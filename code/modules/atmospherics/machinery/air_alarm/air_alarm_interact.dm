@@ -101,57 +101,73 @@
 	if((buildstage == AIR_ALARM_BUILD_COMPLETE))
 		new /obj/item/stack/cable_coil(loc, 3)
 
-/obj/machinery/airalarm/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/airalarm/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	update_last_used(user)
 	switch(buildstage)
 		if(AIR_ALARM_BUILD_COMPLETE)
-			if(W.GetID())// trying to unlock the interface with an ID card
+			if(tool.GetID())// trying to unlock the interface with an ID card
 				togglelock(user)
-				return
-			else if(panel_open && is_wire_tool(W))
-				wires.interact(user)
-				return
-		if(AIR_ALARM_BUILD_NO_WIRES)
-			if(istype(W, /obj/item/stack/cable_coil))
-				var/obj/item/stack/cable_coil/cable = W
-				if(cable.get_amount() < 5)
-					to_chat(user, span_warning(LANG("obj.44b093d6", null)))
-					return
-				user.visible_message(span_notice(LANG("obj.24088500", list(user.name))), \
-									span_notice(LANG("obj.dcfa80c4", null)))
-				if (do_after(user, 2 SECONDS, target = src))
-					if (cable.get_amount() >= 5 && buildstage == AIR_ALARM_BUILD_NO_WIRES)
-						cable.use(5)
-						to_chat(user, span_notice(LANG("obj.038ce342", null)))
-						wires.repair()
-						aidisabled = FALSE
-						locked = FALSE
-						shorted = FALSE
-						danger_level = AIR_ALARM_ALERT_NONE
-						buildstage = AIR_ALARM_BUILD_COMPLETE
-						select_mode(user, /datum/air_alarm_mode/filtering)
-						update_appearance()
-				return
-		if(AIR_ALARM_BUILD_NO_CIRCUIT)
-			if(istype(W, /obj/item/electronics/airalarm))
-				if(user.temporarilyRemoveItemFromInventory(W))
-					to_chat(user, span_notice(LANG("obj.a4c18684", null)))
-					buildstage = AIR_ALARM_BUILD_NO_WIRES
-					update_appearance()
-					qdel(W)
-				return
+				return ITEM_INTERACT_SUCCESS
 
-			if(istype(W, /obj/item/electroadaptive_pseudocircuit))
-				var/obj/item/electroadaptive_pseudocircuit/P = W
-				if(!P.adapt_circuit(user, circuit_cost = 0.025 * STANDARD_CELL_CHARGE))
-					return
+			if(panel_open && is_wire_tool(tool))
+				wires.interact(user)
+				return ITEM_INTERACT_SUCCESS
+
+			return NONE
+
+		if(AIR_ALARM_BUILD_NO_WIRES)
+			if(!istype(tool, /obj/item/stack/cable_coil))
+				return NONE
+
+			var/obj/item/stack/cable_coil/cable = tool
+			if(cable.get_amount() < 5)
+				to_chat(user, span_warning(LANG("obj.44b093d6", null)))
+				return ITEM_INTERACT_BLOCKING
+
+			user.visible_message(span_notice(LANG("obj.24088500", list(user.name))), \
+								span_notice(LANG("obj.dcfa80c4", null)))
+			if(!do_after(user, 2 SECONDS, target = src))
+				return ITEM_INTERACT_BLOCKING
+
+			if(cable.get_amount() < 5 || buildstage != AIR_ALARM_BUILD_NO_WIRES)
+				return ITEM_INTERACT_BLOCKING
+
+			cable.use(5)
+			to_chat(user, span_notice(LANG("obj.038ce342", null)))
+			wires.repair()
+			aidisabled = FALSE
+			locked = FALSE
+			shorted = FALSE
+			danger_level = AIR_ALARM_ALERT_NONE
+			buildstage = AIR_ALARM_BUILD_COMPLETE
+			select_mode(user, /datum/air_alarm_mode/filtering)
+			update_appearance()
+			return ITEM_INTERACT_SUCCESS
+
+		if(AIR_ALARM_BUILD_NO_CIRCUIT)
+			if(istype(tool, /obj/item/electronics/airalarm))
+				if(!user.temporarilyRemoveItemFromInventory(tool))
+					return ITEM_INTERACT_BLOCKING
+
+				to_chat(user, span_notice(LANG("obj.a4c18684", null)))
+				buildstage = AIR_ALARM_BUILD_NO_WIRES
+				update_appearance()
+				qdel(tool)
+				return ITEM_INTERACT_SUCCESS
+
+			if(istype(tool, /obj/item/electroadaptive_pseudocircuit))
+				if(!astype(tool, /obj/item/electroadaptive_pseudocircuit).adapt_circuit(user, circuit_cost = 0.025 * STANDARD_CELL_CHARGE))
+					return ITEM_INTERACT_BLOCKING
+
 				user.visible_message(span_notice(LANG("obj.bdc98e79", list(user, src))), \
 				span_notice(LANG("obj.1f2fc2a5", null)))
 				buildstage = AIR_ALARM_BUILD_NO_WIRES
 				update_appearance()
-				return
+				return ITEM_INTERACT_SUCCESS
 
-	return ..()
+			return NONE
+
+	return NONE
 
 /obj/machinery/airalarm/proc/reset(wire)
 	switch(wire)

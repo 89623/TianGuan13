@@ -113,7 +113,7 @@
 					affected_mob.gib(DROP_ALL_REMAINS)
 					update_stage(1)
 				if(5)
-					if(affected_mob.stat == CONSCIOUS)
+					if(!IS_UNCONSCIOUS_OR_CRIT(affected_mob))
 						affected_mob.visible_message(span_danger(LANG("datum.32fa6902", list(affected_mob, affected_mob.p_their(), affected_mob.p_their()))), \
 					span_userdanger(LANG("datum.4aff365b", null)))
 					var/obj/item/organ/heart/cursed/cheart = new /obj/item/organ/heart/cursed()

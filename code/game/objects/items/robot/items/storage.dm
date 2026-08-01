@@ -33,8 +33,7 @@
 	return ..()
 
 ///A right-click verb, for those not using hotkey mode.
-/obj/item/borg/apparatus/verb/verb_dropHeld()
-	set name = "丢下"
+GAME_VERB(/obj/item/borg/apparatus, verb_dropHeld, "丢下", null)
 
 	if(usr != loc || !stored)
 		return
@@ -128,7 +127,7 @@
 		. += LANG("obj.f7a54f73", list(reagent_container))
 		if(length(reagent_container.reagents.reagent_list))
 			for(var/datum/reagent/reagent in reagent_container.reagents.reagent_list)
-				. += "[reagent.volume] units of [reagent.name]"
+				. += LANG("obj.bcff57a8", list(reagent.volume, reagent.name))
 		else
 			. += LANG("obj.aa75d156", null)
 
@@ -334,8 +333,9 @@
 	. += span_notice(LANG("obj.a9c007ab", null))
 
 /obj/item/borg/apparatus/engineering/pre_attack(atom/atom, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(atom, /obj/item/ai_module) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
+	if(istype(atom, /obj/item/ai_module/law) && !stored) //If an admin wants a borg to upload laws, who am I to stop them? Otherwise, we can hint that it fails
 		to_chat(user, span_warning(LANG("obj.d3e4aec4", null)))
+		return TRUE
 	return ..()
 
 // stops them from cell interactions with other borgos

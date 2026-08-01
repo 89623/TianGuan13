@@ -9,8 +9,8 @@
 	transmittable = 0
 	level = 0 //not obtainable
 	base_message_chance = 20 //here used for the overlays
-	symptom_delay_min = 1
-	symptom_delay_max = 1
+	symptom_delay = 1
+	delay_variation = 0
 	var/passive_message = "" //random message to infected but not actively healing people
 	var/healable_bodytypes = BODYTYPE_ORGANIC // What types of body parts we can heal
 
@@ -210,7 +210,7 @@
 		if(food_conversion)
 			living_host.adjust_nutrition(0.3 * food)
 		if(prob(2))
-			to_chat(living_host, span_notice("You feel a mild warmth as your blood purifies itself."))
+			to_chat(living_host, span_notice(LANG("datum.6a82e68f", null)))
 	return TRUE
 
 
@@ -367,7 +367,7 @@
 	if(living_host.IsSleeping())
 		return power * 0.25 //Voluntary unconsciousness yields lower healing.
 	switch(living_host.stat)
-		if(UNCONSCIOUS, HARD_CRIT)
+		if(HARD_CRIT)
 			return power * 0.9
 		if(SOFT_CRIT)
 			return power * 0.5
@@ -576,8 +576,6 @@
 	stage_speed = 2
 	transmittable = -3
 	level = 6
-	symptom_delay_min = 1
-	symptom_delay_max = 1
 	passive_message = span_notice("Your skin glows faintly for a moment.")
 	threshold_descs = list(
 		"Resistance 7" = "Increases healing speed.",
@@ -618,8 +616,6 @@
 	transmittable = -1
 	level = 4
 	base_message_chance = 0
-	symptom_delay_min = 1
-	symptom_delay_max = 1
 	symptom_cure = null
 	power = 2
 

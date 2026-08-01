@@ -324,9 +324,7 @@
 /obj/machinery/iv_drip/proc/get_reagents()
 	return use_internal_storage ? reagents : reagent_container?.reagents
 
-/obj/machinery/iv_drip/verb/eject_beaker()
-	set name = "移除静脉注射容器"
-	set src in view(1)
+GAME_VERB_SRC(/obj/machinery/iv_drip, eject_beaker, view(1), "移除静脉注射容器", null)
 
 	if(!isliving(usr))
 		to_chat(usr, span_warning(LANG("obj.56e41a3d", null)))
@@ -343,9 +341,7 @@
 		reagent_container = null
 		update_appearance(UPDATE_ICON)
 
-/obj/machinery/iv_drip/verb/toggle_mode()
-	set name = "切换模式"
-	set src in view(1)
+GAME_VERB_SRC(/obj/machinery/iv_drip, toggle_mode, view(1), "切换模式", null)
 
 	if(!isliving(usr))
 		to_chat(usr, span_warning(LANG("obj.56e41a3d", null)))

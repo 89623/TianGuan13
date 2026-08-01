@@ -93,7 +93,7 @@
 /obj/effect/fun_balloon/sentience/effect()
 	var/list/bodies = list()
 	for(var/mob/living/possessable in range(effect_range, get_turf(src)))
-		if (!possessable.ckey && possessable.stat == CONSCIOUS) // Only assign ghosts to living, non-occupied mobs!
+		if (!possessable.ckey && !IS_UNCONSCIOUS_OR_CRIT(possessable)) // Only assign ghosts to living, non-occupied mobs!
 			bodies += possessable
 
 	var/list/candidates = SSpolling.poll_ghosts_for_targets(
@@ -140,7 +140,7 @@
 		var/turf/drop_off = find_safe_turf(z)
 		new /obj/effect/temp_visual/gravpush(get_turf(dispersed_mob))
 		dispersed_mob.forceMove(drop_off)
-		dispersed_mob.balloon_alert(dispersed_mob, "pop!")
+		dispersed_mob.balloon_alert(dispersed_mob, LANG("obj.01729c70", null))
 
 // ----------- Station Crash
 // Can't think of anywhere better to put it right now

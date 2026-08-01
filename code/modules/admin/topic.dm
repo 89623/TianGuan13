@@ -705,14 +705,12 @@
 			var/mob/living/lifer = subject
 			var/status
 			switch (subject.stat)
-				if(CONSCIOUS)
+				if(STABLE)
 					status = "Alive"
 				if(SOFT_CRIT)
-					status = "<font color='orange'><b>Dying</b></font>"
-				if(UNCONSCIOUS)
-					status = "<font color='orange'><b>Unconscious</b></font>"
+					status = "<font color='orange'><b>Critical</b></font>"
 				if(HARD_CRIT)
-					status = "<font color='orange'><b>Unconscious and Dying</b></font>"
+					status = "<font color='orange'><b>Unconscious</b></font>"
 				if(DEAD)
 					status = "<font color='red'><b>Dead</b></font>"
 			health_description = "Status: [status]"
@@ -765,9 +763,9 @@
 		for(var/datum/job/job as anything in SSjob.joinable_occupations)
 			if(job.title == Add)
 				var/newslots = null
-				newslots = input(usr, "How many job slots do you want?", "Add job slots", "[newslots]") as num|null
+				newslots = input(usr, LANG("datum.87730f12", null), LANG("datum.829e48c5", null), "[newslots]") as num|null
 				if(!isnull(newslots))
-					to_chat(src.owner, "Job slots for [job.title] set to [newslots]" , confidential = TRUE)
+					to_chat(src.owner, LANG("datum.a312843b", list(job.title, newslots)) , confidential = TRUE)
 					job.total_positions = newslots
 					log_job_debug("[key_name(usr)] set the job cap for [job.title] to [newslots]")
 					break

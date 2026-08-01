@@ -504,18 +504,25 @@
 		to_chat(user, LANG("obj.6d01fc36", null)) //this is in bigger text because it's hard to spam something that gibs you, and so that you're perfectly aware of the reason why you died
 		user.investigate_log("has been gibbed by putting pineapple on an arnold pizza.", INVESTIGATE_DEATHS)
 		user.gib(DROP_ALL_REMAINS) //if you want something crazy like pineapple, i'll kill you
-	else if(istype(item, /obj/item/food/grown/mushroom) && iscarbon(user))
+		return TRUE
+
+	if(istype(item, /obj/item/food/grown/mushroom) && iscarbon(user))
 		to_chat(user, span_userdanger(LANG("obj.2af34a32", null))) //not as large as the pineapple text, because you could in theory spam it
 		var/mob/living/carbon/shutup = user
 		shutup.gain_trauma(/datum/brain_trauma/severe/mute)
+		return TRUE
+
+	return FALSE
 
 /obj/item/food/pizza/arnold/attack(mob/living/target, mob/living/user)
 	. = ..()
 	try_break_off(target, user)
 
-/obj/item/food/pizza/arnold/attackby(obj/item/item, mob/user)
-	i_kill_you(item, user)
-	. = ..()
+/obj/item/food/pizza/arnold/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!i_kill_you(tool, user))
+		return ..()
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/food/pizzaslice/arnold
 	name = "\improper Arnold pizza slice"
@@ -529,9 +536,11 @@
 	. =..()
 	try_break_off(target, user)
 
-/obj/item/food/pizzaslice/arnold/attackby(obj/item/item, mob/user)
-	i_kill_you(item, user)
-	. = ..()
+/obj/item/food/pizzaslice/arnold/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!i_kill_you(tool, user))
+		return ..()
+
+	return ITEM_INTERACT_SUCCESS
 
 // Ant Pizza, now with more ants.
 /obj/item/food/pizzaslice/ants

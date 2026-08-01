@@ -54,7 +54,7 @@
 /datum/martial_art/blood_steal
 	name = "Blood Steal"
 	id = MARTIALART_BLOODSTEAL
-	help_verb = /mob/living/proc/blood_steal_help
+	help_verb = "Access Core Imprint"
 	smashes_tables = TRUE
 	///Weakref to a machine that's just parried
 	VAR_PRIVATE/datum/weakref/parrying_machine
@@ -273,15 +273,13 @@
 /// Displays help information about the Blood Steal martial art abilities
 /// This verb shows the user information about the Feedbacker and Knuckleblaster attacks,
 /// as well as the active defense mode for parrying projectiles
-/mob/living/proc/blood_steal_help()
-	set name = "访问核心印记"
-	set desc = "You try to remember some of the core Blood Steal protocols."
-	set category = "Blood Steal"
-	to_chat(usr, LANG("mob.b92b9945", null))
+/datum/martial_art/blood_steal/get_style_help()
+	. = list()
+	. += LANG("datum.b92b9945", null)
 
-	to_chat(usr, LANG("mob.12a75e2d", list(span_notice("Feedbacker"))))
-	to_chat(usr, LANG("mob.a71f8b82", list(span_notice("Knuckleblaster"))))
+	. += LANG("datum.12a75e2d", list(span_notice("Feedbacker")))
+	. += LANG("datum.a71f8b82", list(span_notice("Knuckleblaster")))
 
-	to_chat(usr, LANG("mob.e55f7ae2", null))
+	. += LANG("datum.e55f7ae2", null)
 
 #undef MARTIALART_BLOODSTEAL

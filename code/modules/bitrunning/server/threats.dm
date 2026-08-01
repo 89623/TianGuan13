@@ -43,7 +43,7 @@
 /obj/machinery/quantum_server/proc/notify_spawned_threats()
 	for(var/datum/weakref/baddie_ref as anything in spawned_threat_refs)
 		var/mob/living/baddie = baddie_ref.resolve()
-		if(isnull(baddie?.mind) || baddie.stat >= UNCONSCIOUS)
+		if(isnull(baddie?.mind) || IS_UNCONSCIOUS(baddie))
 			continue
 
 		var/atom/movable/screen/alert/bitrunning/alert = baddie.throw_alert(
@@ -54,7 +54,7 @@
 		alert.name = "Queue Deletion"
 		alert.desc = "The server is resetting. Oblivion awaits."
 
-		to_chat(baddie, span_userdanger("You have been flagged for deletion! Thank you for your service."))
+		to_chat(baddie, span_userdanger(LANG("obj.9648d43c", null)))
 
 
 /// Removes a specific threat - used when station spawning
@@ -149,7 +149,7 @@
 		var/mob/living/bitrunner = astype(bitrunner_ref.resolve(), /datum/component/avatar_connection)?.parent
 		if(!bitrunner)
 			continue
-		if((bitrunner.stat > CONSCIOUS) || !bitrunner.client)
+		if(IS_UNCONSCIOUS_OR_CRIT(bitrunner) || !bitrunner.client)
 			continue
 		if(island_brawl_exception)
 			timeout *= max(5 - generated_domain.main_crate_points, 1)

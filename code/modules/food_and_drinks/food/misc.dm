@@ -395,20 +395,22 @@
 	if (can_stick)
 		. += span_notice(LANG("obj.9387c5d1", null))
 
-/obj/item/food/butter/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(item, /obj/item/stack/rods) || !can_stick)
-		return ..()
-	var/obj/item/stack/rods/rods = item
+/obj/item/food/butter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/rods) || !can_stick)
+		return NONE
+
+	var/obj/item/stack/rods/rods = tool
 	if(!rods.use(1))//borgs can still fail this if they have no metal
 		to_chat(user, span_warning(LANG("obj.02ef851f", list(src))))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
+
 	to_chat(user, span_notice(LANG("obj.f9dc8b09", null)))
 	user.temporarilyRemoveItemFromInventory(src)
 	var/obj/item/food/butter/on_a_stick/new_item = new(drop_location())
 	if (new_item.IsReachableBy(user))
 		user.put_in_hands(new_item)
 	qdel(src)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/food/butter/on_a_stick //there's something so special about putting it on a stick.
 	name = "butter on a stick"

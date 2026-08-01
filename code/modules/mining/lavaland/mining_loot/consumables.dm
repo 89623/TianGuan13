@@ -95,7 +95,6 @@
 	RegisterSignal(being, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(update_user_sight))
 	to_chat(being, span_notice(LANG("obj.9911f3cc", null)))
 	ADD_TRAIT(being, TRAIT_THERMAL_VISION, REF(src))
-	being.update_sight()
 
 /obj/effect/wisp/stop_orbit(datum/component/orbiter/orbits, refreshing = FALSE)
 	if(!ismob(orbit_target) || refreshing)
@@ -104,7 +103,6 @@
 	UnregisterSignal(being, COMSIG_MOB_UPDATE_SIGHT)
 	to_chat(being, span_notice(LANG("obj.ddf9fc70", null)))
 	REMOVE_TRAIT(being, TRAIT_THERMAL_VISION, REF(src))
-	being.update_sight()
 	return ..()
 
 /obj/effect/wisp/proc/update_user_sight(mob/user)

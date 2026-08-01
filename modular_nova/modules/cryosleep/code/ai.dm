@@ -1,11 +1,7 @@
-/mob/living/silicon/ai/verb/ai_cryo()
-	set name = "AI 低温休眠"
-	set desc = "Puts the current AI personality into cryogenic stasis, freeing the space for another."
-	set category = "AI Commands"
-
+GAME_VERB_DESC(/mob/living/silicon/ai, ai_cryo, "AI 低温休眠", "Puts the current AI personality into cryogenic stasis, freeing the space for another.", "AI Commands")
 	if(incapacitated)
 		return
-	switch(alert(LANG("mob.8efa8a6a", null),, "Yes.", "No."))
+	switch(alert("Would you like to enter cryo? This will ghost you. Remember to AHELP before cryoing out of important roles, even with no admins online.",,"Yes.","No."))
 		if("Yes.")
 			src.ghostize(FALSE)
 			minor_announce("Station AI has disconnected from system networks and moved to remote storage. Preparing for new AI personality upload.", "Station AI")

@@ -286,7 +286,7 @@
 	user.emote("scream")
 
 	if(do_after(user, BREAKOUT_TIME, target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src || state_open)
 			return
 		user.visible_message(span_warning(LANG("obj.37696909", list(user, src))), \
 			span_notice(LANG("obj.81c31f6b", list(src))))

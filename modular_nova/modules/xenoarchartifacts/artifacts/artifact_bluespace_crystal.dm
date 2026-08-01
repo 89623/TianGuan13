@@ -57,9 +57,9 @@
 			continue
 
 		living_mob.visible_message(
-			span_warning("[living_mob] is displaced by a strange force!"),
-			span_warning("You are displaced by a strange force!"),
-			blind_message = span_hear("You hear zap nearby."),
+			span_warning(LANG("obj.fc07fa9a", list(living_mob))),
+			span_warning(LANG("obj.325c879e", null)),
+			blind_message = span_hear(LANG("obj.f3571fe9", null)),
 		)
 		if(living_mob.buckled)
 			living_mob.buckled.unbuckle_mob()

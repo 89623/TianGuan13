@@ -29,9 +29,7 @@ GLOBAL_DATUM(triple_ai_controller, /datum/triple_ai_controller)
 	GLOB.triple_ai_controller = null
 	. = ..()
 
-/client/proc/triple_ai()
-	set category = "Admin.Events"
-	set name = "切换三 AI 模式"
+GAME_VERB_PROC(/client, triple_ai, "切换三 AI 模式", "Admin.Events")
 
 	if(SSticker.current_state > GAME_STATE_PREGAME)
 		to_chat(usr, LANG("client.c0416f7c", null), confidential = TRUE)

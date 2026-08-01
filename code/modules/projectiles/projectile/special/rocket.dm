@@ -30,7 +30,7 @@
 	var/random_crit_gib = FALSE
 	if(isliving(target) && prob(1) && random_crits_enabled)
 		var/mob/living/gibbed_dude = target
-		if(gibbed_dude.stat < HARD_CRIT)
+		if(!IS_UNCONSCIOUS_OR_CRIT(gibbed_dude))
 			gibbed_dude.say(LANG("obj.31e40fdc", null), forced = "hit by rocket")
 			random_crit_gib = TRUE
 	..()

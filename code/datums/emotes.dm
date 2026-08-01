@@ -49,7 +49,9 @@
 	/// Trait that is required to use this emote.
 	var/trait_required
 	/// In which state can you use this emote? (Check stat.dm for a full list of them)
-	var/stat_allowed = CONSCIOUS
+	var/stat_allowed = STABLE
+
+	var/can_use_flags = NONE
 	/// Sound to play when emote is called.
 	var/sound
 	/// Does this emote vary in pitch?
@@ -89,16 +91,6 @@
 
 	if(!name)
 		name = key
-
-	// NOVA EDIT ADDITION START - i18n
-	// 这里**不能**反查 message/name。emote datum 由 make_datum_reference_lists() 的
-	// init_emote_list() 建立，那在 `Master => GLOB =>` 阶段，**早于 world.New() => config.Load()**
-	// （见 code/game/world.dm 顶部的启动顺序注释）——此刻 GLOB.i18n_server_locale 还没从 config
-	// 读出来，恒等于 en，任何 `locale != en` 的门都进不去（本文件曾放过这样一段，是死代码：
-	// 表情实际全靠 run_emote 末尾那道边界反查，而它在 replace_pronoun 之后，含 "their" 的
-	// 表情反查必 miss —— 表现为「stretches its arms.」这类整句漏翻）。
-	// 反查统一在 run_emote 的输出边界做，见该 proc 内的 i18n 注释。
-	// NOVA EDIT ADDITION END
 
 /**
  * Handles the modifications and execution of emotes.
@@ -230,7 +222,7 @@
 	else if(is_visual && is_audible)
 		user.audible_message(
 			message = msg,
-			deaf_message = span_emote("You see how <b>[user]</b> [msg]"),
+			deaf_message = span_emote(LANG("datum.925c6790", list(user, msg))),
 			self_message = msg,
 			audible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE|additional_message_flags,
 			separation = space, // NOVA EDIT ADDITION
@@ -268,7 +260,7 @@
 		else if(is_visual && is_audible)
 			hologram.audible_message(
 				message = msg,
-				deaf_message = "<span class='emote'>You see how <b>[user]</b> [msg]</span>",
+				deaf_message = LANG("datum.3b266acd", list(user, msg)),
 				self_message = msg,
 				audible_message_flags = EMOTE_MESSAGE|ALWAYS_SHOW_SELF_MESSAGE,
 				separation = space,
@@ -445,22 +437,31 @@
 	if(is_type_in_typecache(user, mob_type_blacklist_typecache))
 		return FALSE
 	if(status_check && !is_type_in_typecache(user, mob_type_ignore_stat_typecache))
-		if(user.stat > stat_allowed)
-			if(!intentional)
-				return FALSE
-			switch(user.stat)
-				if(SOFT_CRIT)
-					to_chat(user, span_warning(LANG("datum.06026301", list(key))))
-				if(UNCONSCIOUS, HARD_CRIT)
-					to_chat(user, span_warning(LANG("datum.b0df7fb7", list(key))))
-				if(DEAD)
-					to_chat(user, span_warning(LANG("datum.9cfbc2db", list(key))))
+		if(IS_UNCONSCIOUS(user) && !(can_use_flags & EMOTE_CANUSE_UNCONSCIOUS))
+			if(intentional)
+				to_chat(user, span_warning(LANG("datum.b0df7fb7", list(key))))
 			return FALSE
-		if(hands_use_check && HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
-			if(!intentional)
-				return FALSE
-			to_chat(user, span_warning(LANG("datum.a6c43807", list(key))))
+		if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED) && (can_use_flags & EMOTE_CANUSE_REQUIRE_HANDS))
+			if(intentional)
+				to_chat(user, span_warning(LANG("datum.a6c43807", list(key))))
 			return FALSE
+
+		switch(user.stat)
+			if(SOFT_CRIT)
+				if(!(can_use_flags & EMOTE_CANUSE_SOFTCRIT))
+					if(intentional)
+						to_chat(user, span_warning(LANG("datum.06026301", list(key))))
+					return FALSE
+			if(HARD_CRIT)
+				if(!(can_use_flags & EMOTE_CANUSE_HARDCRIT))
+					if(intentional)
+						to_chat(user, span_warning(LANG("datum.06026301", list(key))))
+					return FALSE
+			if(DEAD)
+				if(!(can_use_flags & EMOTE_CANUSE_DEAD))
+					if(intentional)
+						to_chat(user, span_warning(LANG("datum.9cfbc2db", list(key))))
+					return FALSE
 
 	if(HAS_TRAIT(user, TRAIT_EMOTEMUTE))
 		return FALSE
@@ -519,7 +520,7 @@
 	return TRUE
 
 /mob/manual_emote(text, log_emote = null)
-	if (stat != CONSCIOUS)
+	if (IS_UNCONSCIOUS_OR_CRIT(src))
 		return FALSE
 	if (isnull(log_emote))
 		log_emote = !isnull(client)

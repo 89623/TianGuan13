@@ -914,9 +914,9 @@
 	if(user.is_holding(src))
 		user.dropItemToGround(src)
 	for(var/mob/living/carbon/human/viewing_mob in viewers(2, user))
-		if(viewing_mob.stat || viewing_mob == user)
+		if(IS_UNCONSCIOUS_OR_CRIT(viewing_mob) || viewing_mob == user)
 			continue
-		viewing_mob.say("Is something wrong? [first_name(user.name)]... you're sweating.", forced = "psycho")
+		viewing_mob.say(LANG("obj.2a7c91b3", list(first_name(user.name))), forced = "psycho")
 		break
 
 /obj/item/card/id/examine_more(mob/user)
@@ -1771,7 +1771,7 @@
 	if(ishuman(interacting_with))
 		interacting_with.balloon_alert(user, LANG("obj.99bff57d", null))
 
-		if(!do_after(user, 2 SECONDS, interacting_with, hidden = TRUE))
+		if(!do_after(user, 2 SECONDS, interacting_with, cog_icon = null))
 			interacting_with.balloon_alert(user, LANG("obj.c67b5d27", null))
 			return ITEM_INTERACT_BLOCKING
 

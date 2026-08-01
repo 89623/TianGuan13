@@ -115,7 +115,7 @@ ADMIN_VERB(cmd_debug_make_powernets, R_DEBUG|R_SERVER, "生成电网", "Regenera
 	BLACKBOX_LOG_ADMIN_VERB("Make Powernets")
 
 ADMIN_VERB_VISIBILITY(cmd_admin_grantfullaccess, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, "授予全部权限", "Grant full access to a mob.", ADMIN_CATEGORY_DEBUG, mob/M in world)
+ADMIN_VERB(cmd_admin_grantfullaccess, R_DEBUG, "授予全部权限", "Grant full access to a mob.", ADMIN_CATEGORY_DEBUG, mob/M)
 	if(!SSticker.HasRoundStarted())
 		tgui_alert(user, LANG("datum.f838a6c3", null))
 		return
@@ -457,7 +457,7 @@ ADMIN_VERB(cmd_admin_areatest_all, R_DEBUG, "测试区域（全部）", "Tests t
 
 	return dresscode
 
-ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, "复苏", mob/living/M in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, "复苏", mob/living/M)
 	if(!istype(M))
 		tgui_alert(user,LANG("datum.df33f692", null))
 		return
@@ -469,10 +469,10 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_rejuvenate, R_ADMIN, "复苏", mob/living
 	admin_ticket_log(M, msg)
 	BLACKBOX_LOG_ADMIN_VERB("Rejuvenate")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_delete, R_DEBUG|R_SPAWN, "删除", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/target as obj|mob|turf in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_delete, R_DEBUG|R_SPAWN, "删除", atom/target as obj|mob|turf)
 	user.admin_delete(target)
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_check_contents, R_ADMIN, "检查内容物", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/mob)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_check_contents, R_ADMIN, "检查内容物", mob/living/mob)
 	var/list/mob_contents = mob.get_contents()
 	for(var/content in mob_contents)
 		to_chat(user, "[content] [ADMIN_VV(content)] [ADMIN_TAG(content)]", confidential = TRUE)
@@ -831,57 +831,57 @@ ADMIN_VERB(check_missing_sprites, R_DEBUG, "调试已穿戴物品精灵", "We're
 		//Is there an explicit worn_icon to pick against the worn_icon_state? Easy street expected behavior.
 		if(sprite.worn_icon)
 			if(!icon_exists(sprite.worn_icon, sprite.icon_state))
-				to_chat(user, span_warning("ERROR sprites for [sprite.type]. Slot Flags are [sprite.slot_flags]."), confidential = TRUE)
+				to_chat(user, span_warning(LANG("datum.b2c423c5", list(sprite.type, sprite.slot_flags))), confidential = TRUE)
 		else if(sprite.worn_icon_state)
 			if(sprite.slot_flags & ITEM_SLOT_MASK)
 				actual_file_name = 'icons/mob/clothing/mask.dmi'
 				if(!icon_exists(actual_file_name, sprite.worn_icon_state))
-					to_chat(user, span_warning("ERROR sprites for [sprite.type]. Mask slot."), confidential = TRUE)
+					to_chat(user, span_warning(LANG("datum.41e0e69f", list(sprite.type))), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_NECK)
 				actual_file_name = 'icons/mob/clothing/neck.dmi'
 				if(!icon_exists(actual_file_name, sprite.worn_icon_state))
-					to_chat(user, span_warning("ERROR sprites for [sprite.type]. Neck slot."), confidential = TRUE)
+					to_chat(user, span_warning(LANG("datum.ae93a270", list(sprite.type))), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_BACK)
 				actual_file_name = 'icons/mob/clothing/back.dmi'
 				if(!icon_exists(actual_file_name, sprite.worn_icon_state))
-					to_chat(user, span_warning("ERROR sprites for [sprite.type]. Back slot."), confidential = TRUE)
+					to_chat(user, span_warning(LANG("datum.8b85493a", list(sprite.type))), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_HEAD)
 				actual_file_name = 'icons/mob/clothing/head/default.dmi'
 				if(!icon_exists(actual_file_name, sprite.worn_icon_state))
-					to_chat(user, span_warning("ERROR sprites for [sprite.type]. Head slot."), confidential = TRUE)
+					to_chat(user, span_warning(LANG("datum.2281f1fe", list(sprite.type))), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_BELT)
 				actual_file_name = 'icons/mob/clothing/belt.dmi'
 				if(!icon_exists(actual_file_name, sprite.worn_icon_state))
-					to_chat(user, span_warning("ERROR sprites for [sprite.type]. Belt slot."), confidential = TRUE)
+					to_chat(user, span_warning(LANG("datum.47ed69ae", list(sprite.type))), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_SUITSTORE)
 				actual_file_name = 'icons/mob/clothing/belt_mirror.dmi'
 				if(!icon_exists(actual_file_name, sprite.worn_icon_state))
-					to_chat(user, span_warning("ERROR sprites for [sprite.type]. Suit Storage slot."), confidential = TRUE)
+					to_chat(user, span_warning(LANG("datum.e0d9522f", list(sprite.type))), confidential = TRUE)
 		else if(sprite.icon_state)
 			if(sprite.slot_flags & ITEM_SLOT_MASK)
 				actual_file_name = 'icons/mob/clothing/mask.dmi'
 				if(!icon_exists(actual_file_name, sprite.icon_state))
-					to_chat(user, span_warning("ERROR sprites for [sprite.type]. Mask slot."), confidential = TRUE)
+					to_chat(user, span_warning(LANG("datum.41e0e69f", list(sprite.type))), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_NECK)
 				actual_file_name = 'icons/mob/clothing/neck.dmi'
 				if(!icon_exists(actual_file_name, sprite.icon_state))
-					to_chat(user, span_warning("ERROR sprites for [sprite.type]. Neck slot."), confidential = TRUE)
+					to_chat(user, span_warning(LANG("datum.ae93a270", list(sprite.type))), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_BACK)
 				actual_file_name = 'icons/mob/clothing/back.dmi'
 				if(!icon_exists(actual_file_name, sprite.icon_state))
-					to_chat(user, span_warning("ERROR sprites for [sprite.type]. Back slot."), confidential = TRUE)
+					to_chat(user, span_warning(LANG("datum.8b85493a", list(sprite.type))), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_HEAD)
 				actual_file_name = 'icons/mob/clothing/head/default.dmi'
 				if(!icon_exists(actual_file_name, sprite.icon_state))
-					to_chat(user, span_warning("ERROR sprites for [sprite.type]. Head slot."), confidential = TRUE)
+					to_chat(user, span_warning(LANG("datum.2281f1fe", list(sprite.type))), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_BELT)
 				actual_file_name = 'icons/mob/clothing/belt.dmi'
 				if(!icon_exists(actual_file_name, sprite.icon_state))
-					to_chat(user, span_warning("ERROR sprites for [sprite.type]. Belt slot."), confidential = TRUE)
+					to_chat(user, span_warning(LANG("datum.47ed69ae", list(sprite.type))), confidential = TRUE)
 			if(sprite.slot_flags & ITEM_SLOT_SUITSTORE)
 				actual_file_name = 'icons/mob/clothing/belt_mirror.dmi'
 				if(!icon_exists(actual_file_name, sprite.icon_state))
-					to_chat(user, span_warning("ERROR sprites for [sprite.type]. Suit Storage slot."), confidential = TRUE)
+					to_chat(user, span_warning(LANG("datum.e0d9522f", list(sprite.type))), confidential = TRUE)
 
 #ifndef OPENDREAM_REAL
 ADMIN_VERB(start_tracy, R_DEBUG, "立即运行 Tracy", "Start running the byond-tracy profiler immediately", ADMIN_CATEGORY_DEBUG)

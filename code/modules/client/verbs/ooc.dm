@@ -3,9 +3,7 @@ GLOBAL_VAR_INIT(OOC_COLOR, null)//If this is null, use the CSS for OOC. Otherwis
 GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 ///talking in OOC uses this
-/client/verb/ooc(msg as text)
-	set name = VERB_OOC
-
+GAME_VERB(/client, ooc, VERB_OOC, null, msg as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger(LANG("client.b79ad8a3", null)))
 		return
@@ -117,22 +115,22 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			if(!holder.fakekey || receiver.holder)
 				if(check_rights_for(src, R_ADMIN))
 					var/ooc_color = ooc_colour ? ooc_colour : prefs.read_preference(/datum/preference/color/ooc_color)
-					to_chat(receiver, span_adminooc("[CONFIG_GET(flag/allow_admin_ooccolor) && ooc_color ? "<font color=[ooc_color]>" :"" ][span_prefix("OOC:")] <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span>"), avoid_highlighting = avoid_highlight, skip_i18n_fallback = TRUE)
+					to_chat(receiver, span_adminooc("[CONFIG_GET(flag/allow_admin_ooccolor) && ooc_color ? "<font color=[ooc_color]>" :"" ][span_prefix("OOC:")] <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]</span>"), avoid_highlighting = avoid_highlight)
 				else
-					to_chat(receiver, span_adminobserverooc(span_prefix("OOC:</span> <EM>[keyname][holder.fakekey ? "/([holder.fakekey])" : ""]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight, skip_i18n_fallback = TRUE)
+					to_chat(receiver, span_adminobserverooc(span_prefix(LANG("client.e7be096b", list(keyname, holder.fakekey ? "/([holder.fakekey])" : "", msg)))), avoid_highlighting = avoid_highlight)
 			else
 				if(GLOB.OOC_COLOR)
-					to_chat(receiver, "<span class='oocplain'><font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]</span></b></font></span>", avoid_highlighting = avoid_highlight, skip_i18n_fallback = TRUE)
+					to_chat(receiver, "<span class='oocplain'><font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]</span></b></font></span>", avoid_highlighting = avoid_highlight)
 				else
-					to_chat(receiver, span_ooc(span_prefix("OOC:</span> <EM>[holder.fakekey ? holder.fakekey : key]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight, skip_i18n_fallback = TRUE)
+					to_chat(receiver, span_ooc(span_prefix(LANG("client.e41c9dd4", list(holder.fakekey ? holder.fakekey : key, msg)))), avoid_highlighting = avoid_highlight)
 
 		else if(!(key in receiver.prefs.ignoring))
 			if(ooc_colour)
-				to_chat(receiver, "<span class='oocplain'><font color='[ooc_colour]'><b>[span_prefix("OOC:")] <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></b></font></span>", avoid_highlighting = avoid_highlight, skip_i18n_fallback = TRUE)
+				to_chat(receiver, "<span class='oocplain'><font color='[ooc_colour]'><b>[span_prefix("OOC:")] <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></b></font></span>", avoid_highlighting = avoid_highlight)
 			else if(GLOB.OOC_COLOR)
-				to_chat(receiver, "<span class='oocplain'><font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></b></font></span>", avoid_highlighting = avoid_highlight, skip_i18n_fallback = TRUE)
+				to_chat(receiver, "<span class='oocplain'><font color='[GLOB.OOC_COLOR]'><b>[span_prefix("OOC:")] <EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></b></font></span>", avoid_highlighting = avoid_highlight)
 			else
-				to_chat(receiver, span_ooc(span_prefix("OOC:</span> <EM>[keyname]:</EM> <span class='message linkify'>[msg]")), avoid_highlighting = avoid_highlight, skip_i18n_fallback = TRUE)
+				to_chat(receiver, span_ooc(span_prefix(LANG("client.e41c9dd4", list(keyname, msg)))), avoid_highlighting = avoid_highlight)
 
 
 /proc/toggle_ooc(toggle = null)
@@ -154,13 +152,6 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	else
 		GLOB.dooc_allowed = !GLOB.dooc_allowed
 
-/client/proc/set_ooc()
-	set name = "设置玩家 OOC 颜色"
-	set desc = "Modifies player OOC Color"
-	set category = "Server"
-	if(IsAdminAdvancedProcCall())
-		return
-
 ADMIN_VERB(set_ooc_color, R_FUN, "设置玩家 OOC 颜色", "Modifies the global OOC color.", ADMIN_CATEGORY_SERVER)
 	var/newColor = tgui_color_picker(user, "Please select the new player OOC color.", "OOC color")
 	if(isnull(newColor))
@@ -170,13 +161,6 @@ ADMIN_VERB(set_ooc_color, R_FUN, "设置玩家 OOC 颜色", "Modifies the global
 	log_admin("[key_name_admin(user)] has set the player ooc color to [new_color].")
 	GLOB.OOC_COLOR = new_color
 
-/client/proc/reset_ooc()
-	set name = "重置玩家 OOC 颜色"
-	set desc = "Returns player OOC Color to default"
-	set category = "Server"
-	if(IsAdminAdvancedProcCall())
-		return
-
 ADMIN_VERB(reset_ooc_color, R_FUN, "重置玩家 OOC 颜色", "Returns player OOC color to default.", ADMIN_CATEGORY_SERVER)
 	if(tgui_alert(user, LANG("datum.26e132eb", null), LANG("datum.53dce6c2", null), list("Yes", "No")) != "Yes")
 		return
@@ -185,31 +169,20 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "重置玩家 OOC 颜色", "Returns player OO
 	GLOB.OOC_COLOR = null
 
 //Checks admin notice
-/client/verb/admin_notice()
-	set name = "管理员通知"
-	set category = "Admin"
-	set desc = "Check the admin notice if it has been set"
-
+GAME_VERB_DESC(/client, admin_notice, "管理员通知", "Check the admin notice if it has been set", "Admin")
 	if(GLOB.admin_notice)
 		to_chat(src, LANG("client.4311435f", list(span_boldnotice("Admin Notice:"), GLOB.admin_notice)))
 	else
 		to_chat(src, span_notice(LANG("client.9b2b211e", null)))
 
-/client/verb/motd()
-	set name = "MOTD"
-	set category = "OOC"
-	set desc ="Check the Message of the Day"
-
+GAME_VERB_DESC(/client, motd, "MOTD", "Check the Message of the Day", "OOC")
 	var/motd = global.config.motd
 	if(motd)
 		to_chat(src, "<span class='infoplain'><div class=\"motd\">[motd]</div></span>", handle_whitespace=FALSE)
 	else
 		to_chat(src, span_notice(LANG("client.f74ead16", null)))
 
-/client/proc/self_notes()
-	set name = "查看管理员备注"
-	set category = "OOC"
-	set desc = "View the notes that admins have written about you"
+GAME_VERB_PROC_DESC(/client, self_notes, "查看管理员备注", "View the notes that admins have written about you", "OOC")
 
 	if(!CONFIG_GET(flag/see_own_notes))
 		to_chat(usr, span_notice(LANG("client.3f633650", null)))
@@ -217,10 +190,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "重置玩家 OOC 颜色", "Returns player OO
 
 	browse_messages(null, usr.ckey, null, TRUE)
 
-/client/proc/self_playtime()
-	set name = "查看记录的游玩时间"
-	set category = "OOC"
-	set desc = "View the amount of playtime for roles the server has tracked."
+GAME_VERB_PROC_DESC(/client, self_playtime, "查看记录的游玩时间", "View the amount of playtime for roles the server has tracked.", "OOC")
 
 	if(!CONFIG_GET(flag/use_exp_tracking))
 		to_chat(usr, span_notice(LANG("client.8cad0082", null)))
@@ -229,11 +199,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "重置玩家 OOC 颜色", "Returns player OO
 	new /datum/job_report_menu(src, usr)
 
 // Ignore verb
-/client/verb/select_ignore()
-	set name = "忽略"
-	set category = "OOC"
-	set desc ="Ignore a player's messages on the OOC channel"
-
+GAME_VERB_DESC(/client, select_ignore, "忽略", "Ignore a player's messages on the OOC channel", "OOC")
 	// Make a list to choose players from
 	var/list/players = list()
 
@@ -311,11 +277,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "重置玩家 OOC 颜色", "Returns player OO
 	to_chat(src, span_infoplain(LANG("client.4185e6d3", list(selection))))
 
 // Unignore verb
-/client/verb/select_unignore()
-	set name = "取消忽略"
-	set category = "OOC"
-	set desc = "Stop ignoring a player's messages on the OOC channel"
-
+GAME_VERB_DESC(/client, select_unignore, "取消忽略", "Stop ignoring a player's messages on the OOC channel", "OOC")
 	// Check if we've ignored any players
 	if(!length(prefs.ignoring))
 		// Express that we haven't ignored any players in chat
@@ -348,25 +310,15 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "重置玩家 OOC 颜色", "Returns player OO
 	// Express that we've unignored the selected player in chat
 	to_chat(src, span_infoplain(LANG("client.abb0f938", list(selection))))
 
-/client/proc/show_previous_roundend_report()
-	set name = "你的上一回合"
-	set category = "OOC"
-	set desc = "View the last round end report you've seen"
+GAME_VERB_PROC_DESC(/client, show_previous_roundend_report, "你的上一回合", "View the last round end report you've seen", "OOC")
 
 	SSticker.show_roundend_report(src, report_type = PERSONAL_LAST_ROUND)
 
-/client/proc/show_servers_last_roundend_report()
-	set name = "服务器上一回合"
-	set category = "OOC"
-	set desc = "View the last round end report from this server"
+GAME_VERB_PROC_DESC(/client, show_servers_last_roundend_report, "服务器上一回合", "View the last round end report from this server", "OOC")
 
 	SSticker.show_roundend_report(src, report_type = SERVER_LAST_ROUND)
 
-/client/verb/fit_viewport()
-	set name = "适应视口"
-	set category = "OOC"
-	set desc = "Fit the width of the map window to match the viewport"
-
+GAME_VERB_DESC(/client, fit_viewport, "适应视口", "Fit the width of the map window to match the viewport", "OOC")
 	// Fetch aspect ratio
 	var/view_size = getviewsize(view)
 	var/aspect_ratio = view_size[1] / view_size[2]
@@ -445,11 +397,7 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "重置玩家 OOC 颜色", "Returns player OO
 	if(fully_created)
 		INVOKE_ASYNC(src, VERB_REF(fit_viewport))
 
-/client/verb/policy()
-	set name = "显示政策"
-	set desc = "Show special server rules related to your current character."
-	set category = "OOC"
-
+GAME_VERB_DESC(/client, policy, "显示政策", "Show special server rules related to your current character.", "OOC")
 	//Collect keywords
 	var/list/keywords = mob.get_policy_keywords()
 	var/header = get_policy(POLICY_VERB_HEADER)
@@ -468,33 +416,20 @@ ADMIN_VERB(reset_ooc_color, R_FUN, "重置玩家 OOC 颜色", "Returns player OO
 	browser.set_content(policytext.Join(""))
 	browser.open()
 
-/client/verb/fix_stat_panel()
-	set name = "修复状态面板"
-	set hidden = TRUE
-
+GAME_VERB_HIDDEN(/client, fix_stat_panel, "修复状态面板")
 	init_verbs()
 
-/client/proc/export_preferences()
-	set name = "导出偏好设置"
-	set desc = "Export your current preferences to a file."
-	set category = "OOC"
+GAME_VERB_PROC_DESC(/client, export_preferences, "导出偏好设置", "Export your current preferences to a file.", "OOC")
 
 	ASSERT(prefs, "User attempted to export preferences while preferences were null!") // what the fuck
 
 	prefs.savefile.export_json_to_client(usr, ckey)
 
-/client/verb/map_vote_tally_count()
-	set name = "显示地图投票统计"
-	set desc = "View the current map vote tally counts."
-	set category = "OOC"
+GAME_VERB_DESC(/client, map_vote_tally_count, "显示地图投票统计", "View the current map vote tally counts.", "OOC")
 	to_chat(mob, SSmap_vote.tally_printout)
 
 
-/client/verb/linkforumaccount()
-	set category = "OOC"
-	set name = "关联论坛账号"
-	set desc = "Validates your byond account to your forum account. Required to post on the forums."
-
+GAME_VERB_DESC(/client, linkforumaccount, "关联论坛账号", "Validates your byond account to your forum account. Required to post on the forums.", "OOC")
 	var/uri = CONFIG_GET(string/forum_link_uri)
 	if(!uri)
 		to_chat(src, span_warning(LANG("client.882f982c", null)))

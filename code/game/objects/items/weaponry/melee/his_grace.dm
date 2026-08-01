@@ -98,7 +98,7 @@
 		INVOKE_ASYNC(src, PROC_REF(awaken), user)
 
 /obj/item/his_grace/attack(mob/living/M, mob/user)
-	if(awakened && M.stat)
+	if(awakened && IS_UNCONSCIOUS_OR_CRIT(M))
 		if(gender == FEMALE)
 			var/dx = M.x - user.x
 			var/dy = M.y - user.y
@@ -177,7 +177,7 @@
 	var/mob/living/L = pick(targets)
 	step_to(src, L)
 	if(Adjacent(L))
-		if(!L.stat)
+		if(!IS_UNCONSCIOUS_OR_CRIT(L))
 			L.visible_message(span_warning(LANG("obj.7e03b2e8", list(src, L))), LANG("obj.cefb8df6", list(src)))
 			do_attack_animation(L, null, src)
 			playsound(L, 'sound/items/weapons/smash.ogg', 50, TRUE)
@@ -197,7 +197,7 @@
 	adjust_bloodthirst(1)
 	force_bonus = HIS_GRACE_FORCE_BONUS * LAZYLEN(contents)
 	notify_ghosts(
-		"[user.real_name] has awoken [src]!",
+		LANG("obj.75154e0f", list(user.real_name, src)),
 		source = src,
 		header = "All Hail [src]!",
 	)

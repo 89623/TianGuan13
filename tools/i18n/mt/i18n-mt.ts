@@ -123,13 +123,37 @@ type TranslatedBatch = {
   catalog: Catalog;
   glossaryAdded: number;
   reused?: boolean;
+  /** 术语强制修好的条数 / 强制后仍违规的条数（见 enforceGlossary）。 */
+  termFixed?: number;
+  termLeft?: number;
 };
 type TermMismatch = {
   term: string;
   expected: string;
+  /**
+   * 该术语是「保持英文」条目（expected === term）。
+   *
+   * 这类"违规"的含义是「译文里没保留英文原词」，**绝不能拿去 repair**：重翻会把英文
+   * 塞回本来好好的中文里（实测 太空润滑剂 -> Space Lube、泡沫力量 SWAT 面具 ->
+   * Foam Force SWAT 面罩）。术语表里 43% 是这类条目（多为 mark-english 种下的），
+   * 与译文冲突时通常是**术语表该改**，不是译文该改。所以只报告、不修。
+   */
+  keepEnglish?: boolean;
 };
-type GlossaryTerm = TermMismatch & {
+/** 一个义项。scope 为空 = 兜底义项（没有任何限定义项命中时用它）。 */
+type GlossarySense = {
+  expected: string;
+  /** 首选 + alts；命中任意一个都算一致。 */
+  accepted: string[];
+  note?: string;
+  /** DM 类型路径前缀，如 "/datum/reagent"。命中即选中该义项。 */
+  scope?: string[];
+};
+type GlossaryTerm = {
+  term: string;
   sourcePattern: RegExp;
+  /** 按 scope 由具体到兜底排好序。 */
+  senses: GlossarySense[];
 };
 type TermReportEntry = {
   en: string;
@@ -138,13 +162,71 @@ type TermReportEntry = {
 };
 type TermReport = Record<string, Record<string, TermReportEntry>>;
 
-const glossary: Record<string, string> = fs.existsSync(GLOSSARY_PATH)
+/**
+ * 术语表条目。两种写法并存（旧的纯字符串仍然合法，不必一次性迁移）：
+ *   "Nanotrasen": "纳米传讯"
+ *   "multitool":  { "zh": "多功能工具", "alts": ["万用工具"], "note": "工程物品；泛指「多用途的工具」时不适用" }
+ * - zh   = 首选译文（喂给模型的那个、自动一致性检查的目标）
+ * - alts = 同样可接受的译法（一个英文对多个译文）。只用于**不判为不一致**，模型仍只被告知首选。
+ * - note = 消歧注释，会随术语一起进提示词。专名 vs 普通名词用法的区分全靠它
+ *          （multitool 那个物品 → 多功能工具；描述挎包「是个多用途的工具」→ 不该套术语）。
+ */
+type GlossarySenseSpec = {
+  zh: string;
+  alts?: string[];
+  note?: string;
+  /**
+   * 限定该义项只在这些 DM 类型路径前缀下生效（可给字符串或数组）。
+   * 语境来自 strings/i18n/scopes.json（nova-i18n extract 产出的 key -> 类型路径）。
+   *
+   *   "Base": [
+   *     { "scope": "/datum/reagent", "zh": "碱" },
+   *     { "scope": ["/area", "/turf"], "zh": "基地" },
+   *     { "zh": "基础" }                              // 无 scope = 兜底
+   *   ]
+   *
+   * 一词多义只能靠这个解决：从前同一个 `Base` 在化学和区域名下共用一条译文，
+   * 检查器不是误报就是漏报，MT 也只能猜。
+   */
+  scope?: string | string[];
+};
+type GlossaryValue = string | GlossarySenseSpec | GlossarySenseSpec[];
+
+const glossary: Record<string, GlossaryValue> = fs.existsSync(GLOSSARY_PATH)
   ? JSON.parse(fs.readFileSync(GLOSSARY_PATH, 'utf8'))
   : {};
-// 术语表里「保持英文」的词（value === key，如 datum/Nanotrasen 缩写），允许留在译文里。
+
+/** 归一成义项数组：具体（有 scope）在前、兜底在后。 */
+function glossarySenses(v: GlossaryValue): GlossarySense[] {
+  const specs: GlossarySenseSpec[] =
+    typeof v === 'string' ? [{ zh: v }] : Array.isArray(v) ? v : [v];
+  return specs
+    .map((s) => {
+      const scope =
+        s.scope == null
+          ? undefined
+          : (Array.isArray(s.scope) ? s.scope : [s.scope]).map((p) =>
+              p.replace(/\/+$/, ''),
+            );
+      return {
+        expected: s.zh,
+        accepted: [s.zh, ...(s.alts ?? [])].filter((x) => x && x.length > 0),
+        note: s.note,
+        scope,
+      };
+    })
+    .sort((a, b) => (b.scope ? 1 : 0) - (a.scope ? 1 : 0));
+}
+
+/** 首选译文（多义时取第一个义项——仅用于「保持英文」判定这类不看语境的场合）。 */
+function glossaryZh(v: GlossaryValue): string {
+  return glossarySenses(v)[0]?.expected ?? '';
+}
+
+// 术语表里「保持英文」的词（首选译文 === key，如 datum/Nanotrasen 缩写），允许留在译文里。
 function keepEnglishTerms(): string[] {
   return Object.entries(glossary)
-    .filter(([k, v]) => k === v)
+    .filter(([k, v]) => k === glossaryZh(v))
     .map(([k]) => k)
     .sort((a, b) => b.length - a.length);
 }
@@ -155,19 +237,134 @@ function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
+/**
+ * 术语表里**换个大小写就是另一个普通英文词**的条目，匹配时保持大小写敏感
+ * （见 sourceTermPattern 的大小写不敏感说明）。
+ *
+ * 判据只有一条：把该词的小写形式放进普通句子里，它是不是一个意思完全不同的日常词。
+ * 是 → 进这张表。举例（都是实测出来的误报）：
+ *   Straight（异性恋）  命中 "walk straight ahead"
+ *   Cream  （奶油）    命中 "ice cream"（冰淇淋是对的，不该改）
+ *   Cook   （厨师）    命中 "cook meat" 这个动词
+ *   Criminal（罪犯）   命中 "criminal mind"（犯罪心理是对的）
+ *   robust （硬核）    命中 "Robust Industries, LLC" 这个公司名
+ *   byond  （BYOND）   命中 "byond://" 协议头
+ *
+ * 反例（**不该**进这张表）：captain / chemist / curator / uplink / plushie —— 它们的
+ * 小写形式就是同一个东西，正是靠大小写不敏感才能覆盖 obj 的小写 name/desc。
+ */
+/**
+ * **拟声词/感叹词绝不能进术语表。**
+ *
+ * 它们的中文写法本来就随语法角色变，强行统一必错。`honk` 踩过：目录里有六种渲染，
+ * 各自都对——
+ *   纯 meme 大写 `<font size=8>HONK</font>` → 必须留 HONK
+ *   拟声 `Honk.` / `a silly bike horn! Honk!` → 叭。/ 叭！
+ *   拟声（另一派）`banana ice cream. Honk!`  → 呱呱！
+ *   动词 `honking clown`                     → 鸣笛小丑
+ *   专名 `El Honker's Mask` / `HONKITUDE`    → 鸣笛者 / 喇叭度
+ * 当时按「目录里 Honk 出现 32 次 > 鸣叫 17 次」判它保持英文，结果把动词义项也变成
+ * 「会让你满嘴 Honk」。**那个频次是整目录子串计数，把专名、meme、拟声全算作一类了**——
+ * 对多语法角色的词是垃圾判据。这类词直接不收，让它随语境走。
+ */
+
+const CASE_SENSITIVE_TERMS = new Set([
+  'alpha',
+  'byond',
+  'cook',
+  'cream',
+  'criminal',
+  'fluff',
+  'honk',
+  'journey',
+  'law',
+  'meta',
+  'noir',
+  'robust',
+  'shade',
+  'sprout',
+  'straight',
+]);
+
 function sourceTermPattern(term: string): RegExp {
   const prefix = /^[A-Za-z0-9]/.test(term) ? '(^|[^A-Za-z0-9])' : '';
   const suffix = /[A-Za-z0-9]$/.test(term) ? '(?=$|[^A-Za-z0-9])' : '';
-  return new RegExp(`${prefix}${escapeRegExp(term)}${suffix}`, 'u');
+  // **大小写不敏感**——DM 里同一个专名有两套写法：datum 显示名是首字母大写的
+  // （"Multiver"、"Syriniver"），而 obj 的 name/desc 按 SS13 惯例全小写
+  // （"multiver bottle"、"A small bottle of syriniver."）。术语表只收得到其中一种，
+  // 大小写敏感匹配就让另一半**永远命中不了术语提示**，MT 每次现编译名 →
+  // 多元维瓶 / 多效解毒剂 / 多功能解毒剂 三种叫法并存。这不是个别词的问题，是整类。
+  //
+  // 例外：**全大写缩写**（AI / ID / NT / ERT）保持大小写敏感。它们的小写形式往往是
+  // 另一个普通词（id、it…），放开会把噪音灌进不一致报告。CASE_SENSITIVE_TERMS 同理。
+  const flags =
+    /[a-z]/.test(term) && !CASE_SENSITIVE_TERMS.has(term.toLowerCase())
+      ? 'iu'
+      : 'u';
+  return new RegExp(`${prefix}${escapeRegExp(term)}${suffix}`, flags);
+}
+
+/**
+ * key -> 该英文串出现过的 DM 类型路径（nova-i18n extract 产出）。
+ * 缺文件不报错，只是退化成「所有义项都按兜底处理」——老仓库/未重跑 extract 时仍能工作。
+ */
+const SCOPES_PATH = path.join(ROOT, 'strings/i18n/scopes.json');
+/**
+ * TGUI 侧同名 sidecar（tgui-catalog.mjs 产出），来源写作 `tgui:ChemReactionChamber`。
+ * 分两个文件是因为两个写者（Rust extract / node tgui-catalog）共用一个文件必然互相覆盖。
+ * 两边 key 空间不重叠——DM 是 `obj.abc12345`，TGUI 直接拿英文原文当 key——所以合并安全。
+ */
+const TGUI_SCOPES_PATH = path.join(ROOT, 'strings/i18n/tgui-scopes.json');
+function loadScopes(p: string): Record<string, string[]> {
+  return fs.existsSync(p) ? JSON.parse(fs.readFileSync(p, 'utf8')) : {};
+}
+const scopesByKey: Record<string, string[]> = {
+  ...loadScopes(SCOPES_PATH),
+  ...loadScopes(TGUI_SCOPES_PATH),
+};
+
+/**
+ * 给定条目 key，选出该术语适用的义项。
+ * 规则：**最长前缀命中优先**（`/datum/reagent/medicine` 比 `/datum` 更具体），
+ * 都不命中则用兜底义项；连兜底都没有就返回 null = 该语境下不检查这个词。
+ */
+function pickSense(term: GlossaryTerm, key: string): GlossarySense | null {
+  const paths = scopesByKey[key];
+  let best: GlossarySense | null = null;
+  let bestLen = -1;
+  for (const sense of term.senses) {
+    if (!sense.scope) {
+      if (best === null) best = sense; // 兜底：只在没有限定义项命中时生效
+      continue;
+    }
+    if (!paths) continue;
+    // 剥掉 `#name` / `#proc()` 后缀再比前缀——scope 写的是类型路径，不含变量名。
+    const bare = paths.map((p) => p.split('#')[0]);
+    for (const prefix of sense.scope) {
+      // `/datum/reagent` 命中 `/datum/reagent/medicine/multiver`；
+      // `tgui:` 这种以冒号收尾的写法命中该来源下全部界面（`tgui:ChemHeater`）。
+      const hit = bare.some(
+        (p) =>
+          p === prefix ||
+          p.startsWith(`${prefix}/`) ||
+          (prefix.endsWith(':') && p.startsWith(prefix)),
+      );
+      if (hit && prefix.length > bestLen) {
+        best = sense;
+        bestLen = prefix.length;
+      }
+    }
+  }
+  return best;
 }
 
 function glossaryTerms(): GlossaryTerm[] {
   return Object.entries(glossary)
-    .filter(([term, expected]) => term.length >= 2 && expected.length > 0)
+    .filter(([term, v]) => term.length >= 2 && glossaryZh(v).length > 0)
     .sort((a, b) => b[0].length - a[0].length)
-    .map(([term, expected]) => ({
+    .map(([term, v]) => ({
       term,
-      expected,
+      senses: glossarySenses(v),
       sourcePattern: sourceTermPattern(term),
     }));
 }
@@ -456,7 +653,8 @@ function isGenericPhrase(term: string): boolean {
 }
 
 function saveGlossary() {
-  const sorted: Record<string, string> = {};
+  // 值原样保留（字符串或 {zh,alts,note} 对象），只重排 key。
+  const sorted: Record<string, GlossaryValue> = {};
   for (const k of Object.keys(glossary).sort()) sorted[k] = glossary[k];
   fs.writeFileSync(GLOSSARY_PATH, `${JSON.stringify(sorted, null, 2)}\n`);
 }
@@ -506,12 +704,43 @@ function isGlossaryAdditionCandidate(en: string): boolean {
 }
 
 /** 把 Codex 这批新发现的固定词合并进术语表（仅新增，不覆盖已有人工译名），并落盘。 */
+/** 术语表查重用的归一化形式：与 sourceTermPattern 的大小写不敏感、以及并条规则保持一致。 */
+function glossaryNormKey(term: string): string {
+  return term.toLowerCase().replace(/[-_\s]/g, '');
+}
+
+/**
+ * **人工判定「不该作为术语」的词**，MT 不得再自动加回来。
+ *
+ * 归一化查重只挡得住「表里已有的变体」，挡不住**被故意删掉的词**：Sol 因为一词多义
+ * （恒星系/语言/前缀）被删，下一轮 MT 就把它当新专名重新收录（Sol -> 太阳联邦），
+ * 61 条假违规立刻回来。删除必须是**有记忆的**，否则每跑一轮就得重删一次。
+ */
+const BLOCKLIST_PATH = path.join(
+  import.meta.dir,
+  `glossary-blocklist.${LOCALE}.json`,
+);
+const glossaryBlocklist = new Set<string>(
+  (fs.existsSync(BLOCKLIST_PATH)
+    ? (JSON.parse(fs.readFileSync(BLOCKLIST_PATH, 'utf8')) as string[])
+    : []
+  ).map(glossaryNormKey),
+);
+
 function mergeGlossaryAdditions(additions: Record<string, string>): number {
+  // **按归一化形式查重**，不能用 `en in glossary` 的精确匹配。
+  // 精确匹配下，模型返回的 "Nanotrasen" 在表里只有 "NANOTRASEN" 时会被当成新词加进去
+  // （译名还不一样：纳诺特雷森 vs 纳米传讯），于是刚并好的变体组当场又裂开——实测一次
+  // MT 运行就把上一轮合并的 40 组重新污染了。匹配已是大小写/连字符不敏感的，
+  // 所以只要归一化后撞上就不算新词。
+  const known = new Set(Object.keys(glossary).map(glossaryNormKey));
   let added = 0;
   for (const [en, zh] of Object.entries(additions)) {
-    if (!en || !zh || en in glossary) continue;
+    if (!en || !zh || known.has(glossaryNormKey(en))) continue;
+    if (glossaryBlocklist.has(glossaryNormKey(en))) continue;
     if (!isGlossaryAdditionCandidate(en)) continue;
     glossary[en] = zh;
+    known.add(glossaryNormKey(en));
     added++;
   }
   if (added) {
@@ -770,17 +999,39 @@ function buildGlobalReverse(): Map<string, string> {
 function termMismatches(
   enVal: string,
   zhVal: string | undefined,
+  key: string,
 ): TermMismatch[] {
   if (zhVal == null || zhVal === '' || zhVal === enVal) {
     return [];
   }
 
   const missing: TermMismatch[] = [];
-  for (const { term, expected, sourcePattern } of termsByLength) {
-    if (!sourcePattern.test(enVal) || zhVal.includes(expected)) {
-      continue;
-    }
-    missing.push({ term, expected });
+  // `[UPLINK_IMPLANT_TELECRYSTAL_COST]` 这类**宏占位符**里的词不是玩家可见文本，
+  // 译文里当然不会出现对应中文 —— 大小写不敏感匹配之后它会稳定误报（Uplink->上行终端）。
+  // 等长空格替换：保留偏移量，下面的 claimed 区间逻辑照常成立。
+  const scanVal = enVal.replace(/\[[A-Z0-9_]{2,}\]/g, (m) => ' '.repeat(m.length));
+  // 已被更长术语占用的字符区间。termsByLength 已按长度降序，所以长词先登记区间。
+  // 不做这一步就会自相矛盾：`Rear Admiral`->海军少将 与 `Admiral`->海军上将 并存时，
+  // 把 "Rear Admiral" 正确译成「海军少将」反而违反了 `Admiral`，且**永远修不好**——
+  // 强制回环会一遍遍重译它，这正是 obj.json 那批「仍违规 37/50」的来源。
+  const claimed: [number, number][] = [];
+  for (const entry of termsByLength) {
+    const m = entry.sourcePattern.exec(scanVal);
+    if (!m) continue;
+    const start = m.index;
+    const end = start + m[0].length;
+    if (claimed.some(([a, b]) => start >= a && end <= b)) continue;
+    claimed.push([start, end]);
+    // 按条目所属的 DM 类型路径挑义项；该语境下没有适用义项就不检查这个词。
+    const sense = pickSense(entry, key);
+    if (!sense) continue;
+    // alts 命中也算一致——一个英文允许多个译法（见 GlossaryValue 注释）。
+    if (sense.accepted.some((a) => zhVal.includes(a))) continue;
+    missing.push({
+      term: entry.term,
+      expected: sense.expected,
+      ...(sense.expected === entry.term ? { keepEnglish: true } : {}),
+    });
   }
   return missing;
 }
@@ -794,7 +1045,7 @@ function computeTermReport(file: string): Record<string, TermReportEntry> {
   for (const key of Object.keys(en)) {
     if (allow && !allow.has(key)) continue;
     const zhVal = zh[key];
-    const missing = termMismatches(en[key], zhVal);
+    const missing = termMismatches(en[key], zhVal, key);
     if (missing.length) {
       report[key] = {
         en: en[key],
@@ -806,10 +1057,15 @@ function computeTermReport(file: string): Record<string, TermReportEntry> {
   return report;
 }
 
+/**
+ * 送去重翻的条目。**只收「真·译名不一致」**：至少有一条违规不是「保持英文」类
+ * （见 TermMismatch.keepEnglish）。纯保持英文的条目重翻只会把英文塞回中文，是净劣化。
+ */
 function computeTermPending(file: string): Catalog {
   const report = computeTermReport(file);
   const pending: Catalog = {};
   for (const [key, entry] of Object.entries(report)) {
+    if (!entry.missing.some((m) => !m.keepEnglish)) continue;
     pending[key] = entry.en;
   }
   return pending;
@@ -836,7 +1092,79 @@ function cmdPending(args: string[]) {
   console.log(`合计待译 ${total} 条（locale=${LOCALE}）`);
 }
 
+/**
+ * 术语表**自相矛盾**检测：归一化（小写 + 去连字符/空格）后同一个词却有多条不同译文。
+ *
+ * 这类条目会凭空制造「不一致」——`maintenance`→维修通道 与 `Maintenance`→维护区 并存时，
+ * 无论译文写哪个都必然违反另一条，实测一次贡献了 706 条假违规（占当时总量的 16%）。
+ * 匹配已是大小写不敏感（见 sourceTermPattern），所以这种并存本身就是 bug，不是配置。
+ * 修法：并成一条，最常用的译文作 zh，其余作 alts。
+ */
+function glossaryConflicts(): string[][] {
+  const groups = new Map<string, Map<string, string>>();
+  for (const [term, v] of Object.entries(glossary)) {
+    const norm = term.toLowerCase().replace(/[-_\s]/g, '');
+    if (!groups.has(norm)) groups.set(norm, new Map());
+    groups.get(norm)?.set(term, glossaryZh(v));
+  }
+  const out: string[][] = [];
+  for (const variants of groups.values()) {
+    if (variants.size < 2) continue;
+    const translated = [...variants].filter(([k, zh]) => k !== zh);
+    if (new Set(translated.map(([, zh]) => zh)).size < 2) continue;
+    out.push([...variants].map(([k, zh]) => `${k} -> ${zh}`));
+  }
+  return out;
+}
+
+/// 子词冲突：短语条目 B 里含独立单词 A，但 B 的译文没沿用 A 的译名。
+/// 这是 glossaryConflicts 的盲区——它只按归一化 key 找同词异译，`Reaper` 与 `.45 Reaper`
+/// 归一化后是两个不同的 key，于是「Reaper->收割者」和「.45 Reaper->.45死神」能长期并存，
+/// 而 MT 每次都照最长匹配那条渲染，玩家看到的就是同一发子弹两个名字。
+/// 有大量合理反例（Rear Admiral vs Admiral、Hong Kong vs Kong），所以只报告、不做门禁。
+function glossarySubTermConflicts(): string[] {
+  const terms = Object.keys(glossary);
+  const out: string[] = [];
+  for (const b of terms) {
+    if (!/\s/.test(b)) continue;
+    for (const a of terms) {
+      if (a === b) continue;
+      const re = new RegExp(
+        `(^|[^A-Za-z])${escapeRegExp(a)}($|[^A-Za-z])`,
+        'i',
+      );
+      if (!re.test(b)) continue;
+      const za = glossaryZh(glossary[a]);
+      const zb = glossaryZh(glossary[b]);
+      if (!za || !zb) continue;
+      if (za === a) continue; // 子词本身保英文，长条目译不译都说得通
+      const alts = glossarySenses(glossary[a]).flatMap((s) => s.accepted);
+      if (alts.some((x) => zb.includes(x))) continue;
+      out.push(`${b} -> ${zb}   ⊃   ${a} -> ${za}`);
+    }
+  }
+  return out;
+}
+
 function cmdTerms(args: string[]) {
+  const subs = glossarySubTermConflicts();
+  if (subs.length) {
+    console.log(
+      `⚠ 术语表子词冲突 ${subs.length} 组（长条目没沿用子词译名）——` +
+        `多数是合理的（Rear Admiral≠Admiral），但同一专名的分歧藏在这里，请人工过一遍：`,
+    );
+    for (const line of subs.slice(0, 10)) console.log(`   ${line}`);
+  }
+  const conflicts = glossaryConflicts();
+  if (conflicts.length) {
+    console.log(
+      `⚠ 术语表自相矛盾 ${conflicts.length} 组（归一化后同词、译文不同）——` +
+        `这些会凭空制造「不一致」，先并成一条（最常用的作 zh，其余作 alts）：`,
+    );
+    for (const group of conflicts.slice(0, 10)) {
+      console.log(`   ${group.join('  |  ')}`);
+    }
+  }
   let total = 0;
   const fullReport: TermReport = {};
   for (const file of namespaceFiles(args)) {
@@ -862,20 +1190,39 @@ function cmdTerms(args: string[]) {
   console.log(`详情：${path.relative(ROOT, outPath)}`);
 }
 
-function batchGlossaryEntries(batch: Catalog): [string, string][] {
+function batchGlossaryEntries(batch: Catalog): [string, string, string?][] {
   if (FULL_GLOSSARY) {
-    return Object.entries(glossary);
+    return Object.entries(glossary).flatMap(([en, v]) =>
+      glossarySenses(v).map(
+        (s) =>
+          [en, s.expected, senseNote(s)] as [string, string, string | undefined],
+      ),
+    );
   }
 
-  const selected = new Map<string, string>();
-  for (const value of Object.values(batch)) {
-    for (const { term, expected, sourcePattern } of termsByLength) {
-      if (sourcePattern.test(value)) {
-        selected.set(term, expected);
-      }
+  // 按 (术语, 义项) 去重：同一批里 `Base` 可能既有 /datum/reagent 的「碱」又有兜底的
+  // 「基础」，两条都得进提示词，否则模型只看到一个义项、另一半必然翻错。
+  const selected = new Map<string, [string, string, string | undefined]>();
+  for (const [key, value] of Object.entries(batch)) {
+    for (const entry of termsByLength) {
+      if (!entry.sourcePattern.test(value)) continue;
+      const sense = pickSense(entry, key);
+      if (!sense) continue;
+      selected.set(`${entry.term} ${sense.expected}`, [
+        entry.term,
+        sense.expected,
+        senseNote(sense),
+      ]);
     }
   }
-  return [...selected.entries()];
+  return [...selected.values()];
+}
+
+/** 提示词里的注释：把 scope 一并说出来，模型才知道这条为什么只在某些语境成立。 */
+function senseNote(sense: GlossarySense): string | undefined {
+  if (!sense.scope) return sense.note;
+  const scopeText = `仅 ${sense.scope.join(' / ')} 语境`;
+  return sense.note ? `${scopeText}；${sense.note}` : scopeText;
 }
 
 function glossaryHint(batch: Catalog): string {
@@ -883,13 +1230,19 @@ function glossaryHint(batch: Catalog): string {
   if (entries.length === 0) {
     return '- （本批没有命中术语表；仍需保留 {0}/{1} 占位符、HTML/DM 宏和大写缩写）';
   }
-  return entries.map(([en, zh]) => `- ${en} => ${zh}`).join('\n');
+  return entries
+    .map(([en, zh, note]) => `- ${en} => ${zh}${note ? `（${note}）` : ''}`)
+    .join('\n');
 }
 
-// 每批喂给模型的条数（大文件如 obj.json 必须分批，否则超上下文）。openai 是单次请求、可吃更大批，
-// 默认调大以减少调用次数/开销；agent 后端保持 200。可用 I18N_CHUNK 覆盖。
+// 每批喂给模型的条数（大文件如 obj.json 必须分批，否则超上下文）。可用 I18N_CHUNK 覆盖。
+//
+// openai 从 400 降到 150：真正的天花板不是**输入**上下文而是**输出** token 上限——
+// 400 条长 desc 的中文译文会把回复截断，JSON 半截结束，报
+// `openai error: JSON Parse error: Unterminated string`，整批白跑（实测 obj.json 第 0 批）。
+// 中文条目普遍比英文原文长，repair-terms 尤其（改的多是长描述），所以宁可小批多跑。
 const CHUNK = Number(
-  process.env.I18N_CHUNK ?? (BACKEND === 'openai' ? 400 : 200),
+  process.env.I18N_CHUNK ?? (BACKEND === 'openai' ? 150 : 200),
 );
 // 并发批数。agent（codex/claude）重、默认串行(1)；openai 是 API，可并行加速（受额度/限流约束）。
 const CONCURRENCY = Math.max(
@@ -1118,12 +1471,32 @@ async function runCodex(
 /// translations 写 outPath、glossary_additions 写 addPath（与 agent 后端一致，自动扩术语表；
 /// mergeGlossaryAdditions 之后还会再过滤一遍）。用 OPENAI_API_KEY + OPENAI_MODEL（可配 base_url
 /// 走兼容 OpenAI 协议的服务，如 DeepSeek/通义/本地 vLLM）。
+/**
+ * 单次 API 请求超时（毫秒）。超时后该批按失败处理、留在 terms 报告里，重跑自然捡回来——
+ * 比无限等下去强得多。CHUNK 调大时可用 I18N_OPENAI_TIMEOUT_MS 放宽。
+ */
+/**
+ * 思考强度。空字符串 = 关闭思考模式（回到纯输出）。默认 max。
+ * 开了之后单批耗时明显变长，所以超时默认也跟着放宽。
+ */
+const REASONING_EFFORT = process.env.I18N_REASONING_EFFORT ?? 'max';
+
+const OPENAI_TIMEOUT_MS = envInt(
+  'I18N_OPENAI_TIMEOUT_MS',
+  REASONING_EFFORT ? 600_000 : 180_000,
+);
+
+/** 全程累计的缓存命中统计（结束时打印，验证静态前缀是否生效）。 */
+let cacheHitTokens = 0;
+let cachePromptTokens = 0;
+
 async function runOpenAI(
   batch: Catalog,
   mode: WorkMode,
   outPath: string,
   addPath: string,
   logPath: string,
+  idToScope: Record<string, string> = {},
 ): Promise<boolean> {
   if (!OPENAI_API_KEY) {
     console.error('  ⚠ 未设置 OPENAI_API_KEY（或 I18N_OPENAI_API_KEY）');
@@ -1133,6 +1506,11 @@ async function runOpenAI(
     mode === 'terms'
       ? '这些条目的现有译文与术语表不一致；请重新给出自然中文译文，并严格套用术语表。'
       : '把每个值翻译为目标语言。';
+  // **静态前缀，逐字节固定** —— DeepSeek 的上下文缓存按前缀匹配命中，缓存命中的
+  // 输入 token 便宜一个数量级。所以随批变化的内容（术语表命中、语境段落、批体本身）
+  // 一律放进 user 消息，system 只留不变的指令。
+  // 从前把 glossaryHint/scopeSection 拼进 system，等于每次请求前缀都不同 —— 命中率恒为 0。
+  // 注意 ${task} 只有两种取值（pending / terms），各自形成一条稳定前缀，不影响命中。
   const system =
     `你是 Space Station 13 游戏文本的专业本地化译者，目标语言：${LOCALE}。${task}` +
     `输入是紧凑 JSON：键 -> 唯一英文源。规则：` +
@@ -1146,11 +1524,20 @@ async function runOpenAI(
     `唯一装备/武器/药剂/材料、型号、缩写、必须保留英文的命令或程序名；` +
     `不要收普通单词、多义词、颜色、大小、方向、形容词、泛称名词、可随语境翻译的词` +
     `（如 white/black/large/small/left/right/agent/vendor/crate）。不确定就不收。没有就写 {}。` +
-    `术语表（仅本批命中）：\n${glossaryHint(batch)}`;
+    `术语表与语境随每批附在用户消息里。`;
+  // 随批变化的部分：全部放 user，前缀才稳得住。
+  const variable =
+    `术语表（仅本批命中）：\n${glossaryHint(batch)}` +
+    scopeSection(idToScope) +
+    `\n\n待翻译 JSON：\n${JSON.stringify(batch)}`;
   fs.mkdirSync(path.dirname(logPath), { recursive: true });
   try {
+    // **必须带超时**。fetch 默认永不超时：连接被中间设备静默丢弃后，promise 既不 resolve
+    // 也不 reject，worker 就永久卡在这里——表现是「跑得极慢」，实际是并发池被逐个挂死，
+    // 最后进程还活着但零连接、零输出。实测卡了 6 分钟无任何动静才发现。
     const res = await fetch(`${OPENAI_BASE_URL}/chat/completions`, {
       method: 'POST',
+      signal: AbortSignal.timeout(OPENAI_TIMEOUT_MS),
       headers: {
         'content-type': 'application/json',
         authorization: `Bearer ${OPENAI_API_KEY}`,
@@ -1159,9 +1546,18 @@ async function runOpenAI(
         model: OPENAI_MODEL,
         temperature: 0,
         response_format: { type: 'json_object' },
+        // DeepSeek 思考模式：翻译是判断密集型（一词多义、术语该不该套、名词短语还是整句），
+        // 开思考明显值。effort 取值 high/max（low/medium 会被映射成 high，xhigh 映射成 max）。
+        // 思考内容走 reasoning_content 字段，不影响我们解析 content。
+        ...(REASONING_EFFORT
+          ? {
+              thinking: { type: 'enabled' },
+              reasoning_effort: REASONING_EFFORT,
+            }
+          : {}),
         messages: [
           { role: 'system', content: system },
-          { role: 'user', content: JSON.stringify(batch) },
+          { role: 'user', content: variable },
         ],
       }),
     });
@@ -1174,7 +1570,26 @@ async function runOpenAI(
     }
     const data = (await res.json()) as {
       choices?: { message?: { content?: string } }[];
+      usage?: {
+        prompt_tokens?: number;
+        prompt_cache_hit_tokens?: number;
+        prompt_cache_miss_tokens?: number;
+        completion_tokens?: number;
+      };
     };
+    // 记缓存命中，用来验证「system 静态前缀」确实被 DeepSeek 缓存了。
+    // 命中恒为 0 就说明前缀又被写活了（有人把随批内容拼回了 system）。
+    const u = data?.usage;
+    if (u) {
+      const hit = u.prompt_cache_hit_tokens ?? 0;
+      const total = u.prompt_tokens ?? 0;
+      cacheHitTokens += hit;
+      cachePromptTokens += total;
+      fs.appendFileSync(
+        logPath,
+        `\n=== usage: prompt ${total}（缓存命中 ${hit}）, completion ${u.completion_tokens ?? 0} ===\n`,
+      );
+    }
     const content = data?.choices?.[0]?.message?.content;
     if (typeof content !== 'string') {
       fs.appendFileSync(logPath, `\n=== openai 无 content ===\n`);
@@ -1206,12 +1621,31 @@ async function runOpenAI(
   }
 }
 
+/**
+ * 条目的语境提示 = 它所属 DM 类型路径的前 4 段（`/datum/reagent/medicine/c2/multiver`
+ * -> `/datum/reagent/medicine`）。前缀比叶子有用：要判的是「这是试剂还是区域名」，
+ * 不是具体哪个试剂。TGUI 条目直接给界面名（`tgui:ChemReactionChamber`）。
+ */
+function scopeHint(key: string): string | null {
+  const paths = scopesByKey[key];
+  if (!paths?.length) return null;
+  const p = paths[0];
+  if (!p.startsWith('/')) return p; // tgui:XXX
+  // 保留 `#name` / `#desc` / `#proc()` —— 它告诉模型这是**短名词短语**还是**整句**，
+  // 很多「物品名被翻成一句话」就是缺这个信号。
+  const [typePath, member] = p.split('#');
+  const short = typePath.split('/').slice(0, 5).join('/');
+  return member ? `${short}#${member}` : short;
+}
+
 function shortIdBatch(batch: Catalog): {
   codexBatch: Catalog;
   idToKeys: string[][];
+  idToScope: Record<string, string>;
 } {
   const codexBatch: Catalog = {};
   const idToKeys: string[][] = [];
+  const idToScope: Record<string, string> = {};
   const valueToId = new Map<string, number>();
   for (const key of Object.keys(batch)) {
     const value = batch[key];
@@ -1225,8 +1659,30 @@ function shortIdBatch(batch: Catalog): {
     valueToId.set(value, numericId);
     idToKeys.push([key]);
     codexBatch[id] = value;
+    const scope = scopeHint(key);
+    if (scope) idToScope[id] = scope;
   }
-  return { codexBatch, idToKeys };
+  return { codexBatch, idToKeys, idToScope };
+}
+
+/** 语境段落。同一路径下的 id 合并成一行，避免逐条重复长路径。 */
+function scopeSection(idToScope: Record<string, string>): string {
+  const byScope = new Map<string, string[]>();
+  for (const [id, scope] of Object.entries(idToScope)) {
+    if (!byScope.has(scope)) byScope.set(scope, []);
+    byScope.get(scope)?.push(id);
+  }
+  if (byScope.size === 0) return '';
+  const lines = [...byScope.entries()].map(
+    ([scope, ids]) => `- ${scope}: ${ids.join(',')}`,
+  );
+  return (
+    '\n各条目在游戏源码里的所属类型（**只用来判断语境，绝不要翻译或写进译文**）。' +
+    'DM 类型路径能直接消歧：/datum/reagent 下的 Base 是「碱」，/area 下的是「基地」；' +
+    '路径后的 `#name` 是物品/显示名（**译成简短名词短语，绝不要译成一句话**），' +
+    '`#desc` 是描述（可以是整句），`#proc()` 是运行时发给玩家的消息：' +
+    `\n${lines.join('\n')}`
+  );
 }
 
 function mapTranslatedBatch(
@@ -1315,11 +1771,68 @@ function reusableTranslatedBatch(
   return { catalog, glossaryAdded, reused: true };
 }
 
+/**
+ * 术语强制回合数。术语表从前只是塞进提示词的**建议**，模型爱听不听 —— 于是同一个
+ * 试剂能在目录里攒出七种叫法。这里把它变成**保证**：每批翻完立刻自查，违规条目
+ * 单独重发（只发违规的那几条，便宜），最多 N 轮；仍不合规就留给 `terms` 报告和人工。
+ * 0 = 关闭（回到纯建议模式）。
+ */
+const TERM_ENFORCE_ROUNDS = Math.max(0, envInt('I18N_TERM_ROUNDS', 2));
+
+/** 本批里译文违反术语表的 key。 */
+function batchTermViolations(batch: Catalog, catalog: Catalog): string[] {
+  const bad: string[] = [];
+  for (const key of Object.keys(catalog)) {
+    const en = batch[key];
+    if (en == null) continue;
+    if (termMismatches(en, catalog[key], key).length > 0) bad.push(key);
+  }
+  return bad;
+}
+
+/**
+ * 就地修正 catalog 里违反术语表的条目。
+ *
+ * 只在**确实变好**时才采纳重翻结果（违规数下降）：重翻是整条重来，可能修好术语却
+ * 把句子别处翻坏。宁可留着旧的进 `terms` 报告等人工，也不要静默变差。
+ */
+async function enforceGlossary(
+  file: string,
+  idx: number | string,
+  batch: Catalog,
+  catalog: Catalog,
+): Promise<{ fixed: number; left: number }> {
+  let fixed = 0;
+  let left = 0;
+  for (let round = 1; round <= TERM_ENFORCE_ROUNDS; round++) {
+    const bad = batchTermViolations(batch, catalog);
+    left = bad.length;
+    if (left === 0) break;
+    const sub: Catalog = {};
+    for (const key of bad) sub[key] = batch[key];
+    // enforce=false：重试自身不再触发强制，避免无限递归。
+    const retry = await translateBatch(file, `${idx}f${round}`, sub, 'terms', false);
+    if (!retry) break;
+    for (const [key, value] of Object.entries(retry.catalog)) {
+      if (batch[key] == null) continue;
+      const before = termMismatches(batch[key], catalog[key], key).length;
+      const after = termMismatches(batch[key], value, key).length;
+      if (after < before) {
+        catalog[key] = value;
+        if (after === 0) fixed++;
+      }
+    }
+    left = batchTermViolations(batch, catalog).length;
+  }
+  return { fixed, left };
+}
+
 async function translateBatch(
   file: string,
-  idx: number,
+  idx: number | string,
   batch: Catalog,
   mode: WorkMode,
+  enforce = true,
 ): Promise<TranslatedBatch | null> {
   const inPath = path.join(
     PENDING_DIR,
@@ -1341,7 +1854,7 @@ async function translateBatch(
     PENDING_DIR,
     file.replace(/\.json$/, `.${idx}.codex.log`),
   );
-  const { codexBatch, idToKeys } = shortIdBatch(batch);
+  const { codexBatch, idToKeys, idToScope } = shortIdBatch(batch);
 
   const reusable = reusableTranslatedBatch(
     inPath,
@@ -1378,11 +1891,12 @@ async function translateBatch(
     `只包括品牌、阵营/组织、物种、舰船/站点/地图名、唯一装备/武器/药剂/材料、型号、缩写、必须保留英文的命令或程序名。` +
     `不要追加普通单词、多义词、颜色、大小、方向、形容词、泛称名词、可随语境翻译的词（例如 white/black/large/small/left/right/agent/vendor/crate 等）。` +
     `不确定是否固定，就不要加入术语表。本批没有合格新增术语就写 {}。` +
-    `以下术语表只列本批命中的术语；若需要完整术语表可用 I18N_FULL_GLOSSARY=1 运行。术语表：\n${glossaryHint(batch)}`;
+    `以下术语表只列本批命中的术语；若需要完整术语表可用 I18N_FULL_GLOSSARY=1 运行。术语表：\n${glossaryHint(batch)}` +
+    scopeSection(idToScope);
 
   const ok =
     BACKEND === 'openai'
-      ? await runOpenAI(codexBatch, mode, outPath, addPath, logPath)
+      ? await runOpenAI(codexBatch, mode, outPath, addPath, logPath, idToScope)
       : await runCodex(prompt, logPath, () =>
           Boolean(
             reusableCatalog(
@@ -1425,9 +1939,20 @@ async function translateBatch(
     );
     return null;
   }
+  // 术语强制：翻完立刻自查违规并定点重发（见 enforceGlossary）。
+  let termFixed = 0;
+  let termLeft = 0;
+  if (enforce && TERM_ENFORCE_ROUNDS > 0) {
+    const res = await enforceGlossary(file, idx, batch, catalog);
+    termFixed = res.fixed;
+    termLeft = res.left;
+  }
+
   return {
     catalog,
     glossaryAdded,
+    termFixed,
+    termLeft,
   };
 }
 
@@ -1512,6 +2037,14 @@ async function cmdTranslate(
     console.log(
       `${file}: ${mode === 'terms' ? '术语不一致' : '待译'} ${keys.length}，分 ${batches} 批（每批 ${CHUNK}，并发 ${CONCURRENCY}，后端 ${BACKEND_LABEL}）`,
     );
+    // **按 DM 类型路径排序后再切批**：同一类型的条目落进同一批，模型能看到成组的
+    // 上下文（"multiver bottle" 与 "A small bottle of multiver." 一起翻），
+    // 语境段落也能按路径合并、少占 token。次键用 key 保证切批稳定可复现。
+    keys.sort((a, b) => {
+      const sa = scopeHint(a) ?? '~';
+      const sb = scopeHint(b) ?? '~';
+      return sa === sb ? a.localeCompare(b) : sa.localeCompare(sb);
+    });
     // 预切批。
     const batchItems: { idx: number; batch: Catalog }[] = [];
     for (let start = 0, idx = 0; start < keys.length; start += CHUNK, idx++) {
@@ -1558,8 +2091,28 @@ async function cmdTranslate(
         // 同步合并落盘（read→apply→write 无 await，并发安全；断点续译：重跑会重算待译）。
         const merged = readCatalog(dstFile);
         let applied = 0;
+        let refused = 0;
         for (const key of Object.keys(translatedBatch.catalog)) {
           if (key in item.batch) {
+            // **绝不用更违规的译文覆盖更合规的**。
+            // 强制回环最多重试 N 轮，仍不合规的条目照样会被写回去 —— 而它覆盖的
+            // 旧译文可能本来是**对的**。实测：blanks.json 的「纳米传讯」被重翻成
+            // 「纳米特兰森」，两轮重试没救回来，于是一条合规译文被违规译文顶掉了。
+            // 术语违规数只许降不许升；持平才看新译文（那是正常的润色）。
+            const before = termMismatches(
+              item.batch[key],
+              merged[key],
+              key,
+            ).length;
+            const after = termMismatches(
+              item.batch[key],
+              translatedBatch.catalog[key],
+              key,
+            ).length;
+            if (merged[key] != null && after > before) {
+              refused++;
+              continue;
+            }
             merged[key] = translatedBatch.catalog[key];
             applied++;
             if (REUSE) globalReverse.set(item.batch[key], translatedBatch.catalog[key]);
@@ -1575,9 +2128,16 @@ async function cmdTranslate(
           file,
           batchNo,
           batches,
-          translatedBatch.reused
+          (translatedBatch.reused
             ? `批 ${batchNo}/${batches} 复用 .pending 输出，合并 ${applied}`
-            : `批 ${batchNo}/${batches} 合并 ${applied}`,
+            : `批 ${batchNo}/${batches} 合并 ${applied}`) +
+            (refused ? `，拒收更违规的 ${refused}` : '') +
+            (translatedBatch.termFixed
+              ? `，术语强制修正 ${translatedBatch.termFixed}`
+              : '') +
+            (translatedBatch.termLeft
+              ? `，仍违规 ${translatedBatch.termLeft}（留待 terms 报告）`
+              : ''),
         );
         if (translatedBatch.glossaryAdded) {
           console.log(
@@ -1596,6 +2156,13 @@ async function cmdTranslate(
       );
       return false;
     }
+  }
+  if (cachePromptTokens > 0) {
+    const pct = Math.round((100 * cacheHitTokens) / cachePromptTokens);
+    console.log(
+      `提示词缓存命中 ${cacheHitTokens}/${cachePromptTokens} tokens（${pct}%）。` +
+        `若为 0%，说明 system 静态前缀被写活了（随批内容混进了 system）。`,
+    );
   }
   console.log(`完成。请抽检后提交 strings/i18n/${LOCALE}。`);
   return true;

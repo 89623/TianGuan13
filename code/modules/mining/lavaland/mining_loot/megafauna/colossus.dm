@@ -32,11 +32,15 @@
 			if (feedback)
 				owner.balloon_alert(owner, LANG("datum.b9e9408a", null))
 			return FALSE
-	if(check_flags & AB_CHECK_CONSCIOUS)
-		if(owner.stat)
-			if (feedback)
+	if((check_flags & AB_CHECK_CONSCIOUS) && IS_UNCONSCIOUS_OR_CRIT(owner))
+		if (feedback)
+			if(owner.stat == DEAD)
+				owner.balloon_alert(owner, LANG("datum.1bf49ad4", null))
+			else if(IS_UNCONSCIOUS(owner))
 				owner.balloon_alert(owner, LANG("datum.dc8b5a42", null))
-			return FALSE
+			else
+				owner.balloon_alert(owner, LANG("datum.b49fe510", null))
+		return FALSE
 	return TRUE
 
 /datum/action/item_action/organ_action/colossus/do_effect(trigger_flags)
@@ -306,7 +310,7 @@
 		SSpoints_of_interest.make_point_of_interest(src)
 		ready_to_deploy = TRUE
 		notify_ghosts(
-			"An anomalous crystal has been activated in [get_area(src)]! This crystal can always be used by ghosts hereafter.",
+			LANG("obj.eefb7b76", list(get_area(src))),
 			source = src,
 			header = "Anomalous crystal activated",
 			click_interact = TRUE,

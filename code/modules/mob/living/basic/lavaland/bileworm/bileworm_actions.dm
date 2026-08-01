@@ -30,7 +30,7 @@
 		to_chat(burrower, span_warning(LANG("datum.3503e05c", null)))
 		if(burrower.ai_controller?.ai_status == AI_STATUS_ON)
 			//this is a valid reason to give up on a target
-			burrower.ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+			burrower.ai_controller.clear_blackboard_key(BB_CURRENT_TARGET)
 		return
 
 	if (istype(burrower, /mob/living/basic/mining/bileworm) && !force)
@@ -51,7 +51,7 @@
 		jump_damaged = FALSE
 		RegisterSignal(worm, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(on_attacked))
 		// Not in an if check direclty to reduce duplicate code
-		var/jump_result = do_after(worm, jump_length, worm, hidden = TRUE, extra_checks = CALLBACK(src, PROC_REF(damage_check)))
+		var/jump_result = do_after(worm, jump_length, worm, cog_icon = null, extra_checks = CALLBACK(src, PROC_REF(damage_check)))
 		UnregisterSignal(worm, COMSIG_ATOM_WAS_ATTACKED)
 		if (worm.icon_state == null)
 			worm.icon_state = old_icon_state
@@ -82,7 +82,7 @@
 #undef BILEWORM_JUMP_FRAMES
 
 /datum/action/cooldown/mob_cooldown/resurface/proc/burrow_again(mob/living/burrower, atom/target)
-	if (!QDELETED(burrower) && !burrower.stat)
+	if (!QDELETED(burrower) && !IS_UNCONSCIOUS_OR_CRIT(burrower))
 		// Burrow immediatelly after being stunned out of the first jump to avoid chainstuns
 		burrow(burrower, target, force = TRUE)
 
@@ -220,7 +220,7 @@
 
 		hit_something = TRUE
 		victim.apply_damage(damage, BURN, null, blocked, wound_bonus = CANT_WOUND)
-		to_chat(victim, span_userdanger("You're hit by [src]!"))
+		to_chat(victim, span_userdanger(LANG("obj.33f28339", list(src))))
 
 	for (var/obj/thing in target)
 		if (!thing.uses_integrity || !thing.density)
@@ -276,7 +276,7 @@
 		to_chat(owner, span_warning(LANG("datum.6fb636e1", null)))
 		return
 	var/mob/living/living_target = target_atom
-	if(living_target.stat < UNCONSCIOUS)
+	if(!IS_UNCONSCIOUS(living_target))
 		to_chat(owner, span_warning(LANG("datum.c04e4681", null)))
 		return
 	burrow_and_devour(owner, living_target)

@@ -51,6 +51,7 @@ GLOBAL_LIST_INIT(blacklisted_malf_machines, typecacheof(list(
 		/obj/machinery/computer/shuttle,
 		/obj/machinery/computer/emergency_shuttle,
 		/obj/machinery/computer/gateway_control,
+		/obj/machinery/ai_law_rack,
 	)))
 
 GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
@@ -219,7 +220,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		if(QDELETED(owner) || !isturf(owner_AI.loc))
 			active = FALSE
 			return
-		to_chat(owner, span_bolddanger("Sending security report to Central Command.....[rand(0, 9) + (rand(20, 30) * i)]%"))
+		to_chat(owner, span_bolddanger(LANG("datum.48fd6dca", list(rand(0, 9) + (rand(20, 30) * i)))))
 	sleep(0.3 SECONDS)
 	if(QDELETED(owner) || !isturf(owner_AI.loc))
 		active = FALSE
@@ -286,7 +287,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 			P.switch_mode_to(TRACK_MALF_AI) //Pinpointers start tracking the AI wherever it goes
 
 		notify_ghosts(
-			"[owner_AI] has activated a Doomsday Device!",
+			LANG("datum.965f3df2", list(owner_AI)),
 			source = owner_AI,
 			header = "DOOOOOOM!!!",
 		)
@@ -649,7 +650,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 		if(is_type_in_typecache(intercom_area, protected_areas))
 			continue
 		// NOVA EDIT ADDITION END
-		found_intercom.audible_message(message = "[found_intercom] crackles for a split second.", hearing_distance = 3)
+		found_intercom.audible_message(message = LANG("datum.87b04b87", list(found_intercom)), hearing_distance = 3)
 		playsound(found_intercom, 'sound/items/airhorn/airhorn.ogg', 100, TRUE)
 		for(var/mob/living/honk_victim in ohearers(6, found_intercom))
 			if(issilicon(honk_victim))
@@ -659,7 +660,7 @@ GLOBAL_LIST_INIT(malf_modules, subtypesof(/datum/ai_module/malf))
 				continue
 			if(honk_victim.soundbang_act(SOUNDBANG_NORMAL, stun_pwr = 20, damage_pwr = 30, deafen_pwr = 60)) //Ear protection will prevent these effects
 				honk_victim.set_jitter_if_lower(120 SECONDS)
-				to_chat(honk_victim, span_clown("HOOOOONK!"))
+				to_chat(honk_victim, span_clown(LANG("datum.ebb68c3e", null)))
 
 /// Robotic Factory: Places a large machine that converts humans that go through it into cyborgs. Unlocking this ability removes shunting.
 /datum/ai_module/malf/utility/place_cyborg_transformer

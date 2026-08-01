@@ -41,7 +41,7 @@
 		..(target)
 
 /obj/machinery/abductor/experiment/relaymove(mob/living/user, direction)
-	if(user.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(user))
 		return
 	if(message_cooldown <= world.time)
 		message_cooldown = world.time + 50
@@ -54,7 +54,7 @@
 		span_notice(LANG("obj.43ad33b1", list(src, DisplayTimeText(breakout_time)))), \
 		span_hear(LANG("obj.a1d9c573", list(src))))
 	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open)
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src || state_open)
 			return
 		user.visible_message(span_warning(LANG("obj.37696909", list(user, src))), \
 			span_notice(LANG("obj.81c31f6b", list(src))))

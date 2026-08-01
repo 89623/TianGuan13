@@ -239,7 +239,7 @@
 
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
-		if(!carbon_victim.appears_alive())
+		if(IS_DEAD_OR_FAKING(carbon_victim))
 			victim.balloon_alert(aggressor, LANG("datum.adef2bb1", null))
 			return FALSE
 

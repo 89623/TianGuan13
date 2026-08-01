@@ -178,7 +178,7 @@
 		to_chat(src, span_warning(LANG("mob.facf268a", null)))
 		return guardian_rename()
 	to_chat(src, span_notice(LANG("mob.6903f312", list(span_name(new_name)))))
-	fully_replace_character_name(null, new_name)
+	fully_replace_character_name(null, new_name, log_new_name = TRUE)
 
 /// Picks a random name as a suggestion
 /mob/living/basic/guardian/proc/generate_random_name()
@@ -312,7 +312,7 @@
 		return
 	to_chat(summoner, span_bolddanger(LANG("mob.1abc4198", list(name))))
 	summoner.visible_message(span_bolddanger(LANG("mob.141a7ced", list(summoner, src))))
-	if(summoner.stat == UNCONSCIOUS || summoner.stat == HARD_CRIT)
+	if(summoner.stat >= HARD_CRIT)
 		to_chat(summoner, span_bolddanger(LANG("mob.6b5369cb", list(src))))
 		summoner.adjust_organ_loss(ORGAN_SLOT_BRAIN, amount * 0.5)
 

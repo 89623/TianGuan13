@@ -128,35 +128,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			return ITEM_INTERACT_SUCCESS
 		return ITEM_INTERACT_BLOCKING
 
-	if(istype(tool, /obj/item/ai_module))
-		if(!opened)
-			balloon_alert(user, LANG("mob.da8259d5", null))
-			return ITEM_INTERACT_BLOCKING
-		if(wiresexposed)
-			balloon_alert(user, LANG("mob.68266e0f", null))
-			return ITEM_INTERACT_BLOCKING
-		if(!cell)
-			balloon_alert(user, LANG("mob.bbde9749", null))
-			return ITEM_INTERACT_BLOCKING
-		if(shell)
-			balloon_alert(user, LANG("mob.16406026", null))
-			return ITEM_INTERACT_BLOCKING
-		if(connected_ai && lawupdate)
-			balloon_alert(user, LANG("mob.46923f97", null))
-			return ITEM_INTERACT_BLOCKING
-		if(emagged)
-			balloon_alert(user, LANG("mob.1ca0259f", null))
-			emote("buzz")
-			return ITEM_INTERACT_BLOCKING
-		if(!mind)
-			balloon_alert(user, LANG("mob.5ba07cc2", null))
-			return ITEM_INTERACT_BLOCKING
-
-		balloon_alert(user, LANG("mob.b0da5792", null))
-		var/obj/item/ai_module/new_laws = tool
-		new_laws.install(laws, user)
-		return ITEM_INTERACT_SUCCESS
-
 	if(istype(tool, /obj/item/encryptionkey) && opened)
 		if(radio)
 			return radio.item_interaction(user, tool)
@@ -326,7 +297,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 /mob/living/silicon/robot/get_shove_flags(mob/living/shover, obj/item/weapon)
 	. = ..()
-	if(isnull(weapon) || stat != CONSCIOUS)
+	if(isnull(weapon) || IS_UNCONSCIOUS_OR_CRIT(src))
 		. &= ~(SHOVE_CAN_MOVE|SHOVE_CAN_HIT_SOMETHING)
 
 /mob/living/silicon/robot/welder_act(mob/living/user, obj/item/tool)
@@ -417,18 +388,10 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	if(. & EMP_PROTECT_SELF)
 		return
 	switch(severity)
-		if(1)
-			emp_knockout(16 SECONDS)
-		if(2)
-			emp_knockout(6 SECONDS)
-
-/mob/living/silicon/robot/proc/emp_knockout(deciseconds)
-	set_stat(UNCONSCIOUS)
-	addtimer(CALLBACK(src, PROC_REF(wake_from_emp)), deciseconds, TIMER_UNIQUE | TIMER_OVERRIDE | TIMER_DELETE_ME)
-
-/mob/living/silicon/robot/proc/wake_from_emp()
-	set_stat(CONSCIOUS)
-	update_stat()
+		if(EMP_HEAVY)
+			Unconscious(16 SECONDS)
+		if(EMP_LIGHT)
+			Unconscious(6 SECONDS)
 
 /mob/living/silicon/robot/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(user == src)//To prevent syndieborgs from emagging themselves
@@ -473,11 +436,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	set_connected_ai(null)
 	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")
 	log_silicon("EMAG: [key_name(user)] emagged cyborg [key_name(src)]. Laws overridden.")
-	var/time = time2text(world.realtime,"hh:mm:ss", TIMEZONE_UTC)
-	if(user)
-		GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")
-	else
-		GLOB.lawchanges.Add("[time] <B>:</B> [name]([key]) emagged by external event.")
+	log_law_change(user, "emagged [key_name(src)]")
 
 	model.rebuild_modules()
 
@@ -503,11 +462,11 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	to_chat(src, span_danger(LANG("mob.7a90b55c", null)))
 	sleep(2 SECONDS)
 	to_chat(src, span_danger(LANG("mob.0d934bcb", null)))
-	laws = new /datum/ai_laws/syndicate_override
+	replace_law_set(/datum/ai_laws/syndicate_override)
 	if(user)
 		to_chat(src, span_danger(LANG("mob.b32b93ce", list(user.real_name, user.p_their()))))
-		set_zeroth_law("Only [user.real_name] and people [user.p_they()] designate[user.p_s()] as being such are Syndicate Agents.")
-	laws.associate(src)
+		laws.set_zeroth_law("Only [user.real_name] and people [user.p_they()] designate[user.p_s()] as being such are Syndicate Agents.", force = TRUE)
+		laws.protected_zeroth = TRUE
 	update_icons()
 
 /mob/living/silicon/robot/blob_act(obj/structure/blob/B)

@@ -84,6 +84,9 @@
 	else
 		new /obj/item/stack/sheet/bone(src)
 
+/turf/open/misc/asteroid/basalt/wasteland/station
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+
 //***Oil well puddles.
 /obj/structure/sink/oil_well //You're not going to enjoy bathing in this...
 	name = "oil well"
@@ -260,8 +263,8 @@
 
 	//player is attempting to open/close the grave with a shovel
 	user.visible_message(
-			span_notice("[user] Is attempting to [opened ? "close" : "dig open"] [src]."),
-			span_notice("You start [opened ? "closing" : "digging open"] [src]."),
+			span_notice(LANG("obj.e5f15a33", list(user, opened ? "close" : "dig open", src))),
+			span_notice(LANG("obj.0f8e8d4a", list(opened ? "closing" : "digging open", src))),
 	)
 	if(!tool.use_tool(src, user, delay = 1.5 SECONDS, volume = 40))
 		return ITEM_INTERACT_BLOCKING

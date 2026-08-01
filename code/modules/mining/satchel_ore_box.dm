@@ -57,16 +57,17 @@
 		deconstruct(TRUE)
 		return ITEM_INTERACT_SUCCESS
 
-/obj/structure/ore_box/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/stack/ore) || istype(weapon, /obj/item/boulder))
-		user.transferItemToLoc(weapon, src)
-		return TRUE
-	else if(weapon.atom_storage)
-		weapon.atom_storage.remove_type(/obj/item/stack/ore, src, INFINITY, TRUE, FALSE, user, null)
-		to_chat(user, span_notice(LANG("obj.e933838f", list(weapon, src))))
-		return TRUE
-	else
-		return ..()
+/obj/structure/ore_box/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stack/ore) || istype(tool, /obj/item/boulder))
+		user.transferItemToLoc(tool, src)
+		return ITEM_INTERACT_SUCCESS
+
+	if(tool.atom_storage)
+		tool.atom_storage.remove_type(/obj/item/stack/ore, src, INFINITY, TRUE, FALSE, user, null)
+		to_chat(user, span_notice(LANG("obj.e933838f", list(tool, src))))
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/ore_box/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()

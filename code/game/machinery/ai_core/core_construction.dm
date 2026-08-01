@@ -17,14 +17,22 @@
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
+/obj/structure/ai_core/can_be_unfasten_wrench(mob/user, silent)
 	if(state >= CORE_STATE_FINISHED)
-		set_anchored(TRUE) //teehee
-		balloon_alert(user, LANG("obj.9f0e2315", null))
-		return ITEM_INTERACT_BLOCKING
+		if(!silent)
+			balloon_alert(user, LANG("obj.3cf01833", null))
+		return FAILED_UNFASTEN
 
-	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	return ..()
+
+/obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
+	switch(default_unfasten_wrench(user, tool))
+		if(FAILED_UNFASTEN)
+			return ITEM_INTERACT_BLOCKING
+		if(SUCCESSFUL_UNFASTEN)
+			return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
 	switch(state)
@@ -156,8 +164,6 @@
 
 	if(istype(tool, /obj/item/mmi))
 		return install_mmi(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-	if(istype(tool, /obj/item/ai_module))
-		return update_laws(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 	if(istype(tool, /obj/item/stack/sheet/rglass))
 		return install_glass(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
@@ -216,20 +222,6 @@
 
 	core_mmi = mmi
 	UPDATE_STATE(CORE_STATE_CABLED)
-	return TRUE
-
-/obj/structure/ai_core/proc/update_laws(mob/living/user, obj/item/ai_module/module)
-	if(!core_mmi)
-		balloon_alert(user, LANG("obj.757789a5", null))
-		return FALSE
-	if(!core_mmi.brainmob || !core_mmi.brainmob?.mind || suicide_check())
-		balloon_alert(user, LANG("obj.f88122b5", list(AI_CORE_BRAIN(core_mmi))))
-		return FALSE
-	if(core_mmi.laws.id != DEFAULT_AI_LAWID)
-		balloon_alert(user, LANG("obj.d00033f5", list(AI_CORE_BRAIN(core_mmi))))
-		return FALSE
-
-	module.install(laws, user)
 	return TRUE
 
 /obj/structure/ai_core/proc/install_glass(mob/living/user, obj/item/stack/sheet/rglass/glass)

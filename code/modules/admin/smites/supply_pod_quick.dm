@@ -14,7 +14,7 @@
 		user,
 		LANG("datum.325b0384", null),
 		LANG("datum.1a01b0f5", null),
-		"/obj/item/food/grown/harebell",
+		"/obj/item/food/grown/flower/harebell",
 	) as null|text
 
 	if (isnull(attempted_target_path)) //The user pressed "Cancel"

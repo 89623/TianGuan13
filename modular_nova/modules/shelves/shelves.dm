@@ -45,7 +45,7 @@
 		. += span_notice(LANG("obj.602498c3", list(src)))
 		. += span_notice(LANG("obj.1c59f63b", list(src)))
 		for(var/obj/structure/closet/crate/crate in contents)
-			. += span_notice("[icon2html(crate, user)] \A [crate]")
+			. += span_notice(LANG("obj.d58b175e", list(icon2html(crate, user), crate)))
 
 /obj/structure/cargo_shelf/wrench_act_secondary(mob/living/user, obj/item/tool)
 	tool.play_tool_sound(src)
@@ -55,7 +55,7 @@
 /obj/structure/cargo_shelf/relay_container_resist_act(mob/living/user, obj/structure/closet/crate)
 	to_chat(user, span_notice(LANG("obj.131cb2d0", list(crate, src))))
 	if(do_after(user, 30 SECONDS, target = crate))
-		if(!user || user.stat != CONSCIOUS || user.loc != crate || crate.loc != src)
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != crate || crate.loc != src)
 			return // If the user is in a strange condition, return early.
 		visible_message(span_warning(LANG("obj.73a87d59", list(crate, src))),
 			span_notice(LANG("obj.5415abf5", list(crate, src))),
@@ -140,7 +140,7 @@
 			if(crate.welded || crate.locked)
 				continue
 			crate.open(force = TRUE) // Break some open, cause a little chaos.
-			crate.visible_message(span_warning("[crate]'s lid falls open!"))
+			crate.visible_message(span_warning(LANG("obj.5a918971", list(crate))))
 
 // Returns a valid open turf to scatter crates
 /obj/structure/cargo_shelf/proc/get_spill_location(radius = 2)
@@ -258,7 +258,7 @@
 		return
 	building = TRUE
 	to_chat(user, span_notice(LANG("obj.11bacef4", list(src))))
-	if(do_after(user, 5 SECONDS, target = user, progress=TRUE))
+	if(do_after(user, 5 SECONDS, target = user, show_progress = TRUE))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			building = FALSE
 			return

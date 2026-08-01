@@ -429,7 +429,7 @@
 			if(!attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_HEAD_INJURY_BLOCKED) && attacking_item.damtype == BRUTE)
 				if(prob(damage_done))
 					adjust_organ_loss(ORGAN_SLOT_BRAIN, 20)
-					if(stat == CONSCIOUS)
+					if(!IS_UNCONSCIOUS_OR_CRIT(src))
 						visible_message(
 							span_danger(LANG("mob.33da1965", list(src))),
 							span_userdanger(LANG("mob.ac602fc8", null)),
@@ -443,7 +443,7 @@
 
 				// rev deconversion through blunt trauma.
 				// this can be signalized to the rev datum
-				if(mind && stat == CONSCIOUS && src != attacker && prob(damage_done + ((maxHealth - health) * 0.5))) // NOVA EDIT CHANGE - ORIGINAL : if(mind && stat == CONSCIOUS && src != attacker && prob(damage_done + ((100 - health) * 0.5)))
+				if(mind && !IS_UNCONSCIOUS_OR_CRIT(src) && src != attacker && prob(damage_done + ((maxHealth - health) * 0.5))) // NOVA EDIT CHANGE - hardcoded 100 instead of maxHealth
 					var/datum/antagonist/rev/rev = mind.has_antag_datum(/datum/antagonist/rev)
 					rev?.remove_revolutionary(attacker)
 
@@ -451,7 +451,7 @@
 			if(.)
 				add_blood_DNA_to_items(get_blood_dna_list(), ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
 
-			if(stat == CONSCIOUS && !attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) && attacking_item.damtype == BRUTE)
+			if(!IS_UNCONSCIOUS_OR_CRIT(src) && !attacking_item.get_sharpness() && !HAS_TRAIT(src, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED) && attacking_item.damtype == BRUTE)
 				if(prob(damage_done))
 					visible_message(
 						span_danger(LANG("mob.4d0a47f7", list(src))),

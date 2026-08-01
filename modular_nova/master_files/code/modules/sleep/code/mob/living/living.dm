@@ -1,7 +1,5 @@
 ///Replaces proc definition in [code\modules\mob\living\living.dm]
-/mob/living/proc/mob_sleep()
-	set name = "睡眠"
-	set category = "IC"
+GAME_VERB_PROC(/mob/living, mob_sleep, "睡眠", "IC")
 
 	if(IsSleeping())
 		to_chat(src, span_warning(LANG("mob.bd5702d4", null)))

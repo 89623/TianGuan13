@@ -151,7 +151,7 @@
 	if(trigger_reason == DIVINE_INTERVENTION)
 		investigate_log("Delam SCRAM was activated by admin intervention", INVESTIGATE_ATMOS)
 		notify_ghosts(
-			"[src] has been activated!",
+			LANG("obj.78bac1c4", list(src)),
 			source = src,
 			header = "Divine Intervention",
 			ghost_sound = 'sound/machines/warning-buzzer.ogg',
@@ -168,7 +168,7 @@
 		investigate_log("Delam SCRAM was activated by [reason]", INVESTIGATE_ATMOS)
 		// They're probably already deadchat engineering discussing what you did wrong
 		notify_ghosts(
-			"[src] has been activated!",
+			LANG("obj.78bac1c4", list(src)),
 			source = src,
 			header = "Mistakes Were Made",
 			ghost_sound = 'sound/machines/warning-buzzer.ogg',
@@ -230,7 +230,7 @@
 
 	// good job buddy, sacrificing yourself for the greater good
 	playsound(src, 'sound/machines/compiler/compiler-failure.ogg', 100, FALSE, MACHINE_SOUND_RANGE, ignore_walls = TRUE, use_reverb = TRUE, falloff_distance = MACHINE_SOUND_FALLOFF_DISTANCE)
-	visible_message(span_danger(LANG("obj.57e2ff49", list(src))), blind_message = span_danger("[src] beeps a sorrowful melody!"))
+	visible_message(span_danger(LANG("obj.57e2ff49", list(src))), blind_message = span_danger(LANG("obj.916500b8", list(src))))
 	deconstruct(FALSE)
 
 /// Drain the internal energy, if the crystal damage is above 100 we heal it a bit. Not much, but should be good to let them recover.

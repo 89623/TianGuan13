@@ -39,7 +39,7 @@
 	var/target_Theyre = target.p_Theyre()
 	var/target_They_have = "[target.p_They()] [target.p_have()]"
 
-	if(target.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(target))
 		to_chat(src, span_revennotice(LANG("mob.06f14de0", list(target_Their))))
 		if(prob(10))
 			to_chat(target, span_revennotice(LANG("mob.8e99b5a2", null)))
@@ -87,7 +87,7 @@
 		to_chat(src, span_revenwarning(LANG("mob.bcf6fa71", list(target ? "[target]'s" : "[target_their]"))))
 		return FALSE
 
-	if(target.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(target))
 		to_chat(src, span_revenwarning(LANG("mob.19eab391", list(target_Theyre))))
 		to_chat(target, span_bolddanger(LANG("mob.a7981ec3", null))) //hey, wait a minute...
 		return FALSE
@@ -96,7 +96,7 @@
 	if(target.stat != DEAD)
 		to_chat(target, span_warning(LANG("mob.9bf26099", null)))
 	if(target.stat == SOFT_CRIT)
-		target.Stun(46)
+		target.Stun(4.6 SECONDS)
 
 	apply_status_effect(/datum/status_effect/revenant/revealed, 5 SECONDS)
 	apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 5 SECONDS)

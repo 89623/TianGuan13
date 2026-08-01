@@ -220,7 +220,8 @@
 		if(HAS_TRAIT(user, TRAIT_STICKY_FINGERS)) // Clowns with thieving gloves will be a menace
 			mod_time *= 0.5
 		// NOVA EDIT ADDITION END
-		if(do_after(user, mod_time, target = our_guy, extra_checks = CALLBACK(src, PROC_REF(still_shoed), our_guy), hidden = TRUE))
+
+		if(do_after(user, mod_time, target = our_guy, extra_checks = CALLBACK(src, PROC_REF(still_shoed), our_guy), cog_icon = null))
 			to_chat(user, span_notice(LANG("obj.edb8a458", list(tied ? "un[fasten_verb()]" : "knot", fastening_type, loc, src.name))))
 			if(tied == SHOES_UNTIED)
 				adjust_laces(SHOES_KNOTTED, user)

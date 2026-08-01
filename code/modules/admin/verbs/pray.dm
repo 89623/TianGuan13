@@ -1,7 +1,5 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-/mob/verb/pray(message as text)
-	set name = VERB_PRAY
-
+GAME_VERB(/mob, pray, VERB_PRAY, null, message as text)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(src, span_danger(LANG("mob.b79ad8a3", null)), confidential = TRUE)
 		return

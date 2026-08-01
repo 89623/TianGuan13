@@ -92,7 +92,7 @@
 		return
 
 	var/mob/living/carbon/current_avatar = avatar_ref?.resolve()
-	if(isnull(current_avatar) || current_avatar.stat != CONSCIOUS) // We need a viable avatar
+	if(isnull(current_avatar) || IS_UNCONSCIOUS_OR_CRIT(current_avatar)) // We need a viable avatar
 		current_avatar = server.start_new_connection(neo, netsuit)
 		if(isnull(current_avatar))
 			balloon_alert(neo, LANG("obj.82ebf72d", null))
@@ -151,7 +151,7 @@
 		return FALSE
 
 	// Invalid
-	if(occupant != neo || isnull(neo.mind) || neo.stat > SOFT_CRIT || avatar.stat == DEAD)
+	if(occupant != neo || isnull(neo.mind) || IS_UNCONSCIOUS(neo) || avatar.stat == DEAD)
 		return FALSE
 
 	return TRUE

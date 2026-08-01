@@ -1,7 +1,4 @@
-/mob/living/carbon/verb/army_crawl()
-	set name = "匍匐前进"
-	set category = "IC"
-
+GAME_VERB(/mob/living/carbon, army_crawl, "匍匐前进", "IC")
 	var/mob/living/carbon/crawler = src
 
 	if(HAS_TRAIT(crawler, TRAIT_PRONE))

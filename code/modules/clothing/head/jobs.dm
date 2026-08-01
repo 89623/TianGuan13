@@ -306,7 +306,7 @@
 	for(var/found_regex in phrases_by_regex)
 		var/found_phrase = phrases_by_regex[found_regex]
 		var/obj/item/found_item = items_by_regex[found_regex]
-		. += span_notice("[icon2html(found_item, user)] You can remove [found_item] by saying <b>\"[prefix] [found_phrase]\"</b>!")
+		. += span_notice(LANG("obj.9644e18e", list(icon2html(found_item, user), found_item, prefix, found_phrase)))
 
 /obj/item/clothing/head/fedora/inspector_hat/Hear(atom/movable/speaker, message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), message_range)
 	. = ..()
@@ -321,36 +321,39 @@
 			continue
 		var/obj/item/found_item = items_by_regex[found_regex]
 		if(wearer.put_in_hands(found_item))
-			wearer.visible_message(span_warning("[src] drops [found_item] into the hands of [wearer]!"))
+			wearer.visible_message(span_warning(LANG("obj.3ee51243", list(src, found_item, wearer))))
 			. = HEAR_HEARD | HEAR_UNDERSTOOD
 		else
-			balloon_alert(wearer, "can't put in hands!")
+			balloon_alert(wearer, LANG("obj.5e23cba6", null))
 			break
 
 	return .
 
-/obj/item/clothing/head/fedora/inspector_hat/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/clothing/head/fedora/inspector_hat/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
+	if(ITEM_INTERACT_ANY_BLOCKER & .)
+		return .
 
 	if(LAZYLEN(contents) >= max_items)
 		balloon_alert(user, LANG("obj.8abfbb3d", null))
-		return
-	if(item.w_class > max_weight)
+		return ITEM_INTERACT_BLOCKING
+
+	if(tool.w_class > max_weight)
 		balloon_alert(user, LANG("obj.a5e64cbb", null))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	var/desired_phrase = tgui_input_text(user, LANG("obj.411d96e2", null), LANG("obj.40c2df28", null), "gadget", max_length = 26)
 	if(!desired_phrase || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(item.loc != user || !user.transferItemToLoc(item, src))
-		return
+	if(tool.loc != user || !user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice(LANG("obj.19130491", list(item, thtotext(contents.len), src))))
+	to_chat(user, span_notice(LANG("obj.19130491", list(tool, thtotext(contents.len), src))))
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-	set_phrase(desired_phrase,item)
+	set_phrase(desired_phrase, tool)
 
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/head/fedora/inspector_hat/attack_self(mob/user)
 	. = ..()

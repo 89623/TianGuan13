@@ -117,7 +117,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 				clockwork_say(potential_invoker, text2ratvar(invocation_text[text_point]), TRUE)
 				break
 
-			if(potential_invoker.stat)
+			if(IS_UNCONSCIOUS_OR_CRIT(potential_invoker))
 				continue
 
 			if(IS_CLOCK(potential_invoker))
@@ -145,7 +145,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 	var/invokers = 0
 	for(var/mob/living/potential_invoker in viewers(invoker))
-		if(potential_invoker.stat)
+		if(IS_UNCONSCIOUS_OR_CRIT(potential_invoker))
 			continue
 
 		if(IS_CLOCK(potential_invoker))
@@ -220,7 +220,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		if(istype(clockwork_struct, /obj/structure/destructible/clockwork/trap))
 			continue
 
-		invoker.balloon_alert(invoker, "structure already on tile!")
+		invoker.balloon_alert(invoker, LANG("datum.a559c1ea", null))
 		return FALSE
 
 	return TRUE

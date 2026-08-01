@@ -233,13 +233,10 @@
 		update_appearance()
 		if(!silent)
 			if(IS_CULTIST(user))
-				to_chat(captured_shade, span_bold("You have been released from your prison, \
-					but you are still bound to the cult's will. Help them succeed in their goals at all costs."))
+				to_chat(captured_shade, span_bold(LANG("obj.82f5e413", null)))
 
 			else if(role_check(user))
-				to_chat(captured_shade, span_bold("You have been released from your prison, \
-					but you are still bound to [user.real_name]'s will. Help [user.p_them()] succeed in \
-					[user.p_their()] goals at all costs."))
+				to_chat(captured_shade, span_bold(LANG("obj.c2f20c02", list(user.real_name, user.p_them(), user.p_their()))))
 		var/datum/antagonist/cult/shade/shade_datum = captured_shade.mind?.has_antag_datum(/datum/antagonist/cult/shade)
 		if(shade_datum)
 			shade_datum.release_time = world.time
@@ -293,21 +290,22 @@
 	if(IS_CULTIST(user) || HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) || user.stat == DEAD)
 		. += extra_desc
 
-/obj/structure/constructshell/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(O, /obj/item/soulstone))
-		var/obj/item/soulstone/SS = O
-		if(!IS_CULTIST(user) && !HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) && !SS.theme == THEME_HOLY)
-			to_chat(user, span_danger(LANG("obj.fd1e6ae4", list(SS))))
-			if(isliving(user))
-				var/mob/living/living_user = user
-				living_user.set_dizzy_if_lower(1 MINUTES)
-			return
-		if(SS.theme == THEME_HOLY && IS_CULTIST(user))
-			SS.hot_potato(user)
-			return
-		SS.transfer_to_construct(src, user)
-	else
-		return ..()
+/obj/structure/constructshell/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/soulstone))
+		return NONE
+
+	var/obj/item/soulstone/whispering_gem = tool
+	if(!IS_CULTIST(user) && !HAS_MIND_TRAIT(user, TRAIT_MAGICALLY_GIFTED) && whispering_gem.theme != THEME_HOLY)
+		to_chat(user, span_danger(LANG("obj.fd1e6ae4", list(whispering_gem))))
+		user.set_dizzy_if_lower(1 MINUTES)
+		return ITEM_INTERACT_BLOCKING
+
+	if(whispering_gem.theme == THEME_HOLY && IS_CULTIST(user))
+		whispering_gem.hot_potato(user)
+		return ITEM_INTERACT_BLOCKING
+
+	whispering_gem.transfer_to_construct(src, user)
+	return ITEM_INTERACT_SUCCESS
 
 /// Procs for moving soul in and out off stone
 
@@ -327,7 +325,7 @@
 				to_chat(user, span_cult(LANG("obj.59d7e41b", null)))
 				return FALSE
 
-		if(grab_sleeping ? victim.stat == CONSCIOUS : victim.stat != DEAD)
+		if(grab_sleeping ? !IS_UNCONSCIOUS_OR_CRIT(victim) : victim.stat != DEAD)
 			to_chat(user, span_userdanger(LANG("obj.9f9feb89", null)))
 			to_chat(user, span_danger(LANG("obj.b1307036", null)))
 			return FALSE

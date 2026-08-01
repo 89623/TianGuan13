@@ -249,7 +249,7 @@
 				return
 
 			to_chat(user, span_notice(LANG("obj.5807fb0d", list(target_machine))))
-			while(do_after(user, 1.5 SECONDS, target = target_machine, progress = FALSE))
+			while(do_after(user, 1.5 SECONDS, target = target_machine, show_progress = FALSE))
 				if(!user || !user.cell || mode != "draw")
 					return
 
@@ -280,7 +280,7 @@
 
 			to_chat(user, span_notice(LANG("obj.72b279e1", list(target))))
 
-			while(do_after(user, 1.5 SECONDS, target = target, progress = FALSE))
+			while(do_after(user, 1.5 SECONDS, target = target, show_progress = FALSE))
 				if(!user || !user.cell || mode != "draw")
 					return
 
@@ -318,7 +318,7 @@
 
 		to_chat(user, span_notice(LANG("obj.72b279e1", list(target))))
 
-		while(do_after(user, 1.5 SECONDS, target = target, progress = FALSE))
+		while(do_after(user, 1.5 SECONDS, target = target, show_progress = FALSE))
 			if(!user || !user.cell || mode != "charge")
 				return
 

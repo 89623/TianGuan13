@@ -121,42 +121,42 @@
 		return
 	. = ..()
 
-/obj/item/assembly/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(isassembly(attacking_item))
-		var/obj/item/assembly/new_assembly = attacking_item
+/obj/item/assembly/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(isassembly(tool))
+		var/obj/item/assembly/new_assembly = tool
 		// Check both our's and their's assembly flags to see if either should not duplicate
 		// If so, and we match types, don't create a holder - block it
 		if(((new_assembly.assembly_flags|assembly_flags) & ASSEMBLY_NO_DUPLICATES) && istype(new_assembly, type))
 			balloon_alert(user, LANG("obj.f8e0657c", list(new_assembly.name)))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		if(new_assembly.secured)
 			balloon_alert(user, LANG("obj.3f73649f", list(new_assembly.name)))
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		if(secured)
 			balloon_alert(user, LANG("obj.3f73649f", list(name)))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		holder = new /obj/item/assembly_holder(drop_location())
 		holder.assemble(src, new_assembly, user)
 		holder.balloon_alert(user, LANG("obj.4a0ae622", null))
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/assembly_holder))
-		var/obj/item/assembly_holder/added_to_holder = attacking_item
+	if(istype(tool, /obj/item/assembly_holder))
+		var/obj/item/assembly_holder/added_to_holder = tool
 		added_to_holder.try_add_assembly(src, user)
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	return ..()
+	return NONE
 
-/obj/item/assembly/screwdriver_act(mob/living/user, obj/item/I)
-	if(..())
-		return TRUE
+/obj/item/assembly/screwdriver_act(mob/living/user, obj/item/tool)
 	if(toggle_secure())
 		to_chat(user, span_notice(LANG("obj.61750689", list(src))))
 	else
 		to_chat(user, span_notice(LANG("obj.910adc2c", list(src))))
 	add_fingerprint(user)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/assembly/examine(mob/user)
 	. = ..()

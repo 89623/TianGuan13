@@ -131,7 +131,7 @@
 		if(!is_type_in_list(thingy, list(/obj/item/bodypart, /obj/item/fishing_rod)) && (thingy != used_rod))
 			continue
 		thingy.forceMove(location)
-		location.visible_message(span_danger("Tendrils lash out from [location] and greedily drag [thingy] inwards. You're probably never seeing [thingy] again."))
+		location.visible_message(span_danger(LANG("datum.22993fa1", list(location, thingy, thingy))))
 
 /datum/fish_source/dimensional_rift/proc/arm_fished(atom/spawn_location)
 	var/obj/item/bodypart/arm/random_arm = pick(subtypesof(/obj/item/bodypart/arm))
@@ -159,7 +159,7 @@
 		var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 		if(heretic_datum)
 			heretic_datum.adjust_knowledge_points(1)
-			to_chat(user, "[span_hear("You hear a whisper...")] [span_hypnophrase("THE HIGHER I RISE, THE MORE I FISH.")]")
+			to_chat(user, "[span_hear("You hear a whisper...")] [span_mansus("THE HIGHER I RISE, THE MORE I FISH.")]")
 			// They can also gain an extra influence point if they infused their rod.
 			if(HAS_TRAIT(challenge.used_rod, TRAIT_ROD_MANSUS_INFUSED))
 				heretic_datum.adjust_knowledge_points(1)

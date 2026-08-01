@@ -1,15 +1,16 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /* CONTAINS:
- * /obj/item/ai_module/core/freeformcore
- * /obj/item/ai_module/supplied/freeform
+ * /obj/item/ai_module/law/core/freeformcore
+ * /obj/item/ai_module/law/supplied/freeform
 **/
 
-/obj/item/ai_module/core/freeformcore
+/obj/item/ai_module/law/core/freeformcore
 	name = "'Freeform' Core AI Module"
 	laws = list("")
 	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
-/obj/item/ai_module/core/freeformcore/attack_self(mob/user)
+/obj/item/ai_module/law/core/freeformcore/configure(mob/user)
+	. = TRUE
 	var/targName = tgui_input_text(user, LANG("obj.c38e88d5", null), LANG("obj.f2d27273", null), laws[1], max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
 	if(!targName || !user.is_holding(src))
 		return
@@ -23,23 +24,20 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[html_encode(targName)]\"")
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[targName]\"")
 	laws[1] = targName
-	..()
 
-/obj/item/ai_module/core/freeformcore/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
-	..()
-	return laws[1]
+/obj/item/ai_module/law/core/freeformcore/can_install_to_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
+	if(!laws[1])
+		to_chat(user, span_warning(LANG("obj.36a60cb6", null)))
+		return FALSE
+	return TRUE
 
-/obj/item/ai_module/supplied/freeform
+/obj/item/ai_module/law/supplied/freeform
 	name = "'Freeform' AI Module"
-	lawpos = 15
 	laws = list("")
 	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
-/obj/item/ai_module/supplied/freeform/attack_self(mob/user)
-	var/newpos = tgui_input_number(user, LANG("obj.440d46d1", null), LANG("obj.2b743674", null), lawpos, 50, 15)
-	if(!newpos || !user.is_holding(src) || !usr.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
-	lawpos = newpos
+/obj/item/ai_module/law/supplied/freeform/configure(mob/user)
+	. = TRUE
 	var/targName = tgui_input_text(user, LANG("obj.dded9ced", null), LANG("obj.f2d27273", null), laws[1], max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
 	if(!targName || !user.is_holding(src))
 		return
@@ -53,19 +51,9 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[html_encode(targName)]\"")
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[targName]\"")
 	laws[1] = targName
-	..()
 
-/obj/item/ai_module/supplied/freeform/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
-	if(!overflow)
-		..()
-	else if(law_datum.owner)
-		law_datum.owner.replace_random_law(laws[1], list(LAW_SUPPLIED), LAW_SUPPLIED)
-	else
-		law_datum.replace_random_law(laws[1], list(LAW_SUPPLIED), LAW_SUPPLIED)
-	return laws[1]
-
-/obj/item/ai_module/supplied/freeform/install(datum/ai_laws/law_datum, mob/user)
-	if(laws[1] == "")
-		to_chat(user, span_alert(LANG("obj.7bb84693", null)))
-		return 0
-	..()
+/obj/item/ai_module/law/supplied/freeform/can_install_to_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
+	if(!laws[1])
+		to_chat(user, span_warning(LANG("obj.36a60cb6", null)))
+		return FALSE
+	return TRUE

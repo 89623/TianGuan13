@@ -185,15 +185,14 @@
 		return FALSE
 	if(action_disabled)
 		return FALSE
-	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
+	if((check_flags & AB_CHECK_CONSCIOUS) && IS_UNCONSCIOUS_OR_CRIT(owner))
 		if (feedback)
-			switch(owner.stat)
-				if(SOFT_CRIT)
-					owner.balloon_alert(owner, LANG("datum.762b74d4", null))
-				if(DEAD)
-					owner.balloon_alert(owner, LANG("datum.1bf49ad4", null))
-				else
-					owner.balloon_alert(owner, LANG("datum.dc8b5a42", null))
+			if(owner.stat == DEAD)
+				owner.balloon_alert(owner, LANG("datum.1bf49ad4", null))
+			else if(IS_UNCONSCIOUS(owner))
+				owner.balloon_alert(owner, LANG("datum.dc8b5a42", null))
+			else
+				owner.balloon_alert(owner, LANG("datum.b49fe510", null))
 		return FALSE
 	if((check_flags & AB_CHECK_HANDS_BLOCKED) && HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
 		if (feedback)
@@ -348,6 +347,7 @@
 		current_button.color = rgb(255,255,255,255)
 	else
 		current_button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+	SEND_SIGNAL(src, COMSIG_ACTION_STATUS_UPDATE, current_button, force)
 
 /// Gives our action to the passed viewer.
 /// Puts our action in their actions list and shows them the button.

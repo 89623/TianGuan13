@@ -101,23 +101,24 @@
 			for(var/mob/smeller in get_hearers_in_view(DEFAULT_MESSAGE_RANGE, src))
 				if(HAS_TRAIT(smeller, TRAIT_ANOSMIA))
 					asomnia_hadders += smeller
-			visible_message(span_danger("You smell a burnt smell coming from [src]!"), ignored_mobs = asomnia_hadders)
+			visible_message(span_danger(LANG("obj.6d67c4b6", list(src))), ignored_mobs = asomnia_hadders)
 	set_smoke_state(worst_cooked_food_state)
 	update_appearance()
 	use_energy(active_power_usage)
 
-/obj/machinery/oven/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!open || used_tray || !istype(item, /obj/item/plate/oven_tray))
-		return ..()
+/obj/machinery/oven/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(open && used_tray && tool.atom_storage)
+		return used_tray.item_interaction(user, tool, modifiers)
 
-	if(user.transferItemToLoc(item, src, silent = FALSE))
-		to_chat(user, span_notice(LANG("obj.de7df645", list(item, src))))
-		add_tray_to_oven(item, user)
+	if(!open || used_tray || !istype(tool, /obj/item/plate/oven_tray))
+		return NONE
 
-/obj/machinery/oven/item_interaction(mob/living/user, obj/item/item, list/modifiers)
-	if(open && used_tray && item.atom_storage)
-		return used_tray.item_interaction(user, item, modifiers)
-	return NONE
+	if(!user.transferItemToLoc(tool, src, silent = FALSE))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice(LANG("obj.de7df645", list(tool, src))))
+	add_tray_to_oven(tool, user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/oven/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	if(open && used_tray && tool.atom_storage)
@@ -254,10 +255,6 @@
 
 /obj/machinery/oven/range/Initialize(mapload)
 	. = ..()
-	// NOVA EDIT ADDITION START - I18N - "range" is a common word; the global reverse renders it as 范围 (the math sense). Pick the appliance term locally instead of polluting the shared catalog entry.
-	if(GLOB.i18n_server_locale != DEFAULT_UI_LOCALE)
-		name = "灶台"
-	// NOVA EDIT ADDITION END
 	var/obj/item/reagent_containers/cup/soup_pot/mapload_container
 	if(mapload)
 		mapload_container = new(loc)

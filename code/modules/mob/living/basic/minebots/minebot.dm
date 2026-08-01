@@ -110,8 +110,8 @@
 	. += LANG("mob.15082120", list(stored_gun.get_remaining_mod_capacity()))
 
 	for(var/obj/item/borg/upgrade/modkit/modkit as anything in stored_gun.modkits)
-		. += span_notice("There is \a [modkit] installed, using <b>[modkit.cost]%</b> capacity.")
-	if(ai_controller && ai_controller.ai_status == AI_STATUS_IDLE)
+		. += span_notice(LANG("mob.ae0e0db4", list(modkit, modkit.cost)))
+	if(ai_controller && ai_controller.ai_status == AI_STATUS_OFF && ai_controller.get_expected_ai_status() == AI_STATUS_ON)
 		. += LANG("mob.bb32306b", list(src))
 
 
@@ -129,17 +129,21 @@
 		user.balloon_alert(user, LANG("mob.7c1135f9", null))
 	return TRUE
 
-/mob/living/basic/mining_drone/attackby(obj/item/item_used, mob/user, list/modifiers, list/attack_modifiers)
-	if(item_used.tool_behaviour == TOOL_CROWBAR || istype(item_used, /obj/item/borg/upgrade/modkit))
-		item_used.melee_attack_chain(user, stored_gun, modifiers)
-		return
+/mob/living/basic/mining_drone/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/borg/upgrade/modkit))
+		return ..()
 
-	return ..()
+	tool.melee_attack_chain(user, stored_gun, modifiers)
+	return ITEM_INTERACT_SUCCESS
+
+/mob/living/basic/mining_drone/crowbar_act(mob/living/user, obj/item/tool)
+	tool.melee_attack_chain(user, stored_gun)
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/basic/mining_drone/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	if(!user.combat_mode)
-		if(ai_controller && ai_controller.ai_status == AI_STATUS_IDLE)
-			ai_controller.set_ai_status(AI_STATUS_ON)
+		if(ai_controller && ai_controller.ai_status == AI_STATUS_OFF)
+			ai_controller.reset_ai_status() //wakes a performance-slept bot, no-op if it is off for a real reason
 		if(LAZYACCESS(modifiers, LEFT_CLICK)) //Lets Right Click be specifically for re-enabling their AI (and avoiding the UI popup), while Left Click simply does both.
 			ui_interact(user)
 		return

@@ -11,8 +11,8 @@
  */
 /datum/heretic_knowledge/hunt_and_sacrifice
 	name = "Heartbeat of the Mansus"
-	desc = "Allows you to sacrifice targets to the Mansus by bringing them to a rune in critical (or worse) condition. \
-		If you have no targets, stand on a transmutation rune and invoke it to acquire some."
+	desc = "Allows you to sacrifice targets to the Mansus by bringing them to a rune in critical (or worse) condition."
+	notice = "If you have no targets, stand on a transmutation rune and invoke it to acquire some."
 	required_atoms = list(/mob/living/carbon/human = 1)
 	cost = 0
 	priority = MAX_KNOWLEDGE_PRIORITY // Should be at the top
@@ -40,6 +40,7 @@
 		/obj/item/organ/stomach/corrupt,
 		/obj/item/organ/tongue/corrupt,
 	)
+	var/backdoor_sacrifice_attempts = 0
 
 /datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force)
 	heretic_mind = null
@@ -79,6 +80,30 @@
 	if(!LAZYLEN(heretic_datum.sac_targets))
 		atoms += user
 		return TRUE
+
+	if(istype(get_area(loc), /area/centcom/heretic_backdoor))
+		loc.balloon_alert(user, LANG("datum.0bb4efa2", null))
+		switch(backdoor_sacrifice_attempts)
+			if(0)
+				to_chat(user, span_mansus(LANG("datum.9a23d624", null)))
+			if(1)
+				to_chat(user, span_mansus(LANG("datum.ecf4d1cf", list(HAS_TRAIT(user, TRAIT_DEAF) ? ", despite your deafness" : ""))))
+			if(2)
+				to_chat(user, span_mansus(LANG("datum.1231e12e", null)))
+				user.soundbang_act(SOUNDBANG_NORMAL, deafen_pwr = 10 SECONDS, stun_pwr = 1 SECONDS, damage_pwr = 10, ignore_deafness = TRUE)
+			if(3)
+				to_chat(user, span_mansus(LANG("datum.f9bd1bfc", null)))
+				user.soundbang_act(SOUNDBANG_OVERWHELMING, deafen_pwr = 20 SECONDS, stun_pwr = 4 SECONDS, damage_pwr = 20, ignore_deafness = TRUE)
+			if(4)
+				if(begin_sacrifice(user))
+					to_chat(user, span_mansus(LANG("datum.1fc20b19", null)))
+				else
+					to_chat(user, span_mansus(LANG("datum.a94a544f", null)))
+			if(5 to INFINITY)
+				to_chat(user, span_mansus(LANG("datum.909d4c8a", null)))
+
+		backdoor_sacrifice_attempts++
+		return FALSE
 
 	// If we have targets, we can check to see if we can do a sacrifice
 	// Let's remove any humans in our atoms list that aren't a sac target
@@ -140,7 +165,7 @@
 
 	if(!length(valid_targets))
 		if(!silent)
-			to_chat(user, span_hierophant_warning(LANG("datum.7a82ac02", null)))
+			to_chat(user, span_mansus(LANG("datum.7a82ac02", null)))
 		return FALSE
 
 	// Now, let's try to get four targets.
@@ -186,7 +211,7 @@
 	for(var/datum/mind/chosen_mind as anything in final_targets)
 		heretic_datum.add_sacrifice_target(chosen_mind.current)
 		if(!silent)
-			to_chat(user, span_danger("[chosen_mind.current.real_name], the [chosen_mind.assigned_role?.title]."))
+			to_chat(user, span_danger(LANG("datum.b88a54a4", list(chosen_mind.current.real_name, chosen_mind.assigned_role?.title))))
 
 	return TRUE
 
@@ -217,6 +242,7 @@
 	var/datum/antagonist/cult/cultist_datum = GET_CULTIST(sacrifice)
 	// Heads give 3 points, cultists give 1 point (and a special reward), normal sacrifices give 2 points.
 	heretic_datum.total_sacrifices++
+	SEND_SIGNAL(heretic_datum, COMSIG_HERETIC_SACRIFICE, sacrifice, (sac_job_flag & JOB_HEAD_OF_STAFF))
 	if((sac_job_flag & JOB_HEAD_OF_STAFF))
 		heretic_datum.adjust_knowledge_points(3)
 		heretic_datum.high_value_sacrifices++
@@ -255,7 +281,7 @@
 
 	// Visible and audible encouragement!
 	to_chat(user, span_big(span_hypnophrase(LANG("datum.2b59bfa5", null))))
-	to_chat(user, span_hierophant(LANG("datum.fc3e2f65", null)))
+	to_chat(user, span_mansus(LANG("datum.fc3e2f65", null)))
 	playsound(sacrifice, 'sound/effects/magic/disintegrate.ogg', 75, TRUE)
 
 	// Drop all items and splatter them around messily.
@@ -545,7 +571,7 @@
 			composed_return_message += span_green("alive, but with a shattered mind. ")
 
 		composed_return_message += span_notice("You hear a whisper... ")
-		composed_return_message += span_hypnophrase(get_area_name(safe_turf, TRUE))
+		composed_return_message += span_mansus(get_area_name(safe_turf, TRUE))
 		to_chat(heretic_mind.current, composed_return_message)
 
 /**

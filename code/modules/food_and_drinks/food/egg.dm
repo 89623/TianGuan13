@@ -90,37 +90,40 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 		new /mob/living/basic/chick(spawn_turf)
 		GLOB.chicks_from_eggs++
 
-/obj/item/food/egg/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/toy/crayon))
-		var/obj/item/toy/crayon/crayon = item
-		var/clr = crayon.crayon_color
+/obj/item/food/egg/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/toy/crayon))
+		var/obj/item/toy/crayon/crayon = tool
+		var/pigment = crayon.crayon_color
 
-		if(!(clr in list("blue", "green", "mime", "orange", "purple", "rainbow", "red", "yellow")))
+		if(!(pigment in list("blue", "green", "mime", "orange", "purple", "rainbow", "red", "yellow")))
 			to_chat(usr, span_notice(LANG("obj.3bcff4f9", list(src))))
-			return
+			return ITEM_INTERACT_BLOCKING
 
-		to_chat(usr, span_notice(LANG("obj.bd20f702", list(src, item))))
-		icon_state = "egg-[clr]"
+		to_chat(usr, span_notice(LANG("obj.bd20f702", list(src, tool))))
+		icon_state = "egg-[pigment]"
+		return ITEM_INTERACT_SUCCESS
 
-	else if(istype(item, /obj/item/stamp/clown))
+	if(istype(tool, /obj/item/stamp/clown))
 		var/clowntype = pick("grock", "grimaldi", "rainbow", "chaos", "joker", "sexy", "standard", "bobble",
 			"krusty", "bozo", "pennywise", "ronald", "jacobs", "kelly", "popov", "cluwne")
 		icon_state = "egg-clown-[clowntype]"
 		desc = LANG("obj.b47f13f9", null)
-		to_chat(usr, span_notice(LANG("obj.9cd73011", list(src, item))))
+		to_chat(usr, span_notice(LANG("obj.9cd73011", list(src, tool))))
+		return ITEM_INTERACT_SUCCESS
 
-	else if(is_reagent_container(item))
-		var/obj/item/reagent_containers/dunk_test_container = item
+	if(is_reagent_container(tool))
+		var/obj/item/reagent_containers/dunk_test_container = tool
 		if (!dunk_test_container.is_drainable() || !dunk_test_container.reagents.has_reagent(/datum/reagent/water))
-			return
+			return NONE
 
 		to_chat(user, span_notice(LANG("obj.dbecdd57", list(src))))
 		if(istype(src, /obj/item/food/egg/rotten))
 			to_chat(user, span_warning(LANG("obj.2be03659", list(src, dunk_test_container))))
 		else
 			to_chat(user, span_notice(LANG("obj.4c37fbf5", list(src, dunk_test_container))))
-	else
-		..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/food/egg/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!istype(interacting_with, /obj/machinery/griddle))
@@ -286,23 +289,25 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	. = ..()
 	AddElement(/datum/element/love_food_buff, /datum/status_effect/food/speech/french)
 
-/obj/item/food/omelette/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/kitchen/fork))
-		var/obj/item/kitchen/fork/fork = item
-		if(fork.forkload)
-			to_chat(user, span_warning(LANG("obj.f0081b30", null)))
-		else
-			fork.icon_state = "forkloaded"
-			user.visible_message(span_notice(LANG("obj.20bb5f72", list(user, user.p_their()))), \
-				span_notice(LANG("obj.d2bce3d3", null)))
+/obj/item/food/omelette/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/kitchen/fork))
+		return NONE
 
-			var/datum/reagent/reagent = pick(reagents.reagent_list)
-			reagents.remove_reagent(reagent.type, 1)
-			fork.forkload = reagent
-			if(reagents.total_volume <= 0)
-				qdel(src)
-		return
-	..()
+	var/obj/item/kitchen/fork/fork = tool
+	if(fork.forkload)
+		to_chat(user, span_warning(LANG("obj.f0081b30", null)))
+		return ITEM_INTERACT_BLOCKING
+
+	fork.icon_state = "forkloaded"
+	user.visible_message(span_notice(LANG("obj.20bb5f72", list(user, user.p_their()))), \
+						span_notice(LANG("obj.d2bce3d3", null)))
+
+	var/datum/reagent/reagent = pick(reagents.reagent_list)
+	reagents.remove_reagent(reagent.type, 1)
+	fork.forkload = reagent
+	if(reagents.total_volume <= 0)
+		qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/food/benedict
 	name = "eggs benedict"

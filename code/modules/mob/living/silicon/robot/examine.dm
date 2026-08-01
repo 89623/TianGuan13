@@ -37,14 +37,15 @@
 	if(cell && cell.charge <= 0)
 		. += span_warning(LANG("mob.1269489e", list(p_Their())))
 
+	if(IS_UNCONSCIOUS_AND_ALIVE(src))
+		. += span_warning(LANG("mob.1959200f", list(p_They(), p_es())))
+
 	switch(stat)
-		if(CONSCIOUS)
+		if(STABLE)
 			if(shell)
 				. += LANG("mob.e65160d9", list(p_They(), p_s(), deployed ? "active" : "empty"))
 			else if(!client)
 				. += LANG("mob.76e341a1", list(p_They(), p_s())) //afk
-		if(SOFT_CRIT, UNCONSCIOUS, HARD_CRIT)
-			. += span_warning(LANG("mob.1959200f", list(p_They(), p_es())))
 		if(DEAD)
 			. += span_deadsay(LANG("mob.2daf9e8b", list(p_They(), p_s())))
 	//NOVA EDIT ADDITION BEGIN - CUSTOMIZATION

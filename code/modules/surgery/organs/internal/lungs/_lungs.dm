@@ -253,7 +253,7 @@
 
 	breathe_gas_volume(breath, /datum/gas/oxygen, /datum/gas/carbon_dioxide)
 	// Heal mob if not in crit.
-	if(breather.stat != SOFT_CRIT && breather.stat != HARD_CRIT && breather.get_oxy_loss())
+	if(breather.stat == STABLE && breather.get_oxy_loss())
 		breather.adjust_oxy_loss(-5)
 
 /// Maximum Oxygen effects. "Too much O2!"
@@ -618,8 +618,9 @@
 	if(has_moles)
 		// Breath has more than 0 moles of gas.
 		// Route gases through mask filter if breather is wearing one.
-		if(istype(breather.wear_mask) && (breather.wear_mask.clothing_flags & GAS_FILTERING) && breather.wear_mask.has_filter)
-			breath = breather.wear_mask.consume_filter(breath)
+		var/obj/item/clothing/mask/worn_mask = breather.get_item_by_slot(ITEM_SLOT_MASK)
+		if(istype(worn_mask) && (worn_mask.clothing_flags & GAS_FILTERING) && worn_mask.has_filter)
+			breath = worn_mask.consume_filter(breath)
 	// Breath has 0 moles of gas, and we can breathe space
 	else if(HAS_TRAIT(breather, TRAIT_NO_BREATHLESS_DAMAGE))
 		// The lungs can breathe anyways. What are you? Some bottom-feeding, scum-sucking algae eater?
@@ -845,7 +846,7 @@
 		var/do_i_cough = SPT_PROB((damage < high_threshold) ? 2.5 : 5, seconds_per_tick) // between : past high
 		if(do_i_cough)
 			owner.emote("cough")
-	if(organ_flags & ORGAN_FAILING && owner.stat == CONSCIOUS)
+	if(organ_flags & ORGAN_FAILING && !IS_UNCONSCIOUS_OR_CRIT(owner))
 		owner.visible_message(span_danger(LANG("obj.c094df16", list(owner, owner.p_their()))), span_userdanger(LANG("obj.d062df62", null)))
 		failed = TRUE
 

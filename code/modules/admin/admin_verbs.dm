@@ -12,7 +12,7 @@
 
 ADMIN_VERB(hide_verbs, R_NONE, "管理员命令 - 全部隐藏", "Hide most of your admin verbs.", ADMIN_CATEGORY_MAIN)
 	user.remove_admin_verbs()
-	add_verb(user, /client/proc/show_verbs)
+	ASSIGN_GAME_VERB(user, /client, show_verbs)
 
 	to_chat(user, span_interface(LANG("datum.d0317d5b", null)), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Hide All Adminverbs")
@@ -491,7 +491,7 @@ ADMIN_VERB(give_disease, R_FUN, "给予疾病", ADMIN_VERB_NO_DESCRIPTION, ADMIN
 	log_admin("[key_name(user)] gave [key_name(victim)] the disease [disease].")
 	message_admins(span_adminnotice("[key_name_admin(user)] gave [key_name_admin(victim)] the disease [disease]."))
 
-ADMIN_VERB_AND_CONTEXT_MENU(object_say, R_FUN, "OOC 发言", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, obj/speaker in world)
+ADMIN_VERB_AND_CONTEXT_MENU(object_say, R_FUN, "OOC 发言", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, obj/speaker)
 	var/message = tgui_input_text(user, LANG("datum.43f83808", null), LANG("datum.f119adcc", null), encode = FALSE)
 	if(!message)
 		return
@@ -599,7 +599,7 @@ ADMIN_VERB(spawn_debug_full_crew, R_DEBUG, "生成调试用完整船员", "Creat
 		// Assign the rank to the new player dummy.
 		if(!SSjob.assign_role(new_guy, job, do_eligibility_checks = FALSE))
 			qdel(new_guy)
-			to_chat(user, "[rank] wasn't able to be spawned.")
+			to_chat(user, LANG("datum.9cfc94fa", list(rank)))
 			continue
 
 		// It's got a job, spawn in a human and shove it in the human.
@@ -765,108 +765,11 @@ ADMIN_VERB(clear_smart_asset_cache, R_DEBUG, "清除智能资源缓存", "Clear 
 		cleared++
 	to_chat(user, span_notice(LANG("datum.186c25e2", list(cleared))))
 
-ADMIN_VERB(give_ai_speech, R_FUN, "给予随机 AI 发言", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/my_guy)
-	if (isnull(my_guy.ai_controller))
-		var/create_controller = tgui_alert(user, LANG("datum.46d83d37", null), LANG("datum.4bdb3aef", null), list("Yes", "No")) == "Yes"
-		if (!create_controller)
-			return
-		var/run_with_mind = tgui_alert(user, LANG("datum.c2016a3a", null), LANG("datum.f4191ee1", null), list("Yes", "No"))
-		if (isnull(run_with_mind))
-			return
-		if (QDELETED(my_guy))
-			to_chat(user, span_warning(LANG("datum.7f641441", null)))
-			return
-		my_guy.ai_controller = new /datum/ai_controller/basic_controller/talk(my_guy)
-		if (run_with_mind == "Yes")
-			var/datum/ai_controller/guy_controller = my_guy.ai_controller
-			guy_controller.continue_processing_when_client = TRUE
-			guy_controller.reset_ai_status()
-
-	var/speech_chance
-	var/list/spoken_lines
-	var/list/audible_emotes
-	var/list/visible_emotes
-	var/list/sounds
-
-	speech_chance = tgui_input_number(user, LANG("datum.c5c7923d", null), LANG("datum.dd711a20", null), default = 2, min_value = 0, max_value = 100, round_value = FALSE)
-	if (isnull(speech_chance))
-		return
-
-	var/add_another
-	var/next_line
-
-	add_another = tgui_alert(user, LANG("datum.bcdb1bf9", list(length(spoken_lines) ? "another" : "a")), LANG("datum.c4273cf6", null), list("Yes", "No"))
-	while (add_another  == "Yes")
-		next_line = tgui_input_text(user, LANG("datum.51389345", list(length(spoken_lines) ? "another" : "a")), LANG("datum.c4273cf6", null))
-		if (isnull(next_line))
-			return
-		LAZYADD(spoken_lines, next_line)
-		add_another = tgui_alert(user, LANG("datum.bcdb1bf9", list(length(spoken_lines) ? "another" : "a")), LANG("datum.c4273cf6", null), list("Yes", "No"))
-	if (isnull(add_another))
-		return
-
-	add_another = tgui_alert(user, LANG("datum.f9e9381d", list(length(spoken_lines) ? "another" : "a")), LANG("datum.ce2edca1", null), list("Yes", "No"))
-	while (add_another == "Yes")
-		next_line = tgui_input_text(user, LANG("datum.27062f17", list(length(spoken_lines) ? "another" : "an")), LANG("datum.ce2edca1", null))
-		if (isnull(next_line))
-			return
-		LAZYADD(audible_emotes, next_line)
-		add_another = tgui_alert(user, LANG("datum.f9e9381d", list(length(spoken_lines) ? "another" : "a")), LANG("datum.ce2edca1", null), list("Yes", "No"))
-	if (isnull(add_another))
-		return
-
-	add_another = tgui_alert(user, LANG("datum.4c86173c", list(length(spoken_lines) ? "another" : "a")), LANG("datum.43020c0d", null), list("Yes", "No"))
-	while (add_another == "Yes")
-		next_line = tgui_input_text(user, LANG("datum.29db1359", list(length(spoken_lines) ? "another" : "an")), LANG("datum.43020c0d", null))
-		if (isnull(next_line))
-			return
-		LAZYADD(visible_emotes, next_line)
-		add_another = tgui_alert(user, LANG("datum.4c86173c", list(length(spoken_lines) ? "another" : "a")), LANG("datum.43020c0d", null), list("Yes", "No"))
-	if (isnull(add_another))
-		return
-
-	if (!length(spoken_lines) && !length(audible_emotes) && !length(visible_emotes))
-		return // Well you didn't tell it to say anything...
-
-	if (length(spoken_lines) || length(audible_emotes))
-		add_another = tgui_alert(user, LANG("datum.ad50e3d5", list(length(spoken_lines) ? "another" : "a")), LANG("datum.e2b85e52", null), list("Yes", "No"))
-		while (add_another == "Yes")
-			next_line = input("", LANG("datum.99f89fee", null),) as null|sound
-			if (isnull(next_line))
-				return
-			LAZYADD(sounds, next_line)
-			add_another = tgui_alert(user, LANG("datum.ad50e3d5", list(length(spoken_lines) ? "another" : "a")), LANG("datum.e2b85e52", null), list("Yes", "No"))
-		if (isnull(add_another))
-			return
-
-	if (QDELETED(my_guy))
-		to_chat(user, span_warning(LANG("datum.a27bfbdd", null)))
-		return
-
-	var/datum/ai_controller/our_controller = my_guy.ai_controller
-	if (length(spoken_lines))
-		spoken_lines = string_list(spoken_lines)
-	if (length(audible_emotes))
-		audible_emotes = string_list(audible_emotes)
-	if (length(visible_emotes))
-		visible_emotes = string_list(visible_emotes)
-
-	var/list/emotes = list(
-		BB_EMOTE_SAY = spoken_lines,
-		BB_EMOTE_HEAR = audible_emotes,
-		BB_EMOTE_SEE = visible_emotes,
-		BB_EMOTE_SOUND = sounds,
-		BB_SPEAK_CHANCE = speech_chance,
-	)
-	our_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, emotes)
-
-	var/behaviour_exists = !!(locate(/datum/ai_planning_subtree/random_speech/blackboard) in our_controller.planning_subtrees)
-	if (behaviour_exists)
-		return
-	our_controller.planning_subtrees = list(GLOB.ai_subtrees[/datum/ai_planning_subtree/random_speech/blackboard]) + our_controller.planning_subtrees
-
 ADMIN_VERB(open_event_logger, R_DEBUG, "打开事件记录器", "Open the event logger interface.", ADMIN_CATEGORY_DEBUG)
 	GLOB.event_logger.ui_interact(user.mob)
+
+ADMIN_VERB(view_behavior_tree, R_DEBUG, "查看行为树", "Inspect the AI behavior tree of a mob.", ADMIN_CATEGORY_DEBUG)
+	GLOB.bt_viewer.ui_interact(user.mob)
 
 ADMIN_VERB(new_blackmarket_item, R_BUILD, "创建黑市物品", "Add an item to the black market for purchase.", ADMIN_CATEGORY_EVENTS, object as text)
 	if(!object)

@@ -27,7 +27,7 @@
 		return FALSE
 	if(!client)
 		return FALSE
-	if(stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		balloon_alert(src, LANG("mob.c2ec14c4", null))
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, conflict_opt_in_aura_cooldown))
@@ -61,11 +61,7 @@
 	to_chat(src, span_notice(LANG("mob.29dcdba7", null)))
 	return TRUE
 
-/mob/living/verb/show_conflict_opt_in_verb()
-	set name = "显示冲突加入意向"
-	set category = "IC"
-	set desc = "Display nearby conflict opt-in statuses."
-
+GAME_VERB_DESC(/mob/living, show_conflict_opt_in_verb, "显示冲突加入意向", "Display nearby conflict opt-in statuses.", "IC")
 	show_conflict_opt_in()
 
 /datum/keybinding/living/conflict_opt_in

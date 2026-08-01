@@ -34,7 +34,7 @@
 	var/good_kind_of_healing = FALSE
 	var/need_mob_update = FALSE
 	switch(affected_mob.stat)
-		if(CONSCIOUS) //bad
+		if(STABLE) //bad
 			thou_shall_heal = max(death_is_coming/20, 3)
 			need_mob_update += affected_mob.adjust_oxy_loss(2 * metabolization_ratio * seconds_per_tick, TRUE, required_biotype = affected_biotype)
 		if(SOFT_CRIT) //meh convert
@@ -50,7 +50,7 @@
 
 	if(good_kind_of_healing && !reaping && SPT_PROB(0.005, seconds_per_tick)) //janken with the grim reaper!
 		notify_ghosts(
-			"[affected_mob.real_name] has entered a game of rock-paper-scissors with death!",
+			LANG("datum.64518392", list(affected_mob.real_name)),
 			source = affected_mob,
 			header = "Who Will Win?",
 		)

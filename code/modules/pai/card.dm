@@ -33,15 +33,17 @@
 	SSpai.pai_card_list += src
 	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 
-/obj/item/pai_card/attackby(obj/item/used, mob/user, list/modifiers, list/attack_modifiers)
-	if(pai && istype(used, /obj/item/encryptionkey))
-		if(!pai.encrypt_mod)
-			to_chat(user, span_alert(LANG("obj.3a580da9", null)))
-			return
-		pai.radio.attackby(used, user, modifiers)
-		to_chat(user, span_notice(LANG("obj.c0c2c8e9", list(used, src))))
-		return
-	return ..()
+/obj/item/pai_card/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!pai || !istype(tool, /obj/item/encryptionkey))
+		return NONE
+
+	if(!pai.encrypt_mod)
+		to_chat(user, span_alert(LANG("obj.3a580da9", null)))
+		return ITEM_INTERACT_BLOCKING
+
+	pai.radio.attackby(tool, user, modifiers)
+	to_chat(user, span_notice(LANG("obj.c0c2c8e9", list(tool, src))))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/pai_card/attack_self(mob/user)
 	if(!in_range(src, user))
@@ -122,7 +124,7 @@
 		can_holo = pai.can_holo,
 		dna = pai.master_dna,
 		emagged = pai.emagged,
-		laws = pai.laws.supplied,
+		laws = pai.laws.inherent,
 		master = pai.master_name,
 		name = pai.name,
 		transmit = pai.can_transmit,
@@ -202,7 +204,7 @@
 	add_alert()
 	addtimer(CALLBACK(src, PROC_REF(remove_alert)), 5 SECONDS)
 	playsound(src, 'sound/machines/ping.ogg', 30, TRUE)
-	visible_message(span_notice(LANG("obj.2ab2f3e8", list(src))), blind_message = span_notice("[src] vibrates with an alert."))
+	visible_message(span_notice(LANG("obj.2ab2f3e8", list(src))), blind_message = span_notice(LANG("obj.b3b344dc", list(src))))
 
 /**
  * Downloads a candidate from the list and removes them from SSpai.candidates
@@ -248,7 +250,7 @@
 	var/mutable_appearance/alert_overlay = mutable_appearance('icons/obj/aicards.dmi', "pai")
 
 	notify_ghosts(
-		"[user.real_name] is requesting a pAI companion! Use the pAI button to submit yourself as one.",
+		LANG("obj.c603f497", list(user.real_name)),
 		source = user,
 		header = "pAI Request!",
 		alert_overlay = alert_overlay,

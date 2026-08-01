@@ -31,7 +31,7 @@
 				return
 			if(intAI.deployed_shell) //Recall AI if shelled so it can be checked for a client
 				intAI.disconnect_shell()
-			if(intAI.stat || !intAI.client)
+			if(IS_UNCONSCIOUS_OR_CRIT(intAI) || !intAI.client)
 				balloon_alert(user, LANG("obj.5f76f1b5", null))
 				return
 			balloon_alert(user, LANG("obj.1db976b4", null))

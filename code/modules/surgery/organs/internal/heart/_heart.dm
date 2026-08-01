@@ -129,7 +129,7 @@
 	// Handle "sudden" heart attack
 	if(!beating || (organ_flags & ORGAN_FAILING))
 		if(owner.can_heartattack() && Stop())
-			if(owner.stat == CONSCIOUS)
+			if(!IS_UNCONSCIOUS_OR_CRIT(owner))
 				owner.visible_message(span_danger(LANG("obj.32fa6902", list(owner, owner.p_their(), owner.p_their()))))
 			to_chat(owner, span_userdanger(LANG("obj.ba4fe027", null)))
 		return

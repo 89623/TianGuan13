@@ -26,7 +26,7 @@
 
 	var/mob/living/scanned = interacting_with
 
-	if(scanned.stat != DEAD && !HAS_TRAIT(scanned, TRAIT_FAKEDEATH)) // good job, you found a loophole
+	if(!IS_DEAD_OR_FAKING(scanned)) // good job, you found a loophole
 		to_chat(user, span_deadsay(LANG("obj.2965ff93", list(icon2html(src, user)))))
 		return ITEM_INTERACT_BLOCKING
 

@@ -80,8 +80,6 @@
 
 	/// overlay when speaker is on
 	var/overlay_speaker_idle = "s_idle"
-	/// overlay when receiving a message
-	var/overlay_speaker_active = "s_active"
 
 	/// overlay when mic is on
 	var/overlay_mic_idle = "m_idle"
@@ -456,13 +454,12 @@
 
 /obj/item/radio/proc/on_receive_message(list/data)
 	SEND_SIGNAL(src, COMSIG_RADIO_RECEIVE_MESSAGE, data)
-	flick_overlay_view(overlay_speaker_active, 5 SECONDS)
-
 	if(!isliving(loc))
 		return
 
 	var/mob/living/holder = loc
 	var/volume_modifier = (holder.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
+
 	if(!radio_noise || HAS_TRAIT(holder, TRAIT_DEAF) || !holder.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_radio_noise))
 		return
 	var/list/spans = data["spans"]
@@ -683,7 +680,6 @@
 	icon_state = "walkieian"
 	desc = LANG("obj.0a5eb76e", null)
 	overlay_speaker_idle = null
-	overlay_speaker_active = null
 	overlay_mic_idle = null
 	overlay_mic_active = null
 
@@ -759,7 +755,6 @@
 	inhand_icon_state = "radio"
 	worn_icon_state = "radio"
 	overlay_speaker_idle = "radio_s_idle"
-	overlay_speaker_active = "radio_s_active"
 	overlay_mic_idle = "radio_m_idle"
 	overlay_mic_active = "radio_m_active"
 

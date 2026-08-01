@@ -326,9 +326,7 @@
 		icon_state = initial(icon_state)
 	return ..()
 
-/obj/item/paper/verb/rename()
-	set name = "重命名纸张"
-	set src in usr
+GAME_VERB_SRC(/obj/item/paper, rename, usr, "重命名纸张", null)
 
 	if(!usr.can_read(src) || usr.is_blind() || INCAPACITATED_IGNORING(usr, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB) || (isobserver(usr) && !isAdminGhostAI(usr)))
 		return
@@ -342,7 +340,7 @@
 	var/n_name = tgui_input_text(usr, LANG("obj.82759545", null), LANG("obj.a12ca291", null), max_length = MAX_NAME_LEN)
 	if(isnull(n_name) || n_name == "")
 		return
-	if(((loc == usr || istype(loc, /obj/item/clipboard)) && usr.stat == CONSCIOUS))
+	if(((loc == usr || istype(loc, /obj/item/clipboard)) && !IS_UNCONSCIOUS_OR_CRIT(usr)))
 		name = "paper[(n_name ? "- '[n_name]'" : null)]"
 	add_fingerprint(usr)
 	update_static_data()
@@ -512,6 +510,8 @@
 	)
 
 /obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
+	if(!user.client) //bro stop trying to open UI on AI man ur gonna drive me nuts man comeon man
+		return
 	if(resistance_flags & ON_FIRE)
 		return
 	ui = SStgui.try_update_ui(user, src, ui)

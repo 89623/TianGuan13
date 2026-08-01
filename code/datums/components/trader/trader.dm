@@ -151,7 +151,7 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 /datum/component/trader/proc/check_menu(mob/customer)
 	if(!istype(customer))
 		return FALSE
-	if(IS_DEAD_OR_INCAP(customer) || !customer.Adjacent(parent))
+	if(customer.incapacitated || !customer.Adjacent(parent))
 		return FALSE
 	return TRUE
 
@@ -430,7 +430,7 @@ Can accept both a type path, and an instance of a datum. Type path has priority.
 	if(trader.combat_mode)
 		trader.balloon_alert(customer, LANG("datum.7a8aba0c", null))
 		return FALSE
-	if(IS_DEAD_OR_INCAP(trader))
+	if(trader.incapacitated)
 		trader.balloon_alert(customer, LANG("datum.3cf2692c", null))
 		return FALSE
 	return TRUE

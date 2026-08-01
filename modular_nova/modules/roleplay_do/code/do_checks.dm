@@ -13,7 +13,7 @@
 		to_chat(usr, span_warning(LANG("mob.60a2534a", list(MAX_MESSAGE_LEN))))
 		return FALSE
 
-	if(usr.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(usr))
 		to_chat(usr, span_notice(LANG("mob.c44da1e5", null)))
 		return FALSE
 

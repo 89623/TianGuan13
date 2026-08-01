@@ -1,19 +1,3 @@
-//shows a list of clients we could send PMs to, then forwards our choice to cmd_Mentor_pm
-/client/proc/cmd_mentor_pm_panel() // We're not using this and I'm debating removing the code as it's dead and useless. We don't need mentors PMing people out of the blue. That's not really how we operate.
-	set category = "Mentor"
-	set name = "导师私信"
-	if(!is_mentor())
-		to_chat(src, span_danger(LANG("client.d0d80bb7", null)))
-		return
-	var/list/client/targets[0]
-	for(var/client/T) // What a cursed proc this is
-		targets["[T]"] = T
-
-	var/list/sorted = sort_list(targets)
-	var/target = input(src, LANG("client.ff86bcc5", null), LANG("client.3d1c7496", null), null) in sorted|null
-	cmd_mentor_pm(targets[target], null)
-	SSblackbox.record_feedback("tally", "Mentor_verb", TRUE, "APM") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
-
 /**
  * Takes input from cmd_mentor_pm_context, cmd_Mentor_pm_panel or /client/Topic and sends them a PM.
  * Fetching a message if needed. src is the sender and target is the target client
@@ -90,4 +74,4 @@
 	for(var/it in GLOB.mentors)
 		var/client/mentor = it
 		if(mentor?.key != key && mentor?.key != target.key)	//check client/mentor is an Mentor and isn't the sender or recipient
-			to_chat(mentor, span_mentor("<B>Mentor PM: [key_name_mentor(src, mentor, FALSE, FALSE, show_char_sender)]-&gt;[key_name_mentor(target, mentor, FALSE, FALSE, show_char_recip)]:</B> [span_blue(msg)]")) //inform mentor
+			to_chat(mentor, span_mentor(LANG("client.db628e7b", list(key_name_mentor(src, mentor, FALSE, FALSE, show_char_sender), key_name_mentor(target, mentor, FALSE, FALSE, show_char_recip), span_blue(msg))))) //inform mentor

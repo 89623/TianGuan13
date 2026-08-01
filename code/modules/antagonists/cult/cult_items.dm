@@ -195,7 +195,7 @@ Striking a noncultist, however, will tear their flesh."}
 		// Void
 		PATH_VOID = list(
 			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/void_phase),
-			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/void_prison),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/aoe/void_pull),
 			SWORD_PREFIX = "tenebrous",
 		),
 		// Blade
@@ -378,8 +378,6 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/melee/cultblade/haunted/Initialize(mapload, mob/soul_to_bind, mob/awakener, do_bind = TRUE)
 	. = ..()
-
-	AddElement(/datum/element/heretic_focus)
 	add_traits(list(TRAIT_CASTABLE_LOC, TRAIT_SPELLS_TRANSFER_TO_LOC), INNATE_TRAIT)
 	if(do_bind && !mapload)
 		bind_soul(soul_to_bind, awakener)
@@ -425,10 +423,6 @@ Striking a noncultist, however, will tear their flesh."}
 	var/datum/antagonist/soultrapped_heretic/bozo = new()
 	bozo.objectives |= copied_objectives
 	trapped_entity.mind.add_antag_datum(bozo)
-
-	// Assigning the spells to give to the wielder and spirit.
-	// Let them cast the given spell.
-	ADD_TRAIT(trapped_entity, TRAIT_ALLOW_HERETIC_CASTING, INNATE_TRAIT)
 
 	var/list/path_spells = heretic_paths_to_haunted_sword_abilities[heretic_path]
 
@@ -705,7 +699,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 	for(var/turf/hole_candidate as anything in turfs_to_scan)
 		if(locate(/obj/structure/spawner/sentient/proteon_spawner) in hole_candidate)
-			to_chat(user, span_cult_bold("There's a gateway too close nearby. The veil is not yet weak enough to allow such close rips in its fabric."))
+			to_chat(user, span_cult_bold(LANG("obj.db87e796", null)))
 			return
 	to_chat(user, span_cult_bold_italic(LANG("obj.ea89891a", list(src))))
 

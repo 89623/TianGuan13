@@ -19,14 +19,15 @@
 	/// What random loot spawner our chest uses
 	var/loot_to_spawn = /obj/effect/spawner/random/mining_loot
 
-/obj/structure/closet/crate/necropolis/tendril/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(item, /obj/item/skeleton_key) || spawned_loot)
+/obj/structure/closet/crate/necropolis/tendril/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/skeleton_key) || spawned_loot)
 		return ..()
 	new loot_to_spawn(src)
 
 	spawned_loot = TRUE
-	qdel(item)
+	qdel(tool)
 	to_chat(user, span_notice(LANG("obj.18d771eb", null)))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/closet/crate/necropolis/tendril/before_open(mob/living/user, force)
 	. = ..()

@@ -258,19 +258,17 @@
 /obj/structure/blob/hulk_damage()
 	return 15
 
-/obj/structure/blob/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(I.tool_behaviour == TOOL_ANALYZER)
-		user.changeNext_move(CLICK_CD_MELEE)
-		to_chat(user, LANG("obj.f3678620", null))
-		SEND_SOUND(user, sound('sound/machines/ping.ogg'))
-		if(overmind)
-			to_chat(user, LANG("obj.f1e6051c", list(span_notice("[overmind.blobs_legit.len]/[overmind.blobwincount]."))))
-			to_chat(user, chemeffectreport(user).Join("\n"))
-		else
-			to_chat(user, LANG("obj.5df59b6b", null))
-		to_chat(user, typereport(user).Join("\n"))
+/obj/structure/blob/analyzer_act(mob/living/user, obj/item/analyzer/tool)
+	user.changeNext_move(CLICK_CD_MELEE)
+	to_chat(user, LANG("obj.f3678620", null))
+	SEND_SOUND(user, sound('sound/machines/ping.ogg'))
+	if(overmind)
+		to_chat(user, LANG("obj.f1e6051c", list(span_notice("[overmind.blobs_legit.len]/[overmind.blobwincount]."))))
+		to_chat(user, chemeffectreport(user).Join("\n"))
 	else
-		return ..()
+		to_chat(user, LANG("obj.5df59b6b", null))
+	to_chat(user, typereport(user).Join("\n"))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/blob/proc/chemeffectreport(mob/user)
 	RETURN_TYPE(/list)

@@ -15,7 +15,7 @@
 
 /datum/status_effect/basilisk_overheat/on_apply()
 	. = ..()
-	if (!. || !istype(owner, /mob/living/basic/mining/basilisk) || owner.stat != CONSCIOUS)
+	if (!. || !istype(owner, /mob/living/basic/mining/basilisk) || IS_UNCONSCIOUS_OR_CRIT(owner))
 		return FALSE
 	var/mob/living/basic/mining/basilisk/hot_stuff = owner
 	hot_stuff.visible_message(span_warning(LANG("datum.7a65233e", list(hot_stuff))))
@@ -41,7 +41,7 @@
 	hot_stuff.remove_movespeed_modifier(/datum/movespeed_modifier/basilisk_overheat)
 	UnregisterSignal(hot_stuff, list(COMSIG_LIVING_DEATH, COMSIG_ATOM_EXPOSE_REAGENTS, COMSIG_ATOM_BULLET_ACT))
 
-	if (hot_stuff.stat != CONSCIOUS)
+	if (IS_UNCONSCIOUS_OR_CRIT(hot_stuff))
 		return
 	hot_stuff.visible_message(span_notice(LANG("datum.7ea6e1ca", list(hot_stuff))))
 	var/obj/effect/particle_effect/fluid/smoke/poof = new(get_turf(hot_stuff))

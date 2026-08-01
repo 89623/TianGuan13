@@ -283,7 +283,7 @@
 	if(uses_remaining == 0) //deletes trap if it triggers when it has no uses left. should only happen if var edited but lets just be safe
 		qdel(src)
 		return
-	if (target.stat) //ensure the guy triggering us is alive
+	if (IS_UNCONSCIOUS_OR_CRIT(target)) //ensure the guy triggering us is alive
 		return
 	if (!faction_check_atom(target)) //and make sure it ain't someone on our team
 		COOLDOWN_START(src, trigger_cooldown, 4 SECONDS)
@@ -300,7 +300,7 @@
 	for(var/mob/living/living_mob in range(shock_range, src))
 		if(faction_check_atom(living_mob))
 			continue
-		to_chat(living_mob, span_warning("You are struck by an arc of electricity!"))
+		to_chat(living_mob, span_warning(LANG("obj.4a5b8a52", null)))
 		src.Beam(living_mob, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
 		living_mob.electrocute_act(shock_damage, host_machine, 1, SHOCK_NOGLOVES, stun_duration, jitter_time, stutter_time)
 	for(var/obj/item/food/deadmouse in range(shock_range, src))

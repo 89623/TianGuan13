@@ -1,8 +1,4 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-
-#define PERCEPTOMATRIX_INACTIVE_FLAGS SNUG_FIT|STACKABLE_HELMET_EXEMPT|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT
-#define PERCEPTOMATRIX_ACTIVE_FLAGS PERCEPTOMATRIX_INACTIVE_FLAGS|CASTING_CLOTHES // we love casting spells
-
 /// Helmet which can turn you into a BEAST!! once an anomaly core is inserted
 /obj/item/clothing/head/helmet/perceptomatrix
 	name = "perceptomatrix helm"
@@ -19,7 +15,7 @@
 	heat_protection = HEAD
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	strip_delay = 8 SECONDS
-	clothing_flags = PERCEPTOMATRIX_ACTIVE_FLAGS
+	clothing_flags = SNUG_FIT|STACKABLE_HELMET_EXEMPT|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT
 	flags_cover = HEADCOVERSEYES|EARS_COVERED
 	flags_inv = HIDEHAIR|HIDEFACE
 	flash_protect = FLASH_PROTECTION_WELDER_SENSITIVE
@@ -100,7 +96,7 @@
 
 	// If the core isn't installed, or it's temporarily deactivated, disable special functions.
 	if(!core_installed)
-		clothing_flags = PERCEPTOMATRIX_INACTIVE_FLAGS
+		REMOVE_TRAIT(src, TRAIT_CASTING_CLOTHING, INNATE_TRAIT)
 		detach_clothing_traits(additional_clothing_traits)
 		QDEL_LIST(active_components)
 		RemoveElement(/datum/element/wearable_client_colour, /datum/client_colour/perceptomatrix, ITEM_SLOT_HEAD, HELMET_TRAIT, forced = TRUE)
@@ -108,7 +104,7 @@
 		astype(loc, /mob/living/carbon)?.update_tint()
 		return
 
-	clothing_flags = PERCEPTOMATRIX_ACTIVE_FLAGS
+	ADD_TRAIT(src, TRAIT_CASTING_CLOTHING, INNATE_TRAIT)
 	attach_clothing_traits(additional_clothing_traits)
 	tint = 0
 	astype(loc, /mob/living/carbon)?.update_tint()
@@ -201,7 +197,7 @@
 			continue
 		// if cooked by chef, or if EITHER 5% chance OR its april fools. a || (b || c)
 		if(HAS_TRAIT_FROM(pancakes, TRAIT_HANDMADE, REF(chef.mind)) || (prob(5) || check_holidays(APRIL_FOOLS)))
-			chef.say("Ma fuckin' pancakes!")
+			chef.say(LANG("datum.fb5cc88a", null))
 
 	playsound(pancakes, 'sound/effects/fuse.ogg', 80)
 	animate(pancakes, time = 1, pixel_z = 12, easing = ELASTIC_EASING)
@@ -240,6 +236,3 @@
 	cast_on.set_eye_blur_if_lower(eye_blur_duration)
 	cast_on.adjust_staggered(stagger_duration)
 	cast_on.apply_status_effect(/datum/status_effect/hallucination/perceptomatrix, hallucination_duration, HALLUCINATION_TIER_RARE)
-
-#undef PERCEPTOMATRIX_INACTIVE_FLAGS
-#undef PERCEPTOMATRIX_ACTIVE_FLAGS

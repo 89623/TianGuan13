@@ -51,7 +51,7 @@
 		to_chat(user, span_warning(LANG("obj.b53c71e2", null)))
 		balloon_alert(user, LANG("obj.31bf8acd", null))
 		return FALSE
-	if(!do_after(user, rand(FOCK_JACKING_SPEED_LOWER, FOCK_JACKING_SPEED_UPPER) SECONDS, door, timed_action_flags = NONE, progress = TRUE))
+	if(!do_after(user, rand(FOCK_JACKING_SPEED_LOWER, FOCK_JACKING_SPEED_UPPER) SECONDS, door, timed_action_flags = NONE, show_progress = TRUE))
 		balloon_alert(user, LANG("obj.31bf8acd", null))
 		do_sparks(2, TRUE, door)
 		return FALSE
@@ -66,7 +66,7 @@
 	balloon_alert(user, LANG("obj.e3f1440c", null))
 	do_sparks(2, TRUE, airalarm)
 	visible_message(span_warning(LANG("obj.b7523a48", list(airalarm))))
-	if(!do_after(user, rand(FOCK_JACKING_SPEED_LOWER, FOCK_JACKING_SPEED_UPPER) SECONDS, airalarm, timed_action_flags = NONE, progress = TRUE))
+	if(!do_after(user, rand(FOCK_JACKING_SPEED_LOWER, FOCK_JACKING_SPEED_UPPER) SECONDS, airalarm, timed_action_flags = NONE, show_progress = TRUE))
 		balloon_alert(user, LANG("obj.31bf8acd", null))
 		do_sparks(1, TRUE, airalarm)
 		return FALSE
@@ -84,7 +84,7 @@
 	balloon_alert(user, LANG("obj.e3f1440c", null))
 	do_sparks(2, TRUE, apc)
 	visible_message(span_warning(LANG("obj.b7523a48", list(apc))))
-	if(!do_after(user, rand(FOCK_JACKING_SPEED_LOWER, FOCK_JACKING_SPEED_UPPER) SECONDS, apc, timed_action_flags = NONE, progress = TRUE))
+	if(!do_after(user, rand(FOCK_JACKING_SPEED_LOWER, FOCK_JACKING_SPEED_UPPER) SECONDS, apc, timed_action_flags = NONE, show_progress = TRUE))
 		balloon_alert(user, LANG("obj.31bf8acd", null))
 		do_sparks(1, TRUE, apc)
 		return FALSE

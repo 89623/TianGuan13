@@ -9,9 +9,7 @@
 /**
  * tgui panel / chat troubleshooting verb
  */
-/client/verb/fix_tgui_panel()
-	set name = "修复聊天"
-	set category = "OOC"
+GAME_VERB(/client, fix_tgui_panel, "修复聊天", "OOC")
 	var/action
 	log_tgui(src, "Started fixing.", context = "verb/fix_tgui_panel")
 
@@ -34,9 +32,7 @@
 	// Force show the panel to see if there are any errors
 	winset(src, OUTPUT_SELECTOR_LEGACY_OUTPUT_SELECTOR, "left=output_browser")
 
-/client/verb/refresh_tgui()
-	set name = "刷新 TGUI"
-	set category = "OOC"
+GAME_VERB(/client, refresh_tgui, "刷新 TGUI", "OOC")
 
 	for(var/window_id in tgui_windows)
 		var/datum/tgui_window/window = tgui_windows[window_id]

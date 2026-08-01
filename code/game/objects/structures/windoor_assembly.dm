@@ -219,7 +219,7 @@
 	if(!anchored)
 		for(var/obj/machinery/door/window/competitor in loc)
 			if(competitor.dir == dir)
-				to_chat(user, span_warning("There is already a windoor in that location!"))
+				to_chat(user, span_warning(LANG("obj.b9e2eb2c", null)))
 				return ITEM_INTERACT_BLOCKING
 
 		user.visible_message(span_notice(LANG("obj.49b00f4e", list(user))),
@@ -232,7 +232,7 @@
 
 		for(var/obj/machinery/door/window/competitor in loc)
 			if(competitor.dir == dir)
-				to_chat(user, span_warning("There is already a windoor in that location!"))
+				to_chat(user, span_warning(LANG("obj.b9e2eb2c", null)))
 				return ITEM_INTERACT_BLOCKING
 
 		to_chat(user, span_notice(LANG("obj.feaf53d7", null)))
@@ -403,10 +403,9 @@
 
 
 //Flips the windoor assembly, determines whather the door opens to the left or the right
-/obj/structure/windoor_assembly/verb/flip()
-	set name = "翻转窗门组件"
-	set src in oview(1)
-	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
+GAME_VERB_SRC(/obj/structure/windoor_assembly, flip, oview(1), "翻转窗门组件", null)
+
+	if(IS_UNCONSCIOUS_OR_CRIT(usr) || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 
 	if(isliving(usr))

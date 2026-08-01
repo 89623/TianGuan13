@@ -334,11 +334,11 @@
 		var/zone_name = parse_zone(zone)
 		switch(pct_damage_part)
 			if(100 to INFINITY)
-				. += span_warning("<b>The [zone_name] is useless and requires mending!</b>")
+				. += span_warning(LANG("obj.39afae4b", list(zone_name)))
 			if(60 to 99)
-				. += span_warning("The [zone_name] is heavily shredded!")
+				. += span_warning(LANG("obj.cb72d897", list(zone_name)))
 			if(30 to 59)
-				. += span_danger("The [zone_name] is partially shredded.")
+				. += span_danger(LANG("obj.ce2e363d", list(zone_name)))
 
 	if(atom_storage)
 		var/list/how_cool_are_your_threads = list("<span class='notice'>")
@@ -367,7 +367,7 @@
 	. = ..()
 	if (clothing_flags & THICKMATERIAL)
 		.["thick"] = "Protects from most injections and sprays."
-	if (clothing_flags & CASTING_CLOTHES)
+	if (HAS_TRAIT(src, TRAIT_CASTING_CLOTHING))
 		.["magical"] = "Allows magical beings to cast spells when wearing [src]."
 	if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
 		.["pressure-proof"] = "Protects the wearer from extremely low or high pressure, such as vacuum of space."

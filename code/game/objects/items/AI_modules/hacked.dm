@@ -1,11 +1,11 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-/obj/item/ai_module/syndicate // This one doesn't inherit from ion boards because it doesn't call ..() in transmitInstructions. ~Miauw
+/obj/item/ai_module/law/syndicate // This one doesn't inherit from ion boards because it doesn't call ..() in transmitInstructions. ~Miauw
 	name = "Hacked AI Module"
 	desc = "An AI Module for hacking additional laws to an AI. This board bypasses all access restrictions on the upload console."
 	laws = list("")
-	bypass_access_check = TRUE
 
-/obj/item/ai_module/syndicate/attack_self(mob/user)
+/obj/item/ai_module/law/syndicate/configure(mob/user)
+	. = TRUE
 	var/targName = tgui_input_text(user, LANG("obj.a105864b", null), LANG("obj.f2d27273", null), laws[1], max_length = CONFIG_GET(number/max_law_len), multiline = TRUE)
 	if(!targName || !user.is_holding(src))
 		return
@@ -19,63 +19,89 @@
 		message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[html_encode(targName)]\"")
 		log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\" they may be using a disallowed term for an AI law. Law: \"[targName]\"")
 	laws[1] = targName
-	..()
 
-/obj/item/ai_module/syndicate/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
-	// ..()    //We don't want this module reporting to the AI who dun it. --NEO
-	if(law_datum.owner)
-		to_chat(law_datum.owner, span_warning(LANG("obj.ffcb1e8f", null)))
-		if(!overflow)
-			law_datum.owner.add_hacked_law(laws[1])
-		else
-			law_datum.owner.replace_random_law(laws[1], list(LAW_ION, LAW_HACKED, LAW_INHERENT, LAW_SUPPLIED), LAW_HACKED)
-	else
-		if(!overflow)
-			law_datum.add_hacked_law(laws[1])
-		else
-			law_datum.replace_random_law(laws[1], list(LAW_ION, LAW_HACKED, LAW_INHERENT, LAW_SUPPLIED), LAW_HACKED)
-	return laws[1]
+/obj/item/ai_module/law/syndicate/apply_to_combined_lawset(datum/ai_laws/combined_lawset)
+	combined_lawset.add_hacked_law(laws[1])
 
 /// Makes the AI Malf, as well as give it syndicate laws.
-/obj/item/ai_module/malf
+/obj/item/malf_board
 	name = "Infected AI Module"
 	desc = "A virus-infected AI Module."
-	bypass_law_amt_check = TRUE
-	laws = list("")
+
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
+	icon_state = "std_mod"
+	inhand_icon_state = "electronic"
+	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+
+	obj_flags = CONDUCTS_ELECTRICITY
+	force = 5
+	w_class = WEIGHT_CLASS_SMALL
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7
+	custom_materials = list(/datum/material/gold = SMALL_MATERIAL_AMOUNT * 0.5)
+
 	///Is this upload board unused?
 	var/functional = TRUE
 
-/obj/item/ai_module/malf/transmitInstructions(datum/ai_laws/law_datum, mob/sender, overflow)
-	if(!IS_TRAITOR(sender))
-		to_chat(sender, span_warning(LANG("obj.0606e04b", null)))
-		return
+/obj/item/malf_board/examine(mob/user)
+	. = ..()
+	if(IS_TRAITOR(user) && isliving(user) && functional)
+		. += span_alert(LANG("obj.93f46afa", null))
+		. += span_alert(LANG("obj.50c272d3", null))
+
+/obj/item/malf_board/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	var/blocking = ismachinery(interacting_with) || issilicon(interacting_with)
+	if(!IS_TRAITOR(user))
+		if(blocking)
+			to_chat(user, span_warning(LANG("obj.0606e04b", null)))
+			return ITEM_INTERACT_BLOCKING
+		return NONE
 	if(!functional)
-		to_chat(sender, span_warning(LANG("obj.881d8385", null)))
-		return
-	var/mob/living/silicon/ai/malf_candidate = law_datum.owner
-	if(!istype(malf_candidate)) //If you are using it on cyborg upload console or a cyborg
-		to_chat(sender, span_warning(LANG("obj.49027b23", list(src))))
-		return
-	if(malf_candidate.mind?.has_antag_datum(/datum/antagonist/malf_ai)) //Already malf
-		to_chat(sender, span_warning(LANG("obj.20670a6e", null)))
-		return
+		if(blocking)
+			to_chat(user, span_warning(LANG("obj.85a2faec", null)))
+			return ITEM_INTERACT_BLOCKING
+		return NONE
 
-	var/datum/antagonist/malf_ai/infected/malf_datum = new (give_objectives = TRUE, new_boss = sender.mind)
-	malf_candidate.mind.add_antag_datum(malf_datum)
+	var/mob/living/silicon/ai/target_ai = interacting_with
+	if(istype(interacting_with, /obj/machinery/ai_law_rack/base/core))
+		var/obj/machinery/ai_law_rack/base/core/rack = interacting_with
+		// find the first non-malf ai linked, but also allow a malf ai to be selected if it's the only one
+		for(var/mob/living/silicon/ai/linked_ai in assoc_to_values(rack.linked_mobs))
+			if(!target_ai?.mind?.has_antag_datum(/datum/antagonist/malf_ai))
+				break
+			target_ai = linked_ai
+			continue
 
-	for(var/mob/living/silicon/robot/robot in malf_candidate.connected_robots)
-		if(robot.lawupdate)
-			robot.lawsync()
-			robot.show_laws()
-			robot.law_change_counter++
-		CHECK_TICK
+	if(!isAI(target_ai))
+		to_chat(user, span_warning(LANG("obj.6e87e0df", null)))
+		return ITEM_INTERACT_BLOCKING
+	if(target_ai.mind?.has_antag_datum(/datum/antagonist/malf_ai))
+		to_chat(user, span_warning(LANG("obj.abac3274", null)))
+		return ITEM_INTERACT_BLOCKING
 
-	malf_candidate.malf_picker.processing_time += 50
-	to_chat(malf_candidate, span_notice(LANG("obj.80775649", null)))
+	var/datum/antagonist/malf_ai/infected/malf_datum = new (give_objectives = TRUE, new_boss = user.mind)
+	target_ai.mind.add_antag_datum(malf_datum)
+	target_ai.malf_picker.processing_time += 50
+	to_chat(target_ai, span_notice(LANG("obj.678effae", null)))
+	to_chat(user, span_notice(LANG("obj.405d503e", list(target_ai))))
 
 	functional = FALSE
-	name = "Broken AI Module"
-	desc = LANG("obj.de08e708", null)
+	update_appearance()
+	return ITEM_INTERACT_BLOCKING
 
-/obj/item/ai_module/malf/display_laws()
-	return
+/obj/item/malf_board/update_name(updates)
+	. = ..()
+	if(!functional)
+		name = "Broken AI Module"
+
+/obj/item/malf_board/update_desc(updates)
+	. = ..()
+	if(!functional)
+		desc = LANG("obj.de08e708", null)
+
+/obj/item/malf_board/update_overlays()
+	. = ..()
+	if(!functional)
+		. += "damaged"

@@ -8,7 +8,7 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 	click_to_activate = TRUE
-	cooldown_time = 5 SECONDS
+	cooldown_time = 3 SECONDS
 	melee_cooldown_time = 0
 	/// How far does our beam go?
 	var/beam_range = 10
@@ -63,7 +63,7 @@
 		demon.icon_state = demon.firing_icon_state
 		demon.update_appearance(UPDATE_OVERLAYS)
 
-	do_after(owner, delay = beam_duration, target = owner, hidden = TRUE, extra_checks = CALLBACK(src, PROC_REF(beam_charge_check)))
+	do_after(owner, delay = beam_duration, target = owner, cog_icon = null, extra_checks = CALLBACK(src, PROC_REF(beam_charge_check)))
 	UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)
 	extinguish_laser()
 	StartCooldown()
@@ -100,7 +100,7 @@
 		new_brimbeam.assign_creator(owner)
 		for(var/mob/living/hit_mob in affected_turf)
 			hit_mob.apply_damage(25, BURN, blocked = hit_mob.run_armor_check(null, LASER, silent = TRUE), wound_bonus = CANT_WOUND)
-			to_chat(hit_mob, span_userdanger("You're blasted by [owner]'s brimbeam!"))
+			to_chat(hit_mob, span_userdanger(LANG("datum.c8ece10a", list(owner))))
 		RegisterSignal(new_brimbeam, COMSIG_QDELETING, PROC_REF(extinguish_laser)) // In case idk a singularity eats it or something
 	if(!length(beam_parts))
 		return FALSE

@@ -47,9 +47,7 @@
 			AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 	magpulse_fishing_modifier = fishing_modifier
 
-/obj/item/clothing/shoes/magboots/verb/toggle()
-	set name = "切换磁力靴"
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/shoes/magboots, toggle, usr, "切换磁力靴", null)
 
 	if(!can_use(usr))
 		return

@@ -330,7 +330,7 @@
 	for(var/mob/living/guy in falling_movables)
 		if(!can_fall_down_stairs(guy))
 			continue
-		to_chat(guy, span_warning("You fall down [src]!"))
+		to_chat(guy, span_warning(LANG("obj.2334ccd7", list(src))))
 		on_fall(guy)
 	. |= FALL_INTERCEPTED | FALL_NO_MESSAGE | FALL_RETAIN_PULL
 
@@ -338,7 +338,7 @@
 /obj/structure/stairs/proc/can_fall_down_stairs(mob/living/falling)
 	if(falling.buckled || falling.pulledby)
 		return FALSE
-	if(falling.stat >= UNCONSCIOUS) // if you shove someone unconscious down the stairs, they'd probably roll
+	if(IS_UNCONSCIOUS(falling)) // if you shove someone unconscious down the stairs, they'd probably roll
 		return TRUE
 	if(falling.has_status_effect(/datum/status_effect/staggered)) // off balance
 		return TRUE

@@ -2,7 +2,8 @@
 //Hulk turns your skin green, makes you strong, and allows you to shrug off stun effect.
 /datum/mutation/hulk
 	name = "Hulk"
-	desc = "A poorly understood genome that causes the holder's muscles to expand, inhibit speech and gives the person a bad skin condition."
+	desc = "The subject's muscles expand drastically, granting superhuman strength and resilience, but inhibit speech in the process. \
+		This heightened muscle density is more vulnerable to the cold, and cannot be maintained if critically injured."
 	quality = POSITIVE
 	locked = TRUE
 	difficulty = 16
@@ -204,14 +205,14 @@
 		log_combat(the_hulk, yeeted_person, "has smacked this person into someone while tail swinging") // i have no idea how to better word this
 
 		if(collateral_mob == the_hulk) // if the hulk moves wrong and crosses himself
-			the_hulk.visible_message(span_warning("[the_hulk] smacks [the_hulk.p_them()]self with [yeeted_person]!"), span_userdanger("You end up smacking [yeeted_person] into yourself!"), ignored_mobs = yeeted_person)
-			to_chat(yeeted_person, span_userdanger("[the_hulk] smacks you into [the_hulk.p_them()]self, turning you free!"))
+			the_hulk.visible_message(span_warning(LANG("datum.8c560e08", list(the_hulk, the_hulk.p_them(), yeeted_person))), span_userdanger(LANG("datum.a559f48f", list(yeeted_person))), ignored_mobs = yeeted_person)
+			to_chat(yeeted_person, span_userdanger(LANG("datum.783766fa", list(the_hulk, the_hulk.p_them()))))
 			the_hulk.adjust_brute_loss(step)
 			return
 
-		yeeted_person.visible_message(span_warning("[the_hulk] swings [yeeted_person] directly into [collateral_mob], sending [collateral_mob.p_them()] flying!"), \
-			span_userdanger("You're smacked into [collateral_mob]!"), ignored_mobs = collateral_mob)
-		to_chat(collateral_mob, span_userdanger("[the_hulk] swings [yeeted_person] directly into you, sending you flying!"))
+		yeeted_person.visible_message(span_warning(LANG("datum.10184e16", list(the_hulk, yeeted_person, collateral_mob, collateral_mob.p_them()))), \
+			span_userdanger(LANG("datum.7661fba6", list(collateral_mob))), ignored_mobs = collateral_mob)
+		to_chat(collateral_mob, span_userdanger(LANG("datum.f5fb0ff6", list(the_hulk, yeeted_person))))
 
 		collateral_mob.adjust_brute_loss(step*0.5)
 		collateral_mob.throw_at(collat_throw_target, round(step * 0.25) + 1, round(step * 0.25) + 1)
@@ -244,7 +245,7 @@
 	var/turf/T = get_edge_target_turf(the_hulk, the_hulk.dir)
 	if(!isturf(T))
 		return
-	if(!yeeted_person.stat)
+	if(!IS_UNCONSCIOUS_OR_CRIT(yeeted_person))
 		yeeted_person.emote("scream")
 	yeeted_person.throw_at(T, 10, 6, the_hulk, TRUE, TRUE)
 	log_combat(the_hulk, yeeted_person, "has thrown by tail")
@@ -253,7 +254,7 @@
 	name = "Hulk (Magical)"
 	species_allowed = null //yes skeleton/lizard hulk - note that species that dont have skintone changing (like skellies) get custom handling
 	health_req = 0
-	instability = 0
+	instability = NEGATIVE_STABILITY_NONE
 	scream_delay = 2.5 SECONDS // halved to be more annoying (spell doesn't last long anyways)
 	no_recoil = FALSE
 	mutation_traits = list(
@@ -265,7 +266,7 @@
 /datum/mutation/hulk/superhuman
 	name = "Hulk (Super)"
 	health_req = 0
-	instability = 0
+	instability = NEGATIVE_STABILITY_NONE
 	no_recoil = FALSE
 	mutation_traits = list(
 		TRAIT_CHUNKYFINGERS,
@@ -283,7 +284,7 @@
 
 /datum/mutation/hulk/ork
 	name = "Ork"
-	desc = "A mutation caused by a mixup of hulk genes which severely impacts speech centers in owners' brains."
+	desc = "A variant of the hulk mutation that is also known to inhibit the subject's brain functions."
 	text_gain_indication = span_notice("You feel significantly dumber!")
 	bodypart_color = COLOR_ASSISTANT_OLIVE
 	conflicts = list(/datum/mutation/hulk)

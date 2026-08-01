@@ -99,7 +99,7 @@
 		owner.adjust_oxy_loss(oxyloss_sum)
 
 	if(time_until_stoppage <= 0)
-		if(owner.stat == CONSCIOUS)
+		if(!IS_UNCONSCIOUS_OR_CRIT(owner))
 			to_chat(owner, span_userdanger(LANG("datum.ba4fe027", null)))
 		owner.adjust_eye_blur(20 SECONDS)
 		human_owner.set_heartattack(TRUE)

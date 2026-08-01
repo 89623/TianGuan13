@@ -103,24 +103,30 @@
 	if (tentacles.cooldown_time > 1 SECONDS)
 		tentacles.cooldown_time -= 1 SECONDS
 
-/mob/living/basic/mining/goliath/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if (!istype(attacking_item, /obj/item/goliath_saddle))
+/mob/living/basic/mining/goliath/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/goliath_saddle))
 		return ..()
+
 	if (!tameable)
 		balloon_alert(user, LANG("mob.7f1af016", null))
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	if (saddled)
 		balloon_alert(user, LANG("mob.264c9319", null))
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	if (!HAS_TRAIT(src, TRAIT_TAMED))
 		balloon_alert(user, LANG("mob.59d44c49", null))
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	balloon_alert(user, LANG("mob.2a19bc39", null))
 	if (!do_after(user, delay = 5.5 SECONDS, target = src))
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	balloon_alert(user, LANG("mob.6c3e5e51", null))
-	qdel(attacking_item)
+	qdel(tool)
 	make_rideable()
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/basic/mining/goliath/proc/make_rideable()
 	saddled = TRUE

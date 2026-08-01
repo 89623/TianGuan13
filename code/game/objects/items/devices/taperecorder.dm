@@ -127,8 +127,7 @@
 	return FALSE
 
 
-/obj/item/taperecorder/verb/ejectverb()
-	set name = "弹出磁带"
+GAME_VERB(/obj/item/taperecorder, ejectverb, "弹出磁带", null)
 
 	if(!can_use(usr))
 		balloon_alert(usr, LANG("obj.3d241116", null))
@@ -162,8 +161,7 @@
 	mytape.storedinfo += "\[[time2text(mytape.used_capacity,"mm:ss", NO_TIMEZONE)]\] [speaker.get_voice()]: [raw_message]"
 
 
-/obj/item/taperecorder/verb/record()
-	set name = "开始录制"
+GAME_VERB(/obj/item/taperecorder, record, "开始录制", null)
 
 	if(!can_use(usr))
 		balloon_alert(usr, LANG("obj.3d241116", null))
@@ -204,8 +202,7 @@
 		playsound(src, 'sound/items/taperecorder/taperecorder_stop.ogg', 50, FALSE)
 
 
-/obj/item/taperecorder/verb/stop()
-	set name = "停止"
+GAME_VERB(/obj/item/taperecorder, stop, "停止", null)
 
 	if(!can_use(usr))
 		balloon_alert(usr, LANG("obj.3d241116", null))
@@ -224,8 +221,7 @@
 	update_appearance()
 	update_sound()
 
-/obj/item/taperecorder/verb/play()
-	set name = "播放磁带"
+GAME_VERB(/obj/item/taperecorder, play, "播放磁带", null)
 
 	if(!can_use(usr))
 		balloon_alert(usr, LANG("obj.3d241116", null))
@@ -296,8 +292,7 @@
 			if("Eject")
 				eject(user)
 
-/obj/item/taperecorder/verb/print_transcript()
-	set name = "打印录音文字稿"
+GAME_VERB(/obj/item/taperecorder, print_transcript, "打印录音文字稿", null)
 
 	var/list/transcribed_info = mytape.storedinfo
 	if(!length(transcribed_info))
@@ -331,7 +326,7 @@
 
 		// Very unexpected. Better abort non-gracefully.
 		if(excerpt_length > MAX_PAPER_LENGTH)
-			balloon_alert(usr, "data corrupted, can't print!")
+			balloon_alert(usr, LANG("obj.41081a75", null))
 			CRASH("Transcript entry has more than [MAX_PAPER_LENGTH] chars: [excerpt_length] chars")
 
 		// If we're going to overflow the paper's length, print the current transcribed text out first and reset to prevent us

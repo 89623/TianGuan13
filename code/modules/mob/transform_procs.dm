@@ -111,7 +111,7 @@
 	if(client)
 		stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
-	var/mob/living/silicon/ai/our_AI = new /mob/living/silicon/ai(pick(landmark_loc), null, src)
+	var/mob/living/silicon/ai/our_AI = new(pick(landmark_loc), src)
 	. = our_AI
 
 	if(preference_source)

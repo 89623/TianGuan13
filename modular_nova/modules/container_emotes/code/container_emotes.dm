@@ -1,9 +1,6 @@
 #define EXME_MAX_LOC_RECURSION 10 //no infinite loops
 
-/mob/living/verb/container_emote()
-	set name = "使用载具/容器做表情"
-	set category = "IC"
-
+GAME_VERB(/mob/living, container_emote, "使用载具/容器做表情", "IC")
 	if (isturf(src.loc))
 		to_chat(src, span_danger(LANG("mob.72c5eb7d", null)))
 		return

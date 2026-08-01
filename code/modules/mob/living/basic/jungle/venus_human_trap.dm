@@ -229,7 +229,7 @@
 	var/list/target_turfs = get_line(owner, target_atom) - list(get_turf(owner), get_turf(target_atom))
 	for(var/turf/blockage in target_turfs)
 		if(blockage.is_blocked_turf(exclude_mobs = TRUE))
-			owner.balloon_alert(owner, "path blocked!")
+			owner.balloon_alert(owner, LANG("datum.8857598a", null))
 			return
 
 	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration * (ismob(target_atom) ? 1 : 2), beam_type = /obj/effect/ebeam/vine, emissive = FALSE)
@@ -257,18 +257,11 @@
 	vines -= vine
 
 /datum/ai_controller/basic_controller/human_trap
+	behavior_tree_json = "code/modules/mob/living/basic/jungle/human_trap.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/targeted_mob_ability/continue_planning,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 
 #undef FINAL_BUD_GROWTH_ICON

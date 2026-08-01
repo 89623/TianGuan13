@@ -1,7 +1,7 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Admin Tab - Event Verbs
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, "私密消息", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, "私密消息", mob/target)
 	message_admins("[key_name_admin(user)] has started answering [ADMIN_LOOKUPFLW(target)]'s prayer.")
 	var/msg = input(user, LANG("datum.008d3052", null), LANG("datum.03de8cc3", list(target.key))) as text|null
 
@@ -20,7 +20,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_subtle_message, R_ADMIN, "私密消息", A
 	admin_ticket_log(target, msg)
 	BLACKBOX_LOG_ADMIN_VERB("Subtle Message")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, "耳机消息", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_headset_message, R_ADMIN, "耳机消息", mob/target)
 	user.admin_headset_message(target)
 
 /client/proc/admin_headset_message(mob/target in GLOB.mob_list, sender = null)
@@ -75,7 +75,7 @@ ADMIN_VERB(cmd_admin_world_narrate, R_ADMIN, "全局旁白", "Send a direct narr
 	message_admins(span_adminnotice("[key_name_admin(user)] Sent a global narrate"))
 	BLACKBOX_LOG_ADMIN_VERB("Global Narrate")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, "本地旁白", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, atom/locale in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, "本地旁白", atom/locale)
 	var/range = input(user, LANG("datum.c5d1936b", null), LANG("datum.520ed99b", null), 7) as num|null
 	if(!range)
 		return
@@ -90,7 +90,7 @@ ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_local_narrate, R_ADMIN, "本地旁白", AD
 	message_admins(span_adminnotice("<b> LocalNarrate: [key_name_admin(user)] at [ADMIN_VERBOSEJMP(locale)]:</b> [msg]<BR>"))
 	BLACKBOX_LOG_ADMIN_VERB("Local Narrate")
 
-ADMIN_VERB_AND_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, "直接旁白", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/target)
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_direct_narrate, R_ADMIN, "直接旁白", mob/target)
 	var/msg = input(user, LANG("datum.008d3052", null), LANG("datum.5d97ad04", null)) as text|null
 
 	if( !msg )
@@ -116,9 +116,14 @@ ADMIN_VERB(cmd_admin_add_freeform_ai_law, R_ADMIN, "添加自定义 AI 法则", 
 	var/show_log = tgui_alert(user, LANG("datum.5d9fa149", null), LANG("datum.affb7d7e", null), list("Yes", "No"))
 	var/announce_ion_laws = (show_log == "Yes" ? 100 : 0)
 
-	var/datum/round_event/ion_storm/add_law_only/ion = new
+	var/datum/round_event/ion_storm/ion = new
 	ion.announce_chance = announce_ion_laws
 	ion.ionMessage = input
+	ion.replaceLawsetChance = 0
+	ion.removeRandomLawChance = 0
+	ion.removeDontImproveChance = 0
+	ion.shuffleLawsChance = 0
+	ion.botEmagChance = 0
 
 	BLACKBOX_LOG_ADMIN_VERB("Add Custom AI Law")
 

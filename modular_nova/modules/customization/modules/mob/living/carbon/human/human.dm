@@ -91,12 +91,9 @@
 /mob/living/carbon/human/species/shadekin
 	race = /datum/species/shadekin
 
-/mob/living/carbon/human/verb/toggle_undies()
-	set category = "IC"
-	set name = "切换内衣可见性"
-	set desc = "Allows you to toggle which underwear should show or be hidden. Underwear will obscure genitals."
+GAME_VERB_DESC(/mob/living/carbon/human, toggle_undies, "切换内衣可见性", "Allows you to toggle which underwear should show or be hidden. Underwear will obscure genitals.", "IC")
 
-	if(stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		to_chat(usr, span_warning(LANG("mob.f9be4f77", null)))
 		return
 
@@ -142,10 +139,7 @@
 		if(dna && dna.species)
 			dna.species.spec_revival(src)
 
-/mob/living/carbon/human/verb/toggle_mutant_part_visibility()
-	set category = "IC"
-	set name = "显示/隐藏突变部位"
-	set desc = "Allows you to choose to try and hide your mutant bodyparts under your clothes."
+GAME_VERB_DESC(/mob/living/carbon/human, toggle_mutant_part_visibility, "显示/隐藏突变部位", "Allows you to choose to try and hide your mutant bodyparts under your clothes.", "IC")
 
 	mutant_part_visibility()
 
@@ -165,7 +159,7 @@
 	)
 
 	// Stat check
-	if(stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		to_chat(usr, span_warning(LANG("mob.2ac07e40", null)))
 		return
 
@@ -254,12 +248,9 @@
 #define DEFAULT_TIME 30
 #define MAX_TIME 36000 // 10 hours
 
-/mob/living/carbon/human/verb/acting()
-	set category = "IC"
-	set name = "假装伤残"
-	set desc = "Pretend to be impaired for a defined duration."
+GAME_VERB_DESC(/mob/living/carbon/human, acting, "假装伤残", "Pretend to be impaired for a defined duration.", "IC")
 
-	if(stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		to_chat(usr, span_warning(LANG("mob.2ac07e40", null)))
 		return
 

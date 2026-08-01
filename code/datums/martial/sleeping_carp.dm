@@ -164,7 +164,7 @@
 	var/grab_log_description = "grabbed"
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	playsound(defender, 'sound/items/weapons/punch1.ogg', 25, TRUE, -1)
-	if(defender.stat != DEAD && !defender.IsUnconscious() && defender.get_stamina_loss() >= 80) //We put our target to sleep.
+	if(!IS_UNCONSCIOUS(defender) && defender.get_stamina_loss() >= 80) //We put our target to sleep.
 		defender.visible_message(
 			span_danger(LANG("datum.a09d7870", list(attacker, defender))),
 			span_userdanger(LANG("datum.4f4d2cbb", list(attacker))),
@@ -426,7 +426,7 @@
 	if(!isliving(target))
 		return ..()
 	var/mob/living/carbon/C = target
-	if(C.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(C))
 		to_chat(user, span_warning(LANG("obj.114a2625", null)))
 		return
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
@@ -447,7 +447,7 @@
 			H.Paralyze(8 SECONDS)
 		if(H.staminaloss && !H.IsSleeping())
 			var/total_health = (H.health - H.staminaloss)
-			if(total_health <= HEALTH_THRESHOLD_CRIT && !H.stat)
+			if(total_health <= HEALTH_THRESHOLD_CRIT && !IS_UNCONSCIOUS_OR_CRIT(H))
 				H.visible_message(span_warning(LANG("obj.5b2d66f3", list(user, H, H.p_them()))), \
 								span_userdanger(LANG("obj.1ace6279", list(user))), span_hear(LANG("obj.6c7f8149", null)), null, user)
 				to_chat(user, span_danger(LANG("obj.8afcd6a2", list(H, H.p_them()))))

@@ -72,17 +72,21 @@
 	. = ..()
 	. += span_notice(LANG("obj.558de421", null))
 
-/obj/item/mod/construction/lavalandcore/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(weapon, /obj/item/stack/cable_coil))
-		return ..()
-	if(!weapon.tool_start_check(user, amount=2))
-		return
+/obj/item/mod/construction/lavalandcore/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/cable_coil))
+		return NONE
+
+	if(!tool.tool_start_check(user, amount=2))
+		return ITEM_INTERACT_BLOCKING
+
 	balloon_alert(user, LANG("obj.f547a475", null))
-	if(!weapon.use_tool(src, user, 5 SECONDS, amount = 2, volume = 30))
+	if(!tool.use_tool(src, user, 5 SECONDS, amount = 2, volume = 30))
 		balloon_alert(user, LANG("obj.c67b5d27", null))
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	new /obj/item/mod/core/plasma/lavaland(drop_location())
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/mod/construction/plating
 	name = "MOD external plating"
@@ -94,8 +98,8 @@
 /obj/item/mod/construction/plating/Initialize(mapload)
 	. = ..()
 	var/datum/mod_theme/used_theme = GLOB.mod_themes[theme]
-	name = "MOD [used_theme.name] external plating"
-	desc = "[desc] [used_theme.desc]"
+	name = "MOD [lang_reverse_text(used_theme.name)] external plating" // NOVA EDIT CHANGE - I18N - ORIGINAL: name = "MOD [used_theme.name] external plating"
+	desc = "[desc] [lang_reverse_text(used_theme.desc)]" // NOVA EDIT CHANGE - I18N - ORIGINAL: desc = "[desc] [used_theme.desc]"
 	icon_state = "[used_theme.default_skin]-plating"
 
 /obj/item/mod/construction/plating/civilian
@@ -171,124 +175,223 @@
 			display_text = "All it's missing is <b>external plating</b>..."
 	. += span_notice(display_text)
 
-/obj/item/mod/construction/shell/attackby(obj/item/part, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
+/obj/item/mod/construction/shell/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	switch(step)
 		if(START_STEP)
-			if(!istype(part, /obj/item/mod/core))
-				return
-			if(!user.transferItemToLoc(part, src))
+			if(!istype(tool, /obj/item/mod/core))
+				return NONE
+
+			if(!user.transferItemToLoc(tool, src))
 				balloon_alert(user, LANG("obj.ee463177", null))
-				return
+				return ITEM_INTERACT_BLOCKING
+
 			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
 			balloon_alert(user, LANG("obj.de575d7b", null))
-			core = part
+			core = tool
 			step = CORE_STEP
-		if(CORE_STEP)
-			if(part.tool_behaviour == TOOL_SCREWDRIVER) //Construct
-				if(part.use_tool(src, user, 0, volume=30))
-					balloon_alert(user, LANG("obj.a5967dfa", null))
-				step = SCREWED_CORE_STEP
-			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
-				if(part.use_tool(src, user, 0, volume=30))
-					core.forceMove(drop_location())
-					balloon_alert(user, LANG("obj.17bf120a", null))
-				step = START_STEP
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
 		if(SCREWED_CORE_STEP)
-			if(istype(part, /obj/item/mod/construction/helmet)) //Construct
-				if(!user.transferItemToLoc(part, src))
-					balloon_alert(user, LANG("obj.ee463177", null))
-					return
-				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, LANG("obj.95fcc204", null))
-				helmet = part
-				step = HELMET_STEP
-			else if(part.tool_behaviour == TOOL_SCREWDRIVER) //Deconstruct
-				if(part.use_tool(src, user, 0, volume=30))
-					balloon_alert(user, LANG("obj.4e25acf7", null))
-					step = CORE_STEP
+			if(!istype(tool, /obj/item/mod/construction/helmet)) //Construct
+				return NONE
+
+			if(!user.transferItemToLoc(tool, src))
+				balloon_alert(user, LANG("obj.ee463177", null))
+				return ITEM_INTERACT_BLOCKING
+
+			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+			balloon_alert(user, LANG("obj.95fcc204", null))
+			helmet = tool
+			step = HELMET_STEP
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
 		if(HELMET_STEP)
-			if(istype(part, /obj/item/mod/construction/chestplate)) //Construct
-				if(!user.transferItemToLoc(part, src))
-					balloon_alert(user, LANG("obj.ee463177", null))
-					return
-				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, LANG("obj.6f263f01", null))
-				chestplate = part
-				step = CHESTPLATE_STEP
-			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
-				if(part.use_tool(src, user, 0, volume=30))
-					helmet.forceMove(drop_location())
-					balloon_alert(user, LANG("obj.b42b2433", null))
-					helmet = null
-					step = SCREWED_CORE_STEP
+			if(!istype(tool, /obj/item/mod/construction/chestplate)) //Construct
+				return NONE
+
+			if(!user.transferItemToLoc(tool, src))
+				balloon_alert(user, LANG("obj.ee463177", null))
+				return ITEM_INTERACT_BLOCKING
+
+			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+			balloon_alert(user, LANG("obj.6f263f01", null))
+			chestplate = tool
+			step = CHESTPLATE_STEP
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
 		if(CHESTPLATE_STEP)
-			if(istype(part, /obj/item/mod/construction/gauntlets)) //Construct
-				if(!user.transferItemToLoc(part, src))
-					balloon_alert(user, LANG("obj.ee463177", null))
-					return
-				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, LANG("obj.9df0f806", null))
-				gauntlets = part
-				step = GAUNTLETS_STEP
-			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
-				if(part.use_tool(src, user, 0, volume=30))
-					chestplate.forceMove(drop_location())
-					balloon_alert(user, LANG("obj.1d2b3d3b", null))
-					chestplate = null
-					step = HELMET_STEP
+			if(!istype(tool, /obj/item/mod/construction/gauntlets)) //Construct
+				return NONE
+
+			if(!user.transferItemToLoc(tool, src))
+				balloon_alert(user, LANG("obj.ee463177", null))
+				return ITEM_INTERACT_BLOCKING
+
+			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+			balloon_alert(user, LANG("obj.9df0f806", null))
+			gauntlets = tool
+			step = GAUNTLETS_STEP
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
 		if(GAUNTLETS_STEP)
-			if(istype(part, /obj/item/mod/construction/boots)) //Construct
-				if(!user.transferItemToLoc(part, src))
-					balloon_alert(user, LANG("obj.ee463177", null))
-					return
-				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				balloon_alert(user, LANG("obj.61bb5191", null))
-				boots = part
-				step = BOOTS_STEP
-			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
-				if(part.use_tool(src, user, 0, volume=30))
-					gauntlets.forceMove(drop_location())
-					balloon_alert(user, LANG("obj.cb7f46ae", null))
-					gauntlets = null
-					step = CHESTPLATE_STEP
-		if(BOOTS_STEP)
-			if(part.tool_behaviour == TOOL_WRENCH) //Construct
-				if(part.use_tool(src, user, 0, volume=30))
-					balloon_alert(user, LANG("obj.40e42e49", null))
-					step = WRENCHED_ASSEMBLY_STEP
-			else if(part.tool_behaviour == TOOL_CROWBAR) //Deconstruct
-				if(part.use_tool(src, user, 0, volume=30))
-					boots.forceMove(drop_location())
-					balloon_alert(user, LANG("obj.1bbfd35b", null))
-					boots = null
-					step = GAUNTLETS_STEP
-		if(WRENCHED_ASSEMBLY_STEP)
-			if(part.tool_behaviour == TOOL_SCREWDRIVER) //Construct
-				if(part.use_tool(src, user, 0, volume=30))
-					balloon_alert(user, LANG("obj.8284d713", null))
-					step = SCREWED_ASSEMBLY_STEP
-			else if(part.tool_behaviour == TOOL_WRENCH) //Deconstruct
-				if(part.use_tool(src, user, 0, volume=30))
-					balloon_alert(user, LANG("obj.213e899a", null))
-					step = BOOTS_STEP
+			if(!istype(tool, /obj/item/mod/construction/boots)) //Construct
+				return NONE
+
+			if(!user.transferItemToLoc(tool, src))
+				balloon_alert(user, LANG("obj.ee463177", null))
+				return ITEM_INTERACT_BLOCKING
+
+			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+			balloon_alert(user, LANG("obj.61bb5191", null))
+			boots = tool
+			step = BOOTS_STEP
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
 		if(SCREWED_ASSEMBLY_STEP)
-			if(istype(part, /obj/item/mod/construction/plating)) //Construct
-				var/obj/item/mod/construction/plating/external_plating = part
-				if(!user.transferItemToLoc(part, src))
-					balloon_alert(user, LANG("obj.ee463177", null))
-					return
-				playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-				var/obj/item/mod = new /obj/item/mod/control(drop_location(), external_plating.theme, null, core)
-				core = null
-				qdel(src)
-				user.put_in_hands(mod)
-				mod.balloon_alert(user, LANG("obj.33113ef2", null))
-			else if(part.tool_behaviour == TOOL_SCREWDRIVER) //Construct
-				if(part.use_tool(src, user, 0, volume=30))
-					balloon_alert(user, LANG("obj.b5142f35", null))
-					step = SCREWED_ASSEMBLY_STEP
-	update_icon_state()
+			if(!istype(tool, /obj/item/mod/construction/plating)) //Construct
+				return NONE
+
+			var/obj/item/mod/construction/plating/external_plating = tool
+			if(!user.transferItemToLoc(tool, src))
+				balloon_alert(user, LANG("obj.ee463177", null))
+				return ITEM_INTERACT_BLOCKING
+
+			playsound(src, 'sound/machines/click.ogg', 30, TRUE)
+			var/obj/item/mod = new /obj/item/mod/control(drop_location(), external_plating.theme, null, core)
+			core = null
+			qdel(src)
+			user.put_in_hands(mod)
+			mod.balloon_alert(user, LANG("obj.33113ef2", null))
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/item/mod/construction/shell/screwdriver_act(mob/living/user, obj/item/tool)
+	switch(step)
+
+		if(CORE_STEP)
+			if(!tool.use_tool(src, user, 0, volume = 30))
+				return ITEM_INTERACT_BLOCKING
+
+			balloon_alert(user, LANG("obj.a5967dfa", null))
+			step = SCREWED_CORE_STEP
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
+		if(SCREWED_CORE_STEP)
+			if(!tool.use_tool(src, user, 0, volume = 30))
+				return ITEM_INTERACT_BLOCKING
+
+			balloon_alert(user, LANG("obj.4e25acf7", null))
+			step = CORE_STEP
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
+		if(WRENCHED_ASSEMBLY_STEP)
+			if(!tool.use_tool(src, user, 0, volume = 30))
+				return ITEM_INTERACT_BLOCKING
+
+			balloon_alert(user, LANG("obj.8284d713", null))
+			step = SCREWED_ASSEMBLY_STEP
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
+		if(SCREWED_ASSEMBLY_STEP)
+			if(!tool.use_tool(src, user, 0, volume = 30))
+				return ITEM_INTERACT_BLOCKING
+
+			balloon_alert(user, LANG("obj.b5142f35", null))
+			step = WRENCHED_ASSEMBLY_STEP
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/item/mod/construction/shell/crowbar_act(mob/living/user, obj/item/tool)
+	switch(step)
+		if(CORE_STEP)
+			if(!tool.use_tool(src, user, 0, volume = 30))
+				return ITEM_INTERACT_SUCCESS
+
+			core.forceMove(drop_location())
+			balloon_alert(user, LANG("obj.17bf120a", null))
+			step = START_STEP
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
+		if(HELMET_STEP)
+			if(!tool.use_tool(src, user, 0, volume = 30))
+				return ITEM_INTERACT_BLOCKING
+
+			helmet.forceMove(drop_location())
+			balloon_alert(user, LANG("obj.b42b2433", null))
+			helmet = null
+			step = SCREWED_CORE_STEP
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
+		if(CHESTPLATE_STEP)
+			if(!tool.use_tool(src, user, 0, volume = 30))
+				return ITEM_INTERACT_BLOCKING
+
+			chestplate.forceMove(drop_location())
+			balloon_alert(user, LANG("obj.1d2b3d3b", null))
+			chestplate = null
+			step = HELMET_STEP
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
+		if(GAUNTLETS_STEP)
+			if(!tool.use_tool(src, user, 0, volume = 30))
+				return ITEM_INTERACT_BLOCKING
+
+			gauntlets.forceMove(drop_location())
+			balloon_alert(user, LANG("obj.cb7f46ae", null))
+			gauntlets = null
+			step = CHESTPLATE_STEP
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
+		if(BOOTS_STEP)
+			if(!tool.use_tool(src, user, 0, volume = 30))
+				return ITEM_INTERACT_BLOCKING
+
+			boots.forceMove(drop_location())
+			balloon_alert(user, LANG("obj.1bbfd35b", null))
+			boots = null
+			step = GAUNTLETS_STEP
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/item/mod/construction/shell/wrench_act(mob/living/user, obj/item/tool)
+	switch(step)
+		if(BOOTS_STEP)
+			if(!tool.use_tool(src, user, 0, volume = 30))
+				return ITEM_INTERACT_BLOCKING
+
+			balloon_alert(user, LANG("obj.40e42e49", null))
+			step = WRENCHED_ASSEMBLY_STEP
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
+		if(WRENCHED_ASSEMBLY_STEP)
+			if(!tool.use_tool(src, user, 0, volume = 30))
+				return ITEM_INTERACT_BLOCKING
+
+			balloon_alert(user, LANG("obj.213e899a", null))
+			step = BOOTS_STEP
+			update_icon_state()
+			return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/mod/construction/shell/update_icon_state()
 	. = ..()

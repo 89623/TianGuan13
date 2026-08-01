@@ -65,6 +65,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/guarddog
 
 /datum/ai_controller/basic_controller/guarddog
+	behavior_tree_json = "code/modules/mob/living/basic/pets/dog/guarddog.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
@@ -73,12 +74,6 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 
 /mob/living/basic/pet/dog/breaddog //Most of the code originates from Cak
 	name = "Kobun"
@@ -120,7 +115,7 @@
 	. = ..()
 	if(!.) //dead or deleted
 		return
-	if(stat) // consciousness check
+	if(IS_UNCONSCIOUS_OR_CRIT(src)) // consciousness check
 		return
 
 	if(health < maxHealth)

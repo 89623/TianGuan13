@@ -259,7 +259,7 @@
 	for(var/obj/machinery/porta_turret/syndicate/toolbox/mag_fed/turret in linked_turrets)
 		for(var/turret_to_control in 1 to length(linked_turrets))
 			turret.override_target(acquired_target?.resolve())
-		balloon_alert(user, "target designated!")
+		balloon_alert(user, LANG("obj.1d6ad100", null))
 
 /// clears manual target acquisition
 /obj/item/target_designator/proc/clear_target(user)
@@ -267,7 +267,7 @@
 	for(var/obj/machinery/porta_turret/syndicate/toolbox/mag_fed/turret in linked_turrets)
 		for(var/turret_to_control in 1 to length(linked_turrets))
 			turret.clear_override()
-		balloon_alert(user, "designation cleared!")
+		balloon_alert(user, LANG("obj.0a3f5035", null))
 
 /// Sets all turrets to the same state as the controller.
 /obj/item/target_designator/proc/sync_turrets()
@@ -275,15 +275,15 @@
 		if(target_all == TRUE && follow_flags == FALSE)
 			if(!(turret.target_assessment == TURRET_FLAG_SHOOT_EVERYONE))
 				turret.target_assessment = TURRET_FLAG_SHOOT_EVERYONE
-				turret.balloon_alert_to_viewers("unrestricting targeting!")
+				turret.balloon_alert_to_viewers(LANG("obj.5e7a5938", null))
 		if(follow_flags == TRUE)
 			if(!(turret.target_assessment == TURRET_FLAG_OBEY_FLAGS))
 				turret.target_assessment = TURRET_FLAG_OBEY_FLAGS
-				turret.balloon_alert_to_viewers("obeying laws!")
+				turret.balloon_alert_to_viewers(LANG("obj.7bcfac8e", null))
 		if(follow_flags == FALSE && target_all == FALSE)
 			if(!(turret.target_assessment == TURRET_FLAG_SHOOT_NOONE))
 				turret.target_assessment = TURRET_FLAG_SHOOT_NOONE
-				turret.balloon_alert_to_viewers("restricting targeting!")
+				turret.balloon_alert_to_viewers(LANG("obj.ca236d6c", null))
 		turret.setState(TRUE) //So they'll update properly
 
 ////// Turret handling //////
@@ -856,36 +856,33 @@
 		balloon_alert(user, LANG("obj.ac33e326", null))
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/porta_turret/syndicate/toolbox/mag_fed/attackby_secondary(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers) //IM TIRED OF MISMATCHED VAR NAMES. IT'S ATTACK_ITEM ON MAIN, WHY WEAPON HERE?
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
+/obj/machinery/porta_turret/syndicate/toolbox/mag_fed/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
 	if(in_faction(user))
-		if(istype(attacking_item, /obj/item/target_designator))
+		if(istype(tool, /obj/item/target_designator))
 			var/obj/item/target_designator/owner_check = linkage?.resolve()
-			if(attacking_item != owner_check) //cant unlink if not the same one
+			if(tool != owner_check) //cant unlink if not the same one
 				balloon_alert(user, LANG("obj.1bfde4cb", null))
-				return
-			var/obj/item/target_designator/controller = attacking_item
+				return ITEM_INTERACT_BLOCKING
+			var/obj/item/target_designator/controller = tool
 			linkage = null
 			controller.linked_turrets -= src
 			balloon_alert(user, LANG("obj.b69401fb", null))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+			return ITEM_INTERACT_SUCCESS
 
-	if(attacking_item.tool_behaviour != TOOL_WRENCH)
-		return SECONDARY_ATTACK_CALL_NORMAL
+	if(tool.tool_behaviour != TOOL_WRENCH)
+		return NONE
 
-	if(!attacking_item.toolspeed)
-		return SECONDARY_ATTACK_CALL_NORMAL
+	if(!tool.toolspeed)
+		return NONE
 
 	if(!claptrap_moment)
 		balloon_alert(user, LANG("obj.44f0e678", null))
-	if(!attacking_item.use_tool(src, user, 5 SECONDS, volume = 20))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!tool.use_tool(src, user, 5 SECONDS, volume = 20))
+		return ITEM_INTERACT_BLOCKING
 
-	attacking_item.play_tool_sound(src, 50)
+	tool.play_tool_sound(src, 50)
 	deconstruct(TRUE)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/porta_turret/syndicate/toolbox/mag_fed/click_alt_secondary(mob/user)
 	. = ..()

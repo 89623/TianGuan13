@@ -1,20 +1,15 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Admin Verbs in this file are special and cannot use the AVD system for some reason or another.
 
-/client/proc/show_verbs()
-	set name = "管理员命令 - 显示"
-	set category = ADMIN_CATEGORY_MAIN
+GAME_VERB_PROC(/client, show_verbs, "管理员命令 - 显示", ADMIN_CATEGORY_MAIN)
 
-	remove_verb(src, /client/proc/show_verbs)
+	UNASSIGN_GAME_VERB(src, /client, show_verbs)
 	add_admin_verbs()
 
 	to_chat(src, span_interface(LANG("client.11524bf0", null)), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Show Adminverbs")
 
-/client/proc/readmin()
-	set name = "恢复管理员权限"
-	set category = "Admin"
-	set desc = "Regain your admin powers."
+GAME_VERB_PROC_DESC(/client, readmin, "恢复管理员权限", "Regain your admin powers.", "Admin")
 
 	var/datum/admins/A = GLOB.deadmins[ckey]
 
@@ -36,9 +31,7 @@
 	log_admin("[src] re-adminned themselves.")
 	BLACKBOX_LOG_ADMIN_VERB("Readmin")
 
-/client/proc/admin_2fa_verify()
-	set name = "验证管理员"
-	set category = "Admin"
+GAME_VERB_PROC(/client, admin_2fa_verify, "验证管理员", "Admin")
 
 	var/datum/admins/admin = GLOB.admin_datums[ckey]
 	admin?.associate(src)

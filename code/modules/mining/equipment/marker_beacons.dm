@@ -133,23 +133,27 @@ GLOBAL_LIST_INIT(marker_beacon_colors, sort_list(list(
 /obj/structure/marker_beacon/attack_tk(mob/user)
 	return
 
-/obj/structure/marker_beacon/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/stack/marker_beacon))
-		var/obj/item/stack/marker_beacon/M = I
+/obj/structure/marker_beacon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stack/marker_beacon))
+		var/obj/item/stack/marker_beacon/collection = tool
 		to_chat(user, span_notice(LANG("obj.71262792", list(src))))
-		if(do_after(user, remove_speed, target = src) && M.amount + 1 <= M.max_amount)
-			M.add(1)
-			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-			qdel(src)
-			return
-	if(istype(I, /obj/item/light_eater))
+		if(!do_after(user, remove_speed, target = src) || collection.amount + 1 > collection.max_amount)
+			return ITEM_INTERACT_BLOCKING
+
+		collection.add(1)
+		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/light_eater))
 		var/obj/effect/decal/cleanable/ash/A = new /obj/effect/decal/cleanable/ash(drop_location())
 		A.desc += "\nLooks like this used to be \a [src] some time ago."
-		visible_message(span_danger(LANG("obj.c92ed8d3", list(src, I))))
+		visible_message(span_danger(LANG("obj.c92ed8d3", list(src, tool))))
 		playsound(src, 'sound/items/tools/welder.ogg', 50, TRUE)
 		qdel(src)
-		return
-	return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/marker_beacon/click_alt(mob/living/user)
 	var/input_color = tgui_input_list(user, LANG("obj.5d507f45", null), LANG("obj.287a5f1a", null), GLOB.marker_beacon_colors)

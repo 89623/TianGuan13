@@ -1,7 +1,7 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/mutation/tongue_spike
 	name = "Tongue Spike"
-	desc = "Allows a creature to voluntary shoot their tongue out as a deadly weapon."
+	desc = "The subject gains the ability to voluntary shoot their tongue out as a deadly weapon."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your feel like you can throw your voice.")
 	instability = POSITIVE_INSTABILITY_MINI // worthless. also serves as a bit of a hint that it's not good
@@ -90,7 +90,7 @@
 
 /datum/mutation/tongue_spike/chem
 	name = "Chem Spike"
-	desc = "Allows a creature to voluntary shoot their tongue out as biomass, allowing a long range transfer of chemicals."
+	desc = "The subject gains the ability to voluntary shoot their tongue out as biomass, allowing a long range transfer of chemicals."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your feel like you can really connect with people by throwing your voice.")
 	instability = POSITIVE_INSTABILITY_MINOR // slightly less worthless. slightly.

@@ -71,32 +71,38 @@
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
-/obj/item/universal_scanner/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(scanning_mode == SCAN_SALES_TAG && isidcard(attacking_item))
-		var/obj/item/card/id/potential_acc = attacking_item
-		if(potential_acc.registered_account)
-			if(payments_acc == potential_acc.registered_account)
-				to_chat(user, span_notice(LANG("obj.bde32b20", null)))
-				return
-			else
-				payments_acc = potential_acc.registered_account
-				playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
-				to_chat(user, span_notice(LANG("obj.37931711", list(src))))
-		else if(!potential_acc.registered_account)
+/obj/item/universal_scanner/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(scanning_mode == SCAN_SALES_TAG && isidcard(tool))
+		var/obj/item/card/id/potential_acc = tool
+		if(!potential_acc.registered_account)
 			to_chat(user, span_warning(LANG("obj.51d0d893", null)))
-			return
-	if(istype(attacking_item, /obj/item/paper))
-		if (!(paper_count >= max_paper_count))
-			paper_count += PAPER_PER_SHEET
-			qdel(attacking_item)
-			if (paper_count >= max_paper_count)
-				paper_count = max_paper_count
-				to_chat(user, span_notice(LANG("obj.60720976", list(src))))
-				return
-			to_chat(user, span_notice(LANG("obj.c2d63d9c", list(src, paper_count))))
-		else
+			return ITEM_INTERACT_BLOCKING
+
+		if(payments_acc == potential_acc.registered_account)
+			to_chat(user, span_notice(LANG("obj.bde32b20", null)))
+			return ITEM_INTERACT_BLOCKING
+
+		payments_acc = potential_acc.registered_account
+		playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
+		to_chat(user, span_notice(LANG("obj.37931711", list(src))))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/paper))
+		if (paper_count >= max_paper_count)
 			to_chat(user, span_notice(LANG("obj.d0c8fa5b", list(src))))
+			return ITEM_INTERACT_BLOCKING
+
+		paper_count += PAPER_PER_SHEET
+		qdel(tool)
+		if (paper_count >= max_paper_count)
+			paper_count = max_paper_count
+			to_chat(user, span_notice(LANG("obj.60720976", list(src))))
+			return ITEM_INTERACT_SUCCESS
+
+		to_chat(user, span_notice(LANG("obj.c2d63d9c", list(src, paper_count))))
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/universal_scanner/attack_self_secondary(mob/user, modifiers)
 	. = ..()
@@ -235,7 +241,7 @@
 
 				for(var/datum/bank_account/shareholder in cube.bounty_holder_accounts)
 					if(shareholder != cube.bounty_handler_account) //No need to send a tracking update to the person scanning it
-						shareholder.bank_card_talk("<b>[cube]</b> was scanned in \the <b>[get_area(cube)]</b> by <b>[scan_human] ([scan_human.job])</b>.")
+						shareholder.bank_card_talk(LANG("obj.6bef883c", list(cube, get_area(cube), scan_human, scan_human.job)))
 
 			else
 				to_chat(user, span_warning(LANG("obj.7431fd1a", null)))

@@ -28,7 +28,7 @@ ADMIN_VERB(announce, R_ADMIN, "公告", "Announce your desires to the world.", A
 	log_admin("Announce: [key_name(user)] : [message]")
 	BLACKBOX_LOG_ADMIN_VERB("Announce")
 
-ADMIN_VERB(unprison, R_ADMIN, "解除监禁", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/prisoner in GLOB.mob_list)
+ADMIN_VERB(unprison, R_ADMIN, "解除监禁", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/prisoner)
 	if(!is_centcom_level(prisoner.z))
 		tgui_alert(user, LANG("datum.dc88f6bd", list(prisoner.name)))
 		return
@@ -150,7 +150,7 @@ ADMIN_VERB(cmd_admin_check_player_exp, R_ADMIN, "玩家游玩时长", "View play
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-ADMIN_VERB(drop_everything, R_ADMIN, "丢下所有物品", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/dropee in GLOB.mob_list)
+ADMIN_VERB(drop_everything, R_ADMIN, "丢下所有物品", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/dropee)
 	var/confirm = tgui_alert(user, LANG("datum.0ca8446b", list(dropee)), LANG("datum.affb7d7e", null), list("Yes", "No"))
 	if(confirm != "Yes")
 		return

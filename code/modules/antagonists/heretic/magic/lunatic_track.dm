@@ -25,7 +25,7 @@
 	owner.balloon_alert(owner, get_balloon_message(ascended_heretic))
 
 	if(ascended_heretic.stat == DEAD)
-		to_chat(owner, span_hierophant(LANG("datum.9185ca5d", list(ascended_heretic))))
+		to_chat(owner, span_mansus(LANG("datum.9185ca5d", list(ascended_heretic))))
 
 	StartCooldown()
 	return TRUE

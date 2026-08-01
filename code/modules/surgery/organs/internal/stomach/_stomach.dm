@@ -171,7 +171,7 @@
 		hunger_rate *= hunger_modifier
 		hunger_rate *= human.physiology.hunger_mod
 		// NOVA EDIT ADDITION BEGIN
-		if((human.body_position == LYING_DOWN) || (human.stat == UNCONSCIOUS))
+		if((human.body_position == LYING_DOWN) || IS_UNCONSCIOUS(human))
 			hunger_rate *= 0.5
 		// NOVA EDIT ADDITION END
 		human.adjust_nutrition(-hunger_rate * seconds_per_tick)
@@ -332,7 +332,7 @@
 		if (HAS_TRAIT(owner, TRAIT_ANALGESIA))
 			continue
 
-		owner.visible_message(span_warning("[owner] doubles over in pain!"), span_userdanger("You feel a sharp, searing sensation in your stomach!"))
+		owner.visible_message(span_warning(LANG("obj.4f2b1df7", list(owner))), span_userdanger(LANG("obj.c23633dd", null)))
 		owner.Paralyze(1 SECONDS)
 		owner.adjust_eye_blur(5 SECONDS)
 
@@ -357,7 +357,7 @@
 			if(SPT_PROB(5, seconds_per_tick))
 				disgusted.adjust_stutter(2 SECONDS)
 				disgusted.adjust_confusion(2 SECONDS)
-			if(SPT_PROB(5, seconds_per_tick) && !disgusted.stat)
+			if(SPT_PROB(5, seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(disgusted))
 				to_chat(disgusted, span_warning(LANG("obj.f60fbe43", null)))
 			disgusted.adjust_jitter(-6 SECONDS)
 		if(disgust >= DISGUST_LEVEL_VERYGROSS)

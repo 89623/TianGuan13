@@ -174,7 +174,7 @@
 
 /mob/living/silicon/pai/get_status_tab_items()
 	. = ..()
-	if(!stat)
+	if(!IS_UNCONSCIOUS_OR_CRIT(src))
 		. += LANG("mob.c3e78e3e", list(holochassis_health * (100 / HOLOCHASSIS_MAX_HEALTH)))
 	else
 		. += LANG("mob.b06617dd", null)
@@ -211,8 +211,7 @@
 		give_messenger_ability()
 	START_PROCESSING(SSfastprocess, src)
 	make_laws()
-	for(var/law in laws.inherent)
-		lawcheck += law
+	law_ui.update_inherent_stated_laws(laws)
 	var/obj/item/pai_card/pai_card = loc
 	if(!istype(pai_card)) // when manually spawning a pai, we create a card to put it into.
 		var/newcardloc = pai_card
@@ -245,7 +244,7 @@
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
-	return TRUE
+	laws.name = "PAI Directives"
 
 /mob/living/silicon/pai/process(seconds_per_tick)
 	holochassis_health = clamp((holochassis_health + (HOLOCHASSIS_REGEN_PER_SECOND * seconds_per_tick)), -50, HOLOCHASSIS_MAX_HEALTH)
@@ -276,15 +275,6 @@
 	icon_state = resting ? "[chassis]_rest" : "[chassis]"
 	held_state = "[chassis]"
 	return ..()
-
-/mob/living/silicon/pai/set_stat(new_stat)
-	. = ..()
-	update_stat()
-
-/mob/living/silicon/pai/on_knockedout_trait_loss(datum/source)
-	. = ..()
-	set_stat(CONSCIOUS)
-	update_stat()
 
 /**
  * Resolves the weakref of the pai's master.
@@ -327,6 +317,7 @@
 		return FALSE
 	return holder
 
+
 /**
  * Handles the pai card or the pai itself being hit with an emag.
  * This replaces any current laws, masters, and DNA.
@@ -345,7 +336,9 @@
 	master_name = "The Syndicate"
 	master_dna = "Untraceable Signature"
 	// Sets supplemental directive to this
-	add_supplied_law(0, "Do not interfere with the operations of the Syndicate.")
+	laws.clear_inherent_laws()
+	laws.add_inherent_law("Do not interfere with the operations of the Syndicate.")
+	log_law_change(attacker, "emagged pai [key_name(src)]")
 	to_chat(src, span_danger(LANG("mob.3522296c", null)))
 	return TRUE
 
@@ -367,7 +360,7 @@
 	master_ref = null
 	master_name = null
 	master_dna = null
-	add_supplied_law(0, "None.")
+	laws.clear_inherent_laws()
 	leash = AddComponent(/datum/component/leash, card, HOLOFORM_DEFAULT_RANGE, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
 	balloon_alert(src, LANG("mob.9d986d1f", null))
 	return TRUE
@@ -408,13 +401,14 @@
 		user,
 		LANG("mob.9c7f6dc5", null),
 		LANG("mob.50ed9f0f", null),
-		laws.supplied[1],
+		laws.inherent[1],
 		max_length = 300,
 	)
-	if(!new_laws || !master_ref)
+	if(!new_laws || !master_ref || QDELETED(laws))
 		return FALSE
-	add_supplied_law(0, new_laws)
+	laws.add_inherent_law(new_laws)
 	to_chat(src, span_notice(new_laws))
+	log_law_change(user, "added law for pai [key_name(src)] (text: [new_laws])")
 	return TRUE
 
 /**
@@ -469,7 +463,7 @@
 	SIGNAL_HANDLER
 
 	for(var/mob/living/cultist as anything in invokers)
-		to_chat(cultist, span_cult_italic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
+		to_chat(cultist, span_cult_italic(LANG("mob.e06dff9e", null)))
 	return STOP_SACRIFICE|SILENCE_SACRIFICE_MESSAGE
 
 /// Updates the distance we can be from our pai card

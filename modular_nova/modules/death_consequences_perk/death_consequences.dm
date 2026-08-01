@@ -27,11 +27,7 @@
 	human_holder.cure_trauma_type(/datum/brain_trauma/severe/death_consequences, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /// Adjusts the mob's linked death consequences trauma (see get_death_consequences_trauma())'s degradation by increment.
-/mob/verb/adjust_degradation(increment as num)
-	set name = "调整死亡衰减"
-	set category = "IC"
-	set instant = TRUE
-
+GAME_VERB(/mob, adjust_degradation, "调整死亡衰减", "IC", increment as num)
 	if (isnull(mind))
 		to_chat(usr, span_warning(LANG("mob.e1a30946", null)))
 		return
@@ -54,11 +50,7 @@
 	to_chat(usr, span_notice(LANG("mob.073eda80", null)))
 
 /// Calls update_variables() on this mob's linked death consequences trauma. See that proc for further info.
-/mob/verb/refresh_death_consequences()
-	set name = "刷新死亡后果变量"
-	set category = "IC"
-	set instant = TRUE
-
+GAME_VERB(/mob, refresh_death_consequences, "刷新死亡后果变量", "IC")
 	if (isnull(mind))
 		to_chat(usr, span_warning(LANG("mob.e1a30946", null)))
 		return

@@ -93,7 +93,7 @@
 	config_tag = "Heavy Pirates"
 	midround_type = HEAVY_MIDROUND
 	jobban_flag = ROLE_TRAITOR
-	ruleset_flags = RULESET_INVADER
+	ruleset_flags = RULESET_INVADER|RULESET_ADMIN_CONFIGURABLE
 	weight = 3
 	min_pop = 25
 	min_antag_cap = 0 // ship will spawn if there are no ghosts around
@@ -177,23 +177,31 @@
 	if(!ship.load(T))
 		CRASH("Loading pirate ship failed!")
 
+	//if the pirate has a "leader" type, fill that first
+	var/list/spawners = list()
 	for(var/turf/area_turf as anything in ship.get_affected_turfs(T))
 		for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner in area_turf)
-			if(candidates.len > 0)
-				var/mob/our_candidate = candidates[1]
-				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
-				candidates -= our_candidate
-				notify_ghosts(
-					"The [chosen_gang.ship_name] has an object of interest: [spawned_mob]!",
-					source = spawned_mob,
-					header = "Pirates!",
-				)
+			if(spawner.is_leader)
+				spawners.Insert(1, spawner)
 			else
-				notify_ghosts(
-					"The [chosen_gang.ship_name] has an object of interest: [spawner]!",
-					source = spawner,
-					header = "Pirate Spawn Here!",
-				)
+				spawners += spawner
+
+	for(var/obj/effect/mob_spawn/ghost_role/human/pirate/spawner as anything in spawners)
+		if(candidates.len > 0)
+			var/mob/our_candidate = candidates[1]
+			var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
+			candidates -= our_candidate
+			notify_ghosts(
+				LANG("datum.48d5a6bb", list(chosen_gang.ship_name, spawned_mob)),
+				source = spawned_mob,
+				header = "Pirates!",
+			)
+		else
+			notify_ghosts(
+				LANG("datum.48d5a6bb", list(chosen_gang.ship_name, spawner)),
+				source = spawner,
+				header = "Pirate Spawn Here!",
+			)
 
 	priority_announce(chosen_gang.arrival_announcement, sender_override = chosen_gang.ship_name)
 
@@ -806,7 +814,7 @@
 	var/list/possible_targets = list()
 
 	for(var/mob/living/carbon/human/player in GLOB.player_list)
-		if(!player.client || !player.mind || player.stat != CONSCIOUS)
+		if(!player.client || !player.mind || IS_UNCONSCIOUS_OR_CRIT(player))
 			continue
 		if(!(player.mind.assigned_role.job_flags & JOB_CREW_MEMBER))
 			continue
@@ -1012,13 +1020,13 @@
 				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
 				candidates -= our_candidate
 				notify_ghosts(
-					"[spawner.prompt_name] has awoken: [spawned_mob]!",
+					LANG("datum.a28ace14", list(spawner.prompt_name, spawned_mob)),
 					source = spawned_mob,
 					header = "Come look!",
 				)
 			else
 				notify_ghosts(
-					"[spawner.prompt_name] spawner has been created!",
+					LANG("datum.1fa06707", list(spawner.prompt_name)),
 					source = spawner,
 					header = "Spawn Here!",
 				)
@@ -1170,7 +1178,7 @@
 /datum/dynamic_ruleset/midround/from_living/traitor/false_alarm()
 	priority_announce(
 		"Attention crew, it appears that someone on your station has hijacked your telecommunications and broadcasted an unknown signal.",
-		"[command_name()] High-Priority Update",
+		LANG("datum.34bd7ec6", list(command_name())),
 	)
 
 /datum/dynamic_ruleset/midround/from_living/traitor/mass
@@ -1214,6 +1222,16 @@
 
 /datum/dynamic_ruleset/midround/from_living/malf_ai/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/malf_ai)
+	if(!prob(33) || !isAI(candidate.current))
+		return
+	priority_announce("Ion storm detected near the station. Please check all AI-controlled equipment for errors.", "Anomaly Alert", ANNOUNCER_IONSTORM)
+	var/mob/living/silicon/new_malf_ai = candidate.current
+	var/obj/machinery/ai_law_rack/base/rack = new_malf_ai.get_law_rack()
+	rack?.scramble_ai_rack(
+		base_ion_prob = 100,
+		sub_ion_prob = 10,
+		ion_limit = 1,
+	)
 
 /datum/dynamic_ruleset/midround/from_living/malf_ai/can_be_selected()
 	return ..() && !HAS_TRAIT(SSstation, STATION_TRAIT_HUMAN_AI)
@@ -1237,7 +1255,7 @@
 /datum/dynamic_ruleset/midround/from_living/blob/assign_role(datum/mind/candidate)
 	candidate.add_antag_datum(/datum/antagonist/blob/infection)
 	notify_ghosts(
-		"[candidate.current.real_name] has become a blob host!",
+		LANG("datum.6c19b4fd", list(candidate.current.real_name)),
 		source = candidate.current,
 		header = "So Bulbous...",
 	)
@@ -1268,7 +1286,7 @@
 	var/obj/item/organ/brain/brain = candidate.current.get_organ_by_type(__IMPLIED_TYPE__)
 	brain.brain_gain_trauma(/datum/brain_trauma/special/obsessed)
 	notify_ghosts(
-		"[candidate.current.real_name] has developed an obsession with someone!",
+		LANG("datum.8b4eb665", list(candidate.current.real_name)),
 		source = candidate.current,
 		header = "Love Can Bloom",
 	)

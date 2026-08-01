@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Abstract parent for soup reagents.
 /// These are the majority result from soup recipes,
 /// but bear in mind it will(should) have other reagents along side it.
@@ -202,7 +203,7 @@
 
 		// Uh oh we reached the top of the pot, the soup's gonna boil over.
 		if(holder.total_volume >= holder.maximum_volume * 0.95)
-			below_pot.visible_message(span_warning("[pot] starts to boil over!"))
+			below_pot.visible_message(span_warning(LANG("datum.eeef20c5", list(pot))))
 			// Create a spread of dirty foam
 			do_foam(1, pot, below_pot, carry = holder, foam_type = /datum/effect_system/fluid_spread/foam/dirty, stop_reactions = TRUE, reagent_scale = 0.1)
 			// Loses a bit from the foam
@@ -486,8 +487,8 @@
 
 // Chili (Hot, not cold)
 /datum/reagent/consumable/nutriment/soup/hotchili
-	name = "Hot Chili"
-	description = "A five alarm Texan Chili!"
+	name = "Chili Con Carne"
+	description = "An extra spicy five alarm Texan Chili."
 	data = list("hot peppers" = 1)
 	glass_price = FOOD_PRICE_NORMAL
 	color = "#E23D12"
@@ -520,9 +521,30 @@
 	ingredient_reagent_multiplier = 0.33 // Chilis have a TON of capsaicin naturally
 	percentage_of_nutriment_converted = 0
 
+// Chili but hotter
+/datum/reagent/consumable/nutriment/soup/hotchili/ghost
+	name = "Ghost Chili Con Carne"
+	description = "An extra-extra <i>seven</i> alarm Texan Chili. Apparently, it goes that high."
+	data = list("extremely hot peppers" = 2)
+	glass_price = FOOD_PRICE_NORMAL
+	color = "#ff9479"
+
+/datum/glass_style/has_foodtype/soup/hotchili/ghost
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/hotchili/ghost
+
+/datum/chemical_reaction/food/soup/hotchili/ghost
+
+/datum/chemical_reaction/food/soup/hotchili/ghost/New()
+	. = ..()
+	required_ingredients[/obj/item/food/grown/ghost_chili] = required_ingredients[/obj/item/food/grown/chili]
+	required_ingredients -= /obj/item/food/grown/chili
+	results.Insert(1, /datum/reagent/consumable/nutriment/soup/hotchili/ghost)
+	results[/datum/reagent/consumable/nutriment/soup/hotchili/ghost] = results[/datum/reagent/consumable/nutriment/soup/hotchili]
+	results -= /datum/reagent/consumable/nutriment/soup/hotchili
+
 // Chili (Cold)
 /datum/reagent/consumable/nutriment/soup/coldchili
-	name = "Cold Chili"
+	name = "Chili Frio"
 	description = "This slush is barely a liquid!"
 	data = list("tomato" = 1, "mint" = 1)
 	glass_price = FOOD_PRICE_NORMAL
@@ -608,6 +630,26 @@
 		/datum/reagent/consumable/nutriment/soup/chili_sin_carne = 30,
 		/datum/reagent/consumable/tomatojuice = 10,
 	)
+
+// Vegan Chili but hotter
+/datum/reagent/consumable/nutriment/soup/chili_sin_carne/ghost
+	name = "Ghost Chili Sin Carne"
+	description = "For the hombres who don't want carne, but do want to feel like their mouth is on fire."
+	data = list("extremely hot peppers" = 2)
+	color = "#ff9479"
+
+/datum/glass_style/has_foodtype/soup/chili_sin_carne/ghost
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/chili_sin_carne/ghost
+
+/datum/chemical_reaction/food/soup/chili_sin_carne/ghost
+
+/datum/chemical_reaction/food/soup/chili_sin_carne/ghost/New()
+	. = ..()
+	required_ingredients[/obj/item/food/grown/ghost_chili] = required_ingredients[/obj/item/food/grown/chili]
+	required_ingredients -= /obj/item/food/grown/chili
+	results.Insert(1, /datum/reagent/consumable/nutriment/soup/chili_sin_carne/ghost)
+	results[/datum/reagent/consumable/nutriment/soup/chili_sin_carne/ghost] = results[/datum/reagent/consumable/nutriment/soup/chili_sin_carne]
+	results -= /datum/reagent/consumable/nutriment/soup/chili_sin_carne
 
 // Tomato soup
 /datum/reagent/consumable/nutriment/soup/tomato

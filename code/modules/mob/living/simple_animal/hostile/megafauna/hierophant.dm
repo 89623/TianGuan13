@@ -103,7 +103,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize(mapload)
 	. = ..()
 	spawned_beacon_ref = WEAKREF(new /obj/effect/hierophant(loc))
-	AddComponent(/datum/component/boss_music, 'sound/music/boss/hiero_boss.ogg', COMSIG_HOSTILE_FOUND_TARGET) // change to COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_CURRENT_TARGET) in basic conversion
+	AddComponent(/datum/component/boss_music, 'sound/music/boss/hiero_boss.ogg', COMSIG_HOSTILE_FOUND_TARGET) // change to COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_TARGET) in basic conversion
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()
 	QDEL_NULL(spawned_beacon_ref)
@@ -444,7 +444,7 @@ Difficulty: Hard
 	visible_message(span_hierophant(LANG("mob.0de96414", null)))
 	visible_message(span_hierophant_warning(LANG("mob.9c1aed9d", list(src))))
 	INVOKE_ASYNC(src, PROC_REF(hierophant_burst), null, get_turf(src), 10)
-	set_stat(CONSCIOUS) // deathgasp won't run if dead, stupid
+	set_stat(STABLE) // deathgasp won't run if dead, stupid
 	..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/celebrate_kill(mob/living/L)
@@ -501,7 +501,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
-	if(!stat && .)
+	if(!IS_UNCONSCIOUS_OR_CRIT(src) && .)
 		var/obj/effect/temp_visual/hierophant/squares/HS = new(old_loc)
 		HS.setDir(movement_dir)
 		playsound(src, 'sound/vehicles/mecha/mechmove04.ogg', 80, TRUE, -4)
@@ -718,13 +718,13 @@ Difficulty: Hard
 		if(L.client)
 			flash_color(L.client, "#660099", 1)
 		playsound(L,'sound/items/weapons/sear.ogg', 50, TRUE, -4)
-		to_chat(L, span_userdanger("You're struck by a [name]!"))
+		to_chat(L, span_userdanger(LANG("obj.91bf91e6", list(name))))
 		var/limb_to_hit = L.get_bodypart(L.get_random_valid_zone(even_weights = TRUE))
 		var/armor = L.run_armor_check(limb_to_hit, MELEE, "Your armor absorbs [src]!", "Your armor blocks part of [src]!", FALSE, 50, "Your armor was penetrated by [src]!")
 		L.apply_damage(damage, BURN, limb_to_hit, armor, wound_bonus=CANT_WOUND)
 		if(ishostile(L))
 			var/mob/living/simple_animal/hostile/H = L //mobs find and damage you...
-			if(H.stat == CONSCIOUS && !H.target && H.AIStatus != AI_OFF && !H.client)
+			if(!IS_UNCONSCIOUS_OR_CRIT(H) && !H.target && H.AIStatus != AI_OFF && !H.client)
 				if(!QDELETED(caster))
 					if(get_dist(H, caster) <= H.aggro_vision_range)
 						H.FindTarget(list(caster))
@@ -740,7 +740,7 @@ Difficulty: Hard
 			var/mob/living/occupant = O
 			if(friendly_fire_check && caster?.faction_check_atom(occupant))
 				continue
-			to_chat(occupant, span_userdanger("Your [M.name] is struck by a [name]!"))
+			to_chat(occupant, span_userdanger(LANG("obj.32dae680", list(M.name, name))))
 			playsound(M,'sound/items/weapons/sear.ogg', 50, TRUE, -4)
 			M.take_damage(damage, BURN, 0, 0)
 
@@ -766,20 +766,24 @@ Difficulty: Hard
 	layer = LOW_OBJ_LAYER
 	anchored = TRUE
 
-/obj/effect/hierophant/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/hierophant_club))
-		var/obj/item/hierophant_club/club = attacking_item
-		if(club.beacon == src)
-			to_chat(user, span_notice(LANG("obj.3641a3ec", null)))
-			if(do_after(user, 5 SECONDS, target = src))
-				playsound(src,'sound/effects/magic/blind.ogg', 100, TRUE, -4)
-				new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
-				to_chat(user, span_hierophant_warning(LANG("obj.f2870dcf", list(src))))
-				club.beacon = null
-				club.update_appearance(UPDATE_ICON_STATE)
-				user.update_mob_action_buttons()
-				qdel(src)
-		else
-			to_chat(user, span_hierophant_warning(LANG("obj.7de78a10", null)))
-	else
+/obj/effect/hierophant/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/hierophant_club))
 		return ..()
+
+	var/obj/item/hierophant_club/club = tool
+	if(club.beacon != src)
+		to_chat(user, span_hierophant_warning(LANG("obj.7de78a10", null)))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice(LANG("obj.3641a3ec", null)))
+	if(!do_after(user, 5 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+
+	playsound(src,'sound/effects/magic/blind.ogg', 100, TRUE, -4)
+	new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
+	to_chat(user, span_hierophant_warning(LANG("obj.f2870dcf", list(src))))
+	club.beacon = null
+	club.update_appearance(UPDATE_ICON_STATE)
+	user.update_mob_action_buttons()
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS

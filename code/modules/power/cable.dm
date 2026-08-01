@@ -652,7 +652,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 /obj/item/stack/cable_coil/proc/try_heal_loop(atom/interacting_with, mob/living/user, repeating = FALSE)
 	var/mob/living/carbon/human/attacked_humanoid = interacting_with
 	var/obj/item/clothing/under/uniform = attacked_humanoid.w_uniform
-	if(uniform?.repair_sensors(user))
+	if(!istype(uniform) || uniform.repair_sensors(user))
 		return ITEM_INTERACT_SUCCESS
 
 	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
@@ -708,7 +708,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 
 	for(var/obj/structure/cable/old_cable in target_turf)
 		if(old_cable.cable_layer & target_layer)
-			to_chat(user, span_warning("There's already a cable at that position!"))
+			to_chat(user, span_warning(LANG("obj.99890162", null)))
 			return
 
 	var/obj/structure/cable/new_cable = new target_type(target_turf)

@@ -37,7 +37,7 @@
 	if(!.)
 		return .
 
-	if(owner.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(owner))
 		to_chat(owner, span_notice(LANG("datum.ef858651", null)))
 	owner.add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_FLOORED), STAMINA)
 	return .
@@ -66,7 +66,7 @@
 	if(mod_amount > 0)
 		return NONE
 
-	if(COOLDOWN_FINISHED(src, warn_cd) && owner.stat == CONSCIOUS)
+	if(COOLDOWN_FINISHED(src, warn_cd) && !IS_UNCONSCIOUS_OR_CRIT(owner))
 		to_chat(owner, span_notice(LANG("datum.e2cc0c22", null)))
 		owner.visible_message(span_warning(LANG("datum.eb815f68", list(owner))), ignored_mobs = owner)
 		COOLDOWN_START(src, warn_cd, 2.5 SECONDS)

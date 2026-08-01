@@ -63,13 +63,17 @@
 		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
 		slipper.Slip(src, hit_atom)
 
-/obj/item/melee/energy/sword/bananium/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(COOLDOWN_FINISHED(src, next_trombone_allowed) && istype(weapon, /obj/item/melee/energy/sword/bananium))
-		COOLDOWN_START(src, next_trombone_allowed, 5 SECONDS)
-		to_chat(user, span_warning(LANG("obj.ac83dad3", null)))
-		playsound(src, 'sound/misc/sadtrombone.ogg', 50)
-		return TRUE
-	return ..()
+/obj/item/melee/energy/sword/bananium/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/melee/energy/sword/bananium))
+		return ..()
+
+	if(!COOLDOWN_FINISHED(src, next_trombone_allowed))
+		return ITEM_INTERACT_BLOCKING
+
+	COOLDOWN_START(src, next_trombone_allowed, 5 SECONDS)
+	to_chat(user, span_warning(LANG("obj.ac83dad3", null)))
+	playsound(src, 'sound/misc/sadtrombone.ogg', 50)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/melee/energy/sword/bananium/suicide_act(mob/living/user)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))

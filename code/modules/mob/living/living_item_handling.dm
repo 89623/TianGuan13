@@ -1,7 +1,7 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 // Throwing stuff
 /mob/living/proc/toggle_throw_mode()
-	if(stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		return
 	if(!HAS_TRAIT(src, TRAIT_CAN_THROW_ITEMS))
 		return
@@ -139,7 +139,7 @@
 		to_chat(src, span_warning(LANG("mob.8f11a8ec", null)))
 		return
 
-	if(IS_DEAD_OR_INCAP(src))
+	if(src.incapacitated)
 		to_chat(src, span_warning(LANG("mob.df8a593f", null)))
 		return
 
@@ -161,7 +161,7 @@
 				to_chat(src, span_notice(LANG("mob.7d1c80f1", list(offered_item))))
 				return
 
-		if(IS_DEAD_OR_INCAP(offered))
+		if(offered.incapacitated)
 			to_chat(src, span_warning(LANG("mob.9d696b5b", list(offered.p_Theyre(), offered.p_their()))))
 			return
 
@@ -196,7 +196,7 @@
  */
 /mob/living/proc/take(mob/living/offerer, obj/item/offered_item, bypass)
 	clear_alert("[offerer]")
-	if(IS_DEAD_OR_INCAP(src))
+	if(src.incapacitated)
 		to_chat(src, span_warning(LANG("mob.3b05dcda", null)))
 		return
 	if(get_dist(src, offerer) > 1)

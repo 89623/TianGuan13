@@ -1,17 +1,4 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-
-/mob/living/silicon/ai/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/ai_module))
-		var/obj/item/ai_module/MOD = W
-		disconnect_shell()
-		if(!mind) //A player mind is required for law procs to run antag checks.
-			to_chat(user, span_warning(LANG("mob.6a991425", list(src))))
-			return
-		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
-		return
-
-	return ..()
-
 /mob/living/silicon/ai/blob_act(obj/structure/blob/B)
 	if (stat != DEAD)
 		adjust_brute_loss(60)
@@ -61,13 +48,10 @@
 	return TRUE
 
 /mob/living/silicon/ai/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(user.combat_mode)
-		return
-	if(stat != DEAD && !incapacitated && (client || deployed_shell?.client))
+	if(!incapacitated && (client || deployed_shell?.client))
 		// alive and well AIs control their floor bolts
-		balloon_alert(user, LANG("mob.f2f96a49", null))
-		return ITEM_INTERACT_SUCCESS
+		balloon_alert(user, LANG("mob.9760cd05", null))
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, LANG("mob.e643c62a", list(!is_anchored ? "tightening" : "loosening")))
 	balloon_alert(src, LANG("mob.62722c28", list(!is_anchored ? "tightened" : "loosened")))
 	if(!tool.use_tool(src, user, 4 SECONDS))

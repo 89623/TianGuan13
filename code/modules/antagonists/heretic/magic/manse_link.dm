@@ -56,7 +56,7 @@
 	to_chat(owner, span_notice(LANG("datum.d639c400", list(linkee))))
 	to_chat(linkee, span_warning(LANG("datum.1efea42c", null)))
 
-	if(!do_after(owner, link_time, linkee, hidden = TRUE))
+	if(!do_after(owner, link_time, linkee, cog_icon = null))
 		to_chat(owner, span_warning(LANG("datum.d2945102", list(linkee))))
 		to_chat(linkee, span_warning(LANG("datum.87466815", null)))
 		return FALSE

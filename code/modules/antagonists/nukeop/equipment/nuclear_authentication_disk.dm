@@ -80,24 +80,24 @@
 
 	return discover_after
 
-/obj/item/disk/nuclear/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/claymore/highlander) && !fake)
-		var/obj/item/claymore/highlander/claymore = weapon
-		if(claymore.nuke_disk)
-			to_chat(user, span_notice(LANG("obj.ffa4945b", null)))
-			qdel(claymore.nuke_disk)
-			claymore.nuke_disk = null
-			return
+/obj/item/disk/nuclear/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/claymore/highlander) || fake)
+		return ..()
 
-		user.visible_message(
-			span_warning(LANG("obj.36873670", list(user, src))),
-			span_userdanger(LANG("obj.5561b4c4", null)),
-		)
-		forceMove(claymore)
-		claymore.nuke_disk = src
-		return TRUE
+	var/obj/item/claymore/highlander/claymore = tool
+	if(claymore.nuke_disk)
+		to_chat(user, span_notice(LANG("obj.ffa4945b", null)))
+		qdel(claymore.nuke_disk)
+		claymore.nuke_disk = null
+		return ITEM_INTERACT_BLOCKING
 
-	return ..()
+	user.visible_message(
+		span_warning(LANG("obj.36873670", list(user, src))),
+		span_userdanger(LANG("obj.5561b4c4", null)),
+	)
+	forceMove(claymore)
+	claymore.nuke_disk = src
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/disk/nuclear/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(LANG("obj.22d912d0", list(user, user.p_theyre()))))

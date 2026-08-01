@@ -108,7 +108,7 @@
 	for(var/mob/living/mob in target.get_all_contents())
 		if(mob.mob_size <= max_mob_size)
 			continue
-		balloon_alert(mod.wearer, "crate too heavy!")
+		balloon_alert(mod.wearer, LANG("obj.ec1b7b19", null))
 		return FALSE
 	return TRUE
 
@@ -342,7 +342,7 @@
 	animate(game_renderer, launch_time, transform = render_matrix)
 	var/current_time = world.time
 	mod.wearer.visible_message(span_warning(LANG("obj.21b8d8e3", list(mod.wearer))), \
-		blind_message = span_hear("You hear a whirring sound."))
+		blind_message = span_hear(LANG("obj.09dec412", null)))
 	playsound(src, 'sound/items/modsuit/loader_charge.ogg', 75, TRUE)
 	lightning = mutable_appearance('icons/effects/effects.dmi', "electricity3", layer = LOW_MOB_LAYER)
 	mod.wearer.add_overlay(lightning)
@@ -728,7 +728,7 @@
 
 /obj/item/mod/module/sphere_transform/proc/on_statchange(datum/source)
 	SIGNAL_HANDLER
-	if(mod.wearer.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(mod.wearer))
 		deactivate()
 
 /obj/projectile/bullet/mining_missile

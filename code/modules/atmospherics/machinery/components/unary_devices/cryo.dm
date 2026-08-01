@@ -522,8 +522,8 @@
 	user.visible_message(span_notice(LANG("obj.591d5354", list(user, src))), \
 		span_notice(LANG("obj.907d1a29", list(src, DisplayTimeText(CRYO_BREAKOUT_TIME)))), \
 		span_hear(LANG("obj.a2fe6eff", list(src))))
-	if(do_after(user, CRYO_BREAKOUT_TIME, target = src, hidden = TRUE))
-		if(!user || user.stat != CONSCIOUS || user.loc != src )
+	if(do_after(user, CRYO_BREAKOUT_TIME, target = src, cog_icon = null))
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src )
 			return
 		user.visible_message(span_warning(LANG("obj.37696909", list(user, src))), \
 			span_notice(LANG("obj.81c31f6b", list(src))))
@@ -556,10 +556,10 @@
 		occupant_data["name"] = mob_occupant.name
 		if(mob_occupant.stat == DEAD)
 			occupant_data["stat"] = "Dead"
-		else if (HAS_TRAIT(mob_occupant, TRAIT_KNOCKEDOUT))
+		else if (IS_UNCONSCIOUS(mob_occupant))
 			occupant_data["stat"] = "Unconscious"
 		else
-			occupant_data["stat"] = "Conscious"
+			occupant_data["stat"] = "Stable"
 
 		occupant_data["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
 

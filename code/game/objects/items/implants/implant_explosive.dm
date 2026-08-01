@@ -90,7 +90,7 @@
 		if(istype(target_implant, /obj/item/implant/explosive)) //we don't use our own type here, because macrobombs inherit this proc and need to be able to upgrade microbombs
 			var/obj/item/implant/explosive/other_implant = target_implant
 			if(other_implant.master_implant && master_implant) //we cant have two master implants at once
-				target.balloon_alert(user, "cannot fit implant!")
+				target.balloon_alert(user, LANG("obj.77f36b33", null))
 				return FALSE
 			if(master_implant)
 				merge_implants(src, other_implant)
@@ -130,7 +130,7 @@
 		imp_in.visible_message(span_warning(LANG("obj.c9a523c0", list(imp_in))))
 		if(notify_ghosts)
 			notify_ghosts(
-				"[imp_in.real_name] is about to detonate their explosive implant!",
+				LANG("obj.b6019462", list(imp_in.real_name)),
 				source = src,
 				header = "Tick Tick Tick...",
 				notify_flags = NOTIFY_CATEGORY_NOFLASH,
@@ -141,7 +141,7 @@
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	if(!panic_beep_sound)
 		sleep(delay * 0.25)
-	if(imp_in && !imp_in.stat && !no_paralyze)
+	if(imp_in && !IS_UNCONSCIOUS_OR_CRIT(imp_in) && !no_paralyze)
 		imp_in.visible_message(span_warning(LANG("obj.4f2b1df7", list(imp_in))))
 		imp_in.Paralyze(14 SECONDS)
 

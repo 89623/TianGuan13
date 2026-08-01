@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 #define REMOTECAM_RANGE_FAR 7
 #define REMOTECAM_RANGE_NEAR 2
 #define REMOTECAM_ENERGY_USAGE_NEAR 0.003 * STANDARD_CELL_CHARGE //Normal components have 0.001 * STANDARD_CELL_CHARGE, this is expensive to livestream footage
@@ -228,7 +229,7 @@
 	for(var/mob/M as anything in GLOB.player_list)
 		if (M.client?.eye == shell_camera)
 			M.reset_perspective(null)
-			to_chat(M, span_warning("The screen bursts into static!"))
+			to_chat(M, span_warning(LANG("obj.f627b674", null)))
 
 /**
  * Restore emp'd camera
@@ -392,7 +393,7 @@
 		return
 	var/obj/item/organ/cyberimp/bci/bci = shell_parent
 	//If shell is not currently inside a head, or user is currently blind, or user is dead
-	if(!bci.owner || bci.owner.is_blind() || bci.owner.stat >= UNCONSCIOUS)
+	if(!bci.owner || bci.owner.is_blind() || IS_UNCONSCIOUS(bci.owner))
 		close_camera()
 		return
 	var/obj/item/stock_parts/power_store/cell = parent.get_cell()

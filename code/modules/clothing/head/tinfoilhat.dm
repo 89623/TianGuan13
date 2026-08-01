@@ -75,7 +75,7 @@
 	if(target.get_item_by_slot(ITEM_SLOT_HEAD) != src)
 		return
 	QDEL_NULL(paranoia)
-	if(target.stat < UNCONSCIOUS)
+	if(!IS_UNCONSCIOUS(target))
 		to_chat(target, span_warning(LANG("obj.9c2e15af", null)))
 
 /obj/item/clothing/head/costume/foilhat/attack_hand(mob/user, list/modifiers)

@@ -230,7 +230,7 @@
 
 	for(var/obj/item/part as anything in get_parts())
 		if(part.loc != src)
-			balloon_alert(user, "parts extended!")
+			balloon_alert(user, LANG("obj.d8967490", null))
 			playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, FALSE, SILENCED_SOUND_EXTRARANGE)
 			return FALSE
 
@@ -388,7 +388,7 @@
 	selected_module?.deactivate(display_message = TRUE)
 	wearer.apply_damage(5 / severity, BURN, spread_damage=TRUE)
 	to_chat(wearer, span_danger(LANG("obj.5d6df311", list(src))))
-	if(wearer.stat < UNCONSCIOUS && prob(10))
+	if(!IS_UNCONSCIOUS(wearer) && prob(10))
 		wearer.emote("scream")
 
 /obj/item/mod/control/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
@@ -430,7 +430,7 @@
 			owner.visible_message(
 				span_warning(LANG("obj.40ac4005", list(user, action_key, owner, src))),
 				span_userdanger(LANG("obj.44eaa2ad", list(user, action_key, src))),
-				blind_message = span_hear("You hear rustling."),
+				blind_message = span_hear(LANG("obj.845a0660", null)),
 				ignored_mobs = user,
 			)
 			INVOKE_ASYNC(src, PROC_REF(attempt_strip_deploy), owner, user, action_key)
@@ -440,7 +440,7 @@
 			owner.visible_message(
 				span_warning(LANG("obj.ecd0c7e4", list(user, owner, src))),
 				span_userdanger(LANG("obj.78a4ee9c", list(user, src))),
-				blind_message = span_hear("You hear rustling."),
+				blind_message = span_hear(LANG("obj.845a0660", null)),
 				ignored_mobs = user,
 			)
 			INVOKE_ASYNC(src, PROC_REF(attempt_strip_activate), owner, user)
@@ -622,7 +622,7 @@
 	for(var/obj/item/mod/module/old_module as anything in modules)
 		if(is_type_in_list(new_module, old_module.incompatible_modules) || is_type_in_list(old_module, new_module.incompatible_modules))
 			if(user)
-				balloon_alert(user, "incompatible with [old_module]!")
+				balloon_alert(user, LANG("obj.0cd47146", list(old_module)))
 				playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 			return
 	var/complexity_with_module = complexity

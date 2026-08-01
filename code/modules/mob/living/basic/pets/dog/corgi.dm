@@ -113,39 +113,55 @@
 			armorval += inventory_back.get_armor_rating(type)
 	return armorval * 0.5
 
-/mob/living/basic/pet/dog/corgi/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/razor))
-		if(shaved)
-			to_chat(user, span_warning(LANG("mob.18f1e18b", list(p_they(), p_have()))))
-			return
-		if(!can_be_shaved)
-			to_chat(user, span_warning(LANG("mob.b6c70b82", list(p_they(), p_do()))))
-			return
-		user.visible_message(span_notice(LANG("mob.215295a5", list(user, src, attacking_item))), span_notice(LANG("mob.490e22db", list(src, attacking_item))))
-		if(do_after(user, 5 SECONDS, target = src))
-			user.visible_message(span_notice(LANG("mob.3ca61c66", list(user, src, attacking_item))))
-			playsound(get_turf(src), 'sound/items/hair-clippers.ogg', 20, TRUE)
-			shaved = TRUE
-			icon_living = "[icon_living]_shaved"
-			icon_dead = "[icon_living]_shaved_dead"
-			if(stat == CONSCIOUS)
-				icon_state = icon_living
-			else
-				icon_state = icon_dead
-		return TRUE
+/mob/living/basic/pet/dog/corgi/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/razor))
+		return ..()
 
-	return  ..()
+	if(shaved)
+		to_chat(user, span_warning(LANG("mob.18f1e18b", list(p_they(), p_have()))))
+		return ITEM_INTERACT_BLOCKING
 
-/mob/living/basic/pet/dog/corgi/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
+	if(!can_be_shaved)
+		to_chat(user, span_warning(LANG("mob.b6c70b82", list(p_they(), p_do()))))
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(
+		span_notice(LANG("mob.215295a5", list(user, src, tool))),
+		span_notice(LANG("mob.490e22db", list(src, tool))),
+		span_hear(LANG("mob.bc0b5d56", null)),
+	)
+
+	if(!do_after(user, 5 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+
+	user.visible_message(span_notice(LANG("mob.3ca61c66", list(user, src, tool))))
+	playsound(get_turf(src), 'sound/items/hair-clippers.ogg', 20, TRUE)
+	shaved = TRUE
+	icon_living = "[icon_living]_shaved"
+	icon_dead = "[icon_living]_shaved_dead"
+	if(!IS_UNCONSCIOUS_OR_CRIT(src))
+		icon_state = icon_living
+	else
+		icon_state = icon_dead
+	return ITEM_INTERACT_SUCCESS
+
+/mob/living/basic/pet/dog/corgi/update_dog_speech(list/speech_data)
 	. = ..()
-
 	if(inventory_head?.dog_fashion)
 		var/datum/dog_fashion/equipped_head_fashion_item = new inventory_head.dog_fashion(src)
-		equipped_head_fashion_item.apply_to_speech(speech)
+		equipped_head_fashion_item.apply_to_speech(speech_data)
 
 	if(inventory_back?.dog_fashion)
 		var/datum/dog_fashion/equipped_back_fashion_item = new inventory_back.dog_fashion(src)
-		equipped_back_fashion_item.apply_to_speech(speech)
+		equipped_back_fashion_item.apply_to_speech(speech_data)
+
+/// Applies corgi fashion to the BT blackboard speech data by routing through the planning stub.
+/mob/living/basic/pet/dog/corgi/update_dog_speak_blackboard(datum/ai_controller/controller)
+	var/list/speech_data = list()
+	update_dog_speech(speech_data)
+	if(!speech_data[BB_SPEAK_CHANCE])
+		speech_data[BB_SPEAK_CHANCE] = 1
+	controller.override_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, speech_data)
 
 /mob/living/basic/pet/dog/corgi/deadchat_plays(mode = ANARCHY_MODE, cooldown = 12 SECONDS)
 	. = AddComponent(/datum/component/deadchat_control/cardinal_movement, mode, list(
@@ -173,7 +189,7 @@
 		if(!equipped_head_fashion_item.obj_color)
 			equipped_head_fashion_item.obj_color = inventory_head.color
 
-		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
+		if(IS_DEAD_OR_FAKING(src))
 			head_icon = equipped_head_fashion_item.get_overlay(dir = EAST)
 			head_icon.pixel_z = -8
 			head_icon.transform = head_icon.transform.Turn(180)
@@ -193,7 +209,7 @@
 		if(!equipped_back_fashion_item.obj_color)
 			equipped_back_fashion_item.obj_color = inventory_back.color
 
-		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
+		if(IS_DEAD_OR_FAKING(src))
 			back_icon = equipped_back_fashion_item.get_overlay(dir = EAST)
 			back_icon.pixel_z = -11
 			back_icon.transform = back_icon.transform.Turn(180)
@@ -239,12 +255,15 @@
 		return FALSE
 
 	if (user)
-		if(stat == DEAD || HAS_TRAIT(src, TRAIT_FAKEDEATH))
+		if(IS_DEAD_OR_FAKING(src))
 			to_chat(user, span_notice(LANG("mob.65cc710d", list(real_name, item_to_add, p_them()))))
 		else
-			user.visible_message(span_notice(LANG("mob.62d82673", list(user, item_to_add, real_name, src, user))),
+			user.visible_message(
+				span_notice(LANG("mob.62d82673", list(user, item_to_add, real_name, src, user))),
 				span_notice(LANG("mob.5447687d", list(item_to_add, real_name, src, p_their()))),
-				span_hear(LANG("mob.2f0583aa", null)))
+				span_hear(LANG("mob.2f0583aa", null)),
+			)
+
 	item_to_add.forceMove(src)
 	inventory_head = item_to_add
 	update_corgi_fluff()
@@ -463,7 +482,7 @@
 
 ///Checks whether Ian has survived the round or not
 /mob/living/basic/pet/dog/corgi/ian/proc/check_ian_survival()
-	if(!stat && !memory_saved)
+	if(!IS_UNCONSCIOUS_OR_CRIT(src) && !memory_saved)
 		Write_Memory(FALSE)
 
 //NARS-IAN! SQ-Q-QooEglor-r'EEn-nl-luEEEf-f-fth-h
@@ -509,10 +528,10 @@
 	. = ..()
 	speak_emote = list("growls", "barks ominously")
 
-/mob/living/basic/pet/dog/corgi/narsie/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
-	speech.speak = string_list(list("Tari'karat-pasnar!", "IA! IA!", "BRRUUURGHGHRHR"))
-	speech.emote_hear = string_list(list("barks echoingly!", "woofs hauntingly!", "yaps in an eldritch manner.", "mutters something unspeakable."))
-	speech.emote_see = string_list(list("communes with the unnameable.", "ponders devouring some souls.", "shakes."))
+/mob/living/basic/pet/dog/corgi/narsie/update_dog_speech(list/speech_data)
+	speech_data[BB_EMOTE_SAY] = string_list(list("Tari'karat-pasnar!", "IA! IA!", "BRRUUURGHGHRHR"))
+	speech_data[BB_EMOTE_HEAR] = string_list(list("barks echoingly!", "woofs hauntingly!", "yaps in an eldritch manner.", "mutters something unspeakable."))
+	speech_data[BB_EMOTE_SEE] = string_list(list("communes with the unnameable.", "ponders devouring some souls.", "shakes."))
 
 /mob/living/basic/pet/dog/corgi/narsie/narsie_act()
 	if(stat == DEAD) //Nar'Sie loves her doggy

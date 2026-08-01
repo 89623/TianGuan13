@@ -6,10 +6,7 @@
 //#define MOB_LAYER 4   // This is a byond standard define
 #define MOB_LAYER_SHIFT_MAX 4.05
 
-/mob/living/verb/shift_layer_up()
-	set name = "上移图层"
-	set category = "IC"
-
+GAME_VERB(/mob/living, shift_layer_up, "上移图层", "IC")
 	if(incapacitated)
 		to_chat(src, span_warning(LANG("mob.93b3c965", null)))
 		return FALSE
@@ -25,10 +22,7 @@
 	return TRUE
 
 
-/mob/living/verb/shift_layer_down()
-	set name = "下移图层"
-	set category = "IC"
-
+GAME_VERB(/mob/living, shift_layer_down, "下移图层", "IC")
 	if(incapacitated)
 		to_chat(src, span_warning(LANG("mob.93b3c965", null)))
 		return FALSE

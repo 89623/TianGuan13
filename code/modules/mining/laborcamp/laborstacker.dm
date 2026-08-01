@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /**********************Prisoners' Console**************************/
 
 /obj/machinery/mineral/labor_claim_console
@@ -224,16 +225,19 @@
 		return
 	user.examinate(src)
 
-/obj/machinery/mineral/labor_points_checker/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(weapon, /obj/item/card/id/advanced/prisoner))
-		return ..()
-	var/obj/item/card/id/advanced/prisoner/prisoner_id = weapon
+/obj/machinery/mineral/labor_points_checker/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/card/id/advanced/prisoner))
+		return NONE
+
+	var/obj/item/card/id/advanced/prisoner/prisoner_id = tool
 	if(!prisoner_id.goal) //no goal to reach
 		say(LANG("obj.ebe1f050", null))
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	say(LANG("obj.2f62b694", list(prisoner_id.registered_name)))
 	say(LANG("obj.907c6c5c", list(prisoner_id.points, prisoner_id.goal)))
 	say(LANG("obj.ea9f3d09", null))
+	return ITEM_INTERACT_SUCCESS
 
 /datum/aas_config_entry/security_labor_stacker
 	name = "Security Alert: Labor Camp Release"

@@ -1,6 +1,6 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-/mob/living/carbon/human/Initialize(mapload)
-	add_verb(src, /mob/living/proc/mob_sleep)
+/mob/living/carbon/human/Initialize(mapload, datum/species/species)
+	ASSIGN_GAME_VERB(src, /mob/living, mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
 	icon_state = "" //Remove the inherent human icon that is visible on the map editor. We're rendering ourselves limb by limb, having it still be there results in a bug where the basic human icon appears below as south in all directions and generally looks nasty.
@@ -11,7 +11,8 @@
 	// Physiology needs to be created before species, as some species modify physiology
 	setup_physiology()
 
-	create_dna()
+
+	create_dna(species)
 	dna.species.create_fresh_body(src)
 	setup_human_dna()
 
@@ -42,10 +43,16 @@
 /mob/living/carbon/human/proc/setup_physiology()
 	physiology = new()
 
+/mob/living/carbon/human/get_unconscious_appearance()
+	return get_generic_humanoid_static_appearance()
+
 /mob/living/carbon/human/proc/setup_mood()
 	if (CONFIG_GET(flag/disable_human_mood))
 		return
 	mob_mood = new /datum/mood(src)
+
+/mob/living/carbon/human/dummy/get_unconscious_appearance()
+	return null
 
 /mob/living/carbon/human/dummy/setup_mood()
 	return
@@ -207,7 +214,7 @@
 							status = "sustained major trauma!"
 							span = "userdanger"
 						if(brutedamage)
-							to_chat(human_user, "<span class='[span]'>[BP] appears to have [status]</span>")
+							to_chat(human_user, LANG("mob.62eef672", list(span, BP, status)))
 				if(get_fire_loss())
 					to_chat(human_user, LANG("mob.b9dc97a6", null))
 					for(var/obj/item/bodypart/BP as anything in get_bodyparts())
@@ -222,7 +229,7 @@
 							status = "major burns!"
 							span = "userdanger"
 						if(burndamage)
-							to_chat(human_user, "<span class='[span]'>[BP] appears to have [status]</span>")
+							to_chat(human_user, LANG("mob.62eef672", list(span, BP, status)))
 				if(get_oxy_loss())
 					to_chat(human_user, span_danger(LANG("mob.e4ed1ff1", null)))
 				if(get_tox_loss() > 20)
@@ -271,7 +278,7 @@
 				return
 			if(ishuman(human_or_ghost_user))
 				var/mob/living/carbon/human/human_user = human_or_ghost_user
-				if(human_user.stat || human_user == src) //|| !human_user.canmove || human_user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
+				if(IS_UNCONSCIOUS_OR_CRIT(human_user) || human_user == src) //|| !human_user.canmove || human_user.restrained()) Fluff: Sechuds have eye-tracking technology and sets 'arrest' to people that the wearer looks and blinks at.
 					return   //Non-fluff: This allows sec to set people to arrest as they get disarmed or beaten
 			// Checks the user has security clearence before allowing them to change arrest status via hud, comment out to enable all access
 				var/obj/item/clothing/glasses/hud/security/user_glasses = human_user.glasses
@@ -451,8 +458,8 @@
 	return chest?.get_butt_sprite()
 
 /mob/living/carbon/human/get_footprint_sprite()
-	var/obj/item/bodypart/leg/L = get_bodypart(BODY_ZONE_R_LEG) || get_bodypart(BODY_ZONE_L_LEG)
-	return shoes?.footprint_sprite || L?.footprint_sprite
+	var/obj/item/bodypart/leg/leg = get_bodypart(BODY_ZONE_R_LEG) || get_bodypart(BODY_ZONE_L_LEG)
+	return astype(get_item_by_slot(ITEM_SLOT_FEET), /obj/item/clothing/shoes)?.footprint_sprite || leg?.footprint_sprite
 
 #define CHECK_PERMIT(item) (item && item.item_flags & NEEDS_PERMIT)
 
@@ -546,7 +553,7 @@
 		for(var/obj/item/hand in held_items)
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && dropItemToGround(hand))
 				step_towards(hand, src)
-				to_chat(src, span_warning("\The [singularity] pulls \the [hand] from your grip!"))
+				to_chat(src, span_warning(LANG("mob.d8912a05", list(singularity, hand))))
 
 #define CPR_PANIC_SPEED (0.8 SECONDS)
 
@@ -563,20 +570,20 @@
 		if (DOING_INTERACTION_WITH_TARGET(src,target))
 			return FALSE
 
-		if (target.stat == DEAD || HAS_TRAIT(target, TRAIT_FAKEDEATH))
-			balloon_alert(src, "[target.p_they()] [target.p_are()] dead!")
+		if (IS_DEAD_OR_FAKING(target))
+			balloon_alert(src, LANG("mob.abe74371", list(target.p_they(), target.p_are())))
 			return FALSE
 
 		if (is_mouth_covered())
-			balloon_alert(src, "remove your mask first!")
+			balloon_alert(src, LANG("mob.f47b9d27", null))
 			return FALSE
 
 		if (target.is_mouth_covered())
-			balloon_alert(src, "remove [target.p_their()] mask first!")
+			balloon_alert(src, LANG("mob.77a71e56", list(target.p_their())))
 			return FALSE
 
 		if(HAS_TRAIT_FROM(src, TRAIT_NOBREATH, DISEASE_TRAIT))
-			to_chat(src, span_warning("you can't breathe!"))
+			to_chat(src, span_warning(LANG("mob.ecb83a88", null)))
 			return FALSE
 
 		var/obj/item/organ/lungs/human_lungs = get_organ_slot(ORGAN_SLOT_LUNGS)
@@ -589,17 +596,17 @@
 			return FALSE
 		*/// NOVA EDIT REMOVAL END
 
-		visible_message(span_notice("[src] is trying to perform CPR on [target.name]!"), \
-						span_notice("You try to perform CPR on [target.name]... Hold still!"))
+		visible_message(span_notice(LANG("mob.b2f4d17f", list(src, target.name))), \
+						span_notice(LANG("mob.033b2298", list(target.name))))
 
 		if (!do_after(src, delay = panicking ? CPR_PANIC_SPEED : (3 SECONDS), target = target))
-			balloon_alert(src, "you fail to perform CPR!")
+			balloon_alert(src, LANG("mob.f6939eed", null))
 			return FALSE
 
 		if (target.health > target.crit_threshold)
 			return FALSE
 
-		visible_message(span_notice("[src] performs CPR on [target.name]!"), span_notice("You perform CPR on [target.name]."))
+		visible_message(span_notice(LANG("mob.1cff402d", list(src, target.name))), span_notice(LANG("mob.7092e734", list(target.name))))
 		if(HAS_MIND_TRAIT(src, TRAIT_MORBID))
 			add_mood_event("morbid_saved_life", /datum/mood_event/morbid_saved_life)
 		else
@@ -617,18 +624,18 @@
 		if(isnull(human_lungs) || istype(human_lungs, /obj/item/organ/lungs/synth) || (human_lungs.organ_flags & ORGAN_FAILING))
 			can_breathe = FALSE
 		if(issynthetic(target)) // Synthetic humanoids don't benefit from CPR
-			to_chat(target, span_unconscious("You feel someone pushing down onto your chest, but you don't feel any better..."))
+			to_chat(target, span_unconscious(LANG("mob.6a24bc46", null)))
 		else if(!can_breathe || (HAS_TRAIT(target, TRAIT_NOBREATH) || !target.get_organ_slot(ORGAN_SLOT_LUNGS)))
-			to_chat(target, span_unconscious("You feel someone pushing down onto your chest..."))
+			to_chat(target, span_unconscious(LANG("mob.b00b31d7", null)))
 			target.adjust_oxy_loss(-min(target.get_oxy_loss(), 5))
 		// NOVA EDIT ADDITION END
 		else
 			target.adjust_oxy_loss(-min(target.get_oxy_loss(), 7))
-			to_chat(target, span_unconscious("You feel someone pushing on your chest, and fresh air inside your lungs... It feels good...")) // NOVA EDIT CHANGE - Original: to_chat(target, span_unconscious("You feel a breath of fresh air enter your lungs... It feels good..."))
+			to_chat(target, span_unconscious(LANG("mob.eb0e9c29", null))) // NOVA EDIT CHANGE - Original: to_chat(target, span_unconscious("You feel a breath of fresh air enter your lungs... It feels good..."))
 
 		if (target.health <= target.crit_threshold)
 			if (!panicking)
-				to_chat(src, span_warning("[target] still isn't up! You try harder!"))
+				to_chat(src, span_warning(LANG("mob.57145868", list(target))))
 			panicking = TRUE
 		else
 			panicking = FALSE
@@ -948,7 +955,7 @@
 	return ..()
 
 /mob/living/carbon/human/mouse_buckle_handling(mob/living/M, mob/living/user)
-	if(pulling != M || grab_state != GRAB_AGGRESSIVE || stat != CONSCIOUS)
+	if(pulling != M || grab_state != GRAB_AGGRESSIVE || IS_UNCONSCIOUS_OR_CRIT(src))
 		return FALSE
 
 	//If they dragged themselves to you and you're currently aggressively grabbing them try to piggyback
@@ -963,7 +970,7 @@
 
 //src is the user that will be carrying, target is the mob to be carried
 /mob/living/carbon/human/proc/can_piggyback(mob/living/carbon/target)
-	return (istype(target) && target.stat == CONSCIOUS)
+	return (istype(target) && !IS_UNCONSCIOUS_OR_CRIT(target))
 
 /mob/living/carbon/human/proc/can_be_firemanned(mob/living/carbon/target)
 	return ishuman(target) && target.body_position == LYING_DOWN
@@ -1144,10 +1151,8 @@
 	var/race = null
 	var/use_random_name = TRUE
 
-/mob/living/carbon/human/species/create_dna()
-	dna = new /datum/dna(src)
-	if (!isnull(race))
-		dna.species = new race
+/mob/living/carbon/human/species/create_dna(datum/species/species)
+	..(race) //Kind of shit but I'm brainfarting how to do this better right now.
 
 /mob/living/carbon/human/species/set_species(datum/species/mrace, icon_update = TRUE, pref_load = FALSE, replace_missing = TRUE, list/override_features, list/override_mutantparts, list/override_markings) // NOVA EDIT CHANGE - Customization. ORIGINAL: /mob/living/carbon/human/species/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
 	. = ..()
@@ -1196,20 +1201,6 @@
 	if(gloves?.max_heat_protection_temperature >= BURNING_ITEM_MINIMUM_TEMPERATURE)
 		return TRUE
 	return ..()
-
-/mob/living/carbon/human/get_sight_and_cutoffs()
-	. = ..()
-	if(!istype(glasses))
-		return
-	. |= glasses.vision_flags
-	if(glasses.invis_override)
-		set_invis_see(glasses.invis_override)
-	else
-		set_invis_see(min(glasses.invis_view, see_invisible))
-	if(!isnull(glasses.lighting_cutoff))
-		lighting_cutoff = max(lighting_cutoff, glasses.lighting_cutoff)
-	if(length(glasses.color_cutoffs))
-		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, glasses.color_cutoffs)
 
 /mob/living/carbon/human/species/abductor
 	race = /datum/species/abductor

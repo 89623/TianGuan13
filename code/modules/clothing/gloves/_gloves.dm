@@ -73,19 +73,23 @@
 		return FALSE // We don't want to cut dyed gloves.
 	return TRUE
 
-/obj/item/clothing/gloves/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/clothing/gloves/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(.)
-		return
+	if(ITEM_INTERACT_ANY_BLOCKER & .)
+		return .
+
 	if(tool.tool_behaviour != TOOL_WIRECUTTER && !tool.get_sharpness())
-		return
+		return .
+
 	if (!can_cut_with(tool))
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	balloon_alert(user, LANG("obj.f36aa85d", null))
 
 	if(!do_after(user, 3 SECONDS, target=src, extra_checks = CALLBACK(src, PROC_REF(can_cut_with), tool)))
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	balloon_alert(user, LANG("obj.b44aa67c", null))
 	qdel(src)
 	user.put_in_hands(new cut_type)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS

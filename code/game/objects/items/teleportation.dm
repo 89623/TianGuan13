@@ -95,6 +95,8 @@
 	var/list/active_portal_pairs = list()
 	///Maximum concurrent active portal pairs allowed
 	var/max_portal_pairs = 3
+	///Whether this can be used to teleport to and from away levels
+	var/away_restricted = TRUE
 
 	/**
 	 * Represents the last place we teleported to, for making quick portals.
@@ -212,7 +214,7 @@
 
 	if (teleport_location == PORTAL_LOCATION_DANGEROUS)
 		var/list/dangerous_turfs = list()
-		for(var/turf/dangerous_turf in urange(10, orange=1))
+		for(var/turf/dangerous_turf in urange(10, get_turf(src), TRUE))
 			if(dangerous_turf.x > world.maxx - PORTAL_DANGEROUS_EDGE_LIMIT || dangerous_turf.x < PORTAL_DANGEROUS_EDGE_LIMIT)
 				continue //putting them at the edge is dumb
 			if(dangerous_turf.y > world.maxy - PORTAL_DANGEROUS_EDGE_LIMIT || dangerous_turf.y < PORTAL_DANGEROUS_EDGE_LIMIT)
@@ -268,7 +270,7 @@
 ///Is, for some reason, separate from the teleport target's check in try_create_portal_to()
 /obj/item/hand_tele/proc/can_teleport_notifies(mob/user)
 	var/turf/current_location = get_turf(user)
-	if (!current_location || !check_teleport_valid(src, current_location) || is_away_level(current_location.z) || !isturf(user.loc))
+	if (!current_location || !check_teleport_valid(src, current_location) || !isturf(user.loc) || (away_restricted && is_away_level(current_location.z)))
 		to_chat(user, span_notice(LANG("obj.654883d6", list(src))))
 		return FALSE
 
@@ -495,7 +497,7 @@
 	for(var/mob/living/victim in fragging_location)//Hit everything in the turf
 		victim.apply_damage(20, BRUTE)
 		victim.Paralyze(6 SECONDS)
-		to_chat(victim, span_warning("[user] teleports into you, knocking you to the floor with the bluespace wave!"))
+		to_chat(victim, span_warning(LANG("obj.6f376820", list(user))))
 		victim.throw_at(get_step_rand(victim), 1, 1, user, spin = TRUE)
 
 ///Bleed and make blood splatters at tele start and end points

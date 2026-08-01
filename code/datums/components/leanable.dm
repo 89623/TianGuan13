@@ -39,7 +39,7 @@
 	for (var/mob/living/leaner as anything in leaning_mobs)
 		leaner.stop_leaning()
 		if(fall)
-			to_chat(leaner, span_danger("You lose balance!"))
+			to_chat(leaner, span_danger(LANG("datum.d7e81dc8", null)))
 			leaner.Paralyze(0.5 SECONDS)
 	leaning_mobs.Cut()
 
@@ -55,7 +55,7 @@
 	if (!iscarbon(dropped) && !iscyborg(dropped))
 		return
 	var/mob/living/leaner = dropped
-	if (INCAPACITATED_IGNORING(leaner, INCAPABLE_RESTRAINTS) || leaner.stat != CONSCIOUS || HAS_TRAIT(leaner, TRAIT_NO_TRANSFORM))
+	if (INCAPACITATED_IGNORING(leaner, INCAPABLE_RESTRAINTS) || IS_UNCONSCIOUS_OR_CRIT(leaner) || HAS_TRAIT(leaner, TRAIT_NO_TRANSFORM))
 		return
 	if (HAS_TRAIT_FROM(leaner, TRAIT_UNDENSE, LEANING_TRAIT))
 		return

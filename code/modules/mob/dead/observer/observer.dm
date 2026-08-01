@@ -307,12 +307,9 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 /*
 This is the proc mobs get to turn into a ghost. Forked from ghostize due to compatibility issues.
 */
-/mob/living/verb/ghost()
-	set category = "OOC"
-	set name = "幽灵"
-	set desc = "Relinquish your life and enter the land of the dead."
+GAME_VERB_DESC(/mob/living, ghost, "幽灵", "Relinquish your life and enter the land of the dead.", "OOC")
 
-	if(stat != CONSCIOUS && stat != DEAD)
+	if(stat != STABLE && stat != DEAD)
 		succumb()
 	if(stat == DEAD)
 		if(!HAS_TRAIT(src, TRAIT_CORPSELOCKED)) //corpse-locked have to confirm with the alert below
@@ -329,10 +326,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	ghostize(FALSE) // FALSE parameter is so we can never re-enter our body. U ded.
 	return TRUE
 
-/mob/eye/verb/ghost()
-	set category = "OOC"
-	set name = "幽灵"
-	set desc = "Relinquish your life and enter the land of the dead."
+GAME_VERB_DESC(/mob/eye, ghost, "幽灵", "Relinquish your life and enter the land of the dead.", "OOC")
 
 	var/response = tgui_alert(usr, LANG("mob.6b44eb18", null), LANG("mob.34dcf73a", null), list("Ghost", "Stay in Body"))
 	if(response != "Ghost")
@@ -374,8 +368,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(new_area != ambience_tracked_area)
 		update_ambience_area(new_area)
 
-/mob/dead/observer/verb/reenter_corpse()
-	set name = "重新进入尸体"
+GAME_VERB(/mob/dead/observer, reenter_corpse, "重新进入尸体", null)
 
 	if(!client)
 		return
@@ -396,8 +389,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	mind.current.client.init_verbs()
 	return TRUE
 
-/mob/dead/observer/verb/do_not_resuscitate()
-	set name = "拒绝复苏"
+GAME_VERB(/mob/dead/observer, do_not_resuscitate, "拒绝复苏", null)
 
 	if(!can_reenter_corpse)
 		to_chat(usr, span_warning(LANG("mob.855d6efc", null)))
@@ -460,8 +452,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if(sound)
 		SEND_SOUND(src, sound(sound))
 
-/mob/dead/observer/verb/dead_tele()
-	set name = "传送"
+GAME_VERB(/mob/dead/observer, dead_tele, "传送", null)
 
 	if(!isobserver(usr))
 		to_chat(usr, span_warning(LANG("mob.51e9f3c5", null)))
@@ -488,13 +479,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	usr.abstract_move(pick(L))
 
-/mob/dead/observer/verb/follow()
-	set name = "环绕"
+GAME_VERB(/mob/dead/observer, follow, "环绕", null)
 
 	GLOB.orbit_menu.show(src)
 
-/mob/dead/observer/verb/jumptomob() //Moves the ghost instead of just changing the ghosts's eye -Nodrak
-	set name = "跳转到生物"
+GAME_VERB(/mob/dead/observer, jumptomob, "跳转到生物", null) //Moves the ghost instead of just changing the ghosts's eye -Nodrak
 
 	if(!isobserver(usr)) //Make sure they're an observer!
 		return
@@ -522,8 +511,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(source_mob, span_danger(LANG("mob.20231aec", null)))
 
-/mob/dead/observer/verb/change_view_range()
-	set name = "视野范围"
+GAME_VERB(/mob/dead/observer, change_view_range, "视野范围", null)
 
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
 		to_chat(usr, span_notice(LANG("mob.a5704d22", null)))
@@ -540,15 +528,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		client.view_size.resetToDefault()
 
-/mob/dead/observer/verb/toggle_ghostsee()
-	set name = "切换幽灵视觉"
+GAME_VERB(/mob/dead/observer, toggle_ghostsee, "切换幽灵视觉", null)
 
 	toggle_ghost_hud_flag(GHOST_VISION)
 	update_sight()
 	to_chat(usr, span_boldnotice(LANG("mob.10328c5a", list((ghost_hud_flags & GHOST_VISION) ? "now" : "no longer"))))
 
-/mob/dead/observer/verb/toggle_darkness()
-	set name = "切换黑暗"
+GAME_VERB(/mob/dead/observer, toggle_darkness, "切换黑暗", null)
 
 	switch(lighting_cutoff)
 		if (LIGHTING_CUTOFF_VISIBLE)
@@ -562,13 +548,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	update_sight()
 
-/mob/dead/observer/verb/view_manifest()
-	set name = "查看船员名单"
+GAME_VERB(/mob/dead/observer, view_manifest, "查看船员名单", null)
 
 	GLOB.manifest.ui_interact(src)
 
-/mob/dead/observer/verb/observe()
-	set name = "观察"
+GAME_VERB(/mob/dead/observer, observe, "观察", null)
 
 	if(!isobserver(usr) || HAS_TRAIT(src, TRAIT_NO_OBSERVE)) //Make sure they're an observer!
 		return
@@ -597,8 +581,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	do_observe(chosen_target)
 
-/mob/dead/observer/verb/tray_view()
-	set name = "T 射线扫描"
+GAME_VERB(/mob/dead/observer, tray_view, "T 射线扫描", null)
 
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
 		to_chat(usr, span_notice(LANG("mob.a5704d22", null)))
@@ -606,8 +589,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 
 	t_ray_scan(src)
 
-/mob/dead/observer/verb/toggle_data_huds()
-	set name = "切换安保/医疗/诊断 HUD"
+GAME_VERB(/mob/dead/observer, toggle_data_huds, "切换安保/医疗/诊断 HUD", null)
 
 	toggle_ghost_hud_flag(GHOST_DATA_HUDS)
 	if(ghost_hud_flags & GHOST_DATA_HUDS)
@@ -615,8 +597,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(src, span_notice(LANG("mob.dd6914ad", null)))
 
-/mob/dead/observer/verb/toggle_health_scan()
-	set name = "切换健康扫描"
+GAME_VERB(/mob/dead/observer, toggle_health_scan, "切换健康扫描", null)
 
 	toggle_ghost_hud_flag(GHOST_HEALTH)
 	if(ghost_hud_flags & GHOST_HEALTH)
@@ -624,8 +605,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(src, span_notice(LANG("mob.17620b99", null)))
 
-/mob/dead/observer/verb/toggle_chem_scan()
-	set name = "切换化学扫描"
+GAME_VERB(/mob/dead/observer, toggle_chem_scan, "切换化学扫描", null)
 
 	toggle_ghost_hud_flag(GHOST_CHEM)
 	if(ghost_hud_flags & GHOST_CHEM)
@@ -633,8 +613,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(src, span_notice(LANG("mob.60a443e3", null)))
 
-/mob/dead/observer/verb/toggle_gas_scan()
-	set name = "切换气体扫描"
+GAME_VERB(/mob/dead/observer, toggle_gas_scan, "切换气体扫描", null)
 
 	toggle_ghost_hud_flag(GHOST_GAS)
 	if(ghost_hud_flags & GHOST_GAS)
@@ -642,8 +621,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	else
 		to_chat(src, span_notice(LANG("mob.d05b2747", null)))
 
-/mob/dead/observer/verb/restore_ghost_appearance()
-	set name = "恢复幽灵角色"
+GAME_VERB(/mob/dead/observer, restore_ghost_appearance, "恢复幽灵角色", null)
 
 	set_ghost_appearance()
 	if(client?.prefs)
@@ -703,9 +681,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	if (!isnull(client) && !isnull(client.eye))
 		reset_perspective(null)
 
-/mob/dead/observer/verb/add_view_range(input as num)
-	set name = "增加视野范围"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/mob/dead/observer, add_view_range, "增加视野范围", input as num)
 
 	if(SSlag_switch.measures[DISABLE_GHOST_ZOOM_TRAY] && !client?.holder)
 		to_chat(usr, span_notice(LANG("mob.a5704d22", null)))
@@ -1004,15 +980,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 			to_chat(G, message)
 	GLOB.observer_default_invisibility = amount
 
-/mob/dead/observer/proc/open_spawners_menu()
-	set name = "生成器菜单"
+GAME_VERB_PROC(/mob/dead/observer, open_spawners_menu, "生成器菜单", null)
 	if(!spawners_menu)
 		spawners_menu = new(src)
 
 	spawners_menu.ui_interact(src)
 
-/mob/dead/observer/proc/open_minigames_menu()
-	set name = "小游戏菜单"
+GAME_VERB_PROC(/mob/dead/observer, open_minigames_menu, "小游戏菜单", null)
 	if(!client)
 		return
 	if(!isobserver(src))

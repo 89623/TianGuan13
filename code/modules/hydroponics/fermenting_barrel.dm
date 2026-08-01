@@ -58,23 +58,26 @@
 	else
 		. += span_notice(LANG("obj.15d570d6", null))
 
-/obj/structure/fermenting_barrel/attackby(obj/item/object, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/fermenting_barrel/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(open)
-		if(istype(object, /obj/item/food/grown) && insert_fruit(user, object))
+		if(istype(tool, /obj/item/food/grown) && insert_fruit(user, tool))
 			balloon_alert(user, LANG("obj.22727303", null))
-			return
-		if(istype(object, /obj/item/storage/bag/plants))
-			var/obj/item/storage/bag/plants/bag = object
+			return ITEM_INTERACT_SUCCESS
+
+		if(istype(tool, /obj/item/storage/bag/plants))
+			var/obj/item/storage/bag/plants/bag = tool
 			var/inserted_fruits = 0
 			for(var/obj/item/food/grown/fruit in bag.contents)
 				if(!insert_fruit(user, fruit, bag))
 					break
 				inserted_fruits++
-			if(inserted_fruits)
-				balloon_alert(user, LANG("obj.6eb70280", list(inserted_fruits)))
-	else if(object.is_refillable())
-		return //so we can refill them via their afterattack.
-	return ..()
+			if(!inserted_fruits)
+				return ITEM_INTERACT_BLOCKING
+
+			balloon_alert(user, LANG("obj.6eb70280", list(inserted_fruits)))
+			return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/fermenting_barrel/attack_hand(mob/user, list/modifiers)
 	if(!can_open)

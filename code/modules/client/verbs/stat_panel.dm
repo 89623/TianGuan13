@@ -1,7 +1,4 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-/client/verb/toggle_stat_panel()
-	set name = "Toggle Stat Panel"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, toggle_stat_panel, "Toggle Stat Panel")
 
 	//Flip it
 	prefs.write_preference(GLOB.preference_entries[/datum/preference/toggle/statpanel], !prefs.read_preference(/datum/preference/toggle/statpanel))

@@ -274,877 +274,533 @@
 	manipulate_emotes()
 
 // code\modules\mob\emote.dm
-/mob/proc/emote_flip()
-	set name = "| 翻转 |"
-	set category = "Emotes"
-	usr.emote("flip", intentional = TRUE)
+GAME_VERB_PROC(/mob, emote_flip, "| 翻转 |", "Emotes")
+	src.emote("flip", intentional = TRUE)
 
-/mob/proc/emote_spin()
-	set name = "| 旋转 |"
-	set category = "Emotes"
-	usr.emote("spin", intentional = TRUE)
+GAME_VERB_PROC(/mob, emote_spin, "| 旋转 |", "Emotes")
+	src.emote("spin", intentional = TRUE)
 
-/mob/proc/emote_rolld20()
-	set name = "| 掷 D20 |"
-	set category = "Emotes"
-	usr.emote("rolld20", intentional = TRUE)
+GAME_VERB_PROC(/mob, emote_rolld20, "| 掷 D20 |", "Emotes")
+	src.emote("rolld20", intentional = TRUE)
 // code\modules\mob\living\emote.dm
 
-/mob/living/proc/emote_blush()
-	set name = "~ 脸红"
-	set category = "Emotes"
-	usr.emote("blush", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_blush, "~ 脸红", "Emotes")
+	src.emote("blush", intentional = TRUE)
 
-/mob/living/proc/emote_bow()
-	set name = "~ 鞠躬"
-	set category = "Emotes"
-	usr.emote("bow", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_bow, "~ 鞠躬", "Emotes")
+	src.emote("bow", intentional = TRUE)
 
-/mob/living/proc/emote_burp()
-	set name = "> 打嗝"
-	set category = "Emotes"
-	usr.emote("burp", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_burp, "> 打嗝", "Emotes")
+	src.emote("burp", intentional = TRUE)
 
-/mob/living/proc/emote_choke()
-	set name = "~ 噎住"
-	set category = "Emotes"
-	usr.emote("choke", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_choke, "~ 噎住", "Emotes")
+	src.emote("choke", intentional = TRUE)
 
-/mob/living/proc/emote_cross()
-	set name = "~ 抱臂"
-	set category = "Emotes"
-	usr.emote("cross", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_cross, "~ 抱臂", "Emotes")
+	src.emote("cross", intentional = TRUE)
 
-/mob/living/proc/emote_chuckle()
-	set name = "~ 轻笑"
-	set category = "Emotes"
-	usr.emote("chuckle", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_chuckle, "~ 轻笑", "Emotes")
+	src.emote("chuckle", intentional = TRUE)
 
-/mob/living/proc/emote_collapse()
-	set name = "~ 瘫倒"
-	set category = "Emotes"
-	usr.emote("collapse", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_collapse, "~ 瘫倒", "Emotes")
+	src.emote("collapse", intentional = TRUE)
 
-/mob/living/proc/emote_cough()
-	set name = "> 咳嗽"
-	set category = "Emotes"
-	usr.emote("cough", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_cough, "> 咳嗽", "Emotes")
+	src.emote("cough", intentional = TRUE)
 
-/mob/living/proc/emote_dance()
-	set name = "~ 跳舞"
-	set category = "Emotes"
-	usr.emote("dance", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_dance, "~ 跳舞", "Emotes")
+	src.emote("dance", intentional = TRUE)
 
-/mob/living/proc/emote_drool()
-	set name = "~ 流口水"
-	set category = "Emotes"
-	usr.emote("drool", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_drool, "~ 流口水", "Emotes")
+	src.emote("drool", intentional = TRUE)
 
-/mob/living/proc/emote_faint()
-	set name = "~ 昏厥"
-	set category = "Emotes"
-	usr.emote("faint", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_faint, "~ 昏厥", "Emotes")
+	src.emote("faint", intentional = TRUE)
 
-/mob/living/proc/emote_flap()
-	set name = "~ 振翅"
-	set category = "Emotes"
-	usr.emote("flap", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_flap, "~ 振翅", "Emotes")
+	src.emote("flap", intentional = TRUE)
 
-/mob/living/proc/emote_aflap()
-	set name = "~ 愤怒振翅"
-	set category = "Emotes"
-	usr.emote("aflap", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_aflap, "~ 愤怒振翅", "Emotes")
+	src.emote("aflap", intentional = TRUE)
 
-/mob/living/proc/emote_frown()
-	set name = "~ 皱眉"
-	set category = "Emotes"
-	usr.emote("frown", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_frown, "~ 皱眉", "Emotes")
+	src.emote("frown", intentional = TRUE)
 
-/mob/living/proc/emote_gag()
-	set name = "~ 干呕"
-	set category = "Emotes"
-	usr.emote("gag", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_gag, "~ 干呕", "Emotes")
+	src.emote("gag", intentional = TRUE)
 
-/mob/living/proc/emote_giggle()
-	set name = "~ 咯咯笑"
-	set category = "Emotes"
-	usr.emote("giggle", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_giggle, "~ 咯咯笑", "Emotes")
+	src.emote("giggle", intentional = TRUE)
 
 
-/mob/living/proc/emote_glare()
-	set name = "~ 瞪视"
-	set category = "Emotes"
-	usr.emote("glare", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_glare, "~ 瞪视", "Emotes")
+	src.emote("glare", intentional = TRUE)
 
-/mob/living/proc/emote_grin()
-	set name = "~ 咧嘴笑"
-	set category = "Emotes"
-	usr.emote("grin", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_grin, "~ 咧嘴笑", "Emotes")
+	src.emote("grin", intentional = TRUE)
 
-/mob/living/proc/emote_groan()
-	set name = "~ 闷哼"
-	set category = "Emotes"
-	usr.emote("groan", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_groan, "~ 闷哼", "Emotes")
+	src.emote("groan", intentional = TRUE)
 
-/mob/living/proc/emote_grimace()
-	set name = "~ 扮鬼脸"
-	set category = "Emotes"
-	usr.emote("grimace", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_grimace, "~ 扮鬼脸", "Emotes")
+	src.emote("grimace", intentional = TRUE)
 
-/mob/living/proc/emote_jump()
-	set name = "~ 跳跃"
-	set category = "Emotes"
-	usr.emote("jump", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_jump, "~ 跳跃", "Emotes")
+	src.emote("jump", intentional = TRUE)
 
-/mob/living/proc/emote_kiss()
-	set name = "| 亲吻 |"
-	set category = "Emotes"
-	usr.emote("kiss", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_kiss, "| 亲吻 |", "Emotes")
+	src.emote("kiss", intentional = TRUE)
 
-/mob/living/proc/emote_laugh()
-	set name = "> 大笑"
-	set category = "Emotes"
-	usr.emote("laugh", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_laugh, "> 大笑", "Emotes")
+	src.emote("laugh", intentional = TRUE)
 
-/mob/living/proc/emote_look()
-	set name = "~ 张望"
-	set category = "Emotes"
-	usr.emote("look", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_look, "~ 张望", "Emotes")
+	src.emote("look", intentional = TRUE)
 
-/mob/living/proc/emote_nod()
-	set name = "~ 点头"
-	set category = "Emotes"
-	usr.emote("nod", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_nod, "~ 点头", "Emotes")
+	src.emote("nod", intentional = TRUE)
 
-/mob/living/proc/emote_nodnod()
-	set name = "~ 连连点头"
-	set category = "Emotes"
-	usr.emote("nod2", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_nodnod, "~ 连连点头", "Emotes")
+	src.emote("nod2", intentional = TRUE)
 
-/mob/living/proc/emote_point()
-	set name = "~ 指向"
-	set category = "Emotes"
-	usr.emote("point", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_point, "~ 指向", "Emotes")
+	src.emote("point", intentional = TRUE)
 
-/mob/living/proc/emote_pout()
-	set name = "~ 撅嘴"
-	set category = "Emotes"
-	usr.emote("pout", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_pout, "~ 撅嘴", "Emotes")
+	src.emote("pout", intentional = TRUE)
 
-/mob/living/proc/emote_scream()
-	set name = "> 尖叫"
-	set category = "Emotes"
-	usr.emote("scream", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_scream, "> 尖叫", "Emotes")
+	src.emote("scream", intentional = TRUE)
 
-/mob/living/proc/emote_scowl()
-	set name = "~ 怒视"
-	set category = "Emotes"
-	usr.emote("scowl", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_scowl, "~ 怒视", "Emotes")
+	src.emote("scowl", intentional = TRUE)
 
-/mob/living/proc/emote_shake()
-	set name = "~ 摇头"
-	set category = "Emotes"
-	usr.emote("shake", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_shake, "~ 摇头", "Emotes")
+	src.emote("shake", intentional = TRUE)
 
-/mob/living/proc/emote_shiver()
-	set name = "~ 发抖"
-	set category = "Emotes"
-	usr.emote("shiver", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_shiver, "~ 发抖", "Emotes")
+	src.emote("shiver", intentional = TRUE)
 
-/mob/living/proc/emote_sigh()
-	set name = "> 叹气"
-	set category = "Emotes"
-	usr.emote("sigh", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_sigh, "> 叹气", "Emotes")
+	src.emote("sigh", intentional = TRUE)
 
-/mob/living/proc/emote_sit()
-	set name = "~ 坐下"
-	set category = "Emotes"
-	usr.emote("sit", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_sit, "~ 坐下", "Emotes")
+	src.emote("sit", intentional = TRUE)
 
-/mob/living/proc/emote_smile()
-	set name = "~ 微笑"
-	set category = "Emotes"
-	usr.emote("smile", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_smile, "~ 微笑", "Emotes")
+	src.emote("smile", intentional = TRUE)
 
-/mob/living/proc/emote_sneeze()
-	set name = "> 打喷嚏"
-	set category = "Emotes"
-	usr.emote("sneeze", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_sneeze, "> 打喷嚏", "Emotes")
+	src.emote("sneeze", intentional = TRUE)
 
-/mob/living/proc/emote_smug()
-	set name = "~ 得意笑"
-	set category = "Emotes"
-	usr.emote("smug", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_smug, "~ 得意笑", "Emotes")
+	src.emote("smug", intentional = TRUE)
 
-/mob/living/proc/emote_sniff()
-	set name = "> 吸鼻子"
-	set category = "Emotes"
-	usr.emote("sniff", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_sniff, "> 吸鼻子", "Emotes")
+	src.emote("sniff", intentional = TRUE)
 
-/mob/living/proc/emote_stare()
-	set name = "~ 凝视"
-	set category = "Emotes"
-	usr.emote("stare", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_stare, "~ 凝视", "Emotes")
+	src.emote("stare", intentional = TRUE)
 
-/mob/living/proc/emote_strech()
-	set name = "~ 伸懒腰"
-	set category = "Emotes"
-	usr.emote("stretch", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_strech, "~ 伸懒腰", "Emotes")
+	src.emote("stretch", intentional = TRUE)
 
-/mob/living/proc/emote_sulk()
-	set name = "~ 闷闷不乐"
-	set category = "Emotes"
-	usr.emote("sulk", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_sulk, "~ 闷闷不乐", "Emotes")
+	src.emote("sulk", intentional = TRUE)
 
-/mob/living/proc/emote_sway()
-	set name = "~ 晕乎摇晃"
-	set category = "Emotes"
-	usr.emote("sway", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_sway, "~ 晕乎摇晃", "Emotes")
+	src.emote("sway", intentional = TRUE)
 
-/mob/living/proc/emote_tilt()
-	set name = "~ 歪头"
-	set category = "Emotes"
-	usr.emote("tilt", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_tilt, "~ 歪头", "Emotes")
+	src.emote("tilt", intentional = TRUE)
 
-/mob/living/proc/emote_tremble()
-	set name = "~ 颤抖"
-	set category = "Emotes"
-	usr.emote("tremble", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_tremble, "~ 颤抖", "Emotes")
+	src.emote("tremble", intentional = TRUE)
 
-/mob/living/proc/emote_twitch()
-	set name = "~ 剧烈抽搐"
-	set category = "Emotes"
-	usr.emote("twitch", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_twitch, "~ 剧烈抽搐", "Emotes")
+	src.emote("twitch", intentional = TRUE)
 
-/mob/living/proc/emote_twitch_s()
-	set name = "~ 轻微抽搐"
-	set category = "Emotes"
-	usr.emote("twitch_s", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_twitch_s, "~ 轻微抽搐", "Emotes")
+	src.emote("twitch_s", intentional = TRUE)
 
-/mob/living/proc/emote_wave()
-	set name = "~ 挥手"
-	set category = "Emotes"
-	usr.emote("wave", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_wave, "~ 挥手", "Emotes")
+	src.emote("wave", intentional = TRUE)
 
-/mob/living/proc/emote_whimper()
-	set name = "~ 呜咽"
-	set category = "Emotes"
-	usr.emote("whimper", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_whimper, "~ 呜咽", "Emotes")
+	src.emote("whimper", intentional = TRUE)
 
-/mob/living/proc/emote_wsmile()
-	set name = "~ 勉强微笑"
-	set category = "Emotes"
-	usr.emote("wsmile", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_wsmile, "~ 勉强微笑", "Emotes")
+	src.emote("wsmile", intentional = TRUE)
 
-/mob/living/proc/emote_yawn()
-	set name = "~ 打哈欠"
-	set category = "Emotes"
-	usr.emote("yawn", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_yawn, "~ 打哈欠", "Emotes")
+	src.emote("yawn", intentional = TRUE)
 
-/mob/living/proc/emote_gurgle()
-	set name = "~ 难受地咕噜"
-	set category = "Emotes"
-	usr.emote("gurgle", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_gurgle, "~ 难受地咕噜", "Emotes")
+	src.emote("gurgle", intentional = TRUE)
 
-/mob/living/proc/emote_inhale()
-	set name = "~ 吸气"
-	set category = "Emotes"
-	usr.emote("inhale", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_inhale, "~ 吸气", "Emotes")
+	src.emote("inhale", intentional = TRUE)
 
-/mob/living/proc/emote_exhale()
-	set name = "~ 呼气"
-	set category = "Emotes"
-	usr.emote("exhale", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_exhale, "~ 呼气", "Emotes")
+	src.emote("exhale", intentional = TRUE)
 
-/mob/living/proc/emote_swear()
-	set name = "~ 骂脏话"
-	set category = "Emotes"
-	usr.emote("swear", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_swear, "~ 骂脏话", "Emotes")
+	src.emote("swear", intentional = TRUE)
 
 // code\modules\mob\living\carbon\emote.dm
 
-/mob/living/carbon/proc/emote_airguitar()
-	set name = "~ 空气吉他"
-	set category = "Emotes"
-	usr.emote("airguitar", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon, emote_airguitar, "~ 空气吉他", "Emotes")
+	src.emote("airguitar", intentional = TRUE)
 
-/mob/living/carbon/proc/emote_blink()
-	set name = "~ 眨眼"
-	set category = "Emotes"
-	usr.emote("blink", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon, emote_blink, "~ 眨眼", "Emotes")
+	src.emote("blink", intentional = TRUE)
 
-/mob/living/carbon/proc/emote_blink_r()
-	set name = "~ 快速眨眼"
-	set category = "Emotes"
-	usr.emote("blink_r", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon, emote_blink_r, "~ 快速眨眼", "Emotes")
+	src.emote("blink_r", intentional = TRUE)
 
-/mob/living/carbon/proc/emote_crack()
-	set name = "> 掰响指节"
-	set category = "Emotes"
-	usr.emote("crack", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon, emote_crack, "> 掰响指节", "Emotes")
+	src.emote("crack", intentional = TRUE)
 
-/mob/living/carbon/proc/emote_circle()
-	set name = "| 画圈 |"
-	set category = "Emotes"
-	usr.emote("circle", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon, emote_circle, "| 画圈 |", "Emotes")
+	src.emote("circle", intentional = TRUE)
 
-/mob/living/carbon/proc/emote_moan()
-	set name = "~ 呻吟"
-	set category = "Emotes"
-	usr.emote("moan", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon, emote_moan, "~ 呻吟", "Emotes")
+	src.emote("moan", intentional = TRUE)
 
-/mob/living/carbon/proc/emote_slap()
-	set name = "| 掌掴 |"
-	set category = "Emotes"
-	usr.emote("slap", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon, emote_slap, "| 掌掴 |", "Emotes")
+	src.emote("slap", intentional = TRUE)
 
-/mob/living/carbon/proc/emote_wink()
-	set name = "~ 眨眼示意"
-	set category = "Emotes"
-	usr.emote("wink", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon, emote_wink, "~ 眨眼示意", "Emotes")
+	src.emote("wink", intentional = TRUE)
 
 // code\modules\mob\living\carbon\human\emote.dm
 
-/mob/living/carbon/human/proc/emote_cry()
-	set name = "~ 哭泣"
-	set category = "Emotes"
-	usr.emote("cry", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon/human, emote_cry, "~ 哭泣", "Emotes")
+	src.emote("cry", intentional = TRUE)
 
-/mob/living/carbon/human/proc/emote_eyebrow()
-	set name = "~ 挑眉"
-	set category = "Emotes"
-	usr.emote("eyebrow", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon/human, emote_eyebrow, "~ 挑眉", "Emotes")
+	src.emote("eyebrow", intentional = TRUE)
 
-/mob/living/carbon/human/proc/emote_grumble()
-	set name = "~ 嘟囔"
-	set category = "Emotes"
-	usr.emote("grumble", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon/human, emote_grumble, "~ 嘟囔", "Emotes")
+	src.emote("grumble", intentional = TRUE)
 
-/mob/living/carbon/human/proc/emote_mumble()
-	set name = "~ 咕哝"
-	set category = "Emotes"
-	usr.emote("mumble", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon/human, emote_mumble, "~ 咕哝", "Emotes")
+	src.emote("mumble", intentional = TRUE)
 
-/mob/living/carbon/human/proc/emote_pale()
-	set name = "~ 脸色发白"
-	set category = "Emotes"
-	usr.emote("pale", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon/human, emote_pale, "~ 脸色发白", "Emotes")
+	src.emote("pale", intentional = TRUE)
 
-/mob/living/carbon/human/proc/emote_raise()
-	set name = "~ 举手"
-	set category = "Emotes"
-	usr.emote("raise", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon/human, emote_raise, "~ 举手", "Emotes")
+	src.emote("raise", intentional = TRUE)
 
-/mob/living/carbon/human/proc/emote_salute()
-	set name = "~ 敬礼"
-	set category = "Emotes"
-	usr.emote("salute", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon/human, emote_salute, "~ 敬礼", "Emotes")
+	src.emote("salute", intentional = TRUE)
 
-/mob/living/carbon/human/proc/emote_shrug()
-	set name = "~ 耸肩"
-	set category = "Emotes"
-	usr.emote("shrug", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon/human, emote_shrug, "~ 耸肩", "Emotes")
+	src.emote("shrug", intentional = TRUE)
 
-/mob/living/carbon/human/proc/emote_wag()
-	set name = "| 摇尾 |"
-	set category = "Emotes"
-	usr.emote("wag", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon/human, emote_wag, "| 摇尾 |", "Emotes")
+	src.emote("wag", intentional = TRUE)
 
-/mob/living/carbon/human/proc/emote_wing()
-	set name = "| 摆翅 |"
-	set category = "Emotes"
-	usr.emote("wing", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon/human, emote_wing, "| 摆翅 |", "Emotes")
+	src.emote("wing", intentional = TRUE)
 
 // modular_nova\modules\emotes\code\emote.dm
 
-/mob/living/proc/emote_peep()
-	set name = "> 啾"
-	set category = "Emotes+"
-	usr.emote("peep", intentional = TRUE)
-
-/mob/living/proc/emote_peep2()
-	set name = "> 啾啾两声"
-	set category = "Emotes+"
-	usr.emote("peep2", intentional = TRUE)
-
-/mob/living/proc/emote_snap()
-	set name = "> 打响指"
-	set category = "Emotes+"
-	usr.emote("snap", intentional = TRUE)
-
-/mob/living/proc/emote_snap2()
-	set name = "> 两声响指"
-	set category = "Emotes+"
-	usr.emote("snap2", intentional = TRUE)
-
-/mob/living/proc/emote_snap3()
-	set name = "> 三声响指"
-	set category = "Emotes+"
-	usr.emote("snap3", intentional = TRUE)
-
-/mob/living/proc/emote_awoo()
-	set name = "> 嗷呜"
-	set category = "Emotes+"
-	usr.emote("awoo", intentional = TRUE)
-
-/mob/living/proc/emote_yip()
-	set name = "> 尖吠"
-	set category = "Emotes+"
-	usr.emote("yip", intentional = TRUE)
-
-/mob/living/proc/emote_gecker()
-	set name = "> 咯咯叫"
-	set category = "Emotes+"
-	usr.emote("gecker", intentional = TRUE)
-
-/mob/living/proc/emote_fwhine()
-	set name = "> 狐狸哀鸣"
-	set category = "Emotes+"
-	usr.emote("fwhine", intentional = TRUE)
-
-/mob/living/proc/emote_nya()
-	set name = "> 喵呜"
-	set category = "Emotes+"
-	usr.emote("nya", intentional = TRUE)
-
-/mob/living/proc/emote_weh()
-	set name = "> 唔诶"
-	set category = "Emotes+"
-	usr.emote("weh", intentional = TRUE)
-
-/mob/living/proc/emote_mothsqueak()
-	set name = "> 蛾类吱鸣"
-	set category = "Emotes+"
-	usr.emote("msqueak", intentional = TRUE)
-
-/mob/living/proc/emote_mousesqueak()
-	set name = "> 鼠吱"
-	set category = "Emotes+"
-	usr.emote("squeak", intentional = TRUE)
-
-/mob/living/proc/emote_merp()
-	set name = "> 咩噗"
-	set category = "Emotes+"
-	usr.emote("merp", intentional = TRUE)
-
-/mob/living/proc/emote_bark()
-	set name = "> 吠叫"
-	set category = "Emotes+"
-	usr.emote("bark", intentional = TRUE)
-
-/mob/living/proc/emote_squish()
-	set name = "> 挤压声"
-	set category = "Emotes+"
-	usr.emote("squish", intentional = TRUE)
-
-/mob/living/proc/emote_bubble()
-	set name = "> 冒泡"
-	set category = "Emotes+"
-	usr.emote("bubble", intentional = TRUE)
-
-/mob/living/proc/emote_pop()
-	set name = "> 啵"
-	set category = "Emotes+"
-	usr.emote("pop", intentional = TRUE)
-
-/mob/living/proc/emote_meow()
-	set name = "> 喵"
-	set category = "Emotes+"
-	usr.emote("meow", intentional = TRUE)
-
-/mob/living/proc/emote_hiss1()
-	set name = "> 嘶嘶"
-	set category = "Emotes+"
-	usr.emote("hiss", intentional = TRUE)
-
-/mob/living/proc/emote_chitter()
-	set name = "> 愉快啾鸣"
-	set category = "Emotes+"
-	usr.emote("chitter", intentional = TRUE)
-
-/mob/living/proc/emote_snore()
-	set name = "> 打鼾"
-	set category = "Emotes+"
-	usr.emote("snore", intentional = TRUE)
-
-/mob/living/proc/emote_clap()
-	set name = "> 鼓掌"
-	set category = "Emotes+"
-	usr.emote("clap", intentional = TRUE)
-
-/mob/living/proc/emote_clap1()
-	set name = "> 拍一下手"
-	set category = "Emotes+"
-	usr.emote("clap1", intentional = TRUE)
-
-/mob/living/proc/emote_headtilt()
-	set name = "~ 侧头"
-	set category = "Emotes+"
-	usr.emote("tilt", intentional = TRUE)
-
-/mob/living/proc/emote_blink2()
-	set name = "~ 眨眼两次"
-	set category = "Emotes+"
-	usr.emote("blink2", intentional = TRUE)
-
-/mob/living/proc/emote_rblink()
-	set name = "~ 快速眨眼"
-	set category = "Emotes+"
-	usr.emote("rblink", intentional = TRUE)
-
-/mob/living/proc/emote_squint()
-	set name = "~ 眯眼"
-	set category = "Emotes+"
-	usr.emote("squint", intentional = TRUE)
-
-/mob/living/proc/emote_smirk()
-	set name = "~ 假笑"
-	set category = "Emotes+"
-	usr.emote("smirk", intentional = TRUE)
-
-/mob/living/proc/emote_eyeroll()
-	set name = "~ 翻白眼"
-	set category = "Emotes+"
-	usr.emote("eyeroll", intentional = TRUE)
-
-/mob/living/proc/emote_huff()
-	set name = "~ 哼气"
-	set category = "Emotes+"
-	usr.emote("huffs", intentional = TRUE)
-
-/mob/living/proc/emote_etwitch()
-	set name = "~ 抖耳"
-	set category = "Emotes+"
-	usr.emote("etwitch", intentional = TRUE)
-
-/mob/living/proc/emote_clear()
-	set name = "~ 清嗓"
-	set category = "Emotes+"
-	usr.emote("clear", intentional = TRUE)
-
-/mob/living/proc/emote_bawk()
-	set name = "> 咯咯鸡叫"
-	set category = "Emotes+"
-	usr.emote("bawk", intentional = TRUE)
-
-/mob/living/proc/emote_caw()
-	set name = "> 呱叫"
-	set category = "Emotes+"
-	usr.emote("caw", intentional = TRUE)
-
-/mob/living/proc/emote_caw2()
-	set name = "> 呱呱两声"
-	set category = "Emotes+"
-	usr.emote("caw2", intentional = TRUE)
-
-/mob/living/proc/emote_whistle()
-	set name = "~ 吹口哨"
-	set category = "Emotes+"
-	usr.emote("whistle", intentional = TRUE)
-
-/mob/living/proc/emote_blep()
-	set name = "~ 吐舌"
-	set category = "Emotes+"
-	usr.emote("blep", intentional = TRUE)
-
-/mob/living/proc/emote_bork()
-	set name = "> 一声汪"
-	set category = "Emotes+"
-	usr.emote("bork", intentional = TRUE)
-
-/mob/living/proc/emote_hoot()
-	set name = "> 枭鸣"
-	set category = "Emotes+"
-	usr.emote("hoot", intentional = TRUE)
-
-/mob/living/proc/emote_growl()
-	set name = "> 低吼"
-	set category = "Emotes+"
-	usr.emote("growl", intentional = TRUE)
-
-/mob/living/proc/emote_woof()
-	set name = "> 欢快汪叫"
-	set category = "Emotes+"
-	usr.emote("woof", intentional = TRUE)
-
-/mob/living/proc/emote_baa()
-	set name = "> 咩"
-	set category = "Emotes+"
-	usr.emote("baa", intentional = TRUE)
-
-/mob/living/proc/emote_baa2()
-	set name = "> 咩咩"
-	set category = "Emotes+"
-	usr.emote("baa2", intentional = TRUE)
-
-/mob/living/proc/emote_wurble()
-	set name = "> 咕噜"
-	set category = "Emotes+"
-	usr.emote("wurble", intentional = TRUE)
-/mob/living/proc/emote_rattle()
-	set name = "> 咔哒响"
-	set category = "Emotes+"
-	usr.emote("rattle", intentional = TRUE)
-
-/mob/living/proc/emote_cackle()
-	set name = "> 癫狂大笑"
-	set category = "Emotes+"
-	usr.emote("cackle", intentional = TRUE)
-
-/mob/living/proc/emote_warble()
-	set name = "> 婉转鸣叫"
-	set category = "Emotes+"
-	usr.emote("warble", intentional = TRUE)
-
-/mob/living/proc/emote_trills()
-	set name = "> 颤鸣"
-	set category = "Emotes+"
-	usr.emote("trills", intentional = TRUE)
-
-/mob/living/proc/emote_rpurr()
-	set name = "> 猛禽呼噜"
-	set category = "Emotes+"
-	usr.emote("rpurr", intentional = TRUE)
-
-/mob/living/proc/emote_purr()
-	set name = "> 呼噜"
-	set category = "Emotes+"
-	usr.emote("purr", intentional = TRUE)
-
-/mob/living/proc/emote_moo()
-	set name = "> 欢快哞叫"
-	set category = "Emotes+"
-	usr.emote("moo", intentional = TRUE)
-
-/mob/living/proc/emote_honk1()
-	set name = "> 大声鹅叫"
-	set category = "Emotes+"
-	usr.emote("honk1", intentional = TRUE)
-
-/mob/living/proc/emote_mggaow()
-	set name = "> 大声喵"
-	set category = "Emotes+"
-	usr.emote("mggaow", intentional = TRUE)
-
-/mob/living/proc/emote_mrrp()
-	set name = "> 咪噜"
-	set category = "Emotes+"
-	usr.emote("mrrp", intentional = TRUE)
-
-/mob/living/proc/emote_prbt()
-	set name = "> 噗噜"
-	set category = "Emotes+"
-	usr.emote("prbt", intentional = TRUE)
-
-/mob/living/proc/emote_awuff()
-	set name = "> 轻声汪"
-	set category = "Emotes+"
-	usr.emote("awuff", intentional = TRUE)
-
-/mob/living/proc/emote_arf()
-	set name = "> 汪汪"
-	set category = "Emotes+"
-	usr.emote("arf", intentional = TRUE)
-
-/mob/living/proc/emote_coyhowl()
-	set name = "> 郊狼嚎叫"
-	set category = "Emotes+"
-	usr.emote("coyhowl", intentional = TRUE)
-
-/mob/living/proc/emote_wolfhowl()
-	set name = "> 狼嚎"
-	set category = "Emotes+"
-	usr.emote("wolfhowl", intentional = TRUE)
-
-/mob/living/proc/emote_dwhine()
-	set name = "> 犬类哀鸣"
-	set category = "Emotes+"
-	usr.emote("dwhine", intentional = TRUE)
-
-/mob/living/proc/emote_dgrowl()
-	set name = "> 犬类低吼"
-	set category = "Emotes+"
-	usr.emote("dgrowl", intentional = TRUE)
-
-/mob/living/proc/emote_aggrobark()
-	set name = "> 凶狠吠叫"
-	set category = "Emotes+"
-	usr.emote("aggrobark", intentional = TRUE)
-
-/mob/living/proc/emote_dcomplain()
-	set name = "> 犬类抱怨"
-	set category = "Emotes+"
-	usr.emote("dcomplain", intentional = TRUE)
-
-/mob/living/proc/emote_meowdeep()
-	set name = "> 低沉喵"
-	set category = "Emotes+"
-	usr.emote("meowdeep", intentional = TRUE)
-
-/mob/living/proc/emote_teshchirp()
-	set name = "> Tesh 啾鸣"
-	set category = "Emotes+"
-	usr.emote("teshchirp", intentional = TRUE)
-
-/mob/living/proc/emote_teshsqueak()
-	set name = "> Tesh 吱鸣"
-	set category = "Emotes+"
-	usr.emote("teshsqueak", intentional = TRUE)
-
-/mob/living/proc/emote_teshtrill()
-	set name = "> Tesh 颤鸣"
-	set category = "Emotes+"
-	usr.emote("teshtrill", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_peep, "> 啾", "Emotes+")
+	src.emote("peep", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_peep2, "> 啾啾两声", "Emotes+")
+	src.emote("peep2", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_snap, "> 打响指", "Emotes+")
+	src.emote("snap", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_snap2, "> 两声响指", "Emotes+")
+	src.emote("snap2", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_snap3, "> 三声响指", "Emotes+")
+	src.emote("snap3", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_awoo, "> 嗷呜", "Emotes+")
+	src.emote("awoo", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_yip, "> 尖吠", "Emotes+")
+	src.emote("yip", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_gecker, "> 咯咯叫", "Emotes+")
+	src.emote("gecker", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_fwhine, "> 狐狸哀鸣", "Emotes+")
+	src.emote("fwhine", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_nya, "> 喵呜", "Emotes+")
+	src.emote("nya", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_weh, "> 唔诶", "Emotes+")
+	src.emote("weh", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_mothsqueak, "> 蛾类吱鸣", "Emotes+")
+	src.emote("msqueak", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_mousesqueak, "> 鼠吱", "Emotes+")
+	src.emote("squeak", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_merp, "> 咩噗", "Emotes+")
+	src.emote("merp", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_bark, "> 吠叫", "Emotes+")
+	src.emote("bark", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_squish, "> 挤压声", "Emotes+")
+	src.emote("squish", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_bubble, "> 冒泡", "Emotes+")
+	src.emote("bubble", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_pop, "> 啵", "Emotes+")
+	src.emote("pop", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_meow, "> 喵", "Emotes+")
+	src.emote("meow", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_hiss1, "> 嘶嘶", "Emotes+")
+	src.emote("hiss", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_chitter, "> 愉快啾鸣", "Emotes+")
+	src.emote("chitter", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_snore, "> 打鼾", "Emotes+")
+	src.emote("snore", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_clap, "> 鼓掌", "Emotes+")
+	src.emote("clap", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_clap1, "> 拍一下手", "Emotes+")
+	src.emote("clap1", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_headtilt, "~ 侧头", "Emotes+")
+	src.emote("tilt", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_blink2, "~ 眨眼两次", "Emotes+")
+	src.emote("blink2", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_rblink, "~ 快速眨眼", "Emotes+")
+	src.emote("rblink", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_squint, "~ 眯眼", "Emotes+")
+	src.emote("squint", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_smirk, "~ 假笑", "Emotes+")
+	src.emote("smirk", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_eyeroll, "~ 翻白眼", "Emotes+")
+	src.emote("eyeroll", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_huff, "~ 哼气", "Emotes+")
+	src.emote("huffs", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_etwitch, "~ 抖耳", "Emotes+")
+	src.emote("etwitch", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_clear, "~ 清嗓", "Emotes+")
+	src.emote("clear", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_bawk, "> 咯咯鸡叫", "Emotes+")
+	src.emote("bawk", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_caw, "> 呱叫", "Emotes+")
+	src.emote("caw", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_caw2, "> 呱呱两声", "Emotes+")
+	src.emote("caw2", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_whistle, "~ 吹口哨", "Emotes+")
+	src.emote("whistle", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_blep, "~ 吐舌", "Emotes+")
+	src.emote("blep", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_bork, "> 一声汪", "Emotes+")
+	src.emote("bork", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_hoot, "> 枭鸣", "Emotes+")
+	src.emote("hoot", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_growl, "> 低吼", "Emotes+")
+	src.emote("growl", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_woof, "> 欢快汪叫", "Emotes+")
+	src.emote("woof", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_baa, "> 咩", "Emotes+")
+	src.emote("baa", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_baa2, "> 咩咩", "Emotes+")
+	src.emote("baa2", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_wurble, "> 咕噜", "Emotes+")
+	src.emote("wurble", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_rattle, "> 咔哒响", "Emotes+")
+	src.emote("rattle", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_cackle, "> 癫狂大笑", "Emotes+")
+	src.emote("cackle", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_warble, "> 婉转鸣叫", "Emotes+")
+	src.emote("warble", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_trills, "> 颤鸣", "Emotes+")
+	src.emote("trills", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_rpurr, "> 猛禽呼噜", "Emotes+")
+	src.emote("rpurr", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_purr, "> 呼噜", "Emotes+")
+	src.emote("purr", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_moo, "> 欢快哞叫", "Emotes+")
+	src.emote("moo", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_honk1, "> 大声鹅叫", "Emotes+")
+	src.emote("honk1", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_mggaow, "> 大声喵", "Emotes+")
+	src.emote("mggaow", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_mrrp, "> 咪噜", "Emotes+")
+	src.emote("mrrp", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_prbt, "> 噗噜", "Emotes+")
+	src.emote("prbt", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_awuff, "> 轻声汪", "Emotes+")
+	src.emote("awuff", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_arf, "> 汪汪", "Emotes+")
+	src.emote("arf", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_coyhowl, "> 郊狼嚎叫", "Emotes+")
+	src.emote("coyhowl", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_wolfhowl, "> 狼嚎", "Emotes+")
+	src.emote("wolfhowl", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_dwhine, "> 犬类哀鸣", "Emotes+")
+	src.emote("dwhine", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_dgrowl, "> 犬类低吼", "Emotes+")
+	src.emote("dgrowl", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_aggrobark, "> 凶狠吠叫", "Emotes+")
+	src.emote("aggrobark", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_dcomplain, "> 犬类抱怨", "Emotes+")
+	src.emote("dcomplain", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_meowdeep, "> 低沉喵", "Emotes+")
+	src.emote("meowdeep", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_teshchirp, "> Tesh 啾鸣", "Emotes+")
+	src.emote("teshchirp", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_teshsqueak, "> Tesh 吱鸣", "Emotes+")
+	src.emote("teshsqueak", intentional = TRUE)
+
+GAME_VERB_PROC(/mob/living, emote_teshtrill, "> Tesh 颤鸣", "Emotes+")
+	src.emote("teshtrill", intentional = TRUE)
 
 // code\modules\mob\living\brain\emote.dm
 
-/mob/living/brain/proc/emote_alarm()
-	set name = "< 警报 >"
-	set category = "Emotes"
-	usr.emote("alarm", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/brain, emote_alarm, "< 警报 >", "Emotes")
+	src.emote("alarm", intentional = TRUE)
 
-/mob/living/brain/proc/emote_alert()
-	set name = "< 告急 >"
-	set category = "Emotes"
-	usr.emote("alert", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/brain, emote_alert, "< 告急 >", "Emotes")
+	src.emote("alert", intentional = TRUE)
 
-/mob/living/brain/proc/emote_flash()
-	set name = "< 闪灯 >"
-	set category = "Emotes"
-	usr.emote("flash", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/brain, emote_flash, "< 闪灯 >", "Emotes")
+	src.emote("flash", intentional = TRUE)
 
-/mob/living/brain/proc/emote_notice()
-	set name = "< 提示音 >"
-	set category = "Emotes"
-	usr.emote("notice", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/brain, emote_notice, "< 提示音 >", "Emotes")
+	src.emote("notice", intentional = TRUE)
 
-/mob/living/brain/proc/emote_whistle_brain()
-	set name = "< 哨音 >"
-	set category = "Emotes"
-	usr.emote("whistle", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/brain, emote_whistle_brain, "< 哨音 >", "Emotes")
+	src.emote("whistle", intentional = TRUE)
 
 // code\modules\mob\living\carbon\alien\emote.dm
 
-/mob/living/carbon/alien/proc/emote_gnarl()
-	set name = "< 龇牙 >"
-	set category = "Emotes"
-	usr.emote("gnarl", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon/alien, emote_gnarl, "< 龇牙 >", "Emotes")
+	src.emote("gnarl", intentional = TRUE)
 
-/mob/living/carbon/alien/proc/emote_hiss()
-	set name = "< 嘶鸣 >"
-	set category = "Emotes"
-	usr.emote("hiss", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon/alien, emote_hiss, "< 嘶鸣 >", "Emotes")
+	src.emote("hiss", intentional = TRUE)
 
-/mob/living/carbon/alien/proc/emote_roar()
-	set name = "< 咆哮 >"
-	set category = "Emotes"
-	usr.emote("roar", intentional = TRUE)
+GAME_VERB_PROC(/mob/living/carbon/alien, emote_roar, "< 咆哮 >", "Emotes")
+	src.emote("roar", intentional = TRUE)
 
 //modular_nova\modules\emotes\code\synth_emotes.dm
 
-/mob/living/proc/emote_dwoop()
-	set name = "< 欢快啾鸣 >"
-	set category = "Emotes"
-	usr.emote("dwoop", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_dwoop, "< 欢快啾鸣 >", "Emotes")
+	src.emote("dwoop", intentional = TRUE)
 
-/mob/living/proc/emote_yes()
-	set name = "< 肯定音 >"
-	set category = "Emotes"
-	usr.emote("yes", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_yes, "< 肯定音 >", "Emotes")
+	src.emote("yes", intentional = TRUE)
 
-/mob/living/proc/emote_no()
-	set name = "< 否定音 >"
-	set category = "Emotes"
-	usr.emote("no", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_no, "< 否定音 >", "Emotes")
+	src.emote("no", intentional = TRUE)
 
-/mob/living/proc/emote_boop()
-	set name = "< 嘟 >"
-	set category = "Emotes"
-	usr.emote("boop", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_boop, "< 嘟 >", "Emotes")
+	src.emote("boop", intentional = TRUE)
 
-/mob/living/proc/emote_buzz()
-	set name = "< 嗡鸣 >"
-	set category = "Emotes"
-	usr.emote("buzz", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_buzz, "< 嗡鸣 >", "Emotes")
+	src.emote("buzz", intentional = TRUE)
 
-/mob/living/proc/emote_beep()
-	set name = "< 哔 >"
-	set category = "Emotes"
-	usr.emote("beep", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_beep, "< 哔 >", "Emotes")
+	src.emote("beep", intentional = TRUE)
 
-/mob/living/proc/emote_beep2()
-	set name = "< 尖锐哔声 >"
-	set category = "Emotes"
-	usr.emote("beep2", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_beep2, "< 尖锐哔声 >", "Emotes")
+	src.emote("beep2", intentional = TRUE)
 
-/mob/living/proc/emote_buzz2()
-	set name = "< 两声嗡鸣 >"
-	set category = "Emotes"
-	usr.emote("buzz2", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_buzz2, "< 两声嗡鸣 >", "Emotes")
+	src.emote("buzz2", intentional = TRUE)
 
-/mob/living/proc/emote_chime()
-	set name = "< 铃声 >"
-	set category = "Emotes"
-	usr.emote("chime", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_chime, "< 铃声 >", "Emotes")
+	src.emote("chime", intentional = TRUE)
 
-/mob/living/proc/emote_honk()
-	set name = "< 欢快鸣笛 >"
-	set category = "Emotes"
-	usr.emote("honk", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_honk, "< 欢快鸣笛 >", "Emotes")
+	src.emote("honk", intentional = TRUE)
 
-/mob/living/proc/emote_ping()
-	set name = "< 叮 >"
-	set category = "Emotes"
-	usr.emote("ping", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_ping, "< 叮 >", "Emotes")
+	src.emote("ping", intentional = TRUE)
 
-/mob/living/proc/emote_sad()
-	set name = "< 悲伤长号 >"
-	set category = "Emotes"
-	usr.emote("sad", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_sad, "< 悲伤长号 >", "Emotes")
+	src.emote("sad", intentional = TRUE)
 
-/mob/living/proc/emote_warn()
-	set name = "< 警告鸣响 >"
-	set category = "Emotes"
-	usr.emote("warn", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_warn, "< 警告鸣响 >", "Emotes")
+	src.emote("warn", intentional = TRUE)
 
-/mob/living/proc/emote_slowclap()
-	set name = "< 慢速鼓掌 >"
-	set category = "Emotes"
-	usr.emote("slowclap", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_slowclap, "< 慢速鼓掌 >", "Emotes")
+	src.emote("slowclap", intentional = TRUE)
 
 // modular_nova\modules\emotes\code\additionalemotes\overlay_emote.dm
-/mob/living/proc/emote_sweatdrop()
-	set name = "| 汗滴 |"
-	set category = "Emotes+"
-	usr.emote("sweatdrop", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_sweatdrop, "| 汗滴 |", "Emotes+")
+	src.emote("sweatdrop", intentional = TRUE)
 
-/mob/living/proc/emote_exclaim()
-	set name = "| 感叹号 |"
-	set category = "Emotes+"
-	usr.emote("exclaim", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_exclaim, "| 感叹号 |", "Emotes+")
+	src.emote("exclaim", intentional = TRUE)
 
-/mob/living/proc/emote_question()
-	set name = "| 问号 |"
-	set category = "Emotes+"
-	usr.emote("question", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_question, "| 问号 |", "Emotes+")
+	src.emote("question", intentional = TRUE)
 
-/mob/living/proc/emote_realize()
-	set name = "| 恍然大悟 |"
-	set category = "Emotes+"
-	usr.emote("realize", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_realize, "| 恍然大悟 |", "Emotes+")
+	src.emote("realize", intentional = TRUE)
 
-/mob/living/proc/emote_annoyed()
-	set name = "| 恼怒 |"
-	set category = "Emotes+"
-	usr.emote("annoyed", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_annoyed, "| 恼怒 |", "Emotes+")
+	src.emote("annoyed", intentional = TRUE)
 
-/mob/living/proc/emote_glasses()
-	set name = "| 推眼镜 |"
-	set category = "Emotes+"
-	usr.emote("glasses", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_glasses, "| 推眼镜 |", "Emotes+")
+	src.emote("glasses", intentional = TRUE)
 
 //modular_nova\modules\emotes\code\additionalemotes\turf_emote.dm
-/mob/living/proc/emote_mark_turf()
-	set name = "| 标记地块 |"
-	set category = "Emotes+"
-	usr.emote("turf", intentional = TRUE)
+GAME_VERB_PROC(/mob/living, emote_mark_turf, "| 标记地块 |", "Emotes+")
+	src.emote("turf", intentional = TRUE)

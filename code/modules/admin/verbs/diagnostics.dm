@@ -1,6 +1,6 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 ADMIN_VERB_VISIBILITY(debug_air_status, ADMIN_VERB_VISIBLITY_FLAG_MAPPING_DEBUG)
-ADMIN_VERB(debug_air_status, R_DEBUG, "调试空气状态" , ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, turf/target in world)
+ADMIN_VERB(debug_air_status, R_DEBUG, "调试空气状态" , ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, turf/target)
 	atmos_scan(user.mob, target, silent = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Show Air Status")
 

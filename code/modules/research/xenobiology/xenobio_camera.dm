@@ -273,7 +273,7 @@
 		to_chat(user, span_warning(LANG("obj.d675af0d", list(cap))))
 		return
 
-	var/mob/living/carbon/human/species/monkey/food = new /mob/living/carbon/human/species/monkey(target_turf, TRUE)
+	var/mob/living/carbon/human/species/monkey/food = new /mob/living/carbon/human/species/monkey(target_turf, null, TRUE)
 	if (QDELETED(food))
 		return
 
@@ -305,7 +305,7 @@
 		if(user)
 			target_human.balloon_alert(user, LANG("obj.7673769d", null))
 		return FALSE
-	if(target_human.stat < DEAD)
+	if(target_human.stat != DEAD)
 		if(user)
 			target_human.balloon_alert(user, LANG("obj.f5271c5d", null))
 		return FALSE

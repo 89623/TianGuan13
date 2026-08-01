@@ -10,7 +10,7 @@
 
 /obj/item/ammo_box/magazine/recharge/update_desc()
 	. = ..()
-	desc = LANG("obj.5f6c1b67", list(initial(desc), stored_ammo.len))
+	desc = LANG("obj.5f6c1b67", list(initial(desc), length(stored_ammo)))
 
 /obj/item/ammo_box/magazine/recharge/update_icon_state()
 	. = ..()

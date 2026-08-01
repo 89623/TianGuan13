@@ -263,7 +263,7 @@
 	if(tk_firing(user))
 		visible_message(
 			span_danger(LANG("obj.087c6e3b", list(src, pointblank ? " point blank at [pbtarget]!" : "!"))),
-			blind_message = span_hear("You hear a gunshot!"),
+			blind_message = span_hear(LANG("obj.89ccf80f", null)),
 			vision_distance = COMBAT_MESSAGE_RANGE
 		)
 	else if(pointblank)
@@ -307,7 +307,7 @@
 	if(!isliving(loc))
 		return ..()
 	var/mob/living/holder = loc
-	if(holder.is_holding(src) && holder.stat < UNCONSCIOUS)
+	if(holder.is_holding(src) && !IS_UNCONSCIOUS(holder))
 		to_chat(holder, span_boldwarning(LANG("obj.8e75b695", list(src))))
 		holder.playsound_local(get_turf(src), 'sound/items/weapons/smash.ogg', 50, TRUE)
 	return ..()

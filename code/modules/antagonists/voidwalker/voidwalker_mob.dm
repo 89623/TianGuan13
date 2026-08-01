@@ -226,7 +226,7 @@
 		victim.balloon_alert(src, LANG("mob.0d5de9f8", null))
 		return FALSE
 
-	if(victim.stat == CONSCIOUS) //we're still beating them up!!
+	if(!IS_UNCONSCIOUS_OR_CRIT(victim)) //we're still beating them up!!
 		return TRUE
 
 	if(!istype(get_turf(victim), home_turf) && !(locate(kidnapping_decal) in get_turf(victim)))
@@ -321,7 +321,7 @@
 	var/obj/particles = new /obj/effect/abstract/particle_holder (our_wall, /particles/void_wall)
 
 	balloon_alert(src, LANG("mob.d763db5f", null))
-	if(!do_after(src, 8 SECONDS, our_wall, hidden = TRUE))
+	if(!do_after(src, 8 SECONDS, our_wall, cog_icon = null))
 		qdel(particles)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(!conversions_remaining)

@@ -103,7 +103,7 @@
 	if(transfer_in_progress)
 		to_chat(user, span_warning(LANG("obj.4d3b28cf", null)))
 		return FALSE
-	if(interaction != AI_TRANS_TO_CARD || occupier.stat)
+	if(interaction != AI_TRANS_TO_CARD || IS_UNCONSCIOUS_OR_CRIT(occupier))
 		return FALSE
 	var/turf/user_turf = get_turf(user)
 	if(!user_turf)

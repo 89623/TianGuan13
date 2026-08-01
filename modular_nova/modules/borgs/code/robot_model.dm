@@ -15,14 +15,14 @@
 	if (model_features && (TRAIT_R_TALL in model_features))
 		cyborg.maptext_height = 48 //Runechat blabla
 		cyborg.AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE, 2, -6, sound_vary = TRUE)
-		add_verb(cyborg, /mob/living/silicon/robot/proc/robot_lay_down)
+		ASSIGN_GAME_VERB(cyborg, /mob/living/silicon/robot, robot_lay_down)
 		switch(cyborg_base_icon)
 			if("mekamine")
 				cyborg.AddComponent(/datum/component/robot_smoke)
 	else
 		cyborg.maptext_height = initial(cyborg.maptext_height)
 		cyborg.RemoveElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE, 2, -6, sound_vary = TRUE)
-		remove_verb(cyborg, /mob/living/silicon/robot/proc/robot_lay_down)
+		UNASSIGN_GAME_VERB(cyborg, /mob/living/silicon/robot, robot_lay_down)
 		if(cyborg.GetComponent(/datum/component/robot_smoke))
 			qdel(cyborg.GetComponent(/datum/component/robot_smoke))
 			QDEL_NULL(cyborg.particles)	// Removing left over particles
@@ -35,13 +35,13 @@
 	if (model_features && (TRAIT_R_WIDE in model_features))
 		hat_offset = INFINITY
 		cyborg.set_base_pixel_x(-16)
-		add_verb(cyborg, /mob/living/silicon/robot/proc/robot_lay_down)
-		add_verb(cyborg, /mob/living/silicon/robot/proc/rest_style)
+		ASSIGN_GAME_VERB(cyborg, /mob/living/silicon/robot, robot_lay_down)
+		ASSIGN_GAME_VERB(cyborg, /mob/living/silicon/robot, rest_style)
 	else
 		cyborg.robot_rest_style = ROBOT_REST_NORMAL
 		cyborg.set_base_pixel_x(0)
-		remove_verb(cyborg, /mob/living/silicon/robot/proc/robot_lay_down)
-		remove_verb(cyborg, /mob/living/silicon/robot/proc/rest_style)
+		UNASSIGN_GAME_VERB(cyborg, /mob/living/silicon/robot, robot_lay_down)
+		UNASSIGN_GAME_VERB(cyborg, /mob/living/silicon/robot, rest_style)
 
 //SERVICE
 /obj/item/robot_model/service
@@ -84,8 +84,6 @@
 		"K4T (Dispenser)" = list(SKIN_ICON_STATE = "k4tserve_alt2", SKIN_ICON = CYBORG_ICON_SERVICE_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(2, 15), "west" = list(-2, 15))),
 		"Dullahan" = list(SKIN_ICON_STATE = "dullahanserv", SKIN_ICON = CYBORG_ICON_SERVICE_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL, TRAIT_R_UNIQUEPANEL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(2, 15), "west" = list(-2, 15))),
 		"Dullahan (Taur)" = list(SKIN_ICON_STATE = "dullahantaurserv", SKIN_ICON = CYBORG_ICON_SERVICE_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL, TRAIT_R_UNIQUEPANEL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(7, 15), "west" = list(-7, 15))),
-		"BigDragon" = list(SKIN_ICON_STATE =  "bigdragon", SKIN_ICON = 'modular_z121/icons/mob/robots_big.dmi', SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK,TRAIT_R_TALL,TRAIT_R_WIDE), SKIN_HAT_OFFSET = list("north" = list(16, 32), "south" = list(16, 32), "east" = list(16, 32), "west" = list(16, 32))),
-		"Dragondaddy" = list(SKIN_ICON_STATE =  "Dragondaddy", SKIN_ICON = 'modular_z121/icons/mob/robots_tall2.dmi', SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK,TRAIT_R_TALL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(1, 15), "west" = list(1, 15))),
 	)
 
 //MINING
@@ -127,7 +125,6 @@
 		"NiKO" = list(SKIN_ICON_STATE = "mmekamine", SKIN_ICON = CYBORG_ICON_MINING_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(2, 15), "west" = list(-2, 15))),
 		"Dullahan" = list(SKIN_ICON_STATE = "dullahanmine", SKIN_ICON = CYBORG_ICON_MINING_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL, TRAIT_R_UNIQUEPANEL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(2, 15), "west" = list(-2, 15))),
 		"Dullahan (Taur)" = list(SKIN_ICON_STATE = "dullahantaurmine", SKIN_ICON = CYBORG_ICON_MINING_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL, TRAIT_R_UNIQUEPANEL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(7, 15), "west" = list(-7, 15))),
-		"Dragondaddy" = list(SKIN_ICON_STATE =  "DragondaddyMine", SKIN_ICON = 'modular_z121/icons/mob/robots_tall2.dmi', SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK,TRAIT_R_TALL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(1, 15), "west" = list(1, 15))),
 	)
 
 //CLOWN
@@ -190,7 +187,6 @@
 		"NiKO" = list(SKIN_ICON_STATE = "mmekaeng", SKIN_ICON = CYBORG_ICON_ENG_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(2, 15), "west" = list(-2, 15))),
 		"Dullahan" = list(SKIN_ICON_STATE = "dullahaneng", SKIN_ICON = CYBORG_ICON_ENG_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL, TRAIT_R_UNIQUEPANEL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(2, 15), "west" = list(-2, 15))),
 		"Dullahan (Taur)" = list(SKIN_ICON_STATE = "dullahantaureng", SKIN_ICON = CYBORG_ICON_ENG_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL, TRAIT_R_UNIQUEPANEL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(7, 15), "west" = list(-7, 15))),
-		"Dragondaddy" = list(SKIN_ICON_STATE =  "DragondaddyEng", SKIN_ICON = 'modular_z121/icons/mob/robots_tall2.dmi', SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK,TRAIT_R_TALL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(1, 15), "west" = list(1, 15))),
 	)
 
 //JANITOR
@@ -270,8 +266,6 @@
 		"NiKO" = list(SKIN_ICON_STATE = "mmekamed", SKIN_ICON = CYBORG_ICON_MED_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(2, 15), "west" = list(-2, 15))),
 		"Dullahan" = list(SKIN_ICON_STATE = "dullahanmed", SKIN_ICON = CYBORG_ICON_MED_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL, TRAIT_R_UNIQUEPANEL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(2, 15), "west" = list(-2, 15))),
 		"Dullahan (Taur)" = list(SKIN_ICON_STATE = "dullahantaurmed", SKIN_ICON = CYBORG_ICON_MED_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL, TRAIT_R_UNIQUEPANEL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(7, 15), "west" = list(-7, 15))),
-		"Unicorn" = list(SKIN_ICON_STATE = "unicorn", SKIN_ICON = 'modular_z121/icons/mob/robots_Vi.dmi', SKIN_FEATURES = list(TRAIT_R_TALL,TRAIT_R_UNIQUEWRECK,TRAIT_R_UNIQUETIP), SKIN_HAT_OFFSET = list("north" = list(0, 4), "south" = list(0, 4), "east" = list(0, 4), "west" = list(0, 4))),
-		"Dragondaddy" = list(SKIN_ICON_STATE =  "DragondaddyMed", SKIN_ICON = 'modular_z121/icons/mob/robots_tall2.dmi', SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK,TRAIT_R_TALL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(1, 15), "west" = list(1, 15))),
 	)
 
 //PEACEKEEPER
@@ -302,7 +296,6 @@
 		"NiKO" = list(SKIN_ICON_STATE = "mmekapeace", SKIN_ICON = CYBORG_ICON_PEACEKEEPER_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(2, 15), "west" = list(-2, 15))),
 		"Dullahan" = list(SKIN_ICON_STATE = "dullahanpeace", SKIN_ICON = CYBORG_ICON_PEACEKEEPER_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL, TRAIT_R_UNIQUEPANEL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(2, 15), "west" = list(-2, 15))),
 		"Dullahan (Taur)" = list(SKIN_ICON_STATE = "dullahantaurpeace", SKIN_ICON = CYBORG_ICON_PEACEKEEPER_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL, TRAIT_R_UNIQUEPANEL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(7, 15), "west" = list(-7, 15))),
-		"Dragondaddy" = list(SKIN_ICON_STATE =  "DragondaddySec", SKIN_ICON = 'modular_z121/icons/mob/robots_tall2.dmi', SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK,TRAIT_R_TALL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(1, 15), "west" = list(1, 15))),
 	)
 
 //SECURITY
@@ -339,7 +332,6 @@
 		"K4T" = list(SKIN_ICON_STATE = "k4tsec", SKIN_ICON = CYBORG_ICON_SEC_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(2, 15), "west" = list(-2, 15))),
 		"NiKA" = list(SKIN_ICON_STATE = "fmekasec", SKIN_ICON = CYBORG_ICON_SEC_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(2, 15), "west" = list(-2, 15))),
 		"NiKO" = list(SKIN_ICON_STATE = "mmekasec", SKIN_ICON = CYBORG_ICON_SEC_TALL, SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK, TRAIT_R_UNIQUETIP, TRAIT_R_TALL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(2, 15), "west" = list(-2, 15))),
-		"Dragondaddy" = list(SKIN_ICON_STATE =  "DragondaddySec", SKIN_ICON = 'modular_z121/icons/mob/robots_tall2.dmi', SKIN_FEATURES = list(TRAIT_R_UNIQUEWRECK,TRAIT_R_TALL), SKIN_HAT_OFFSET = list("north" = list(1, 15), "south" = list(1, 15), "east" = list(1, 15), "west" = list(1, 15))),
 	)
 
 // CARGO

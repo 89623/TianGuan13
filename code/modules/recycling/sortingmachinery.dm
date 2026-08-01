@@ -82,7 +82,7 @@
 		return
 	to_chat(user, span_notice(LANG("obj.966c22fa", list(container))))
 	if(do_after(user, 5 SECONDS, target = container))
-		if(!user || user.stat != CONSCIOUS || user.loc != container || container.loc != src)
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != container || container.loc != src)
 			return
 		to_chat(user, span_notice(LANG("obj.4bf27ae3", list(container))))
 		container.forceMove(loc)

@@ -175,7 +175,7 @@
 	if(ismob(tracked_thing))
 		var/mob/tracked_mob = tracked_thing
 		if(tracked_mob.stat == DEAD)
-			to_chat(owner, span_hierophant(LANG("datum.ac1f0124", list(tracked_mob, sac_knowledge.name))))
+			to_chat(owner, span_mansus(LANG("datum.ac1f0124", list(tracked_mob, sac_knowledge.name))))
 
 	StartCooldown()
 	return TRUE

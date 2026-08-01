@@ -103,9 +103,15 @@
 			gear_path = AG.build_path[1]
 
 			cat["items"] += list(list(
-				"name" = AG.name,
+				// NOVA EDIT CHANGE START - I18N: "items" 整个键在 payload_skip_keys 里（因为 name 是 act("buy")
+				// 的回传键），于是同一条目里**纯显示**的 desc 也被一起跳过 → 绑架者终端整片英文。
+				// 改为在落地点显式反查：id 保持英文供 act 回传，name/desc 只作显示。
+				// ORIGINAL: "name" = AG.name, "desc" = AG.description,
+				"id" = AG.name,
+				"name" = lang_reverse_text(AG.name),
 				"cost" = AG.cost,
-				"desc" = AG.description,
+				"desc" = lang_reverse_text(AG.description),
+				// NOVA EDIT CHANGE END
 				"icon" = gear_path::icon,
 				"icon_state" = gear_path::icon_state,
 			))
@@ -141,7 +147,9 @@
 				buyable_items += possible_gear[category]
 			for(var/key in buyable_items)
 				var/datum/abductor_gear/AG = buyable_items[key]
-				if(AG.name == item_name)
+				// NOVA EDIT CHANGE - I18N: 前端回传的是英文 id，但对译名再兜一层（老客户端/残留 P1 翻译）
+				// ORIGINAL: if(AG.name == item_name)
+				if(AG.name == item_name || AG.name == lang_unreverse_text(item_name))
 					Dispense(AG.build_path, AG.cost)
 					return TRUE
 		if("teleporter_send")
@@ -267,13 +275,16 @@
 	vest = V
 	return TRUE
 
-/obj/machinery/abductor/console/attackby(obj/O, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(O, /obj/item/abductor/gizmo) && AddGizmo(O))
+/obj/machinery/abductor/console/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/abductor/gizmo) && AddGizmo(tool))
 		to_chat(user, span_notice(LANG("obj.dbad3c59", null)))
-	else if(istype(O, /obj/item/clothing/suit/armor/abductor/vest) && AddVest(O))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/clothing/suit/armor/abductor/vest) && AddVest(tool))
 		to_chat(user, span_notice(LANG("obj.2d16967c", null)))
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/machinery/abductor/console/proc/Dispense(items_list, cost=1)
 	if(experiment && experiment.credits >= cost)

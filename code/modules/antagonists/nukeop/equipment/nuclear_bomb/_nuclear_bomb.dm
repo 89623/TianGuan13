@@ -112,86 +112,59 @@ GLOBAL_VAR(station_nuke_source)
 
 	return TRUE
 
-/obj/machinery/nuclearbomb/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if (istype(weapon, /obj/item/disk/nuclear))
-		if(!disk_check(weapon))
-			return TRUE
-		if(!user.transferItemToLoc(weapon, src))
-			return TRUE
-		auth = weapon
+/obj/machinery/nuclearbomb/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (istype(tool, /obj/item/disk/nuclear))
+		if(!disk_check(tool))
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+
+		auth = tool
 		update_ui_mode()
 		playsound(src, 'sound/machines/terminal/terminal_insert_disc.ogg', 50, FALSE)
 		add_fingerprint(user)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
 	switch(deconstruction_state)
-		if(NUKESTATE_INTACT)
-			if(istype(weapon, /obj/item/screwdriver/nuke))
-				to_chat(user, span_notice(LANG("obj.6d8d832f", list(src))))
-				if(!weapon.use_tool(src, user, 6 SECONDS, volume = 100))
-					return TRUE
-				deconstruction_state = NUKESTATE_UNSCREWED
-				to_chat(user, span_notice(LANG("obj.dc412c3f", list(src))))
-				update_appearance()
-				return TRUE
-
-		if(NUKESTATE_UNSCREWED)
-			if(istype(weapon, /obj/item/screwdriver/nuke))
-				to_chat(user, span_notice(LANG("obj.a8a852a5", list(src))))
-				if(!weapon.use_tool(src, user, 8 SECONDS, volume = 100))
-					return TRUE
-				deconstruction_state = NUKESTATE_INTACT
-				to_chat(user, span_notice(LANG("obj.e6153d3f", list(src))))
-				deconstruction_state = NUKESTATE_INTACT
-				update_appearance()
-				return TRUE
-
-		if(NUKESTATE_PANEL_REMOVED)
-			if(weapon.tool_behaviour == TOOL_WELDER)
-				if(!weapon.tool_start_check(user, amount = 1))
-					return TRUE
-				to_chat(user, span_notice(LANG("obj.7b940279", list(src))))
-				if(!weapon.use_tool(src, user, 8 SECONDS, volume=100))
-					return TRUE
-				to_chat(user, span_notice(LANG("obj.4c9fc8e8", list(src))))
-				deconstruction_state = NUKESTATE_WELDED
-				update_appearance()
-				return TRUE
-
 		if(NUKESTATE_CORE_EXPOSED)
-			if(istype(weapon, /obj/item/nuke_core_container))
-				var/obj/item/nuke_core_container/core_box = weapon
+			if(istype(tool, /obj/item/nuke_core_container))
+				var/obj/item/nuke_core_container/core_box = tool
 				to_chat(user, span_notice(LANG("obj.855b7b50", list(core_box))))
-				if(!do_after(user, 5 SECONDS, target = src, hidden = TRUE))
-					return TRUE
-				if(core_box.load(core, user))
-					to_chat(user, span_notice(LANG("obj.f5ef12ec", list(core_box))))
-					deconstruction_state = NUKESTATE_CORE_REMOVED
-					update_appearance()
-					core = null
-				else
-					to_chat(user, span_warning(LANG("obj.514ef5d5", list(core_box, core_box))))
-				return TRUE
+				if(!do_after(user, 5 SECONDS, target = src, cog_icon = null))
+					return ITEM_INTERACT_BLOCKING
 
-			if(istype(weapon, /obj/item/stack/sheet/iron))
-				if(!weapon.tool_start_check(user, amount = 20))
-					return TRUE
+				if(!core_box.load(core, user))
+					to_chat(user, span_warning(LANG("obj.514ef5d5", list(core_box, core_box))))
+					return ITEM_INTERACT_BLOCKING
+
+				to_chat(user, span_notice(LANG("obj.f5ef12ec", list(core_box))))
+				deconstruction_state = NUKESTATE_CORE_REMOVED
+				update_appearance()
+				core = null
+				return ITEM_INTERACT_SUCCESS
+
+			if(istype(tool, /obj/item/stack/sheet/iron))
+				if(!tool.tool_start_check(user, amount = 20))
+					return ITEM_INTERACT_BLOCKING
 
 				to_chat(user, span_notice(LANG("obj.c12fad84", list(src))))
-				if(!weapon.use_tool(src, user, 10 SECONDS, amount = 20))
-					return TRUE
+				if(!tool.use_tool(src, user, 10 SECONDS, amount = 20))
+					return ITEM_INTERACT_BLOCKING
+
 				to_chat(user, span_notice(LANG("obj.4f8b6189", list(src))))
 				deconstruction_state = NUKESTATE_PANEL_REMOVED
 				STOP_PROCESSING(SSobj, core)
 				update_appearance()
-				return TRUE
+				return ITEM_INTERACT_SUCCESS
 
 		if(NUKESTATE_CORE_REMOVED)
-			if(astype(weapon, /obj/item/nuke_core_container)?.core && !istype(weapon, /obj/item/nuke_core_container/supermatter))
-				var/obj/item/nuke_core_container/core_box = weapon
+			if(astype(tool, /obj/item/nuke_core_container)?.core && !istype(tool, /obj/item/nuke_core_container/supermatter))
+				var/obj/item/nuke_core_container/core_box = tool
 				to_chat(user, span_notice(LANG("obj.5990c1c6", list(core_box, core_box.core, src))))
 				if(!do_after(user, 15 SECONDS, src))
-					return TRUE
+					return ITEM_INTERACT_BLOCKING
+
 				core_box.core.forceMove(src)
 				core = core_box.core
 				to_chat(user, span_notice(LANG("obj.18949095", list(core_box.core, src))))
@@ -199,53 +172,108 @@ GLOBAL_VAR(station_nuke_source)
 				update_appearance()
 				core_box.icon_state = core_box::icon_state
 				core_box.core = null
-				return TRUE
-			if(istype(weapon, /obj/item/nuke_core) && !istype(weapon, /obj/item/nuke_core/supermatter_sliver))
-				to_chat(user, span_notice(LANG("obj.da6645dd", list(weapon, src))))
+				return ITEM_INTERACT_SUCCESS
+
+			if(istype(tool, /obj/item/nuke_core) && !istype(tool, /obj/item/nuke_core/supermatter_sliver))
+				to_chat(user, span_notice(LANG("obj.da6645dd", list(tool, src))))
 				if(!do_after(user, 6 SECONDS, src))
-					return TRUE
-				weapon.forceMove(src)
-				core = weapon
-				to_chat(user, span_notice(LANG("obj.18949095", list(weapon, src))))
+					return ITEM_INTERACT_BLOCKING
+
+				tool.forceMove(src)
+				core = tool
+				to_chat(user, span_notice(LANG("obj.18949095", list(tool, src))))
 				deconstruction_state = NUKESTATE_CORE_EXPOSED
 				update_appearance()
-				return TRUE
+				return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/machinery/nuclearbomb/crowbar_act(mob/user, obj/item/tool)
 	switch(deconstruction_state)
 		if(NUKESTATE_UNSCREWED)
 			to_chat(user, span_notice(LANG("obj.427be926", list(src))))
-			if(!tool.use_tool(src, user, 30, volume=100))
-				return TRUE
+			if(!tool.use_tool(src, user, 3 SECONDS, volume = 100))
+				return ITEM_INTERACT_BLOCKING
+
 			to_chat(user, span_notice(LANG("obj.71da5252", list(src))))
 			deconstruction_state = NUKESTATE_PANEL_REMOVED
 			update_appearance()
-			return TRUE
+			return ITEM_INTERACT_SUCCESS
+
 		if(NUKESTATE_WELDED)
 			to_chat(user, span_notice(LANG("obj.7578532c", list(src))))
-			if(!tool.use_tool(src, user, 30, volume=100))
-				return TRUE
+			if(!tool.use_tool(src, user, 3 SECONDS, volume = 100))
+				return ITEM_INTERACT_BLOCKING
+
 			if(core)
 				to_chat(user, span_notice(LANG("obj.eea6038b", list(src))))
-				deconstruction_state = NUKESTATE_CORE_EXPOSED
 				START_PROCESSING(SSobj, core)
+				deconstruction_state = NUKESTATE_CORE_EXPOSED
 			else
 				to_chat(user, span_notice(LANG("obj.b555edb5", list(src))))
 				deconstruction_state = NUKESTATE_CORE_REMOVED
 			update_appearance()
 			new /obj/item/stack/sheet/iron(loc, 15)
-			return TRUE
+			return ITEM_INTERACT_SUCCESS
+
 		if(NUKESTATE_PANEL_REMOVED)
 			to_chat(user, span_notice(LANG("obj.479f73b6", list(src))))
-			if(!tool.use_tool(src, user, 30, volume = 100))
-				return TRUE
+			if(!tool.use_tool(src, user, 3 SECONDS, volume = 100))
+				return ITEM_INTERACT_BLOCKING
+
 			to_chat(user, span_notice(LANG("obj.691e006e", list(src))))
 			deconstruction_state = NUKESTATE_UNSCREWED
 			update_appearance()
-			return TRUE
-	return FALSE
+			return ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_SKIP_TO_ATTACK
+
+/obj/machinery/nuclearbomb/screwdriver_act(mob/living/user, obj/item/tool)
+	if(!istype(tool, /obj/item/screwdriver/nuke))
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	switch(deconstruction_state)
+		if(NUKESTATE_INTACT)
+			if(istype(tool, /obj/item/screwdriver/nuke))
+				to_chat(user, span_notice(LANG("obj.6d8d832f", list(src))))
+				if(!tool.use_tool(src, user, 6 SECONDS, volume = 100))
+					return ITEM_INTERACT_BLOCKING
+
+				deconstruction_state = NUKESTATE_UNSCREWED
+				to_chat(user, span_notice(LANG("obj.dc412c3f", list(src))))
+				update_appearance()
+				return ITEM_INTERACT_SUCCESS
+
+		if(NUKESTATE_UNSCREWED)
+			if(istype(tool, /obj/item/screwdriver/nuke))
+				to_chat(user, span_notice(LANG("obj.a8a852a5", list(src))))
+				if(!tool.use_tool(src, user, 8 SECONDS, volume = 100))
+					return ITEM_INTERACT_BLOCKING
+
+				deconstruction_state = NUKESTATE_INTACT
+				to_chat(user, span_notice(LANG("obj.e6153d3f", list(src))))
+				deconstruction_state = NUKESTATE_INTACT
+				update_appearance()
+				return ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_SKIP_TO_ATTACK
+
+/obj/machinery/nuclearbomb/welder_act(mob/living/user, obj/item/tool)
+	if(deconstruction_state != NUKESTATE_PANEL_REMOVED)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	if(!tool.tool_start_check(user, amount = 1))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice(LANG("obj.7b940279", list(src))))
+	if(!tool.use_tool(src, user, 8 SECONDS, volume=100))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice(LANG("obj.4c9fc8e8", list(src))))
+	deconstruction_state = NUKESTATE_WELDED
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/machinery/nuclearbomb/attack_hand_secondary(mob/user, list/modifiers)
 	if(deconstruction_state != NUKESTATE_CORE_EXPOSED)
@@ -546,7 +574,7 @@ GLOBAL_VAR(station_nuke_source)
 	countdown.start()
 	SSsecurity_level.set_level(SEC_LEVEL_DELTA)
 	notify_ghosts(
-		"A nuclear device has been armed in [get_area_name(src)]!",
+		LANG("obj.83140544", list(get_area_name(src))),
 		source = src,
 		header = "Nuke Armed",
 	)

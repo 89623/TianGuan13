@@ -1178,7 +1178,7 @@
 "gaS" = (/obj/effect/turf_decal/siding/wood{dir = 9},/turf/open/floor/wood/large,/area/centcom/interlink)
 "gbl" = (/obj/effect/turf_decal/tile/dark_green/half{dir = 4},/obj/structure/window/reinforced/survival_pod/spawner/directional/south,/obj/structure/window/reinforced/survival_pod/spawner/directional/east{pixel_x = 4},/obj/effect/turf_decal/siding/white{dir = 6},/obj/machinery/shower/directional/west,/obj/structure/drain,/turf/open/floor/iron/white/small,/area/centcom/holding/cafe)
 "gbG" = (/obj/effect/turf_decal/siding/wood/end{dir = 4},/obj/machinery/light/floor{alpha = 0; invisibility = 100; color = "#FFA62B"},/turf/open/floor/wood/wood_13,/area/centcom/interlink)
-"gbM" = (/obj/effect/turf_decal/siding/wood{dir = 9},/obj/structure/rack/wooden,/obj/item/food/grown/poppy/geranium,/obj/structure/railing/wooden_fencing{dir = 1},/turf/open/floor/wood/large,/area/centcom/holding/cafepark)
+"gbM" = (/obj/effect/turf_decal/siding/wood{dir = 9},/obj/structure/rack/wooden,/obj/item/food/grown/flower/poppy/geranium,/obj/structure/railing/wooden_fencing{dir = 1},/turf/open/floor/wood/large,/area/centcom/holding/cafepark)
 "gbT" = (/obj/structure/fans/tiny/invisible,/obj/effect/turf_decal/siding/thinplating/dark/corner{dir = 4},/turf/open/floor/stone,/area/centcom/holding/cafepark)
 "gcf" = (/obj/structure/table/wood,/obj/machinery/light/floor{alpha = 0; invisibility = 100},/obj/effect/turf_decal/siding/wood{dir = 6},/obj/effect/turf_decal/siding/wood/corner{dir = 1},/turf/open/floor/wood/wood_7,/area/centcom/holding/cafe)
 "gcJ" = (/obj/machinery/recycler{dir = 8},/obj/machinery/conveyor{dir = 4; id = "cafesposals"},/turf/open/indestructible/plating,/area/centcom/holding/cafe)

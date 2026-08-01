@@ -122,11 +122,11 @@
 	return TRUE
 
 /datum/martial_art/cqc/proc/Kick(mob/living/attacker, mob/living/defender)
-	if(defender.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(defender))
 		return FALSE
 
 	attacker.do_attack_animation(defender)
-	if(defender.body_position == LYING_DOWN && !defender.IsUnconscious() && defender.get_stamina_loss() >= 100)
+	if(defender.body_position == LYING_DOWN && !IS_UNCONSCIOUS(defender) && defender.get_stamina_loss() >= 100)
 		log_combat(attacker, defender, "knocked out (Head kick)(CQC)")
 		defender.visible_message(
 			span_danger(LANG("datum.d51c445c", list(attacker, defender, defender.p_them()))),
@@ -156,7 +156,7 @@
 		var/atom/throw_target = get_edge_target_turf(defender, attacker.dir)
 		defender.throw_at(throw_target, 1, 14, attacker)
 		defender.apply_damage(10, attacker.get_attack_type())
-		if(defender.body_position == LYING_DOWN && !defender.IsUnconscious())
+		if(defender.body_position == LYING_DOWN && !IS_UNCONSCIOUS(defender))
 			defender.adjust_stamina_loss(45)
 		log_combat(attacker, defender, "kicked (CQC)")
 
@@ -180,7 +180,7 @@
 /datum/martial_art/cqc/proc/Restrain(mob/living/attacker, mob/living/defender)
 	if(restraining_mob?.resolve())
 		return FALSE
-	if(defender.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(defender))
 		return FALSE
 
 	log_combat(attacker, defender, "restrained (CQC)")
@@ -199,7 +199,7 @@
 	return TRUE
 
 /datum/martial_art/cqc/proc/Consecutive(mob/living/attacker, mob/living/defender)
-	if(defender.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(defender))
 		return FALSE
 
 	attacker.do_attack_animation(defender)
@@ -340,7 +340,7 @@
 		return MARTIAL_ATTACK_SUCCESS
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_DISARM)
-	if(prob(65) && (defender.stat == CONSCIOUS || !defender.IsParalyzed() || !restraining_mob?.resolve()))
+	if(prob(65) && (!IS_UNCONSCIOUS_OR_CRIT(defender) || !defender.IsParalyzed() || !restraining_mob?.resolve()))
 		var/obj/item/disarmed_item = defender.get_active_held_item()
 		if(disarmed_item && defender.temporarilyRemoveItemFromInventory(disarmed_item))
 			defender.dropItemToGround(disarmed_item)

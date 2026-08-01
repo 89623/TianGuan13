@@ -1,6 +1,4 @@
-/client/verb/mentorwho()
-	set category = "Mentor"
-	set name = "导师在线"
+GAME_VERB(/client, mentorwho, "导师在线", "Mentor")
 	var/msg = "<b>Current Mentors:</b>\n"
 	for(var/X in GLOB.mentors)
 		var/client/C = X

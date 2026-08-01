@@ -843,10 +843,7 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 
 	new /datum/admin_help(message, user_client, FALSE, null, urgent) // NOVA EDIT - Handling tickets - ORIGINAL: new /datum/admin_help(message, user_client, FALSE, urgent)
 
-/client/verb/no_tgui_adminhelp(message as message)
-	set name = "无 TGUI 管理员帮助"
-	set hidden = TRUE
-
+GAME_VERB_HIDDEN(/client, no_tgui_adminhelp, "无 TGUI 管理员帮助", message as message)
 	if(adminhelptimerid)
 		return
 
@@ -854,16 +851,11 @@ GLOBAL_DATUM_INIT(admin_help_ui_handler, /datum/admin_help_ui_handler, new)
 
 	GLOB.admin_help_ui_handler.perform_adminhelp(src, message, FALSE)
 
-/client/verb/adminhelp()
-	set category = "Admin"
-	set name = "管理员帮助"
+GAME_VERB(/client, adminhelp, "管理员帮助", "Admin")
 	GLOB.admin_help_ui_handler.ui_interact(mob)
 	to_chat(src, span_boldnotice(LANG("client.f2319813", list(REF(src)))))
 
-/client/verb/view_latest_ticket()
-	set category = "Admin"
-	set name = "查看最新工单"
-
+GAME_VERB(/client, view_latest_ticket, "查看最新工单", "Admin")
 	if(!current_ticket)
 		// Check if the client had previous tickets, and show the latest one
 		var/list/prev_tickets = list()

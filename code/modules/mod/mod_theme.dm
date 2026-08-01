@@ -127,7 +127,7 @@
 		// ("administrative MOD helmet") isn't half-english; base part.name reversed at atom Initialize.
 		// ORIGINAL: part.name = "[name] [part.name]"
 		part.name = "[lang_reverse_text(name)] [part.name]"
-		part.desc = "[part.desc] [desc]"
+		part.desc = "[part.desc] [lang_reverse_text(desc)]" // NOVA EDIT CHANGE - I18N - ORIGINAL: part.desc = "[part.desc] [desc]"
 		part.set_armor(armor_type)
 		part.resistance_flags = resistance_flags
 		part.flags_1 |= atom_flags //flags like initialization or admin spawning are here, so we cant set, have to add
@@ -157,6 +157,9 @@
 		part.visor_flags_inv = category[SEALED_INVISIBILITY] || NONE
 		part.flags_cover = category[UNSEALED_COVER] || NONE
 		part.visor_flags_cover = category[SEALED_COVER] || NONE
+		REMOVE_TRAITS_IN(part, MOD_THEME_TRAIT)
+		for(var/trait in category[MOD_PART_TRAITS])
+			ADD_TRAIT(part, trait, MOD_THEME_TRAIT)
 		if(mod.get_part_datum(part).sealed)
 			part.clothing_flags |= part.visor_flags
 			part.flags_inv |= part.visor_flags_inv
@@ -1571,19 +1574,21 @@
 	variants = list(
 		"enchanted" = list(
 			/obj/item/clothing/head/mod = list(
-				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL|CASTING_CLOTHES,
+				UNSEALED_CLOTHING = SNUG_FIT|THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE|HEADINTERNALS,
 				UNSEALED_INVISIBILITY = HIDEFACIALHAIR|HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
 				UNSEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 				UNSEALED_MESSAGE = HELMET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = HELMET_SEAL_MESSAGE,
+				MOD_PART_TRAITS = list(TRAIT_CASTING_CLOTHING),
 			),
 			/obj/item/clothing/suit/mod = list(
-				UNSEALED_CLOTHING = THICKMATERIAL|CASTING_CLOTHES,
+				UNSEALED_CLOTHING = THICKMATERIAL,
 				SEALED_CLOTHING = STOPSPRESSUREDAMAGE,
 				SEALED_INVISIBILITY = HIDEJUMPSUIT,
 				UNSEALED_MESSAGE = CHESTPLATE_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = CHESTPLATE_SEAL_MESSAGE,
+				MOD_PART_TRAITS = list(TRAIT_CASTING_CLOTHING),
 			),
 			/obj/item/clothing/gloves/mod = list(
 				UNSEALED_CLOTHING = THICKMATERIAL,

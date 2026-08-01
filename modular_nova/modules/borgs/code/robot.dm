@@ -47,10 +47,7 @@
 	if(model && model.model_features && (TRAIT_R_TALL in model.model_features))
 		maptext_height = 48 //Offset value of tallborgs
 
-/mob/living/silicon/robot/proc/rest_style()
-	set name = "切换休息姿势"
-	set category = "AI Commands"
-	set desc = "Select your resting pose."
+GAME_VERB_PROC_DESC(/mob/living/silicon/robot, rest_style, "切换休息姿势", "Select your resting pose.", "AI Commands")
 	if(!can_rest())
 		to_chat(src, span_warning(LANG("mob.56e41a3d", null)))
 		return
@@ -76,15 +73,15 @@
 		on_lying_down()
 	update_icons()
 
-/mob/living/silicon/robot/proc/robot_lay_down()
-	set name = "躺下"
-	set category = "AI Commands"
+GAME_VERB_PROC(/mob/living/silicon/robot, robot_lay_down, "躺下", "AI Commands")
 	if(!can_rest())
 		to_chat(src, span_warning(LANG("mob.56e41a3d", null)))
 		return
-	if(stat != CONSCIOUS) //Make sure we don't enable movement when not concious
+	if(IS_UNCONSCIOUS_OR_CRIT(src)) //Make sure we don't enable movement when not concious
 		return
 	if(robot_resting)
+		if(GetComponent(/datum/component/robot_smoke))
+			dissipate()
 		to_chat(src, span_notice(LANG("mob.63c0a69c", null)))
 		robot_resting = FALSE
 		mobility_flags = MOBILITY_FLAGS_DEFAULT

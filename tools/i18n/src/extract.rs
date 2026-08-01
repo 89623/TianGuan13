@@ -275,8 +275,20 @@ fn is_loose_sentence(template: &str) -> bool {
     if lit.len() < 10 || !lit.contains(' ') {
         return false;
     }
+    // 「必须含小写」原本是排标识符/枚举/define 值的粗闸，但它连坐掉了**整整一类**玩家可见文本：
+    // SS13 的控制台状态行、广播警报、广告词、喊话全是全大写
+    // （`OPERATION FAILED: CANNOT PROBE WHEN BUFFER FULL.` / `BLUESPACE ARTILLERY MALFUNCTION!`
+    // / `24-HOUR PIZZA PIE POWER!`）——实测 154 条一条没抽到，玩家报的电信控制台漏译就是这么来的。
+    // 全大写放行的额外闸：至少 3 个「词」（≥2 字母），标识符/枚举名不会长成这样，且句末标点
+    // 那道闸仍在下面把 SQL/路径/define 值挡在外面。
     if !lit.chars().any(|c| c.is_ascii_lowercase()) {
-        return false;
+        let words = lit
+            .split_whitespace()
+            .filter(|w| w.chars().filter(|c| c.is_ascii_alphabetic()).count() >= 2)
+            .count();
+        if words < 3 {
+            return false;
+        }
     }
     let end = lit.trim_end_matches(['"', '\'', ')', ']', '*']);
     if !(end.ends_with(['.', '!', '?', '…']) || end.ends_with("...")) {
@@ -626,10 +638,11 @@ fn sink_message_args(name: &str) -> Option<&'static [usize]> {
         "say" => Some(&[0]),
         "manual_emote" => Some(&[0]),
         // 提示/对话框（玩家可见）。只取消息+标题；按钮/选项列表/返回值不动，
-        // 以免破坏 `if(alert(...) == "Yes")` 之类的比较。原生 alert/input 的按钮/默认值是位置实参
-        // （无 usr 时 [2]=按钮），故只取 [0,1]=消息+标题；[2] 不抽，避免按钮误入目录/被改写。
-        "alert" => Some(&[0, 1]),
-        "input" => Some(&[0, 1]),
+        // 以免破坏 `if(alert(...) == "Yes")` 之类的比较。原生 alert/input 的位置实参随「有没有 usr」
+        // 整体平移一位（有 usr 时 [2]=标题、该抽；无 usr 时 [2]=按钮/默认值、绝不能抽），判据见
+        // native_dialog_no_usr。**必须与 rewrite.rs 同表**，否则 rewrite 会生成目录里没有的 key。
+        "alert" => Some(&[0, 1, 2]),
+        "input" => Some(&[0, 1, 2]),
         "tgui_alert" => Some(&[1, 2]),
         "tgui_input_list" => Some(&[1, 2]),
         "tgui_input_text" => Some(&[1, 2]),
@@ -645,8 +658,23 @@ fn sink_message_args(name: &str) -> Option<&'static [usize]> {
         "bank_card_talk" => Some(&[0]),
         // 幽灵招募/事件通知（"An X is ready to hatch in …" 等）：notify_ghosts(message, source, …)。与 rewrite.rs 同表。
         "notify_ghosts" => Some(&[0]),
+        // 机器打印到纸上的正文（字面量实参必是作者写的印刷体；玩家书写永远是变量）。与 rewrite.rs 同表。
+        "add_raw_text" => Some(&[0]),
         _ => None,
     }
+}
+
+/// 原生 alert/input 的「无 usr」写法判别：`alert(Message, Title, Button1…)` / `input(Message, Title, Default)`
+/// 时 [0] 就是消息字符串字面量，此时 [2] 是按钮/默认值而非标题，**不得抽取**（会污染目录并诱使
+/// rewrite 改写返回值/比较值）。与 rewrite.rs 的同名判据保持一致。
+fn native_dialog_no_usr(name: &str, args: &[Expression]) -> bool {
+    if !matches!(name, "alert" | "input") {
+        return false;
+    }
+    let Some(a0) = args.first() else { return false };
+    let mut nodes: Vec<&dm::ast::Spanned<Term>> = Vec::new();
+    crate::rewrite::collect_text_nodes(a0, &mut nodes);
+    !nodes.is_empty()
 }
 
 pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
@@ -667,6 +695,7 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
     let mut pure_procs: HashSet<String> = HashSet::new();
     for ty in tree.iter_types() {
         for (proc_name, type_proc) in ty.procs.iter() {
+            let proc_scope = format!("{}#{}()", ty.path, proc_name);
             for proc_value in type_proc.value.iter() {
                 if let Some(block) = &proc_value.code {
                     if block_is_pure(block) {
@@ -679,13 +708,22 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
 
     let mut catalog = Catalog::new();
     for ty in tree.iter_types() {
-        let namespace = namespace_for(&ty.path);
+        // **完整类型路径**往下传（不是压扁后的命名空间）：命名空间由 Catalog::insert 推导，
+        // 完整路径同时被记进 scopes.json 供术语表按语境消歧（`Base` 在 /datum/reagent 下是
+        // 「碱」，在 /area 下是「基地」）。从前这里就地压成 "obj"/"datum"，语境信号在下一行
+        // 就丢了 —— 一个词多个义项只能靠 MT 猜。
+        let namespace = ty.path.clone();
         // 单元测试类型只在 UNIT_TESTS 编译期存在，断言消息玩家永不可见 → 不进激进抽取
         // （既有 sink 路径不变，避免目录 churn）。
         let suppress_aggressive = ty.path.starts_with("/datum/unit_test");
 
         // 1) 变量初始化（name/desc 等）。
         for (var_name, type_var) in ty.vars.iter() {
+            // 语境再细一层：**变量名**。`#name` 是物品名（短名词短语），`#desc` 是描述
+            // （整句），`#message` 是发给玩家的话。模型光看类型路径分不出这个，于是
+            // 常把物品名翻成一句话。`#` 不影响命名空间推导（namespace_for 按 `/` 取首段），
+            // 所以目录 key 不变。
+            let var_scope = format!("{}#{}", ty.path, var_name);
             let mut is_sink = SINK_VARS.contains(&var_name.as_str());
             // ADMIN_VERB 宏展开成 `/datum/admin_verb/xxx { name = ##verb_name; … }`，所以管理员
             // 命令的显示名同时是**类型变量**，会绕开 `set name` 那条路上的 is_safe_verb_name 闸
@@ -720,7 +758,7 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
             // 自定义 examine 文本变量（dry_desc 类）、pick 表、未列入 SINK_VARS 的长尾自动入目录
             // （句末标点闸门挡住标识符/枚举名）；显示靠反查表/字面 AC/模板逆匹配引擎。
             if let Some(expr) = &type_var.value.expression {
-                visit_expr(expr, &namespace, &mut catalog, suppress_aggressive, false);
+                visit_expr(expr, &var_scope, &mut catalog, suppress_aggressive, false);
             }
             if !is_sink && !is_config_default && !is_aas_template && !is_law_list && !is_slogan
                 && !is_speech_pool && !is_steps_list
@@ -729,15 +767,15 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
             }
             if let Some(expr) = &type_var.value.expression {
                 if is_aas_template {
-                    emit_message_list(expr, &namespace, &mut catalog);
+                    emit_message_list(expr, &var_scope, &mut catalog);
                     continue;
                 }
                 if is_steps_list {
-                    emit_list_strings(expr, &namespace, &mut catalog);
+                    emit_list_strings(expr, &var_scope, &mut catalog);
                     continue;
                 }
                 if is_law_list || is_speech_pool {
-                    emit_list_strings(expr, &namespace, &mut catalog);
+                    emit_list_strings(expr, &var_scope, &mut catalog);
                     if is_law_list {
                         continue;
                     }
@@ -750,7 +788,7 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                         for part in template.split(';') {
                             let s = part.trim();
                             if !s.is_empty() && !s.contains('{') {
-                                emit(&mut catalog, &namespace, s);
+                                emit(&mut catalog, &var_scope, s);
                             }
                         }
                     }
@@ -760,7 +798,7 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
                     if is_config_default && !is_sentence_like(&template) {
                         continue;
                     }
-                    emit(&mut catalog, &namespace, &template);
+                    emit(&mut catalog, &var_scope, &template);
                 }
             }
         }
@@ -770,10 +808,11 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
             if pure_procs.contains(proc_name) {
                 continue;
             }
+            let proc_scope = format!("{}#{}()", ty.path, proc_name);
             for proc_value in type_proc.value.iter() {
                 if let Some(block) = &proc_value.code {
                     let ident_proc = is_identifier_dot_proc(proc_name);
-                    visit_block(block, &namespace, &mut catalog, suppress_aggressive, ident_proc);
+                    visit_block(block, &proc_scope, &mut catalog, suppress_aggressive, ident_proc);
                     // verb 命令面板显示名：`set name = "X"`（Statement::Setting）。非 sink、非类型变量，
                     // 单独抽。仅安全显示名（is_safe_verb_name 排除 .click/body-chest 等 keybind 标识符）。
                     // 编译期由 rewrite::run_verbs 注入译文（verb 名无法运行时本地化）。
@@ -927,6 +966,17 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
             out.display(),
             catalog.entry_count()
         );
+        // key -> 类型路径 sidecar。放 locale 目录的**上一级**（见 write_scopes 注释）。
+        let scopes_path = out
+            .parent()
+            .unwrap_or(out)
+            .join("scopes.json");
+        catalog.write_scopes(&scopes_path)?;
+        eprintln!(
+            "已写入语境 sidecar: {}（本次 {} 个 key 带类型路径）",
+            scopes_path.display(),
+            catalog.scope_count()
+        );
     }
     Ok(())
 }
@@ -938,12 +988,14 @@ fn block_is_pure(block: &[dm::ast::Spanned<Statement>]) -> bool {
     })
 }
 
-pub(crate) fn emit(catalog: &mut Catalog, namespace: &str, template: &str) {
+/// `type_path` = 完整 DM 类型路径（flavor.rs 等无类型来源传裸命名空间名，见 Catalog::insert）。
+pub(crate) fn emit(catalog: &mut Catalog, type_path: &str, template: &str) {
     if !template.chars().any(|c| c.is_alphabetic()) {
         return;
     }
-    let key = make_key(namespace, template);
-    catalog.insert(namespace, &key, template);
+    // key 必须仍按**命名空间**算（`<ns>.<hash>`），否则全目录 key 变更 = 丢光全部译文。
+    let key = make_key(&namespace_for(type_path), template);
+    catalog.insert(type_path, &key, template);
 }
 
 // ---- 语句/表达式遍历：找到汇聚点调用 ----
@@ -1079,9 +1131,33 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog, suppress: bool
                 }
             }
             // 汇聚点调用检测。
+            // 已被 rewrite 改写的字符串，源码里只剩 `LANG("obj.abc123")` —— 字面量没了，
+            // 常规抽取产不出它，key 靠 Catalog::load_dir 从旧目录续命。语境同理会丢：
+            // 全目录约 28% 的 key（而且恰恰是玩家最常见的 sink 串）会没有类型路径。
+            // 这里从 **LANG() 调用点本身**回收 scope —— 比原字面量的定义处更准，
+            // 因为它记的是这句话实际被用在哪个类型里。
+            if let Term::Call(name, args) = &term.elem {
+                // 注意匹配的是**宏展开后**的名字：LANG/LANGU 是 `#define`
+                // （code/__DEFINES/~nova_defines/i18n.dm），SpacemanDMM 的预处理器在建 AST
+                // 之前就把它们展开成 lang_format/lang_format_for 了，AST 里根本没有 "LANG"。
+                let key_arg = match name.as_str() {
+                    "lang_format" => Some(0),
+                    "lang_format_for" => Some(1), // LANGU(user, key, args)
+                    _ => None,
+                };
+                if let Some(idx) = key_arg {
+                    if let Some(key) = args.get(idx).and_then(plain_string) {
+                        catalog.note_scope(&key, ns);
+                    }
+                }
+            }
             if let Term::Call(name, args) = &term.elem {
                 if let Some(indices) = sink_message_args(name.as_str()) {
+                    let skip_two = native_dialog_no_usr(name.as_str(), args);
                     for &i in indices {
+                        if skip_two && i == 2 {
+                            continue;
+                        }
                         if let Some(arg) = args.get(i) {
                             if let Some(template) = build_template(arg) {
                                 emit(catalog, ns, &template);
@@ -1093,7 +1169,11 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog, suppress: bool
             // input() 是专用 Term::Input（非 Call），与 rewrite 保持一致地抽取其消息/标题。
             if let Term::Input { args, .. } = &term.elem {
                 if let Some(indices) = sink_message_args("input") {
+                    let skip_two = native_dialog_no_usr("input", args);
                     for &i in indices {
+                        if skip_two && i == 2 {
+                            continue;
+                        }
                         if let Some(arg) = args.get(i) {
                             if let Some(template) = build_template(arg) {
                                 emit(catalog, ns, &template);
@@ -1292,7 +1372,11 @@ fn recurse_follow(follow: &Follow, ns: &str, catalog: &mut Catalog, suppress: bo
             // 方法调用形式的汇聚点（`user.visible_message(...)`/`src.say(...)`/`M.balloon_alert(...)` 等）。
             // 此前只检测裸调用 `Term::Call`，漏掉了大量 `X.sink(...)` 形式（战斗/交互可见消息多为此形）。
             if let Some(indices) = sink_message_args(name.as_str()) {
+                let skip_two = native_dialog_no_usr(name.as_str(), args);
                 for &i in indices {
+                    if skip_two && i == 2 {
+                        continue;
+                    }
                     if let Some(arg) = args.get(i) {
                         if let Some(template) = build_template(arg) {
                             emit(catalog, ns, &template);

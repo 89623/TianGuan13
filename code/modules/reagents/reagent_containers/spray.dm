@@ -139,9 +139,8 @@
 		current_range = spray_range
 	to_chat(user, span_notice(LANG("obj.60df330b", list(stream_mode ? "\"stream\"":"\"spray\""))))
 
-/obj/item/reagent_containers/spray/verb/empty()
-	set name = "清空喷雾瓶"
-	set src in usr
+GAME_VERB_SRC(/obj/item/reagent_containers/spray, empty, usr, "清空喷雾瓶", null)
+
 	if(usr.incapacitated)
 		return
 	if (tgui_alert(usr, LANG("obj.744e72e8", null), LANG("obj.e85534f6", null), list("Yes", "No")) != "Yes")

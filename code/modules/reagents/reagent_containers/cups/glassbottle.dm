@@ -126,20 +126,11 @@
 	volume = 50
 	custom_price = PAYCHECK_CREW * 0.9
 
-/obj/item/reagent_containers/cup/glass/bottle/smash(mob/living/target, mob/thrower, datum/thrownthing/throwingdatum, break_top)
-	if(bartender_check(target, thrower) && throwingdatum)
-		return FALSE
-	splash_reagents(target, thrower || throwingdatum?.get_thrower(), allow_closed_splash = TRUE)
-	var/obj/item/broken_bottle/broken = new(drop_location())
-	if(!throwingdatum && thrower)
-		thrower.put_in_hands(broken)
-	broken.mimic_broken(src, target, break_top)
+/obj/item/reagent_containers/cup/glass/bottle/post_smash(atom/target, atom/thrower, datum/thrownthing/throwingdatum, obj/item/broken_bottle/broken)
+	if(!throwingdatum && ismob(thrower))
+		astype(thrower, /mob).put_in_hands(broken)
 	broken.inhand_icon_state = broken_inhand_icon_state
-	if(message_in_a_bottle)
-		message_in_a_bottle.forceMove(drop_location())
-
-	qdel(src)
-	return TRUE
+	message_in_a_bottle?.forceMove(drop_location())
 
 /obj/item/reagent_containers/cup/glass/bottle/try_splash(mob/user, atom/target)
 	if(!isGlass)
@@ -171,7 +162,7 @@
 	else
 		user.visible_message(
 			span_warning(LANG("obj.4c2fb061", list(user, src, head_hitter ? "over [target]'s head" : "against [target]"))),
-			span_warning(LANG("obj.4c2fb061", list(user, src, head_hitter ? "over your head" : "against you"))),
+			span_warning(LANG("obj.6010cb59", list(src, head_hitter ? "over [target]'s head" : "against [target]"))),
 		)
 
 	// Finally, smash the bottle. This kills (del) the bottle and also does all the logging for us
@@ -393,6 +384,7 @@
 	desc = "A flask of the chaplain's holy water."
 	icon = 'icons/obj/drinks/bottles.dmi'
 	icon_state = "holyflask"
+	worn_icon_state = "holyflask"
 	inhand_icon_state = "holyflask"
 	broken_inhand_icon_state = "broken_holyflask"
 	list_reagents = list(/datum/reagent/water/holywater = 100)
@@ -1030,7 +1022,7 @@
 	icon_state = "trashbag1" // pruno releases air as it ferments, we don't want to simulate this in atmos, but we can make it look like it did
 	for (var/mob/living/M in view(2, get_turf(src))) // letting people and/or narcs know when the pruno is done
 		if(HAS_TRAIT(M, TRAIT_ANOSMIA))
-			to_chat(M, span_info("A pungent smell emanates from [src], like fruit puking out its guts."))
+			to_chat(M, span_info(LANG("obj.645bfc03", list(src))))
 		playsound(get_turf(src), 'sound/effects/bubbles/bubbles2.ogg', 25, TRUE)
 
 /**

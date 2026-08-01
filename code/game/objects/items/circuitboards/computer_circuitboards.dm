@@ -11,28 +11,6 @@
 
 //Command
 
-/obj/item/circuitboard/computer/aiupload
-	name = "AI Upload"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/computer/upload/ai
-	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
-	req_one_access = list(ACCESS_AI_UPLOAD)
-
-/obj/item/circuitboard/computer/aiupload/no_lock
-	build_path = /obj/machinery/computer/upload/ai/no_lock
-	req_one_access = null
-
-/obj/item/circuitboard/computer/borgupload
-	name = "Cyborg Upload"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	req_one_access = list(ACCESS_AI_UPLOAD)
-	build_path = /obj/machinery/computer/upload/borg
-	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
-
-/obj/item/circuitboard/computer/borgupload/no_lock
-	req_one_access = null
-	build_path = /obj/machinery/computer/upload/borg/no_lock
-
 /obj/item/circuitboard/computer/bsa_control
 	name = "Bluespace Artillery Controls"
 	build_path = /obj/machinery/computer/bsa_control
@@ -531,9 +509,9 @@
 	locked = !locked
 	balloon_alert(user, locked ? "locked" : "unlocked")
 	user.visible_message(
-		span_notice("\The [user] unlock[user.p_s()] \the [src] with \the [tool]."),
-		span_notice("You unlock \the [src] with \the [tool]."),
-		span_hear("You hear a soft beep."),
+		span_notice(LANG("obj.2d106050", list(user, user.p_s(), src, tool))),
+		span_notice(LANG("obj.7b91cd02", list(src, tool))),
+		span_hear(LANG("obj.fc511428", null)),
 	)
 	return ITEM_INTERACT_SUCCESS
 

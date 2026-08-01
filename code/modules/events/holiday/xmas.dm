@@ -9,7 +9,7 @@
 	var/cracked = FALSE
 
 /obj/item/toy/xmas_cracker/attack(mob/target, mob/user)
-	if( !cracked && ishuman(target) && (target.stat == CONSCIOUS) && !target.get_active_held_item() )
+	if( !cracked && ishuman(target) && (!IS_UNCONSCIOUS_OR_CRIT(target)) && !target.get_active_held_item() )
 		target.visible_message(span_notice(LANG("obj.5246022f", list(user, target, src))), span_notice(LANG("obj.0a192efd", list(src, target))), span_hear(LANG("obj.445a50ea", null)))
 		var/obj/item/paper/joke_paper = new /obj/item/paper(user.loc)
 		joke_paper.name = "[pick("awful","terrible","unfunny")] joke"

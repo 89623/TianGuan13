@@ -27,7 +27,7 @@
 	if(player_turf?.is_blocked_turf(TRUE))
 		return FALSE
 	user.visible_message(span_danger(LANG("obj.2bce40fb", list(user, src))))
-	if(do_after(user, 8 SECONDS, target = user.drop_location(), progress = TRUE))
+	if(do_after(user, 8 SECONDS, target = user.drop_location()))
 		new /obj/structure/hedge/opaque(user.drop_location())
 		to_chat(user, span_notice(LANG("obj.ad55c574", list(src))))
 		qdel(src)

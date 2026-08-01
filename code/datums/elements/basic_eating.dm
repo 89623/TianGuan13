@@ -54,7 +54,7 @@
 	if(user.combat_mode || !is_type_in_list(possible_food, food_types))
 		return NONE
 	var/mob/living/living_source = source
-	if(living_source.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS(living_source))
 		return NONE
 	return try_eating(source, possible_food, user) ? ITEM_INTERACT_SUCCESS : NONE
 
@@ -139,4 +139,3 @@
 		movable_target.forceMove(eater)
 	else
 		qdel(final_target)
-

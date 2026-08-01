@@ -1049,7 +1049,7 @@
 	var/turf/jaunt_turf = get_turf(jaunter)
 	jaunt_turf.visible_message(
 		span_warning(LANG("datum.fb10f4ba", list(source, blood))),
-		blind_message = span_notice("You hear a splash and a thud.")
+		blind_message = span_notice(LANG("datum.6db08b72", null))
 	)
 	to_chat(jaunter, span_warning(LANG("datum.d84e8da0", list(source))))
 
@@ -1091,7 +1091,7 @@
 		if(!nearby_blood.can_bloodcrawl_in())
 			continue
 		source.forceMove(get_turf(nearby_blood))
-		source.visible_message(span_warning("[nearby_blood] violently expels [source]!"))
+		source.visible_message(span_warning(LANG("datum.e950111a", list(nearby_blood, source))))
 		crawl.exit_blood_effect(source)
 		return
 
@@ -1546,7 +1546,7 @@
 			if(current_cycle > 51 && SPT_PROB(7.5, seconds_per_tick))
 				if(!drinker.undergoing_cardiac_arrest() && drinker.can_heartattack())
 					drinker.set_heartattack(TRUE)
-					if(drinker.stat == CONSCIOUS)
+					if(!IS_UNCONSCIOUS_OR_CRIT(drinker))
 						drinker.visible_message(span_userdanger(LANG("datum.a043844a", list(drinker, drinker.p_their(), drinker.p_their()))))
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -1765,7 +1765,7 @@
 	if(need_mob_update)
 		drinker.updatehealth()
 	drinker.visible_message(span_warning(LANG("datum.6ca3c1c8", list(drinker))), span_notice(LANG("datum.59cacafb", list(LOWER_TEXT(name)))))
-	if(!drinker.stat && heal_points == 20) //brought us out of softcrit
+	if(!IS_UNCONSCIOUS_OR_CRIT(drinker) && heal_points == 20) //brought us out of softcrit
 		drinker.visible_message(span_danger(LANG("datum.672c82cc", list(drinker, drinker.p_their()))), span_boldnotice(LANG("datum.0c750abd", null)))
 
 /datum/reagent/consumable/ethanol/bastion_bourbon/on_mob_life(mob/living/drinker, seconds_per_tick, metabolization_ratio)
@@ -1876,7 +1876,7 @@
 		for(var/obj/item/shield/the_shield in the_human.contents)
 			mighty_shield = WEAKREF(the_shield)
 			the_shield.block_chance += 10
-			to_chat(the_human, span_notice("[the_shield] appears polished, although you don't recall polishing it."))
+			to_chat(the_human, span_notice(LANG("datum.c63d62a2", list(the_shield))))
 			break
 
 /datum/reagent/consumable/ethanol/alexander/on_mob_life(mob/living/drinker, seconds_per_tick, metabolization_ratio)

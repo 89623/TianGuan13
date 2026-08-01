@@ -109,7 +109,7 @@
 /// Triggers an alert to all ghosts that the rat has become player controlled.
 /mob/living/basic/regal_rat/proc/became_player_controlled()
 	notify_ghosts(
-		"All rise for [name], ascendant to the throne in \the [get_area(src)].",
+		LANG("mob.3803618b", list(name, get_area(src))),
 		source = src,
 		header = "Sentient Rat Created",
 		notify_flags = NOTIFY_CATEGORY_NOFLASH,
@@ -198,7 +198,7 @@
 		return TRUE // it might be possible to attack this? we'll find out soon enough
 
 	var/mob/living/living_target = the_target
-	if(HAS_TRAIT_NOT_FROM(living_target, TRAIT_FAKEDEATH, SPECIES_TRAIT) || living_target.stat == DEAD)
+	if(IS_DEAD_OR_FAKING(living_target))
 		balloon_alert(src, LANG("mob.c037f6bd", null))
 		return FALSE
 

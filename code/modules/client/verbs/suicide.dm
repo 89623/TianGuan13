@@ -2,8 +2,7 @@
 /// Verb to simply kill yourself (in a very visual way to all players) in game! How family-friendly. Can be governed by a series of multiple checks (i.e. confirmation, is it allowed in this area, etc.) which are
 /// handled and called by the proc this verb invokes. It's okay to block this, because we typically always give mobs in-game the ability to Ghost out of their current mob irregardless of context. This, in contrast,
 /// can have as many different checks as you desire to prevent people from doing the deed to themselves.
-/mob/living/verb/suicide()
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/mob/living, suicide, "suicide")
 	handle_suicide()
 
 /// Actually handles the bare basics of the suicide process. Message type is the message we want to dispatch in the world regarding the suicide, using the defines in this file.
@@ -76,15 +75,18 @@
 		to_chat(src, span_warning(LANG("mob.bb3aaa78", null)))
 		return FALSE
 
-	switch(stat)
-		if(CONSCIOUS)
-			return TRUE
-		if(SOFT_CRIT)
-			to_chat(src, span_warning(LANG("mob.8f3165ed", null)))
-		if(UNCONSCIOUS, HARD_CRIT)
-			to_chat(src, span_warning(LANG("mob.48cfee80", null)))
-		if(DEAD)
-			to_chat(src, span_warning(LANG("mob.28e380e1", null)))
+	if(!IS_UNCONSCIOUS_OR_CRIT(src))
+		return TRUE
+
+	if(stat == DEAD)
+		to_chat(src, span_warning(LANG("mob.28e380e1", null)))
+		return FALSE
+
+	if(IS_UNCONSCIOUS(src))
+		to_chat(src, span_warning(LANG("mob.48cfee80", null)))
+		return FALSE
+
+	to_chat(src, span_warning(LANG("mob.8f3165ed", null)))
 	return FALSE
 
 /// Inserts in logging and death + mind dissociation when we're fully done with ending the life of our mob, as well as adjust the health. We will disallow re-entering the body when this is called.

@@ -83,10 +83,10 @@
 		if(!bounty.is_stealable(stealing))
 			continue
 		if(bounty.claimed)
-			stealing.balloon_alert(spy, "bounty already claimed!")
+			stealing.balloon_alert(spy, LANG("datum.c8d3a3d1", null))
 			return TRUE
 		if(DOING_INTERACTION(spy, REF(src)))
-			spy.balloon_alert(spy, "already scanning!") // Only shown if they're trying to scan two valid targets
+			spy.balloon_alert(spy, LANG("datum.ca13ca70", null)) // Only shown if they're trying to scan two valid targets
 			return TRUE
 		SEND_SIGNAL(stealing, COMSIG_MOVABLE_SPY_STEALING, spy, bounty)
 		INVOKE_ASYNC(src, PROC_REF(start_stealing), stealing, spy, bounty)
@@ -139,7 +139,7 @@
 		span_notice(LANG("datum.be5f19a1", list(stealing))),
 	)
 
-	if(!do_after(spy, bounty.theft_time, stealing, interaction_key = REF(src), hidden = TRUE))
+	if(!do_after(spy, bounty.theft_time, stealing, interaction_key = REF(src), cog_icon = null))
 		return FALSE
 	if(bounty.claimed)
 		to_chat(spy, span_warning(LANG("datum.86b2d04f", list(stealing))))

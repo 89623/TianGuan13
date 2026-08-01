@@ -193,7 +193,7 @@
 	emag_effect = TRUE
 	playsound(source.loc, 'sound/misc/interference.ogg', 50)
 	to_chat(source, span_warning(LANG("datum.d3bcbb5d", null)))
-	if(source.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(source))
 		to_chat(user, span_warning(LANG("datum.69d48dc1", list(source))))
 		return
 	source.visible_message(span_danger(LANG("datum.e8ad7350", list(user, source, forced_speech == 0 ? "!" : " yet nothing happens..?"))), span_userdanger(LANG("datum.8dc8c1d5", list(user))))

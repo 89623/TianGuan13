@@ -40,11 +40,16 @@
 
 ///Turns a baby slime into an adult slime
 /datum/action/innate/slime/evolve/Activate()
-	var/mob/living/basic/slime/slime_owner = owner
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
+		if(owner.stat == DEAD)
+			owner.balloon_alert(owner, LANG("datum.1bf49ad4", null))
+		else if(IS_UNCONSCIOUS(owner))
+			owner.balloon_alert(owner, LANG("datum.dc8b5a42", null))
+		else
+			owner.balloon_alert(owner, LANG("datum.b49fe510", null))
+		return FALSE
 
-	if(slime_owner.stat)
-		slime_owner.balloon_alert(slime_owner, LANG("datum.dc8b5a42", null))
-		return
+	var/mob/living/basic/slime/slime_owner = owner
 	if(slime_owner.life_stage == SLIME_LIFE_STAGE_ADULT)
 		slime_owner.balloon_alert(slime_owner, LANG("datum.78aaed48", null))
 		return
@@ -79,9 +84,14 @@
 ///Splits the slime into multiple children if possible
 /mob/living/basic/slime/proc/reproduce()
 
-	if(stat != CONSCIOUS)
-		balloon_alert(src, LANG("mob.a708139f", null))
-		return
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
+		if(stat == DEAD)
+			balloon_alert(src, LANG("mob.1bf49ad4", null))
+		else if(IS_UNCONSCIOUS(src))
+			balloon_alert(src, LANG("mob.dc8b5a42", null))
+		else
+			balloon_alert(src, LANG("mob.b49fe510", null))
+		return FALSE
 
 	if(!isopenturf(loc))
 		balloon_alert(src, LANG("mob.323611bb", null))

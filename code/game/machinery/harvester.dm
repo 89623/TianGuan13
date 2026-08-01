@@ -79,14 +79,14 @@
 	if(!allow_clothing)
 		for(var/obj/item/abiotic_item in carbon_occupant.held_items + carbon_occupant.get_equipped_items())
 			if(!(HAS_TRAIT(abiotic_item, TRAIT_NODROP)))
-				say("Subject may not have abiotic items on.")
+				say(LANG("obj.be964350", null))
 				playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 				return
 	if(!(carbon_occupant.mob_biotypes & MOB_ORGANIC))
 		say(LANG("obj.d320b37b", null))
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
-	if(!allow_living && !(carbon_occupant.stat == DEAD || HAS_TRAIT(carbon_occupant, TRAIT_FAKEDEATH)))     //I mean, the machines scanners arent advanced enough to tell you're alive
+	if(!allow_living && !IS_DEAD_OR_FAKING(carbon_occupant))
 		say(LANG("obj.511831da", null))
 		playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 30, TRUE)
 		return
@@ -98,9 +98,9 @@
 
 	var/mob/living/carbon/carbon_occupant = occupant
 
-	if(carbon_occupant.stat < UNCONSCIOUS)
+	if(carbon_occupant.client && carbon_occupant.stat <= HARD_CRIT)
 		notify_ghosts(
-			"[carbon_occupant.real_name] is about to be ground up by a malfunctioning organ harvester!",
+			LANG("obj.281fe5b2", list(carbon_occupant.real_name)),
 			source = src,
 			header = "Gruesome!",
 		)

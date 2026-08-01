@@ -54,10 +54,12 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 
 /mob/living/carbon/alien/adult/resist_grab(moving_resist)
 	if(pulledby.grab_state)
-		visible_message(span_danger(LANG("mob.801741bb", list(src, pulledby))), \
-						span_danger(LANG("mob.b3003c7c", list(pulledby))))
+		visible_message(
+			span_danger(LANG("mob.801741bb", list(src, pulledby))),
+			span_danger(LANG("mob.b3003c7c", list(pulledby))),
+		)
 	pulledby.stop_pulling()
-	. = 0
+	return TRUE
 
 /mob/living/carbon/alien/adult/alien_evolve(mob/living/carbon/alien/adult/new_xeno)
 	drop_all_held_items()
@@ -112,7 +114,7 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 /mob/living/carbon/alien/adult/proc/can_consume(atom/movable/poor_soul)
 	if(!isliving(poor_soul) || pulling != poor_soul)
 		return FALSE
-	if(incapacitated || grab_state < GRAB_AGGRESSIVE || stat != CONSCIOUS)
+	if(incapacitated || grab_state < GRAB_AGGRESSIVE)
 		return FALSE
 	if(get_dir(src, poor_soul) != dir) // Gotta face em 4head
 		return FALSE

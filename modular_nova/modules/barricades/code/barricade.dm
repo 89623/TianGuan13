@@ -203,22 +203,14 @@
 		else
 			. += image('modular_nova/modules/barricades/icons/barricade.dmi', icon_state = "[barricade_type]_closed_wire")
 
-/obj/structure/deployable_barricade/verb/rotate()
-	set name = "逆时针旋转路障 <"
-	set category = "Object"
-	set src in oview(1)
-
+GAME_VERB_SRC(/obj/structure/deployable_barricade, rotate, oview(1), "逆时针旋转路障 <", null)
 	if(anchored)
 		to_chat(usr, span_warning(LANG("obj.f9fc930f", null)))
 		return FALSE
 
 	setDir(turn(dir, 90))
 
-/obj/structure/deployable_barricade/verb/revrotate()
-	set name = "顺时针旋转路障 >"
-	set category = "Object"
-	set src in oview(1)
-
+GAME_VERB_SRC(/obj/structure/deployable_barricade, revrotate, oview(1), "顺时针旋转路障 >", null)
 	if(anchored)
 		to_chat(usr, span_warning(LANG("obj.f9fc930f", null)))
 		return FALSE
@@ -582,7 +574,7 @@
 
 			for(var/obj/structure/deployable_barricade/B in loc)
 				if(B != src && B.dir == dir)
-					to_chat(user, span_warning("There is already a barricade here."))
+					to_chat(user, span_warning(LANG("obj.66f7c233", null)))
 					return TRUE
 
 			playsound(src, 'sound/items/tools/ratchet.ogg', 25, TRUE)
@@ -811,11 +803,11 @@
 		if(!thing.density) //not dense, move on
 			continue
 		if(!(thing.flags_1 & ON_BORDER_1)) //dense and non-directional, end
-			to_chat(user, span_warning("There is no room deploy [src] here."))
+			to_chat(user, span_warning(LANG("obj.40691b67", list(src))))
 			return FALSE
 		if(thing.dir != user.dir)
 			continue
-		to_chat(user, span_warning("There is no room deploy [src] here."))
+		to_chat(user, span_warning(LANG("obj.40691b67", list(src))))
 		return FALSE
 	to_chat(user, span_notice(LANG("obj.de73e397", list(src))))
 	return TRUE

@@ -113,13 +113,11 @@
 		+ "</body></html>", "window=photo_showing;size=[scribble ? "480x580" : "480x480"]")
 	onclose(user, "[name]")
 
-/obj/item/photo/verb/rename()
-	set name = "重命名照片"
-	set src in usr
+GAME_VERB_SRC(/obj/item/photo, rename, usr, "重命名照片", null)
 
 	var/n_name = tgui_input_text(usr, LANG("obj.ab5cb1c6", null), LANG("obj.a9ed249c", null), max_length = MAX_NAME_LEN)
 	//loc.loc check is for making possible renaming photos in clipboards
-	if(n_name && (loc == usr || loc.loc && loc.loc == usr) && usr.stat == CONSCIOUS && !usr.incapacitated)
+	if(n_name && (loc == usr || loc.loc && loc.loc == usr) && !IS_UNCONSCIOUS_OR_CRIT(usr) && !usr.incapacitated)
 		name = "photo[(n_name ? "- '[n_name]'" : null)]"
 	add_fingerprint(usr)
 

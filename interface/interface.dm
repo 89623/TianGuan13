@@ -1,9 +1,6 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 //Please use mob or src (not usr) in these procs. This way they can be called in the same fashion as procs.
-/client/verb/wiki()
-	set name = "wiki"
-	set desc = "Brings you to the Wiki"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, wiki, "wiki")
 
 	var/wikiurl = CONFIG_GET(string/wikiurl)
 	if(!wikiurl)
@@ -22,10 +19,7 @@
 		output += "?title=Special%3ASearch&profile=default&search=[query]"
 	DIRECT_OUTPUT(src, link(output))
 
-/client/verb/forum()
-	set name = "forum"
-	set desc = "Visit the forum."
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, forum, "forum")
 
 	var/forumurl = CONFIG_GET(string/forumurl)
 	if(!forumurl)
@@ -33,10 +27,7 @@
 		return
 	DIRECT_OUTPUT(src, link(forumurl))
 
-/client/verb/rules()
-	set name = "rules"
-	set desc = "Show Server Rules."
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, rules, "rules")
 
 	var/rulesurl = CONFIG_GET(string/rulesurl)
 	if(!rulesurl)
@@ -44,10 +35,7 @@
 		return
 	DIRECT_OUTPUT(src, link(rulesurl))
 
-/client/verb/github()
-	set name = "github"
-	set desc = "Visit Github"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, github, "github")
 
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(!githuburl)
@@ -55,10 +43,7 @@
 		return
 	DIRECT_OUTPUT(src, link(githuburl))
 
-/client/verb/config()
-	set name = "config"
-	set desc = "View the server configuration files."
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, config, "config")
 
 	var/configurl = CONFIG_GET(string/configurl)
 	if(!configurl)
@@ -66,9 +51,7 @@
 		return
 	DIRECT_OUTPUT(src, link(configurl))
 
-/client/verb/reportissue()
-	set name = "report-issue"
-	set desc = "Report an issue"
+GAME_VERB_DESC(/client, reportissue, "report-issue", "Report an issue", null)
 
 	var/githuburl = CONFIG_GET(string/githuburl)
 	if(!githuburl)
@@ -119,9 +102,7 @@
 
 	DIRECT_OUTPUT(src, link(jointext(concatable, "")))
 
-/client/verb/changelog()
-	set name = "更新日志"
-	set category = "OOC"
+GAME_VERB(/client, changelog, "更新日志", "OOC")
 
 	if(!GLOB.changelog_tgui)
 		GLOB.changelog_tgui = new /datum/changelog()
@@ -131,18 +112,14 @@
 		prefs.lastchangelog = GLOB.changelog_hash
 		prefs.save_preferences()
 
-/client/verb/hotkeys_help()
-	set name = "Hotkeys Help"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, hotkeys_help, "Hotkeys Help")
 
 	if(!GLOB.hotkeys_tgui)
 		GLOB.hotkeys_tgui = new /datum/hotkeys_help()
 
 	GLOB.hotkeys_tgui.ui_interact(mob)
 
-/client/verb/emote_panel()
-	set name = "Emote Panel"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/client, emote_panel, "Emote Panel")
 
 	if(!isliving(mob))
 		to_chat(mob, span_notice(LANG("client.143dea2d", null)))

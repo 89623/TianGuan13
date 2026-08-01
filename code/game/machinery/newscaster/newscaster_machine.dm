@@ -443,7 +443,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 		if("clearWantedIssue")
 			clear_wanted_issue(user)
-			for(var/obj/machinery/newscaster/other_newscaster in GLOB.allCasters)
+			for(var/obj/machinery/newscaster/other_newscaster as anything in GLOB.allCasters)
 				other_newscaster.update_appearance()
 				return TRUE
 
@@ -635,18 +635,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 /**
  * When a new feed message is made that will alert all newscasters, this causes the newscasters to sent out a spoken message as well as create a sound.
  */
-/obj/machinery/newscaster/proc/news_alert(channel, update_alert = TRUE)
+/obj/machinery/newscaster/proc/news_alert(channel)
 	if(channel)
-		if(update_alert)
-			say(LANG("obj.46508b75", list(channel)))
-			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 75, TRUE)
 		alert = TRUE
+		say(LANG("obj.46508b75", list(channel)))
+		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 75, TRUE)
 		update_appearance()
 		addtimer(CALLBACK(src, PROC_REF(remove_alert)), ALERT_DELAY, TIMER_UNIQUE|TIMER_OVERRIDE)
 
-	else if(!channel && update_alert)
+	else
 		say(LANG("obj.c4d96e05", null))
-		playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, TRUE)
+		playsound(src, 'sound/machines/warning-buzzer.ogg', 75, TRUE)
 
 /**
  * Performs a series of sanity checks before giving the user confirmation to create a new feed_channel using channel_name, and channel_desc.
@@ -843,12 +842,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 		return TRUE
 	for(var/datum/station_request/iterated_station_request as anything in GLOB.request_list)
 		if(iterated_station_request.req_number == current_user.account_id)
-			say("Account already has active bounty.")
+			say(LANG("obj.c9c211c4", null))
 			return TRUE
 	var/datum/station_request/curr_request = new /datum/station_request(current_user.account_holder, bounty_value,bounty_text,current_user.account_id, current_user)
 	GLOB.request_list += list(curr_request)
 	for(var/obj/iterated_bounty_board as anything in GLOB.allbountyboards)
-		iterated_bounty_board.say("New bounty added!")
+		iterated_bounty_board.say(LANG("obj.973df1c5", null))
 		playsound(iterated_bounty_board.loc, 'sound/effects/cashregister.ogg', 30, TRUE)
 /**
  * This sorts through the current list of bounties, and confirms that the intended request found is correct.

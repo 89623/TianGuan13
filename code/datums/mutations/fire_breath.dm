@@ -1,7 +1,7 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/mutation/firebreath
 	name = "Fire Breath"
-	desc = "An ancient mutation that gives lizards breath of fire."
+	desc = "The subject can breathe fire at will."
 	quality = POSITIVE
 	difficulty = 12
 	locked = TRUE

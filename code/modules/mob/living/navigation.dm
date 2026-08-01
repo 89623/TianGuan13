@@ -9,9 +9,7 @@
 	/// Images of the path created by navigate().
 	var/list/navigation_images = list()
 
-/mob/living/verb/navigate()
-	set name = "导航"
-	set hidden = TRUE
+GAME_VERB_HIDDEN(/mob/living, navigate, "导航")
 
 	if(incapacitated)
 		return

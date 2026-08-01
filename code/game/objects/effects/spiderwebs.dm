@@ -238,7 +238,7 @@
 	to_chat(user, span_notice(LANG("obj.50b9f9a4", list(DisplayTimeText(breakout_time)))))
 	visible_message(span_notice(LANG("obj.4cc8e807", list(src))))
 	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src)
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src)
 			return
 		qdel(src)
 

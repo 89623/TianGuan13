@@ -381,7 +381,7 @@
 		//If they can't, they're missing their heart and this would runtime
 		if(undergoing_cardiac_arrest() && can_heartattack() && (shock_damage * siemens_coeff >= 1) && prob(25))
 			var/obj/item/organ/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
-			if(heart.Restart() && stat == CONSCIOUS)
+			if(heart.Restart() && !IS_UNCONSCIOUS_OR_CRIT(src))
 				to_chat(src, span_notice(LANG("mob.a18e05ec", null)))
 	if (!(flags & SHOCK_NO_HUMAN_ANIM))
 		electrocution_animation(4 SECONDS)
@@ -547,7 +547,7 @@
 	return ..()
 
 /mob/living/carbon/human/check_self_for_injuries()
-	if(stat >= UNCONSCIOUS)
+	if(IS_UNCONSCIOUS(src))
 		return
 	var/list/combined_msg = list()
 
@@ -559,7 +559,7 @@
 	for(var/part_zone, body_part_untyped in get_bodyparts_by_zones())
 		var/obj/item/bodypart/body_part = body_part_untyped
 		if(isnull(body_part) || IS_STUMP(body_part))
-			combined_msg += span_boldannounce("&rdsh; Your [parse_zone(body_part?.body_zone || part_zone)] is missing!")
+			combined_msg += span_boldannounce(LANG("mob.edc9f6d8", list(parse_zone(body_part?.body_zone || part_zone))))
 			continue
 		if(body_part.bodypart_flags & BODYPART_PSEUDOPART) //don't show injury text for fake bodyparts; ie chainsaw arms or synthetic armblades
 			continue
@@ -757,10 +757,5 @@
 
 /mob/living/carbon/human/get_eye_protection()
 	. = ..()
-	if(isclothing(head)) // Adds head protection
-		var/obj/item/clothing/helmet = head
-		. += helmet.flash_protect
-	if(isclothing(glasses)) // Glasses
-		. += glasses.flash_protect
-	if(isclothing(wear_mask)) // Mask
-		. += wear_mask.flash_protect
+	for (var/obj/item/clothing/clothing in get_equipped_items())
+		. += clothing.flash_protect

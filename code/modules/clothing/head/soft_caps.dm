@@ -21,8 +21,7 @@
 	flipped = FALSE
 	..()
 
-/obj/item/clothing/head/soft/verb/flipcap()
-	set name = "翻转盖子"
+GAME_VERB(/obj/item/clothing/head/soft, flipcap, "翻转盖子", null)
 
 	flip(usr)
 

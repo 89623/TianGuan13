@@ -140,7 +140,7 @@
 /// Attempts to perform a headslam, with the user slamming target's head into the floor. (Does not account for the potential nonexistence of aforementioned floor, e.g. space.)
 /datum/species/proc/try_headslam(mob/living/carbon/human/user, mob/living/carbon/human/target, obj/item/bodypart/affecting)
 	var/time_doing = 4 SECONDS
-	if(target.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(target))
 		time_doing = 2 SECONDS
 		target.visible_message(span_danger(LANG("datum.3089419d", list(user, target))), ignored_mobs = user)
 		to_chat(user, span_danger(LANG("datum.54b6f603", list(target))))

@@ -25,7 +25,7 @@
 	var/appears_dead = FALSE
 	var/just_sleeping = FALSE
 
-	if(!appears_alive())
+	if(IS_DEAD_OR_FAKING(src))
 		appears_dead = TRUE
 
 		var/obj/item/clothing/glasses/shades = get_item_by_slot(ITEM_SLOT_EYES)
@@ -97,21 +97,21 @@
 			damage_text = "limp and lifeless"
 		else
 			damage_text = (body_part.brute_dam >= body_part.burn_dam) ? body_part.heavy_brute_msg : body_part.heavy_burn_msg
-		. += span_boldwarning("[capitalize(t_his)] [body_part.plaintext_zone] looks [damage_text]!")
+		. += span_boldwarning(LANG("mob.3a6ab594", list(capitalize(t_his), body_part.plaintext_zone, damage_text)))
 
 	//stores missing limbs
 	var/l_limbs_missing = 0
 	var/r_limbs_missing = 0
 	for(var/missing_limb in get_missing_limbs())
 		if(missing_limb == BODY_ZONE_HEAD)
-			. += span_deadsay("<B>[t_His] [parse_zone(missing_limb)] is missing!</B>")
+			. += span_deadsay(LANG("mob.ff5e16b5", list(t_His, parse_zone(missing_limb))))
 			continue
 		if(missing_limb == BODY_ZONE_L_ARM || missing_limb == BODY_ZONE_L_LEG)
 			l_limbs_missing++
 		else if(missing_limb == BODY_ZONE_R_ARM || missing_limb == BODY_ZONE_R_LEG)
 			r_limbs_missing++
 
-		. += span_boldwarning("[capitalize(t_his)] [parse_zone(missing_limb)] is missing!")
+		. += span_boldwarning(LANG("mob.7fb1cb66", list(capitalize(t_his), parse_zone(missing_limb))))
 
 	if(l_limbs_missing >= 2 && r_limbs_missing == 0)
 		. += span_tinydanger(LANG("mob.2fc5c3ff", list(t_He, p_s())))
@@ -212,7 +212,7 @@
 			. += bleed_text
 			if(LAZYLEN(grasped_limbs))
 				for(var/grasped_part in grasped_limbs)
-					. += "[t_He] [t_is] holding [t_his] [grasped_part] to slow the bleeding!"
+					. += LANG("mob.f89190fe", list(t_He, t_is, t_his, grasped_part))
 
 	if(reagents.has_reagent(/datum/reagent/teslium, needs_metabolizing = TRUE))
 		. += span_smallnoticeital(LANG("mob.aa008903", list(t_He, t_is))) // this should be signalized
@@ -227,14 +227,13 @@
 				. += LANG("mob.664ba4bd", list(t_He, t_has, t_him))
 				living_user.add_mood_event("religious_comfort", /datum/mood_event/religiously_comforted)
 
-		switch(stat)
-			if(UNCONSCIOUS, HARD_CRIT)
-				. += span_notice(LANG("mob.738a7088", list(t_He, t_is, t_him, p_s())))
-			if(SOFT_CRIT)
-				. += span_notice(LANG("mob.089eac99", list(t_He, t_is)))
-			if(CONSCIOUS)
-				if(HAS_TRAIT(src, TRAIT_DUMB))
-					. += LANG("mob.124f9dfa", list(t_He, t_has, t_his))
+		if(IS_UNCONSCIOUS(src))
+			. += span_notice(LANG("mob.738a7088", list(t_He, t_is, t_him, p_s())))
+		else if(stat == SOFT_CRIT)
+			. += span_notice(LANG("mob.089eac99", list(t_He, t_is)))
+		else if(HAS_TRAIT(src, TRAIT_DUMB))
+			. += LANG("mob.124f9dfa", list(t_He, t_has, t_his))
+
 		var/obj/item/organ/brain/brain = get_organ_by_type(/obj/item/organ/brain)
 		if(brain && isnull(ai_controller))
 			var/npc_message = ""
@@ -300,13 +299,13 @@
 		. += LANG("mob.3dd4cfa2", list(t_He, t_is, gunpointing.target.name, gunpointing.aimed_gun.name))
 	if(length(gunpointed))
 		for(var/datum/gunpoint/GP in gunpointed)
-			. += "<span class='warning'><b>[GP.source.name] [GP.source.p_are()] holding [t_him] at gunpoint with [GP.aimed_gun.name]!</b></span>\n"
+			. += LANG("mob.3dd4cfa2", list(GP.source.name, GP.source.p_are(), t_him, GP.aimed_gun.name))
 	if(has_dna(src))
 		for(var/genital_slot in GLOB.possible_genitals)
 			var/obj/item/organ/genital/possible_genital = get_organ_slot(genital_slot)
 			if(possible_genital)
 				if(possible_genital.is_exposed())
-					. += "<span class='notice'>[t_He] [t_has] exposed genitals... <a href='byond://?src=[REF(src)];lookup_info=genitals'>\[Look closer...\]</a></span>"
+					. += LANG("mob.ea9f1c57", list(t_He, t_has, REF(src)))
 					break
 
 	var/flavor_text_link
@@ -429,12 +428,12 @@
 	for(var/obj/item/held_thing in held_items)
 		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
 			continue
-		. += "[t_He] [t_is] holding [held_thing.examine_title(user)] in [t_his] [get_held_index_name(get_held_index_of_item(held_thing))]."
+		. += LANG("mob.01050c26", list(t_He, t_is, held_thing.examine_title(user), t_his, get_held_index_name(get_held_index_of_item(held_thing))))
 	for(var/obj/item/bodypart/arm/part in get_bodyparts())
 		if(!(part.bodypart_flags & BODYPART_PSEUDOPART))
 			continue
 		var/obj/item/corresponding_item = get_item_for_held_index(part.held_index) || part
-		. += "[t_He] [t_has] a [corresponding_item.examine_title(user)] in place of [t_his] [initial(part.plaintext_zone)]."
+		. += LANG("mob.e3f54875", list(t_He, t_has, corresponding_item.examine_title(user), t_his, initial(part.plaintext_zone)))
 	//handcuffed?
 	if(handcuffed)
 		var/cables_or_cuffs = istype(handcuffed, /obj/item/restraints/handcuffs/cable) ? "restrained with cable" : "handcuffed"
@@ -508,12 +507,12 @@
 	for(var/obj/item/held_thing in held_items)
 		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
 			continue
-		. += "[t_He] [t_is] holding [held_thing.examine_title(user)] in [t_his] [get_held_index_name(get_held_index_of_item(held_thing))]."
+		. += LANG("mob.01050c26", list(t_He, t_is, held_thing.examine_title(user), t_his, get_held_index_name(get_held_index_of_item(held_thing))))
 	for(var/obj/item/bodypart/arm/part in get_bodyparts())
 		if(!(part.bodypart_flags & BODYPART_PSEUDOPART))
 			continue
 		var/obj/item/corresponding_item = get_item_for_held_index(part.held_index) || part
-		. += "[t_He] [t_has] [corresponding_item.examine_title(user)] in place of [t_his] [initial(part.plaintext_zone)]."
+		. += LANG("mob.670b31d9", list(t_He, t_has, corresponding_item.examine_title(user), t_his, initial(part.plaintext_zone)))
 	//gloves
 	if(gloves && !(obscured_slots & HIDEGLOVES) && !HAS_TRAIT(gloves, TRAIT_EXAMINE_SKIP))
 		. += LANG("mob.b09af672", list(t_He, t_has, gloves.examine_title(user), t_his))
@@ -545,7 +544,7 @@
 	. = list()
 	var/perpname = get_face_name(get_id_name(""))
 	var/title = ""
-	if(perpname && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)) && (user.stat == CONSCIOUS || isobserver(user)) && user != src)
+	if(perpname && (HAS_TRAIT(user, TRAIT_SECURITY_HUD) || HAS_TRAIT(user, TRAIT_MEDICAL_HUD)) && (!IS_UNCONSCIOUS_OR_CRIT(user) || isobserver(user)) && user != src)
 		var/datum/record/crew/target_record = find_record(perpname)
 		if(target_record)
 			. += LANG("mob.63d84f9d", list(target_record.rank))

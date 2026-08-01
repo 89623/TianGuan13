@@ -192,7 +192,6 @@
 		to_chat(current_owner, span_notice(LANG("obj.d27cbfb7", null)))
 
 		current_owner.remove_traits(list(TRAIT_SIXTHSENSE, TRAIT_XRAY_VISION), SCRYING_ORB)
-		current_owner.update_sight()
 
 		current_owner = null
 
@@ -202,7 +201,6 @@
 		to_chat(current_owner, span_notice(LANG("obj.b1affb03", null)))
 
 		current_owner.add_traits(list(TRAIT_SIXTHSENSE, TRAIT_XRAY_VISION), SCRYING_ORB)
-		current_owner.update_sight()
 
 /obj/item/scrying/attack_self(mob/user)
 	visible_message(span_danger(LANG("obj.d74be6dd", list(user, src))))

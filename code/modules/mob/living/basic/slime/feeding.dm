@@ -8,9 +8,13 @@
 	if(!isliving(meal)) //sanity check
 		return FALSE
 
-	if(stat != CONSCIOUS)
-		if(!silent)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
+		if(stat == DEAD)
+			balloon_alert(src, LANG("mob.1bf49ad4", null))
+		else if(IS_UNCONSCIOUS(src))
 			balloon_alert(src, LANG("mob.dc8b5a42", null))
+		else
+			balloon_alert(src, LANG("mob.b49fe510", null))
 		return FALSE
 
 	if(hunger_disabled)

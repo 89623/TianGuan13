@@ -10,7 +10,7 @@
 		return
 	var/mob/living/carbon/human/dude = target
 	var/obj/item/clothing/shoes/sick_kicks = dude.shoes
-	if (!sick_kicks || sick_kicks.fastening_type == SHOES_SLIPON)
+	if (!istype(sick_kicks) || sick_kicks.fastening_type == SHOES_SLIPON)
 		to_chat(user, span_warning(LANG("datum.ea089fb6", list(dude))), confidential = TRUE)
 		return
 	sick_kicks.adjust_laces(SHOES_KNOTTED)

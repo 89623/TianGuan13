@@ -224,7 +224,7 @@
 			continue
 
 		storage_datum.energy += charger.materials.use_materials(list(SSmaterials.get_material(storage_datum.mat_type) = to_stock), action = "restocked", name = "units", user_data = ID_DATA(robot))
-		charger.balloon_alert(robot, "+ [to_stock]u [initial(storage_datum.mat_type.name)]")
+		charger.balloon_alert(robot, LANG("obj.3c47112a", list(to_stock, initial(storage_datum.mat_type.name))))
 		playsound(charger, 'sound/items/weapons/gun/general/mag_bullet_insert.ogg', 50, vary = FALSE)
 		return
 	charger.balloon_alert(robot, LANG("obj.ebd3d28c", null))
@@ -253,7 +253,7 @@
 	cyborg.model = new_model
 	cyborg.update_module_innate()
 	new_model.rebuild_modules()
-	cyborg.radio.recalculateChannels()
+	cyborg.radio?.recalculateChannels() // NOVA EDIT CHANGE - ORIGINAL: cyborg.radio.recalculateChannels()
 	cyborg.set_modularInterface_theme()
 	cyborg.diag_hud_set_health()
 	cyborg.diag_hud_set_status()

@@ -1,3 +1,4 @@
+// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /// Boss for the hauntedtradingpost space ruin
 /// It's a stationary AI core that casts spells
 #define LIGHTNING_ABILITY_TYPEPATH /datum/action/cooldown/spell/pointed/lightning_strike
@@ -112,21 +113,12 @@
 
 /// how the ai core thinks
 /datum/ai_controller/basic_controller/cybersun_ai_core
+	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/cybersun_ai_core.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGETLESS_TIME = 0,
 	)
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/targeted_mob_ability/lightning_strike,
-		/datum/ai_planning_subtree/targeted_mob_ability/cybersun_barrage,
-	)
 
-/// DA SPELLS!
-// spell #1: lightning strike
-/datum/ai_planning_subtree/targeted_mob_ability/lightning_strike
-	ability_key = BB_CYBERSUN_CORE_LIGHTNING
-	finish_planning = FALSE
 
 /datum/action/cooldown/spell/pointed/lightning_strike
 	name = "lightning strike"
@@ -175,7 +167,7 @@
 	for(var/mob/living/victim in loc)
 		if (is_type_in_typecache(victim, damage_blacklist_typecache))
 			continue
-		to_chat(victim, span_warning("You are struck by a large bolt of electricity!"))
+		to_chat(victim, span_warning(LANG("obj.be4a5a34", null)))
 		victim.electrocute_act(zap_damage, src, flags = SHOCK_NOGLOVES | SHOCK_NOSTUN)
 
 /obj/effect/temp_visual/lightning_strike_zap
@@ -188,11 +180,6 @@
 /obj/effect/temp_visual/lightning_strike_zap/Initialize(mapload)
 	. = ..()
 	do_sparks(number = rand(1,3), source = src)
-
-// spell #2: cybersun laser barrage
-/datum/ai_planning_subtree/targeted_mob_ability/cybersun_barrage
-	ability_key = BB_CYBERSUN_CORE_BARRAGE
-	finish_planning = FALSE
 
 /datum/action/cooldown/spell/pointed/projectile/cybersun_barrage
 	name = "plasma beam barrage"

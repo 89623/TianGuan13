@@ -256,7 +256,7 @@
 			)
 
 		else
-			if(slapped.IsSleeping() || slapped.IsUnconscious())
+			if(IS_UNCONSCIOUS(slapped))
 				user.visible_message(
 					span_notice(LANG("obj.202fd898", list(user, slapped, slapped.p_them()))),
 					span_notice(LANG("obj.30d35b1c", list(slapped, slapped.p_them()))),
@@ -462,7 +462,7 @@
 		return
 	if (user.body_position != LYING_DOWN)
 		return
-	var/obj/item/clothing/shoes/item_to_strip = target_human.shoes
+	var/obj/item/item_to_strip = target_human.shoes
 	user.visible_message(span_warning(LANG("obj.e61440d4", list(user, target_human, item_to_strip.name))), \
 		span_danger(LANG("obj.bc0ad176", list(target_human, item_to_strip.name))))
 	to_chat(target_human, span_userdanger(LANG("obj.b2acf044", list(user, item_to_strip.name))))
@@ -617,7 +617,7 @@
 
 /obj/projectile/kiss/proc/try_fluster(mob/living/living_target)
 	// people with the social anxiety quirk can get flustered when hit by a kiss
-	if(!HAS_TRAIT(living_target, TRAIT_ANXIOUS) || (living_target.stat > SOFT_CRIT) || living_target.is_blind())
+	if(!HAS_TRAIT(living_target, TRAIT_ANXIOUS) || IS_UNCONSCIOUS_OR_CRIT(living_target) || living_target.is_blind())
 		return
 	if(HAS_TRAIT(living_target, TRAIT_FEARLESS) || prob(50)) // 50% chance for it to apply, also immune while on meds
 		return

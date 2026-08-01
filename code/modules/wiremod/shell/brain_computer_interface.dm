@@ -435,7 +435,7 @@
 
 	if (locked)
 		message = "it won't budge!"
-	else if (user.stat != CONSCIOUS)
+	else if (IS_UNCONSCIOUS_OR_CRIT(user))
 		message = "you don't have the energy!"
 
 	if (!isnull(message))

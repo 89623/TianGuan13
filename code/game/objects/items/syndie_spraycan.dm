@@ -53,7 +53,7 @@
 /obj/item/traitor_spraycan/proc/try_draw_new_rune(mob/living/user, turf/target_turf)
 	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, target_turf))
 		if (!isopenturf(nearby_turf) || is_type_in_typecache(nearby_turf, no_draw_turfs))
-			user.balloon_alert(user, "you need a clear 3x3 area!")
+			user.balloon_alert(user, LANG("obj.54c10994", null))
 			return
 
 	draw_rune(user, target_turf)
@@ -86,7 +86,7 @@
 	if(HAS_TRAIT(user, TRAIT_TAGGER))
 		wait_time *= 0.5
 
-	if(!do_after(user, wait_time, target, hidden = TRUE, extra_checks = CALLBACK(src, PROC_REF(adjacency_check), user, target)))
+	if(!do_after(user, wait_time, target, cog_icon = null, extra_checks = CALLBACK(src, PROC_REF(adjacency_check), user, target)))
 		user.balloon_alert(user, LANG("obj.c67b5d27", null))
 		drawing_rune = FALSE
 		return FALSE

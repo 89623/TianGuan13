@@ -48,7 +48,7 @@
 		. += span_notice(LANG("obj.4f41ff84", list(efficiency, gibtime*0.1)))
 		for(var/datum/stock_part/servo/servo in component_parts)
 			if(servo.tier >= 2)
-				. += span_notice("[src] has been upgraded to process inorganic materials.")
+				. += span_notice(LANG("obj.8ab40c90", list(src)))
 
 /obj/machinery/gibber/update_overlays()
 	. = ..()
@@ -112,7 +112,7 @@
 		if(!ignore_clothing)
 			for(var/obj/item/I in C.held_items + C.get_equipped_items())
 				if(!HAS_TRAIT(I, TRAIT_NODROP))
-					to_chat(user, span_warning("Subject may not have abiotic items on!"))
+					to_chat(user, span_warning(LANG("obj.68f77223", null)))
 					return
 
 		user.visible_message(span_danger(LANG("obj.fa9f1c74", list(user, C, src))))
@@ -143,10 +143,9 @@
 	. = ..()
 	icon_state = panel_open ? "[base_icon_state]_open" : base_icon_state
 
-/obj/machinery/gibber/verb/eject()
-	set name = "清空绞肉机"
-	set src in oview(1)
-	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
+GAME_VERB_SRC(/obj/machinery/gibber, eject, oview(1), "清空绞肉机", null)
+
+	if (IS_UNCONSCIOUS_OR_CRIT(usr) || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	if(!usr.can_perform_action(src))
 		return

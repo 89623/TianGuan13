@@ -50,10 +50,14 @@ fn sink_message_args(name: &str) -> Option<&'static [usize]> {
         // 提示/对话框（玩家可见）。只取消息+标题；按钮/选项列表/返回值不动，
         // 以免破坏 `if(alert(...) == "Yes")` 之类的比较。alert 取 [0,1,2] 同时覆盖
         // `alert("msg")` 与 `alert(user, msg, title)` 两种写法（非字符串实参会被安全跳过）。
-        // 原生 alert/input 的按钮/默认值是位置实参（无 usr 时 [2]=按钮），故只取 [0,1]=消息+标题
-        // （含 usr 写法 alert(usr,msg,..) 则 [1]=消息；标题在 [2] 会漏译，但绝不误改按钮）。
-        "alert" => Some(&[0, 1]),
-        "input" => Some(&[0, 1]),
+        // 原生 alert/input 的位置实参随「有没有 usr」整体平移一位：
+        //   有 usr：alert(Usr, Message, Title, Button1…) / input(Usr, Message, Title, Default)  → [2]=标题，该译
+        //   无 usr：alert(Message, Title, Button1…)      / input(Message, Title, Default)       → [2]=按钮/默认值，**绝不能译**
+        //           （按钮是 `if(alert(...)=="Yes")` 的比较值；Default 是 input 的返回值）
+        // 判据在 try_rewrite_call 里：[0] 是字符串字面量 ⇒ 无 usr 形式 ⇒ 跳过 [2]。此前一律不取 [2]，
+        // 代价是所有对话框标题漏译（Tip/Admin Announce/Sort Type/Observe… 一大批）。
+        "alert" => Some(&[0, 1, 2]),
+        "input" => Some(&[0, 1, 2]),
         "tgui_alert" => Some(&[1, 2]),
         "tgui_input_list" => Some(&[1, 2]),
         "tgui_input_text" => Some(&[1, 2]),
@@ -69,6 +73,49 @@ fn sink_message_args(name: &str) -> Option<&'static [usize]> {
         // 幽灵招募/事件通知（"An X is ready to hatch in …" 等，72+ 处）：notify_ghosts(message, source, …)。
         // 只改位置实参 [0]=消息字面量（header 是关键字实参、改写器够不着，作残留）。与 extract.rs 同表。
         "notify_ghosts" => Some(&[0]),
+        // 机器打印/预置到纸上的正文（21 处：每日密钥重置、核弹授权码、雇佣条款、扫描报告…）。
+        // 纸张**玩家书写**的内容不该译，但 add_raw_text 的字符串**字面量**实参全是作者写的印刷体，
+        // 玩家输入永远是变量。纸张渲染路径不过反查（见 i18n readme），所以只能靠 LANG 改写。
+        "add_raw_text" => Some(&[0]),
+        _ => None,
+    }
+}
+
+/// sink 的消息实参下标 -> 形参名。用于**关键字实参**调用（`priority_announce(text = "…", title = "…")`，
+/// 上游 46 处这么写）：改写器原本只按位置取实参，关键字写法下 AST 里那一项是 `text = "…"` 整个
+/// 赋值表达式 —— build_template 拿它算出的 key 与目录对不上，于是整类调用**一处都改不到**
+/// （玩家报的「紧急穿梭机公告半中半英」就是这么来的：AC 兜底只译得动 emergency shuttle 这种词组，
+/// 整句带插值、反查和 AC 都够不着）。有了名字表就能按名对齐，顺带防住 `f(text=…, sound=…, title=…)`
+/// 这种乱序写法把 title 套到 sound 上。
+fn sink_arg_name(sink: &str, idx: usize) -> Option<&'static str> {
+    let names: &[(usize, &'static str)] = match sink {
+        "priority_announce" => &[(0, "text"), (1, "title")],
+        "minor_announce" => &[(0, "message"), (1, "title")],
+        "print_command_report" => &[(0, "text"), (1, "title")],
+        "to_chat" => &[(1, "message")],
+        "balloon_alert" => &[(1, "text")],
+        "visible_message" => &[(0, "message"), (1, "self_message"), (2, "blind_message")],
+        "audible_message" => &[(0, "message"), (1, "self_message"), (3, "deaf_message")],
+        "notify_ghosts" => &[(0, "title")],
+        _ => return None,
+    };
+    names.iter().find(|(i, _)| *i == idx).map(|(_, n)| *n)
+}
+
+/// 关键字实参 `name = expr` 的名字（不是关键字实参就返回 None）。
+fn keyword_arg_name(arg: &Expression) -> Option<String> {
+    let Expression::AssignOp { op: AssignOp::Assign, lhs, rhs: _ } = arg else {
+        return None;
+    };
+    // 形参名在 AST 里是裸标识符项；build_template 只认字符串表达式，拿它取名会一律返回 None。
+    let Expression::Base { term, follow } = lhs.as_ref() else {
+        return None;
+    };
+    if !follow.is_empty() {
+        return None;
+    }
+    match &term.elem {
+        Term::Ident(name) => Some(name.clone()),
         _ => None,
     }
 }
@@ -497,6 +544,42 @@ impl<'a> Rewriter<'a> {
                 }
             }
             Statement::Setting { value, .. } => self.visit_expr(value, ns),
+            // 以下分支此前全落进 `_ => {}`：**for-in / for-in-range / do-while / try-catch / 带标签块
+            // 的整个循环体一处都没被改写过**（extract.rs 早已补齐同样的分支，rewrite 漏修至今）。
+            // `for(var/mob/M in viewers)` 里的 to_chat/visible_message 是最常见的形态之一。
+            Statement::DoWhile { block, condition } => {
+                self.visit_block(block, ns);
+                self.visit_expr(&condition.elem, ns);
+            }
+            Statement::ForList(f) => {
+                if let Some(e) = &f.in_list {
+                    self.visit_expr(e, ns);
+                }
+                self.visit_block(&f.block, ns);
+            }
+            Statement::ForKeyValue(f) => {
+                if let Some(e) = &f.in_list {
+                    self.visit_expr(e, ns);
+                }
+                self.visit_block(&f.block, ns);
+            }
+            Statement::ForRange(f) => {
+                self.visit_expr(&f.start, ns);
+                self.visit_expr(&f.end, ns);
+                if let Some(e) = &f.step {
+                    self.visit_expr(e, ns);
+                }
+                self.visit_block(&f.block, ns);
+            }
+            Statement::TryCatch {
+                try_block,
+                catch_block,
+                ..
+            } => {
+                self.visit_block(try_block, ns);
+                self.visit_block(catch_block, ns);
+            }
+            Statement::Label { block, .. } => self.visit_block(block, ns),
             _ => {}
         }
     }
@@ -505,14 +588,14 @@ impl<'a> Rewriter<'a> {
         if let Expression::Base { term, follow } = expr {
             if let Term::Call(name, args) = &term.elem {
                 if let Some(indices) = sink_message_args(name.as_str()) {
-                    self.try_rewrite_call(term.location, args, indices, ns, is_announce_sink(name.as_str()));
+                    self.try_rewrite_call(term.location, args, indices, ns, is_announce_sink(name.as_str()), name.as_str());
                 }
             }
             // input() 是 dreammaker 的专用 Term::Input（因 `as type in list` 语法），不是 Call。
             // 复用同一套实参定位（term.location 指向 input 关键字，find_open_paren 找其 `(`）。
             if let Term::Input { args, .. } = &term.elem {
                 if let Some(indices) = sink_message_args("input") {
-                    self.try_rewrite_call(term.location, args, indices, ns, false);
+                    self.try_rewrite_call(term.location, args, indices, ns, false, "input");
                 }
             }
             self.recurse_term(&term.elem, ns);
@@ -521,7 +604,7 @@ impl<'a> Rewriter<'a> {
                 // 改写消息参数。裸调用走上面的 Term::Call 分支；方法调用是 Follow::Call，此前完全漏改。
                 if let Follow::Call(_, name, fargs) = &f.elem {
                     if let Some(indices) = sink_message_args(name.as_str()) {
-                        self.try_rewrite_call(f.location, fargs, indices, ns, is_announce_sink(name.as_str()));
+                        self.try_rewrite_call(f.location, fargs, indices, ns, is_announce_sink(name.as_str()), name.as_str());
                     }
                 }
                 self.recurse_follow(&f.elem, ns);
@@ -587,11 +670,49 @@ impl<'a> Rewriter<'a> {
         indices: &[usize],
         ns: &str,
         interp_only: bool,
+        sink: &str,
     ) {
+        // 原生 alert/input 的 [2]：有 usr 时是标题（该译），无 usr 时是按钮/默认值（绝不能译）。
+        // 判据是 [0] 到底是不是字符串字面量（是 ⇒ [0] 就是 Message ⇒ 无 usr 形式）。见 sink_message_args。
+        let native_dialog = matches!(sink, "alert" | "input");
+        let no_usr_form = native_dialog && {
+            let mut n0: Vec<&Spanned<Term>> = Vec::new();
+            if let Some(a0) = args.first() {
+                collect_text_nodes(a0, &mut n0);
+            }
+            !n0.is_empty()
+        };
         // 1) 用 AST 判定每个消息参数是否「恰好一个可翻译文本节点」，并取其模板/占位符数/key。
         let mut targets: Vec<(usize, String, usize)> = Vec::new();
         for &i in indices {
-            let Some(arg) = args.get(i) else { continue };
+            if no_usr_form && i == 2 {
+                continue;
+            }
+            // 关键字实参写法：按形参名找到它实际所在的位置槽；找不到就退回按位置取，
+            // 但**位置上那一项若本身是关键字实参**说明对齐已不可信 → 跳过，宁可漏译不改错。
+            let kw_slot = sink_arg_name(sink, i).and_then(|want| {
+                args.iter()
+                    .position(|a| keyword_arg_name(a).as_deref() == Some(want))
+            });
+            let slot = match kw_slot {
+                Some(s) => s,
+                None => {
+                    if args.get(i).is_some_and(|a| keyword_arg_name(a).is_some()) {
+                        continue;
+                    }
+                    i
+                }
+            };
+            let Some(raw_arg) = args.get(slot) else { continue };
+            // 关键字实参取右值做模板；`text = "…"` 整体算 key 会与目录对不上。
+            let arg = match raw_arg {
+                Expression::AssignOp { op: AssignOp::Assign, rhs, .. }
+                    if keyword_arg_name(raw_arg).is_some() =>
+                {
+                    rhs.as_ref()
+                }
+                other => other,
+            };
             // 门槛：源码里恰好一个可翻译字符串字面量（保证后面切片定位无歧义）。
             let mut nodes: Vec<&Spanned<Term>> = Vec::new();
             collect_text_nodes(arg, &mut nodes);
@@ -617,7 +738,7 @@ impl<'a> Rewriter<'a> {
             if interp_only && ph == 0 {
                 continue;
             }
-            targets.push((i, make_key(ns, &template), ph));
+            targets.push((slot, make_key(ns, &template), ph));
         }
         if targets.is_empty() {
             return;
@@ -635,10 +756,20 @@ impl<'a> Rewriter<'a> {
             return;
         };
         let Some(lparen) = find_open_paren(src, name_start) else { return };
-        let Some(arg_ranges) = split_call_args(src, lparen) else { return };
+        let Some(mut arg_ranges) = split_call_args(src, lparen) else { return };
+        // **尾逗号**（多行调用的 `f(\n\ta,\n\tb,\n)` 收尾风格，上游 tgstation 大量使用）：源码切分会在
+        // 最后一个逗号与 `)` 之间多切出一个空范围，而 AST 里没有它。它在**末尾**，不会让前面任何实参的
+        // 下标错位 —— 直接丢弃即可。不丢的话会被下面的空实参守卫当成 `f(a,,b)` 而整调用跳过，这正是
+        // 2026-07-30 上游同步后 40 余处 visible_message/to_chat 再也改写不回来的原因（rewrite 全仓 0 处）。
+        if arg_ranges
+            .last()
+            .is_some_and(|&(s, e)| src[s..e].trim().is_empty())
+        {
+            arg_ranges.pop();
+        }
         // 空实参守卫：dreammaker 的 AST **丢弃** `f(a,,b)` 里的空实参，但按源码逗号切分会**保留**空范围
         // → AST 下标与源码范围下标错位，目标会套用到相邻的错误实参（典型：alert 空标题 `,,` 致按钮被当
-        // 消息改写，重跑还层层套 LANG）。有空实参即整调用跳过——宁可不译也不改坏（这类多为 admin alert）。
+        // 消息改写，重跑还层层套 LANG）。**中间**的空实参才会错位，仍整调用跳过——宁可不译也不改坏。
         if arg_ranges.iter().any(|&(s, e)| src[s..e].trim().is_empty()) {
             return;
         }
@@ -965,7 +1096,7 @@ fn is_dialog_button(template: &str) -> bool {
     )
 }
 
-fn collect_text_nodes<'b>(expr: &'b Expression, out: &mut Vec<&'b Spanned<Term>>) {
+pub(crate) fn collect_text_nodes<'b>(expr: &'b Expression, out: &mut Vec<&'b Spanned<Term>>) {
     match expr {
         Expression::Base { term, follow } if follow.is_empty() => match &term.elem {
             Term::String(_) | Term::InterpString(_, _) => {

@@ -75,7 +75,7 @@
 	if(area)
 		var/mutable_appearance/alert_overlay = mutable_appearance('icons/effects/cult.dmi', "ghostalertsie")
 		notify_ghosts(
-			"Nar'Sie has risen in [area]. Reach out to the Geometer to be given a new shell for your soul.",
+			LANG("obj.46963cee", list(area)),
 			source = src,
 			header = "Nar'Sie has risen!",
 			click_interact = TRUE,
@@ -171,9 +171,9 @@
 /// Stun people around Nar'Sie that aren't cultists
 /obj/narsie/proc/mesmerize()
 	for (var/mob/living/carbon/victim in viewers(NARSIE_CONSUME_RANGE, src))
-		if (victim.stat == CONSCIOUS)
+		if (!IS_UNCONSCIOUS_OR_CRIT(victim))
 			if (!IS_CULTIST(victim))
-				to_chat(victim, span_cult("You feel conscious thought crumble away in an instant as you gaze upon [src]..."))
+				to_chat(victim, span_cult(LANG("obj.91c5f025", list(src))))
 				victim.apply_effect(NARSIE_MESMERIZE_EFFECT, EFFECT_STUN)
 
 /// Narsie rewards her cultists with being devoured first, then picks a ghost to follow.
@@ -263,7 +263,7 @@
 		return
 	priority_announce(
 		text = "An acausal dimensional event has been detected in your sector. Event has been flagged EXTINCTION-CLASS. Directing all available assets toward simulating solutions. SOLUTION ETA: 60 SECONDS.",
-		title = "[command_name()] Higher Dimensional Affairs",
+		title = LANG("_root.92d186ed", list(command_name())),
 		sound = 'sound/announcer/alarm/airraid.ogg',
 	)
 	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(narsie_end_second_check)), 50 SECONDS)

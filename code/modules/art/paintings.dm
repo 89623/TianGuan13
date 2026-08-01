@@ -293,7 +293,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 			if(curator_cut)
 				for(var/datum/bank_account/curator as anything in curator_accounts)
 					curator.adjust_money(curator_cut, "Painting: Patronage cut")
-					curator.bank_card_talk("Cut on patronage received, account now holds [curator.account_balance] [MONEY_SYMBOL].")
+					curator.bank_card_talk(LANG("obj.c2681220", list(curator.account_balance, MONEY_SYMBOL)))
 
 	if(istype(loc, /obj/structure/sign/painting))
 		var/obj/structure/sign/painting/frame = loc
@@ -339,7 +339,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 /obj/item/canvas/proc/can_select_frame(mob/user)
 	if(!istype(loc, /obj/structure/sign/painting))
 		return FALSE
-	if(!loc.IsReachableBy(user) || IS_DEAD_OR_INCAP(user))
+	if(!loc.IsReachableBy(user) || user.incapacitated)
 		return FALSE
 	if(!last_patron || !IS_WEAKREF_OF(user?.mind, last_patron))
 		return FALSE

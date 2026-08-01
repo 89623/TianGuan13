@@ -44,7 +44,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/opened = FALSE
 	var/welded = FALSE
 	var/locked = FALSE
-	var/large = TRUE
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/breakout_time = 1200
 	var/message_cooldown
@@ -488,7 +487,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	for(var/mob/living/L in T)
 		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
-				to_chat(user, span_danger("There's something large on top of [src], preventing it from opening."))
+				to_chat(user, span_danger(LANG("obj.25b5a9f8", list(src))))
 			return FALSE
 	return TRUE
 
@@ -497,12 +496,12 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	for(var/obj/structure/closet/closet in T)
 		if(closet != src && !closet.wall_mounted)
 			if(user)
-				balloon_alert(user, "[closet.name] is in the way!")
+				balloon_alert(user, LANG("obj.f4935eb9", list(closet.name)))
 			return FALSE
 	for(var/mob/living/L in T)
 		if(L.anchored || horizontal && L.mob_size > MOB_SIZE_TINY && L.density)
 			if(user)
-				to_chat(user, span_danger("There's something too large in [src], preventing it from closing."))
+				to_chat(user, span_danger(LANG("obj.e1f04d6b", list(src))))
 			return FALSE
 	return TRUE
 
@@ -927,7 +926,12 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(user in contents)
 		return ITEM_INTERACT_BLOCKING
 
+
 	if(opened && istype(tool, cutting_tool)) // not all of them take welders
+		if(resistance_flags & INDESTRUCTIBLE)
+			to_chat(user, span_warning(LANG("obj.75151349", list(src))))
+			return ITEM_INTERACT_BLOCKING
+
 		if(!tool.tool_start_check(user, amount=1))
 			return ITEM_INTERACT_BLOCKING
 
@@ -1019,7 +1023,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		O.forceMove(T)
 
 /obj/structure/closet/relaymove(mob/living/user, direction)
-	if(user.stat || !isturf(loc))
+	if(IS_UNCONSCIOUS_OR_CRIT(user) || !isturf(loc))
 		return
 	if(locked)
 		if(message_cooldown <= world.time)
@@ -1060,9 +1064,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(attack_hand(user))
 		return ITEM_INTERACT_BLOCKING
 
-/obj/structure/closet/verb/verb_toggleopen()
-	set name = "打开/关闭"
-	set src in view(1)
+GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "打开/关闭", null)
 
 	if(!usr.can_perform_action(src) || !isturf(loc))
 		return
@@ -1106,7 +1108,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	addtimer(CALLBACK(src, PROC_REF(check_if_shake)), 1 SECONDS)
 
 	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || (loc_required && (user.loc != src)) || opened || (!locked && !welded) )
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || (loc_required && (user.loc != src)) || opened || (!locked && !welded) )
 			return
 		//we check after a while whether there is a point of resisting anymore and whether the user is capable of resisting
 		user.visible_message(span_danger(LANG("obj.37696909", list(user, src))),
@@ -1222,7 +1224,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(secure && !broken)
-		visible_message(span_warning(LANG("obj.4ebe3de5", list(src))), blind_message = span_hear("You hear a faint electrical spark."))
+		visible_message(span_warning(LANG("obj.4ebe3de5", list(src))), blind_message = span_hear(LANG("obj.e9bee9b3", null)))
 		balloon_alert(user, LANG("obj.8808ba88", null))
 		playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		broken = TRUE

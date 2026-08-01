@@ -88,7 +88,7 @@
 		for(var/s in symptoms)
 			var/datum/symptom/symptom_datum = s
 			if(symptom_datum.Start(src)) //this will return FALSE if the symptom is neutered
-				symptom_datum.next_activation = world.time + (rand(symptom_datum.symptom_delay_min SECONDS, symptom_datum.symptom_delay_max SECONDS) * DISEASE_SYMPTOM_FREQUENCY_MODIFIER)
+				symptom_datum.next_activation = world.time + (rand(symptom_datum.symptom_delay * (1 - symptom_datum.delay_variation) SECONDS, symptom_datum.symptom_delay * (1 + symptom_datum.delay_variation) SECONDS) * DISEASE_SYMPTOM_FREQUENCY_MODIFIER)
 			symptom_datum.on_stage_change(src)
 
 	for(var/s in symptoms)
@@ -415,7 +415,7 @@
 	symptoms += SSdisease.list_symptoms.Copy()
 	do
 		if(user)
-			var/symptom = tgui_input_list(user, "Choose a symptom to add ([i] remaining)", "Choose a Symptom", sort_list(symptoms, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+			var/symptom = tgui_input_list(user, LANG("_root.7ae826de", list(i)), LANG("_root.a8c6cdd1", null), sort_list(symptoms, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 			if(isnull(symptom))
 				return
 			else if(istext(symptom))
@@ -452,7 +452,7 @@
 					found = H.ForceContractDisease(D)
 					break
 				if(!found)
-					to_chat(user, "Could not find a valid target for the disease.")
+					to_chat(user, LANG("_root.962814fb", null))
 		else
 			H = target
 			if(istype(H) && D.infectable_biotypes & H.mob_biotypes)
@@ -502,6 +502,22 @@
 /datum/disease/advance/proc/make_visible()
 	visibility_flags &= ~HIDDEN_SCANNER
 	affected_mob.med_hud_set_status()
+
+/datum/disease/advance/cure(add_resistance = TRUE)
+	if(severity == DISEASE_SEVERITY_UNCURABLE)
+		return
+	if(add_resistance == TRUE)
+		for(var/datum/symptom/each_symptom as anything in symptoms)
+			if(!each_symptom.neutered && !each_symptom.immunity_proof)
+				LAZYOR(affected_mob.symptom_resistances, each_symptom.name)
+	.=..()
+
+/datum/disease/advance/get_immunity_recovery()
+	var/recovery_bonus = 0
+	for(var/datum/symptom/each_symptom as anything in symptoms)
+		if((each_symptom.name in affected_mob.symptom_resistances) && !each_symptom.neutered)
+			recovery_bonus += DISEASE_SYMPTOM_IMMUNITY_RECOVERY_BONUS
+	return recovery_bonus
 
 /datum/disease/advance/proc/generate_cure_text(cure_count)
 	var/remedies = list()

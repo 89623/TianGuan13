@@ -408,7 +408,7 @@
 			else
 				if (occupant)
 					var/mob/living/mob_occupant = occupant
-					to_chat(mob_occupant, span_userdanger(LANG("obj.303d7705", list(src, !mob_occupant.stat ? "alive" : "away"))))
+					to_chat(mob_occupant, span_userdanger(LANG("obj.303d7705", list(src, mob_occupant.stat == DEAD ? "away" : "alive"))))
 				cook()
 		if ("lock", "unlock")
 			if(locked && !access_check(user))
@@ -497,7 +497,7 @@
 				mob_occupant.adjust_fire_loss(rand(20, 36))
 			else
 				mob_occupant.adjust_fire_loss(rand(10, 16))
-			if(iscarbon(mob_occupant) && mob_occupant.stat < UNCONSCIOUS)
+			if(iscarbon(mob_occupant) && !IS_UNCONSCIOUS(mob_occupant))
 				//Awake, organic and screaming
 				mob_occupant.emote("scream")
 		addtimer(CALLBACK(src, PROC_REF(cook)), 5 SECONDS)
@@ -586,7 +586,7 @@
 		span_notice(LANG("obj.b62a303d", list(DisplayTimeText(breakout_time)))), \
 		span_hear(LANG("obj.a2fe6eff", list(src))))
 	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src )
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src )
 			return
 		user.visible_message(span_warning(LANG("obj.37696909", list(user, src))), \
 			span_notice(LANG("obj.81c31f6b", list(src))))
@@ -603,7 +603,7 @@
 		dump_inventory_contents()
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
-	if(!state_open && occupant && (user in src) && user.stat == CONSCIOUS) // Check they're still here.
+	if(!state_open && occupant && (user in src) && !IS_UNCONSCIOUS_OR_CRIT(user)) // Check they're still here.
 		visible_message(span_notice(LANG("obj.afbf7f90", list(user, src))), \
 			span_notice(LANG("obj.19d802a7", list(src))))
 		open_machine()

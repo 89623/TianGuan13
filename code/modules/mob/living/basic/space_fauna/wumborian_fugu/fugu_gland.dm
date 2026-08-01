@@ -24,7 +24,7 @@
 		return NONE
 	var/mob/living/animal = interacting_with
 
-	if(animal.stat == DEAD || HAS_TRAIT(animal, TRAIT_FAKEDEATH))
+	if(IS_DEAD_OR_FAKING(animal))
 		balloon_alert(user, LANG("obj.5f159f3d", null))
 		return ITEM_INTERACT_BLOCKING
 	if(HAS_TRAIT(animal, TRAIT_FUGU_GLANDED))

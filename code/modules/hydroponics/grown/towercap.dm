@@ -85,28 +85,28 @@
 
 	return NONE
 
-/obj/item/grown/log/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.get_sharpness())
-
+/obj/item/grown/log/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.get_sharpness())
 		user.balloon_alert(user, LANG("obj.dac102ae", list(plank_count, plank_name)))
 		new plank_type(user.loc, plank_count)
 		qdel(src)
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(CheckAccepted(attacking_item))
-		var/obj/item/food/grown/leaf = attacking_item
-		if(HAS_TRAIT(leaf, TRAIT_DRIED))
-			user.balloon_alert(user, LANG("obj.d1ec31a1", null))
-			var/obj/item/flashlight/flare/torch/new_torch = new /obj/item/flashlight/flare/torch(user.loc)
-			user.dropItemToGround(attacking_item)
-			user.put_in_active_hand(new_torch)
-			qdel(leaf)
-			qdel(src)
-			return
-		else
+	if(CheckAccepted(tool))
+		var/obj/item/food/grown/leaf = tool
+		if(!HAS_TRAIT(leaf, TRAIT_DRIED))
 			balloon_alert(user, LANG("obj.a6ee2a30", null))
-	else
-		return ..()
+			return ITEM_INTERACT_BLOCKING
+
+		user.balloon_alert(user, LANG("obj.d1ec31a1", null))
+		var/obj/item/flashlight/flare/torch/new_torch = new /obj/item/flashlight/flare/torch(user.loc)
+		user.dropItemToGround(tool)
+		user.put_in_active_hand(new_torch)
+		qdel(leaf)
+		qdel(src)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/grown/log/proc/CheckAccepted(obj/item/I)
 	return is_type_in_typecache(I, accepted)
@@ -176,7 +176,7 @@
 		if(LAZYLEN(buckled_mobs))
 			return
 		if(buckle_mob(fallen_mob, TRUE))
-			to_chat(fallen_mob, span_userdanger("You are impaled by [src]!"))
+			to_chat(fallen_mob, span_userdanger(LANG("obj.1af7f6dd", list(src))))
 			fallen_mob.apply_damage(25 * levels, BRUTE, sharpness = SHARP_POINTY)
 			if(iscarbon(fallen_mob))
 				var/mob/living/carbon/fallen_carbon = fallen_mob

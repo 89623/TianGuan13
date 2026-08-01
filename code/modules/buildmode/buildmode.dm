@@ -171,9 +171,7 @@
 	mode.handle_click(user.client, params, object)
 	return TRUE // no doing underlying actions
 
-/proc/togglebuildmode(mob/M as mob in GLOB.player_list)
-	set name = "切换建造模式"
-	set category = "Event"
+GAME_VERB_GLOBAL_PROC(togglebuildmode, "切换建造模式", "", "Event", mob/M as mob in GLOB.player_list)
 
 	if(M.client)
 		if(istype(M.client.click_intercept,/datum/buildmode))

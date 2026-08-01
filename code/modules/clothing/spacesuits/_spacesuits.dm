@@ -241,17 +241,20 @@
 	return ITEM_INTERACT_SUCCESS
 
 // object handling for accessing features of the suit
-/obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!cell_cover_open || !istype(I, /obj/item/stock_parts/power_store/cell))
+/obj/item/clothing/suit/space/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!cell_cover_open || !istype(tool, /obj/item/stock_parts/power_store/cell))
 		return ..()
+
 	if(cell)
 		to_chat(user, span_warning(LANG("obj.3d7d4031", list(src))))
-		return
-	if(user.transferItemToLoc(I, src))
-		cell = I
-		to_chat(user, span_notice(LANG("obj.b9a8027e", list(cell, src))))
-		update_hud_icon(user)
-		return
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	cell = tool
+	to_chat(user, span_notice(LANG("obj.b9a8027e", list(cell, src))))
+	update_hud_icon(user)
+	return ITEM_INTERACT_SUCCESS
 
 /// Open the cell cover when ALT+Click on the suit
 /obj/item/clothing/suit/space/click_alt(mob/living/user)

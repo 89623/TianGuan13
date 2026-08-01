@@ -137,7 +137,7 @@
 		rename_dragon()
 		return
 	to_chat(src, span_notice(LANG("mob.fce56561", list(span_name("[chosen_name]")))))
-	fully_replace_character_name(null, chosen_name)
+	fully_replace_character_name(null, chosen_name, log_new_name = TRUE)
 
 /// Select scale colour with the colour picker
 /mob/living/basic/space_dragon/proc/select_colour()

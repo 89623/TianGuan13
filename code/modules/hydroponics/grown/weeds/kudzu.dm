@@ -47,7 +47,7 @@
 
 /obj/item/seeds/kudzu/attack_self(mob/user)
 	user.visible_message(span_danger(LANG("obj.92036855", list(user))))
-	if(do_after(user, 5 SECONDS, target = user.drop_location(), progress = TRUE))
+	if(do_after(user, 5 SECONDS, target = user.drop_location()))
 		plant(user)
 		to_chat(user, span_notice(LANG("obj.baa4d562", null)))
 

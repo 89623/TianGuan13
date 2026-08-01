@@ -1,10 +1,7 @@
-/mob/living/carbon/human/verb/climax_verb()
-	set name = "高潮"
-	set category = "IC"
-
+GAME_VERB(/mob/living/carbon/human, climax_verb, "高潮", "IC")
 	if(!has_status_effect(/datum/status_effect/climax_cooldown))
 		if(tgui_alert(usr, LANG("mob.b5f29a08", null), LANG("mob.39f677eb", null), list("Yes", "No")) == "Yes")
-			if(stat != CONSCIOUS)
+			if(IS_UNCONSCIOUS_OR_CRIT(src))
 				to_chat(usr, span_warning(LANG("mob.9143876c", null)))
 				return
 			else
@@ -12,9 +9,7 @@
 	else
 		to_chat(src, span_warning(LANG("mob.b4242208", null)))
 
-/mob/living/verb/reflexes_verb()
-	set name = "切换敏捷反应"
-	set category = "IC"
+GAME_VERB(/mob/living, reflexes_verb, "切换敏捷反应", "IC")
 	if(!HAS_TRAIT_FROM(src, TRAIT_QUICKREFLEXES, REF(src)))
 		ADD_TRAIT(src, TRAIT_QUICKREFLEXES, REF(src))
 		to_chat(src, span_notice("[get_reflexes_gain_text()]"))
@@ -34,11 +29,7 @@
 /mob/living/silicon/get_reflexes_lose_text()
 	return "Our systems will allow platonic contact."
 
-/mob/living/carbon/human/verb/safeword()
-	set name = "移除不雅物品"
-	set category = "OOC"
-	set desc = "Removes any and all lewd items from you."
-
+GAME_VERB_DESC(/mob/living/carbon/human, safeword, "移除不雅物品", "Removes any and all lewd items from you.", "OOC")
 	log_message("[key_name(src)] used the Remove Lewd Items verb.", LOG_ATTACK)
 	for(var/obj/item/equipped_item in get_equipped_items())
 		if(!(equipped_item.type in GLOB.pref_checked_clothes))

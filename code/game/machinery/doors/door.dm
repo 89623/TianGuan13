@@ -258,7 +258,7 @@
 		return
 	if(ismob(AM))
 		var/mob/B = AM
-		if((isdrone(B) || iscyborg(B)) && B.stat)
+		if((isdrone(B) || iscyborg(B)) && IS_UNCONSCIOUS_OR_CRIT(B))
 			return
 		if(isliving(AM))
 			var/mob/living/M = AM
@@ -669,7 +669,7 @@
 /obj/machinery/door/proc/crush()
 	for(var/turf/checked_turf in locs)
 		for(var/mob/living/future_pancake in checked_turf)
-			future_pancake.visible_message(span_warning("[src] closes on [future_pancake], crushing [future_pancake.p_them()]!"), span_userdanger("[src] closes on you and crushes you!"))
+			future_pancake.visible_message(span_warning(LANG("obj.f1b14203", list(src, future_pancake, future_pancake.p_them()))), span_userdanger(LANG("obj.1506090e", list(src))))
 			var/sig_return = SEND_SIGNAL(future_pancake, COMSIG_LIVING_DOORCRUSHED, src)
 			future_pancake.add_splatter_floor(loc)
 			log_combat(src, future_pancake, "crushed")

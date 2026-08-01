@@ -1,7 +1,7 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 /datum/mutation/self_amputation
 	name = "Autotomy"
-	desc = "Allows a creature to voluntary discard a random appendage."
+	desc = "The subject gains the ability to voluntarily discard a random appendage."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your joints feel loose.")
 	instability = POSITIVE_INSTABILITY_MINOR

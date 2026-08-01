@@ -10,7 +10,7 @@
 		user.visible_message(
 			span_warning(LANG("datum.d8c54a6a", list(user))),
 			span_warning(LANG("datum.fc17dd20", null)),
-			blind_message = span_hear("You hear zap nearby."),
+			blind_message = span_hear(LANG("datum.f3571fe9", null)),
 		)
 
 /datum/artifact_effect/teleport/do_effect_aura(seconds_per_tick)
@@ -21,9 +21,9 @@
 	for(var/mob/living/living_mob in range(range, curr_turf))
 		if(teleport_around(living_mob, 20))
 			living_mob.visible_message(
-				span_warning("[living_mob] is displaced by a strange force!"),
-				span_warning("You are displaced by a strange force!"),
-				blind_message = span_hear("You hear zap nearby."),
+				span_warning(LANG("datum.fc07fa9a", list(living_mob))),
+				span_warning(LANG("datum.325c879e", null)),
+				blind_message = span_hear(LANG("datum.f3571fe9", null)),
 			)
 
 /datum/artifact_effect/teleport/do_effect_pulse(seconds_per_tick)
@@ -35,9 +35,9 @@
 	for(var/mob/living/living_mob in range(range, curr_turf))
 		if(teleport_around(living_mob, round(1 * used_power)))
 			living_mob.visible_message(
-				span_warning("[living_mob] is displaced by a strange force!"),
-				span_warning("You are displaced by a strange force!"),
-				blind_message = span_hear("You hear zap nearby."),
+				span_warning(LANG("datum.fc07fa9a", list(living_mob))),
+				span_warning(LANG("datum.325c879e", null)),
+				blind_message = span_hear(LANG("datum.f3571fe9", null)),
 			)
 
 /datum/artifact_effect/teleport/do_effect_destroy()
@@ -45,9 +45,9 @@
 	for(var/mob/living/living_mob in range(7, curr_turf))
 		if(teleport_around(living_mob, 50))
 			living_mob.visible_message(
-				span_warning("[living_mob] is displaced by a strange force!"),
-				span_warning("You are displaced by a strange force!"),
-				blind_message = span_hear("You hear zap nearby."),
+				span_warning(LANG("datum.fc07fa9a", list(living_mob))),
+				span_warning(LANG("datum.325c879e", null)),
+				blind_message = span_hear(LANG("datum.f3571fe9", null)),
 			)
 
 /**

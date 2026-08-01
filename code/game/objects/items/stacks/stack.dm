@@ -155,6 +155,11 @@
 		other_stack = find_other_stack(already_found, TRUE)
 	return TRUE
 
+/obj/item/stack/apply_material_effects(list/materials)
+	. = ..()
+	if(amount)
+		mats_per_unit = SSmaterials.get_material_set_cache(materials, 1/amount)
+
 /obj/item/stack/blend_requirements(atom/movable/grinder, mob/living/user)
 	if(!is_cyborg)
 		return TRUE
@@ -262,10 +267,10 @@
 	for(var/recipe in recipe_to_iterate)
 		if(istype(recipe, /datum/stack_recipe_list))
 			var/datum/stack_recipe_list/R = recipe
-			L["[lang_reverse_text("[R.title]")]"] = recursively_build_recipes(R.recipes) // NOVA EDIT CHANGE - i18n: title is the display KEY (P1 skips keys); reverse it so the menu localizes. make() acts on data["ref"], not the title. - ORIGINAL: L["[R.title]"] = recursively_build_recipes(R.recipes)
+			L[lang_unique_display_key(L, R.title)] = recursively_build_recipes(R.recipes) // NOVA EDIT CHANGE - i18n: title 是显示用的 KEY（P1 跳过 key）→ 反查它菜单才是中文；但**两个英文标题可能译成同一中文**，同 key 会互相覆盖、配方凭空消失，故经 lang_unique_display_key 去重。make() 走 data["ref"] 不受影响。 - ORIGINAL: L["[R.title]"] = recursively_build_recipes(R.recipes)
 		if(istype(recipe, /datum/stack_recipe))
 			var/datum/stack_recipe/R = recipe
-			L["[lang_reverse_text("[R.title]")]"] = build_recipe(R) // NOVA EDIT CHANGE - i18n: reverse display-key title (see above) - ORIGINAL: L["[R.title]"] = build_recipe(R)
+			L[lang_unique_display_key(L, R.title)] = build_recipe(R) // NOVA EDIT CHANGE - i18n: 同上，反查显示 key 并去重（wooden barrel / wooden bucket 都译作「木桶」，不去重会吃掉一个配方） - ORIGINAL: L["[R.title]"] = build_recipe(R)
 	return L
 
 /**
@@ -550,7 +555,7 @@
 	if(recipe.crafting_flags & CRAFT_CHECK_DENSITY)
 		for(var/obj/object in dest_turf)
 			if(object.density && !(object.obj_flags & IGNORE_DENSITY) || object.obj_flags & BLOCKS_CONSTRUCTION)
-				builder.balloon_alert(builder, "something is in the way!")
+				builder.balloon_alert(builder, LANG("obj.ae97e927", null))
 				return FALSE
 
 	if(recipe.placement_checks & STACK_CHECK_CARDINALS)
@@ -558,8 +563,8 @@
 		for(var/direction in GLOB.cardinals)
 			nearby_turf = get_step(dest_turf, direction)
 			if(locate(recipe.result_type) in nearby_turf)
-				to_chat(builder, span_warning("\The [recipe.title] must not be built directly adjacent to another!"))
-				builder.balloon_alert(builder, "can't be adjacent to another!")
+				to_chat(builder, span_warning(LANG("obj.ccfba6d7", list(recipe.title))))
+				builder.balloon_alert(builder, LANG("obj.a3c4c5d9", null))
 				return FALSE
 
 	if(recipe.placement_checks & STACK_CHECK_ADJACENT)

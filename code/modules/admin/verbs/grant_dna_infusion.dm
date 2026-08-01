@@ -4,9 +4,7 @@
  * Returns the entry if all organs were successfully replaced.
  * If no infusion was picked, the infusion had no organs, or if one or more organs could not be granted, returns FALSE
 */
-/client/proc/grant_dna_infusion(mob/living/carbon/human/target in world)
-	set name = "应用 DNA 灌注"
-	set category = "Debug"
+GAME_VERB_PROC(/client, grant_dna_infusion, "应用 DNA 灌注", "Debug", mob/living/carbon/human/target)
 
 	var/list/infusions = list()
 	for(var/datum/infuser_entry/path as anything in sort_list(subtypesof(/datum/infuser_entry), GLOBAL_PROC_REF(cmp_typepaths_asc)))
@@ -30,7 +28,7 @@
 		var/obj/item/organ/new_organ = new infusion_organ()
 		new_organ.replace_into(target)
 		if(new_organ.owner != target)
-			to_chat(usr, span_notice("[target] is unable to carry [new_organ]!"))
+			to_chat(usr, span_notice(LANG("client.41edee27", list(target, new_organ))))
 			qdel(new_organ)
 			. = FALSE
 			continue

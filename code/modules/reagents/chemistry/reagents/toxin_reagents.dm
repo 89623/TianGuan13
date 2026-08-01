@@ -994,7 +994,7 @@
 		if(3)
 			if(!affected_mob.undergoing_cardiac_arrest() && affected_mob.can_heartattack())
 				affected_mob.set_heartattack(TRUE)
-				if(affected_mob.stat == CONSCIOUS)
+				if(!IS_UNCONSCIOUS_OR_CRIT(affected_mob))
 					affected_mob.visible_message(span_userdanger(LANG("datum.a043844a", list(affected_mob, affected_mob.p_their(), affected_mob.p_their()))))
 			else
 				affected_mob.losebreath += 10

@@ -6,16 +6,6 @@ The original authors are: cogwerks, pistoleer, spyguy, angriestibm, marquesas, a
 If you make a derivative work from this code, you must include this notification header alongside it.
 */
 
-/mob/living/proc/wrestling_help()
-	set name = "回忆教诲"
-	set desc = "Remember how to wrestle."
-	set category = "Wrestling"
-
-	to_chat(usr, LANG("mob.f1a0dcbb", null))
-	to_chat(usr, LANG("mob.6963c6df", list(span_notice("Clinch"))))
-	to_chat(usr, LANG("mob.e6244ed1", list(span_notice("Suplex"))))
-	to_chat(usr, LANG("mob.559339a9", list(span_notice("Advanced grab"))))
-
 /datum/martial_art/wrestling
 	name = "Wrestling"
 	id = MARTIALART_WRESTLING
@@ -187,11 +177,11 @@ If you make a derivative work from this code, you must include this notification
 		if (attacker && defender)
 
 			if (get_dist(attacker, defender) > 1)
-				to_chat(attacker, span_warning("[defender] is too far away!"))
+				to_chat(attacker, span_warning(LANG("datum.d8fecc16", list(defender))))
 				return
 
 			if (!isturf(attacker.loc) || !isturf(defender.loc))
-				to_chat(attacker, span_warning("You can't throw [defender] from here!"))
+				to_chat(attacker, span_warning(LANG("datum.4a32c09e", list(defender))))
 				return
 
 			attacker.setDir(turn(attacker.dir, 90))
@@ -225,7 +215,7 @@ If you make a derivative work from this code, you must include this notification
 		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
 		var/turf/T = get_edge_target_turf(attacker, attacker.dir)
 		if (T && isturf(T))
-			if (!defender.stat)
+			if (!IS_UNCONSCIOUS_OR_CRIT(defender))
 				defender.emote("scream")
 			defender.throw_at(T, 10, 4, attacker, TRUE, TRUE, callback = CALLBACK(defender, TYPE_PROC_REF(/mob/living, Paralyze), 20))
 	log_combat(attacker, defender, "has thrown with wrestling")
@@ -273,7 +263,7 @@ If you make a derivative work from this code, you must include this notification
 					defender.pixel_x = attacker.pixel_x + 8
 
 			if (get_dist(attacker, defender) > 1)
-				to_chat(attacker, span_warning("[defender] is too far away!"))
+				to_chat(attacker, span_warning(LANG("datum.d8fecc16", list(defender))))
 				attacker.pixel_x = attacker.base_pixel_x
 				attacker.pixel_y = attacker.base_pixel_y
 				defender.pixel_x = defender.base_pixel_x
@@ -281,7 +271,7 @@ If you make a derivative work from this code, you must include this notification
 				return
 
 			if (!isturf(attacker.loc) || !isturf(defender.loc))
-				to_chat(attacker, span_warning("You can't slam [defender] here!"))
+				to_chat(attacker, span_warning(LANG("datum.f7115f20", list(defender))))
 				attacker.pixel_x = attacker.base_pixel_x
 				attacker.pixel_y = attacker.base_pixel_y
 				defender.pixel_x = defender.base_pixel_x
@@ -325,7 +315,7 @@ If you make a derivative work from this code, you must include this notification
 						span_userdanger(LANG("datum.074fb9e3", list(fluff, attacker))), span_hear(LANG("datum.6c7f8149", null)), COMBAT_MESSAGE_RANGE, attacker)
 		to_chat(attacker, span_danger(LANG("datum.22d557f3", list(fluff, defender))))
 		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
-		if (!defender.stat)
+		if (!IS_UNCONSCIOUS_OR_CRIT(defender))
 			defender.emote("scream")
 			defender.Paralyze(4 SECONDS)
 
@@ -454,7 +444,7 @@ If you make a derivative work from this code, you must include this notification
 		attacker.emote("scream")
 
 		if (falling == 1)
-			if (prob(33) || defender.stat)
+			if (prob(33) || IS_UNCONSCIOUS_OR_CRIT(defender))
 				EX_ACT(defender, EXPLODE_LIGHT)
 			else
 				defender.adjust_brute_loss(rand(20,30))

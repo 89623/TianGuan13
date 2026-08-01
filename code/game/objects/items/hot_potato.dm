@@ -111,7 +111,7 @@
 		return FALSE
 	if(!victim.client)
 		to_chat(user, span_boldwarning(LANG("obj.e6dfc6fc", list(src))))
-	if(victim.stat != CONSCIOUS || !victim.usable_legs)
+	if(IS_UNCONSCIOUS_OR_CRIT(victim) || !victim.usable_legs)
 		to_chat(user, span_boldwarning(LANG("obj.2dd88d24", list(src))))
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	. = FALSE
@@ -156,7 +156,7 @@
 	active = TRUE
 	if(detonate_explosion) //doesn't send a notification unless it's a genuine, exploding hot potato.
 		notify_ghosts(
-			"[user.real_name] has primed a Hot Potato!",
+			LANG("obj.8dbb2a79", list(user.real_name)),
 			source = src,
 			header = "Hot Hot Hot!",
 		)

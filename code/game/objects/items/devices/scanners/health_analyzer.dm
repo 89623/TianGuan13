@@ -91,7 +91,7 @@
 		last_scan_text = floor_text
 		return
 
-	if(ispodperson(M) && !scanpower <= SCANPOWER_ADVANCED)
+	if(ispodperson(M) && scanpower < SCANPOWER_ADVANCED)
 		to_chat(user, span_info(LANG("obj.58992497", list(M))))
 		return
 
@@ -161,7 +161,7 @@
 	var/tox_loss = target.get_tox_loss()
 	var/fire_loss = target.get_fire_loss()
 	var/brute_loss = target.get_brute_loss()
-	var/mob_status = (!target.appears_alive() ? span_alert("<b>Deceased</b>") : "<b>[round(target.health / target.maxHealth, 0.01) * 100]% healthy</b>")
+	var/mob_status = (IS_DEAD_OR_FAKING(target) ? span_alert("<b>Deceased</b>") : "<b>[round(target.health / target.maxHealth, 0.01) * 100]% healthy</b>")
 
 	if(HAS_TRAIT(target, TRAIT_FAKEDEATH) && target.stat != DEAD)
 		// if we don't appear to actually be in a "dead state", add fake oxyloss
@@ -491,7 +491,7 @@
 	// NOVA EDIT ADDITION END
 
 	// Time of death
-	if(target.station_timestamp_timeofdeath && !target.appears_alive())
+	if(target.station_timestamp_timeofdeath && IS_DEAD_OR_FAKING(target))
 		render_list += "<hr>"
 		render_list += "<span class='info ml-1'>Time of Death: [target.station_timestamp_timeofdeath]</span><br>"
 		render_list += "<span class='alert ml-1'><b>Subject died [DisplayTimeText(round(world.time - target.timeofdeath))] ago.</b></span><br>"
@@ -692,7 +692,7 @@
 			if (scanner.give_wound_treatment_bonus)
 				ADD_TRAIT(current_wound, TRAIT_WOUND_SCANNED, ANALYZER_TRAIT)
 				if(!advised)
-					to_chat(user, span_notice("You notice how bright holo-images appear over your [(length(wounded_part.wounds) || length(patient.get_wounded_bodyparts()) ) > 1 ? "various wounds" : "wound"]. They seem to be filled with helpful information, this should make treatment easier!"))
+					to_chat(user, span_notice(LANG("_root.77738b07", list((length(wounded_part.wounds) || length(patient.get_wounded_bodyparts()) ) > 1 ? "various wounds" : "wound"))))
 					advised = TRUE
 		render_list += "</span>"
 

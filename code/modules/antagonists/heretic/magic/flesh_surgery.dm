@@ -169,8 +169,8 @@
 	new /obj/effect/temp_visual/cult/sparks(get_turf(to_heal))
 	var/condition = (to_heal.damage > 0) ? "better" : "perfect"
 	caster.visible_message(
-		span_warning("[caster]'s hand glows a brilliant red as [caster.p_they()] restore[caster.p_s()] \the [to_heal] to [condition] condition!"),
-		span_notice("Your hand glows a brilliant red as you restore \the [to_heal] to [condition] condition!"),
+		span_warning(LANG("datum.65e3a4cb", list(caster, caster.p_they(), caster.p_s(), to_heal, condition))),
+		span_notice(LANG("datum.7c3a3093", list(to_heal, condition))),
 	)
 
 	return TRUE
@@ -275,7 +275,7 @@
 	carbon_victim.balloon_alert(caster, LANG("datum.2a4235b4", list(chosen_organ)))
 	carbon_victim.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_DARK_RED)
 	playsound(victim, 'sound/effects/dismember.ogg', 50, TRUE)
-	if(carbon_victim.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(carbon_victim))
 		carbon_victim.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
 		carbon_victim.emote("scream")
 
@@ -359,7 +359,7 @@
 	victim.balloon_alert(caster, LANG("datum.048c1f34", list(inserted_organ)))
 	victim.remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_DARK_RED)
 	playsound(victim, 'sound/effects/dismember.ogg', 50, TRUE)
-	if(victim.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(victim))
 		victim.emote("scream")
 		if(!using_on_self)
 			victim.adjust_timed_status_effect(15 SECONDS, /datum/status_effect/speech/slurring/heretic)
