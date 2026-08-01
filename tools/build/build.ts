@@ -199,13 +199,36 @@ export const DmMapsIncludeTarget = new Juke.Target({
 });
 
 export const BehaviorTreeCompilerTarget = new Juke.Target({
-  inputs: ['code/**/*.bt.json', 'code/__DEFINES/**/*.dm'],
+  // NOVA EDIT REMOVAL START - MODULAR BEHAVIOR TREES
+  // inputs: ['code/**/*.bt.json', 'code/__DEFINES/**/*.dm'],
+  // outputs: () => {
+  //   return Juke.glob('code/**/*.bt.json').map((file) => {
+  //     const rel = file.replace(/^code\//, '').replace(/\.bt\.json$/, '');
+  //     return `build/behavior_trees/${rel}.bt.compiled.json`;
+  //   });
+  // },
+  // NOVA EDIT REMOVAL END
+  // NOVA EDIT ADDITION START - MODULAR BEHAVIOR TREES
+  inputs: [
+    'code/**/*.bt.json',
+    'modular_nova/**/*.bt.json',
+    'code/__DEFINES/**/*.dm',
+  ],
   outputs: () => {
-    return Juke.glob('code/**/*.bt.json').map((file) => {
-      const rel = file.replace(/^code\//, '').replace(/\.bt\.json$/, '');
-      return `build/behavior_trees/${rel}.bt.compiled.json`;
-    });
+    return [
+      ...Juke.glob('code/**/*.bt.json').map((file) => {
+        const rel = file.replace(/^code\//, '').replace(/\.bt\.json$/, '');
+        return `build/behavior_trees/${rel}.bt.compiled.json`;
+      }),
+      ...Juke.glob('modular_nova/**/*.bt.json').map((file) => {
+        const rel = file
+          .replace(/^modular_nova\//, '')
+          .replace(/\.bt\.json$/, '');
+        return `build/behavior_trees/${rel}.bt.compiled.json`;
+      }),
+    ];
   },
+  // NOVA EDIT ADDITION END
   executes: async () => {
     const suffix = process.platform == 'win32' ? '.bat' : '';
     await Juke.exec(`tools/bootstrap/python${suffix}`, ['tools/build_bt.py']);

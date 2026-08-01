@@ -140,14 +140,9 @@
 		),
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/random_speech/magicfur,
-		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/find_and_hunt_target/play_with_owner
-	)
+	behavior_tree_json = "modular_nova/modules/basic_mobs/code/magicfur.bt.json"
 
-/datum/ai_planning_subtree/random_speech/magicfur
+/datum/bt_node/ai_behavior/random_speech/magicfur
 	speech_chance = 4
 	speak = list("Aw~","嗷呜~")
 	emote_hear = list("绒毛细腻的摩擦声")
