@@ -9,7 +9,7 @@
 	greyscale_colors = "#ffffff#39393f"
 	greyscale_config = /datum/greyscale_config/bowtie_collar
 	greyscale_config_worn = /datum/greyscale_config/bowtie_collar_worn
-	flags_1 = null
+	flags_1 = NO_NEW_GAGS_PREVIEW_1
 	alternate_worn_layer = UNDER_SUIT_LAYER
 	/// All ties start untied unless otherwise specified
 	var/is_tied = FALSE
@@ -118,7 +118,7 @@
 	greyscale_colors = "#ffffff#39393f"
 	greyscale_config = /datum/greyscale_config/bowtie_collar
 	greyscale_config_worn = /datum/greyscale_config/bowtie_collar_worn
-	flags_1 = null
+	flags_1 = NO_NEW_GAGS_PREVIEW_1
 	alternate_worn_layer = UNDER_SUIT_LAYER
 
 /obj/item/clothing/neck/bunny/bunnytie/greyscale
@@ -131,7 +131,7 @@
 	greyscale_colors = "#ffffff#39393f"
 	greyscale_config = /datum/greyscale_config/bowtie_collar
 	greyscale_config_worn = /datum/greyscale_config/bowtie_collar_worn
-	flags_1 = IS_PLAYER_COLORABLE_1
+	flags_1 = IS_PLAYER_COLORABLE_1 | NO_NEW_GAGS_PREVIEW_1
 	alternate_worn_layer = UNDER_SUIT_LAYER
 	is_tied = TRUE
 
@@ -483,7 +483,7 @@
 	greyscale_colors = "#ffffff#39393f"
 	greyscale_config = /datum/greyscale_config/bowtie_collar
 	greyscale_config_worn = /datum/greyscale_config/bowtie_collar_worn
-	flags_1 = null
+	flags_1 = NO_NEW_GAGS_PREVIEW_1
 	custom_price = PAYCHECK_CREW
 	is_tied = TRUE
 
