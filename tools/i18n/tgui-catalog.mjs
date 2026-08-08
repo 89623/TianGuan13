@@ -18,19 +18,13 @@ const TGUI_PACKAGE_I18N_DIR = path.join(ROOT, 'tgui/packages/tgui/i18n');
 const STRINGS_I18N_DIR = path.join(ROOT, 'strings/i18n');
 const TGUI_NAMESPACE = 'tgui';
 
-const TRANSLATABLE_PROPS = new Set([
-  'aria-label',
-  'content',
-  'displayText',
-  'header',
-  'label',
-  'message',
-  'placeholder',
-  'title',
-  'tooltip',
-]);
-
-const OPTION_TEXT_PROPS = new Set(['displayText', 'label', 'text', 'title']);
+// 可翻 prop 名的**单一来源**是 strings/i18n/policy.json：抽取器与运行时 localize.ts 各存一份
+// 时，新增 prop 只改一边就会出现「目录有键界面不翻」/「界面翻了目录没键」的静默半覆盖。
+const POLICY = JSON.parse(
+  fs.readFileSync(path.join(ROOT, 'strings/i18n/policy.json'), 'utf8'),
+);
+const TRANSLATABLE_PROPS = new Set(POLICY.translatable_props);
+const OPTION_TEXT_PROPS = new Set(POLICY.option_text_props);
 
 // 偏好「feature 定义」里的 name/description（如 height_scaling.tsx 的 `name: 'Body Height'`）。
 // 这些是对象字面量属性、非 JSX 文本，但 PreferencesMenu 渲染 feature.name 时经自动本地化 runtime
@@ -452,6 +446,43 @@ function walk(dir, out = []) {
   return out;
 }
 
+// JSX 文本节点与 JSX 属性字符串里的 HTML 实体，编译期由 JSX transform 解码：源码写
+// `you&apos;re`，运行时 React 拿到的是 `you're`。TS 的 `JsxText.text` / 属性字面量 `.text`
+// **不解码**，直接拿来当 key 就会造出一批永远查不到的死键（`I&apos;m sold!…`），表现为
+// 「目录里明明有译文、界面照旧显示英文」。所以抽取时按 JSX 语义先解码再算 key。
+// 注意 `&nbsp;` 解成 U+00A0，会被 normalizeText 的 `\s+` 折叠/trim 掉——与运行时
+// localize.ts 的同款折叠一致，两端仍然对得上。
+const JSX_ENTITIES = {
+  amp: '&',
+  apos: "'",
+  bull: '•',
+  copy: '©',
+  ensp: ' ',
+  gt: '>',
+  rarr: '→',
+  times: '×',
+  lt: '<',
+  nbsp: ' ',
+  quot: '"',
+};
+
+function decodeJsxEntities(text) {
+  if (typeof text !== 'string' || !text.includes('&')) {
+    return text;
+  }
+  return text.replace(/&(#x[0-9a-fA-F]+|#\d+|[a-zA-Z]+);/g, (match, body) => {
+    if (body[0] === '#') {
+      const code =
+        body[1] === 'x' || body[1] === 'X'
+          ? Number.parseInt(body.slice(2), 16)
+          : Number.parseInt(body.slice(1), 10);
+      return Number.isFinite(code) ? String.fromCodePoint(code) : match;
+    }
+    const mapped = JSX_ENTITIES[body.toLowerCase()];
+    return mapped ?? match;
+  });
+}
+
 function normalizeText(text) {
   if (typeof text !== 'string') {
     return null;
@@ -519,8 +550,48 @@ function addDisplayExpr(catalog, node) {
     ) {
       addDisplayExpr(catalog, node.left);
       addDisplayExpr(catalog, node.right);
+      return;
+    }
+    if (op === ts.SyntaxKind.PlusToken) {
+      // 纯字面量拼接（`'WARNING: This is destructive' + ' and will wipe ALL access.'`）：
+      // 源码里为了绕 80 列而折行，JS 求值后就是**一整串**，运行时按整串查表。逐个操作数抽出
+      // 的半句永远查不到（且半句译文本身也没用），整条不抽则是死键——必须按求值结果折叠成
+      // 一个 key，与运行时看到的字节完全一致。
+      const folded = foldStringConcat(node);
+      if (folded !== null) {
+        addText(catalog, folded);
+        return;
+      }
+      // 含表达式的拼接（`'Giver Tank (' + moles + ' moles at '`）运行期才成串、形状不可复原
+      // （运行时只看得到成品字符串，无从知道哪几段是字面量）：整条**不抽**。抽半句只会留下
+      // 永远查不到的死键，还会被 MT 译成拼不回去的碎片——与混排 children 同一道理。
     }
   }
+}
+
+/// 把「操作数全是字符串字面量」的 `+` 链求值成一整串；含任何非字面量则返回 null。
+function foldStringConcat(node) {
+  if (ts.isParenthesizedExpression(node)) {
+    return foldStringConcat(node.expression);
+  }
+  if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) {
+    return node.text;
+  }
+  if (
+    ts.isBinaryExpression(node) &&
+    node.operatorToken.kind === ts.SyntaxKind.PlusToken
+  ) {
+    const left = foldStringConcat(node.left);
+    if (left === null) {
+      return null;
+    }
+    const right = foldStringConcat(node.right);
+    if (right === null) {
+      return null;
+    }
+    return left + right;
+  }
+  return null;
 }
 
 /// 剥离 DM 语法宏（\improper/\proper），使抽出的串与运行时 TGUI 收到的（宏已解析）对齐。
@@ -695,6 +766,18 @@ const DM_LABEL_SOURCES = [
   // {cuisine}/{dish}/{meal} 文本节点；前端按英文值过滤（activeFoodCuisine.includes(recipe.cuisine_category)）
   // → 仅翻显示文本节点（act/filter 用英文原值）→ 译之安全（含单词类）。
   ['code/__DEFINES/crafting.dm', false, /#define\s+(?:CUISINE|DISH|MEAL)_\w+\s+"([^"]+)"/g],
+  // 研究/制造机（部门原型机、外骨骼制造机、殖民地制造机…）的分类与**子分类**名
+  // （RND_CATEGORY_* / RND_SUBCATEGORY_* 定义值，如 "/Tools"、"/Atmospherics Tools"）：
+  // DM 发的 design.categories 是拼好的路径串（"Tools/Atmospherics Tools"），DesignBrowser.tsx 按 '/'
+  // 切成树、只渲染 {category.title} 文本节点翻显示；选中/锚点/过滤全用英文原 title → 译之安全。
+  // 顶层分类（Tools→工具）此前靠别处同名串偶然覆盖，子分类没有任何来源 → 二级菜单全英文。
+  // 前导 '/' 是路径分隔符不是名字的一部分，用 `\/?` 吃掉，别抽进 key。
+  // 只取首字母大写的值：小写的三个（initial/hacked/digitigrade）是**元分类**，DesignBrowser 的
+  // BLACKLISTED_CATEGORIES 直接跳过、玩家永远看不到；抽进目录反而会让运行时把界面里任何
+  // 等于 "hacked"/"initial" 的裸文本节点一起翻掉。
+  ['code/__DEFINES/research', true, /#define\s+RND_(?:SUB)?CATEGORY_\w+\s+"\/?([A-Z][^"]*)"/g],
+  ['code/__DEFINES/~nova_defines', true, /#define\s+RND_(?:SUB)?CATEGORY_\w+\s+"\/?([A-Z][^"]*)"/g],
+  ['modular_nova', true, /#define\s+RND_(?:SUB)?CATEGORY_\w+\s+"\/?([A-Z][^"]*)"/g],
   // 待接：反派名散在 code/modules/antagonists 各处，整目录抽会混入目标/技能等海量非偏好名，需专门源。
 ];
 
@@ -855,6 +938,57 @@ function tsFilesUnder(dir, out = []) {
   return out;
 }
 
+// 共享常量表里的显示字段。`walk()` 只扫 .tsx/.jsx，界面**共用**的查表数据却住在 .ts 里
+// （constants.ts 的 GASES → `getGasLabel(gas_id)` 渲染进 AtmosFilter/PortablePump/管道等一整
+// 排界面）。这些串运行期才由函数返回、界面文件里根本没有字面量 → 全类漏抽，界面越多漏得越广。
+//
+// 不整体放开 .ts：backend.ts/logging.ts 之流里的 name/label 多是标识符。按「文件 + 表名 + 字段」
+// 三重定点登记，同类新表加一行即可。id/path 是 act() 回传标识符，永不入表。
+const CONSTANT_LABEL_TABLES = [
+  { file: 'constants.ts', table: 'GASES', props: ['name', 'label'] },
+];
+
+function extractConstantTableLabels(catalog) {
+  for (const { file, table, props } of CONSTANT_LABEL_TABLES) {
+    const filePath = path.join(TGUI_SOURCE_DIR, file);
+    let source;
+    try {
+      source = fs.readFileSync(filePath, 'utf8');
+    } catch {
+      continue;
+    }
+    const sf = ts.createSourceFile(
+      filePath,
+      source,
+      ts.ScriptTarget.Latest,
+      true,
+      ts.ScriptKind.TS,
+    );
+    const wanted = new Set(props);
+    const visit = (node) => {
+      if (
+        ts.isVariableDeclaration(node) &&
+        ts.isIdentifier(node.name) &&
+        node.name.text === table
+      ) {
+        const collect = (inner) => {
+          if (ts.isPropertyAssignment(inner)) {
+            const name = propertyName(inner.name);
+            if (wanted.has(name)) {
+              addText(catalog, literalText(inner.initializer));
+            }
+          }
+          ts.forEachChild(inner, collect);
+        };
+        collect(node);
+        return;
+      }
+      ts.forEachChild(node, visit);
+    };
+    visit(sf);
+  }
+}
+
 function extractAntagonistLabels(catalog) {
   for (const file of tsFilesUnder(ANTAG_DEF_DIR)) {
     let source;
@@ -897,6 +1031,73 @@ function extractAntagonistLabels(catalog) {
   }
 }
 
+
+// ---------------------------------------------------------------------------
+// 混合 children 的占位符模板
+//
+// `<Box>Reduced by {n}% when infected with viruses.</Box>` 在 React 里的 children 是
+// ["Reduced by ", n, "% when infected with viruses."]。逐段抽、逐段翻，渲染时仍按英文语序
+// 拼回去 → 「减少了 2 感染病毒时的%。」。中文语序和英文不同，碎片翻译必然拼错，
+// 比不翻还糟。改为整条抽成带占位符的模板（与 DM 侧 LANG 模板同一思路），运行时整条查表、
+// 再把占位符换回原来的非字符串 children。
+// ---------------------------------------------------------------------------
+
+/// 复现 JSX transform 对 JSXText 的空白处理（Babel cleanJSXElementLiteralChild 同款）：
+/// 含换行的首尾空白删掉，行间换行+缩进折成一个空格。抽取期算出的串必须与运行时 children
+/// 里的字符串逐字节一致，否则查表必 miss。
+function jsxTextValue(raw) {
+  const lines = raw.split(/\r\n|\n|\r/);
+  let lastNonEmptyLine = 0;
+  for (let i = 0; i < lines.length; i++) {
+    if (/[^ \t]/.test(lines[i])) lastNonEmptyLine = i;
+  }
+  let out = '';
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i].replace(/\t/g, ' ');
+    if (i !== 0) line = line.replace(/^ +/, '');
+    if (i !== lines.length - 1) line = line.replace(/ +$/, '');
+    if (line) {
+      if (i !== lastNonEmptyLine) line += ' ';
+      out += line;
+    }
+  }
+  return out;
+}
+
+/// children 里「会在运行时占一个数组位」的节点：文本（空白节点被 transform 丢掉）与表达式。
+/// 注释表达式 `{/* … */}` 不产生 child。
+function templateChildren(children) {
+  const out = [];
+  for (const child of children) {
+    if (ts.isJsxText(child)) {
+      const value = jsxTextValue(decodeJsxEntities(child.text));
+      if (value) out.push({ text: value });
+    } else if (ts.isJsxExpression(child)) {
+      if (!child.expression) continue; // {/* comment */}
+      out.push({ slot: true });
+    } else {
+      out.push({ slot: true }); // 嵌套元素
+    }
+  }
+  return out;
+}
+
+/// 把混合 children 拼成 `Reduced by {0}% when infected with viruses.` 这样的模板。
+/// 只在**既有文本又有占位**、且文本部分含真正词句时才产出——纯占位或纯文本走原来的路径。
+function childrenTemplate(children) {
+  const parts = templateChildren(children);
+  if (!parts.some((p) => p.text) || !parts.some((p) => p.slot)) return null;
+  let slot = 0;
+  let template = '';
+  for (const part of parts) {
+    template += part.text !== undefined ? part.text : `{${slot++}}`;
+  }
+  template = template.replace(/\s+/g, ' ').trim();
+  // 至少要有一个字母词，且不是纯标点/数字外壳（`{0}%`、`({0})` 之流不值得进目录）。
+  if (!/[A-Za-z]{2}/.test(template)) return null;
+  return template;
+}
+
 function extractCatalog() {
   const catalog = {};
   // 这三个来源不是界面文件，语境按来源种类记（够用来把它们和界面串区分开）。
@@ -906,6 +1107,8 @@ function extractCatalog() {
   extractAntagonistLabels(catalog);
   currentScope = 'dm:interactions';
   extractInteractionLabels(catalog);
+  currentScope = 'tgui:constants';
+  extractConstantTableLabels(catalog);
   for (const filePath of walk(TGUI_SOURCE_DIR)) {
     // 界面名即语境。`interfaces/ChemReactionChamber.tsx` -> `tgui:ChemReactionChamber`。
     currentScope = `tgui:${path.basename(filePath).replace(/\.(tsx|jsx|ts|js)$/, '')}`;
@@ -920,13 +1123,37 @@ function extractCatalog() {
 
     const isFeatureDef = filePath.includes(FEATURE_DEF_DIR);
 
+    // 已被 children 模板吃掉的 JsxText 节点：不再单独入目录，否则那些碎片仍会被
+    // 运行时逐段替换、拼出语序错乱的中文。
+    const templatedText = new Set();
+
     function visit(node) {
+      if ((ts.isJsxElement(node) || ts.isJsxFragment(node)) && node.children) {
+        const template = childrenTemplate(node.children);
+        if (template) {
+          addText(catalog, template);
+          for (const child of node.children) {
+            if (ts.isJsxText(child)) templatedText.add(child);
+          }
+        }
+      }
       if (ts.isJsxText(node)) {
-        addText(catalog, node.text);
+        if (!templatedText.has(node)) {
+          addText(catalog, decodeJsxEntities(node.text));
+        }
       } else if (ts.isJsxAttribute(node)) {
         const name = node.name.getText(sourceFile);
         if (TRANSLATABLE_PROPS.has(name)) {
-          addDisplayExpr(catalog, node.initializer); // 含三元/|| 两支（content={x?'Retract':'Deploy'}）
+          // 属性初始值若是 JSX 直写的字符串（title="Don&apos;t"），实体同样由 transform 解码。
+          const initializer =
+            node.initializer && ts.isStringLiteral(node.initializer)
+              ? decodeJsxEntities(node.initializer.text)
+              : node.initializer;
+          if (typeof initializer === 'string') {
+            addText(catalog, initializer);
+          } else {
+            addDisplayExpr(catalog, initializer); // 含三元/|| 两支（content={x?'Retract':'Deploy'}）
+          }
         }
       } else if (ts.isPropertyAssignment(node)) {
         const name = propertyName(node.name);
@@ -1036,8 +1263,33 @@ function extract() {
 
   writeJson(stringsCatalogPath('en'), enCatalog);
   writeJson(stringsCatalogPath('zh-Hans'), zhCatalog);
+  warnHtmlEntities(enCatalog, zhCatalog);
   writeTguiScopes(enCatalog);
   sync();
+}
+
+// 目录里出现 HTML 实体 = 两类真 bug，且都**静默**：
+//   key 带实体   → 抽取时漏解码，运行时永远查不到（界面显示英文，但目录里看着「已翻」）；
+//   value 带实体 → 译文当文本子节点渲染，玩家会看到字面的 `&nbsp;` / `&quot;`。
+// enCatalog 是「新抽取 ∪ 历史键」——历史键从不裁剪，所以旧的坏键只能靠这里报出来。
+function warnHtmlEntities(enCatalog, zhCatalog) {
+  const ENTITY = /&(#x[0-9a-fA-F]+|#\d+|[a-zA-Z]+);/;
+  const badKeys = Object.keys(enCatalog).filter((key) => ENTITY.test(key));
+  const badValues = Object.entries(zhCatalog).filter(([, value]) =>
+    ENTITY.test(value),
+  );
+  if (!badKeys.length && !badValues.length) {
+    return;
+  }
+  console.warn(
+    `tgui 目录含 HTML 实体：key ${badKeys.length} 条（死键，运行时查不到）、译文 ${badValues.length} 条（会字面显示）`,
+  );
+  for (const key of badKeys.slice(0, 10)) {
+    console.warn(`   key ${JSON.stringify(key)}`);
+  }
+  for (const [key, value] of badValues.slice(0, 10)) {
+    console.warn(`   val ${JSON.stringify(key)} -> ${JSON.stringify(value)}`);
+  }
 }
 
 /**

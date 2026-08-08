@@ -31,17 +31,17 @@
 /datum/action/cooldown/spell/ghostliness/cast(mob/living/carbon/human/cast_on)
 	. = ..()
 
-	if(isspirit(cast_on))
+	if(HAS_TRAIT(cast_on, TRAIT_GHOSTLY_MOB))
 		to_chat(cast_on, span_green(LANG("datum.7d9286bd", null)))
 	else
 		to_chat(cast_on, span_green(LANG("datum.f918b45f", null)))
 	if(!do_after(cast_on, 5 SECONDS))
-		if(isspirit(cast_on))
+		if(HAS_TRAIT(cast_on, TRAIT_GHOSTLY_MOB))
 			to_chat(cast_on, span_warning(LANG("datum.7df38b8b", null)))
 		else
 			to_chat(cast_on, span_warning(LANG("datum.b3b88428", null)))
 		return
-	if(isspirit(cast_on))
+	if(HAS_TRAIT(cast_on, TRAIT_GHOSTLY_MOB))
 		to_chat(cast_on, span_green(LANG("datum.ae7b212d", null)))
 	else
 		to_chat(cast_on, span_danger(LANG("datum.61c28d4b", null)))

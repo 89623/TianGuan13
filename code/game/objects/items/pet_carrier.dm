@@ -112,8 +112,7 @@
 	var/mob/living/target = interacting_with
 	if(target.mob_size > max_occupant_weight)
 		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(isfeline(H)) // NOVA EDIT - FELINE TRAITS. Was: isfelinid(H)
+			if(isfeline(target) || HAS_TRAIT(target, TRAIT_CATLIKE_INSTINCT))
 				to_chat(user, span_warning(LANG("obj.6dd75ce0", null)))
 			else
 				to_chat(user, span_warning(LANG("obj.6b4e5a5e", null)))

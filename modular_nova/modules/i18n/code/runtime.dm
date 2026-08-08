@@ -322,6 +322,75 @@ GLOBAL_VAR_INIT(i18n_armor_classes_loaded, FALSE)
 						GLOB.i18n_armor_classes[class_name] = for_locale[class_name]
 	return GLOB.i18n_armor_classes[name] || name
 
+/// 「域内显示表」的通用加载器。
+///
+/// 顶层 `strings/i18n/<file>.json`（形如 `{"zh-Hans": {"英文": "译名"}}`）**不被 build_i18n_cache
+/// 合并进全局反查表**——表里的值往往同时是 icon_state / assoc 键 / switch 标识符，而且多是
+/// blue、Fire、Power 这类通用单词，进反查表必然误伤（见 `nova-i18n lint` 的单词类碰撞）。
+/// 按域分表而不是合成一张大表：同一个词在不同域可以译得不一样，也不会互相污染。
+///
+/// 新增一个域：放一个 json + 写一个三行的 `lang_xxx()` 包装即可。
+/// （armor_classes / voice_of_god / phobia / statpanel 几张老表各有自己的加载逻辑，暂未并过来。）
+GLOBAL_LIST_EMPTY(i18n_scoped_tables)
+/proc/lang_scoped_table(file_name)
+	var/list/cached = GLOB.i18n_scoped_tables[file_name]
+	if(islist(cached))
+		return cached
+	var/list/table = list()
+	var/locale = GLOB.i18n_server_locale || DEFAULT_UI_LOCALE
+	if(locale != DEFAULT_UI_LOCALE)
+		var/path = "[STRING_DIRECTORY]/[I18N_SUBDIRECTORY]/[file_name]"
+		if(fexists(path))
+			var/list/decoded = json_decode(file2text(path))
+			var/list/for_locale = islist(decoded) ? decoded[locale] : null
+			if(islist(for_locale))
+				for(var/entry in for_locale)
+					table[entry] = for_locale[entry]
+	GLOB.i18n_scoped_tables[file_name] = table
+	return table
+
+/// `english_list()` 的本地化版：**逐项**过 lang_localize_arg（状态词表 → 反查 → 冠词剥离），
+/// 再用中文顿号连接。
+///
+/// 这类「形容词/状态词列表拼成一句」的写法（鱼的健康警告、材料属性详检、伤情列表…）整句永远
+/// 不是目录键，而 `english_list` 拼出来的成品里每个词都还是英文——只能逐项翻。连接词也要换：
+/// 英文的 " and " 直接留在中文句子里很难看，中文用「、」。locale==en 时原样调 english_list，零变化。
+/proc/lang_english_list(list/items, nothing_text = "nothing")
+	if(GLOB.i18n_server_locale == DEFAULT_UI_LOCALE)
+		return english_list(items, nothing_text)
+	if(!length(items))
+		return lang_localize_arg(nothing_text)
+	var/list/localized = list()
+	for(var/item in items)
+		localized += lang_localize_arg("[item]")
+	return jointext(localized, "、")
+
+/// 史莱姆颜色（SLIME_TYPE_* 的值）的显示译名。颜色同时是 icon_state 与突变表键，不能进反查表。
+/proc/lang_slime_colour(colour)
+	if(!istext(colour))
+		return colour
+	var/list/table = lang_scoped_table("slime_colours.json")
+	return table[colour] || colour
+
+/// 线缆颜色的显示译名。颜色值同时是 act 回传标识符（`wire.color`）与 CSS 颜色名
+/// （前端 `labelColor={shownColor.replace(' ','')}`），所以值本身必须留英文；
+/// ui_data 里另发一个 shownColorLabel 供前端当 label 用。
+/// **不能**图省事塞进 tgui.json：那份也被 build_i18n_cache 读进全局反查表，
+/// blue/purple/gold 进去就毒化整个 DM 侧（i18n_real_catalog 抓到过一次）。
+/proc/lang_wire_colour(colour)
+	if(!istext(colour))
+		return colour
+	var/list/table = lang_scoped_table("wire_colours.json")
+	return table[colour] || colour
+
+/// 警报类别（ALARM_* 的值）的显示译名。这些值是 `alarm_types_show/clear` 的 assoc **键**，
+/// 且是 Fire/Power/Camera/Motion 这种通用单词，同样不能进反查表。
+/proc/lang_alarm_type(alarm_type)
+	if(!istext(alarm_type))
+		return alarm_type
+	var/list/table = lang_scoped_table("alarm_types.json")
+	return table[alarm_type] || alarm_type
+
 /// 反查后的文本要当**关联列表的 key**（= 显示标签）时的防撞车包装。
 ///
 /// 不同英文标题完全可能译成同一个中文——`wooden barrel` 和 `wooden bucket` 都是「木桶」——
@@ -478,6 +547,20 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 				var/unescaped_key = lang_unescape_source(en_text)
 				if(unescaped_key != en_text && !reverse[unescaped_key])
 					reverse[unescaped_key] = lang_unescape_source(translated)
+			// 首字母大小写对齐：DM 里「小写存、显示时 capitalize()」是通用写法（手术名
+			// `capitalize(operation.name)`、伤口/器官/试剂名、`"[capitalize(x.name)]"` 拼句…）。
+			// 目录键保留源码原样的小写形态，运行期送来的却是首字母大写的串 → 精确反查与 AC 字典
+			// 双双 miss，整类「目录里明明有译文却显英文」（外科处理机列出的 Tend wounds/Lobotomize
+			// 即此）。这里额外登记首字母大写的变体键，指向同一译文；已有精确键优先，不覆盖。
+			// 中文无大小写，值不用变。
+			// **只做多词键**：单词键几乎全是标识符形态（"move"/"add"/"clear"/"ready"…），
+			// 给它们登记大写变体会把 `switch("Add")`、`if(pick == "Clear")` 这类比较拖进反查面
+			// —— 与 P1 的多词门槛、AC 字典的多词过滤是同一条安全线，此处保持一致。
+			var/first_char = copytext(en_text, 1, 2)
+			if(findtext(en_text, " ") && findtextEx("abcdefghijklmnopqrstuvwxyz", first_char))
+				var/capitalized_key = uppertext(first_char) + copytext(en_text, 2)
+				if(!reverse[capitalized_key])
+					reverse[capitalized_key] = translated
 
 	GLOB.i18n_reverse[locale] = reverse
 	return reverse
@@ -573,6 +656,9 @@ GLOBAL_LIST_EMPTY(i18n_reverse)
 /// 故在**使用点**（如手术计算机）用 lang_reverse_suffixed 拆开 base + 后缀分别精确反查（避免 AC 蚕食）。
 GLOBAL_LIST_INIT(i18n_appended_suffixes, list(
 	"This procedure can only be performed once per organ.",
+	// 高优先级赏金说明：`update_global_bounty_list()` 在 description 后面追加。三条被上报的
+	// 高优先级赏金整条显英文就是它拖的——基础句本身早就译好了。
+	"</br>This bounty is marked as <b>high priority</b>, and will reward <b>1.5x</b> the normal payout!",
 ))
 
 /// 反查「base + 已知追加后缀」型字符串：先整串精确（rnd_desc 等无后缀的直接命中）；miss 时若以某
@@ -583,11 +669,26 @@ GLOBAL_LIST_INIT(i18n_appended_suffixes, list(
 	. = lang_reverse_text(text)
 	if(. != text)
 		return . // 整串精确命中
+	// 追加点的分隔各式各样：手术 desc 是一个空格，赏金是 `"</br>\<换行><制表符>…"`（DM 续行把制表符
+	// 并进串里）。先把空白折叠成单空格再比（目录键本身就是折叠形态），分隔空格按原样还回拼接处。
+	var/collapsed = lang_collapse_ws(text)
+	var/collapsed_length = length(collapsed)
 	for(var/suffix in GLOB.i18n_appended_suffixes)
-		var/appended = " [suffix]" // 追加时带前导空格
-		var/alen = length(appended)
-		if(length(text) > alen && copytext(text, length(text) - alen + 1) == appended)
-			return "[lang_reverse_text(copytext(text, 1, length(text) - alen + 1))] [lang_reverse_text(suffix)]"
+		// 目录键与运行期串的**接缝空白**不保证一致：手术那条源码里自带前导空格，赏金那条靠 DM 续行
+		// （`"</br>\` + 换行 + 制表符），抽取器把续行空白吃掉了、运行期不一定。所以两种形态都试。
+		var/list/needles = list(lang_collapse_ws(suffix), " [lang_collapse_ws(suffix)]")
+		for(var/needle in needles)
+			var/needle_length = length(needle)
+			if(collapsed_length <= needle_length)
+				continue
+			if(copytext(collapsed, collapsed_length - needle_length + 1) != needle)
+				continue
+			var/base = copytext(collapsed, 1, collapsed_length - needle_length + 1)
+			var/separator = ""
+			if(copytext(needle, 1, 2) == " ")
+				needle = copytext(needle, 2)
+				separator = " "
+			return "[lang_reverse_text(base)][separator][lang_reverse_text(needle)]"
 	return .
 
 /// 完整句聊天行反查：用于「先 `list += span_*("整句")` 累加、再 jointext 进一个 boxed_message
@@ -810,7 +911,10 @@ GLOBAL_LIST_EMPTY(i18n_tgui_phrase_cache)
 	if(islist(GLOB.i18n_tgui_strings) && GLOB.i18n_tgui_strings[text])
 		. = text
 	else
-		. = lang_reverse_text(text)
+		// lang_reverse_suffixed 而非裸 lang_reverse_text：TGUI 负载里同样有「基础句 + 运行期追加
+		// 后缀」的值（赏金 description 加高优先级说明、手术 desc 加「每器官一次」），整串不是目录键，
+		// 精确反查会连基础句一起 miss。无后缀时它就是 lang_reverse_text，零行为变化。
+		. = lang_reverse_suffixed(text)
 	// 整串精确反查未命中的多词串：很多是**运行期拼接/插值后才成形**的句子（Orion 事件 text、研究要求
 	// "Scan unique individuals with [desc]." 等经 ui_data 下发的动态串）——exact 反查够不着。补一道边界
 	// 模板逆匹配引擎：目录里已译的 {0} 模板按字面段在原串上命中、捕获实参反查后按 zh 模板填充。这样
@@ -1021,10 +1125,10 @@ GLOBAL_LIST_INIT(i18n_pref_desc_keys, build_i18n_policy_set("pref_desc_keys"))
 		"pizza" = "披萨",
 		"plasma" = "等离子体",
 		"plasmaglass" = "等离子玻璃",
-		"plasteel" = "塑钢",
+		"plasteel" = "等离子铁",
 		"plastic" = "塑料",
-		"plastitanium" = "塑钛",
-		"plastitanium glass" = "塑钛玻璃",
+		"plastitanium" = "等离子钛",
+		"plastitanium glass" = "等离子钛玻璃",
 		"rock" = "岩石",
 		"runed metal" = "符文金属",
 		"runite" = "符文矿",

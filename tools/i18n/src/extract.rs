@@ -43,6 +43,16 @@ const SINK_VARS: &[&str] = &[
     // 其它可靠的玩家可见显示字段（type 变量；非 desc 的别名 / 专有显示串）。
     "description",      // /datum/reagent 等用 description（非 desc）——之前完全漏抽。
     "taste_description", // 试剂味道（"It tastes of …"）。
+    // /datum/disease 的两个纯显示字段：form（"Advanced Disease"，医疗扫描的「Warning: … detected」）、
+    // agent（"advance microbes"，病毒学面板的病原体名）。全仓无 `== ` 比较，翻显示安全。
+    "agent",
+    "form",
+    // 实验扫描仪的进度行覆盖文案（/datum/experiment/scanning 的 scan_message）：纯显示，
+    // 经 TGUI 负载下发，由边界模板引擎落地。
+    "scan_message",
+    // 污染物气味（Nova pollution 模块）："空气里飘着淡淡的 [scent]" 那句的插值值。纯显示，
+    // 与 taste_description 同类。descriptor 那一侧是 #define 常量、走 _state_words。
+    "scent",
     "display_name",     // 机器/发射台等的展示名。
     "wiki_desc",        // wiki 界面描述。
     "war_declaration",  // 核弹战争宣言（全员公告）。
@@ -96,6 +106,13 @@ const SINK_VARS: &[&str] = &[
     "circumstance",
     // 售货机出货答谢语（vend_reply，单句，say 出 → 聊天 AC 翻译）。
     "vend_reply",
+    // 幽灵生成器（/obj/effect/mob_spawn/ghost_role）的入场介绍三件套：mob_spawn.dm 把它们拼进
+    // 一条 to_chat（「你是一名维修无人机」/背景/「你**必须**仔细阅读法则」）。注意 flavour_text
+    // 是英式拼写——列表里原有的 flavor_text 是另一个字段，看着像已覆盖，实则整类幽灵角色的入场
+    // 文字一条都没抽到。运行时靠聊天 AC 子串层落地。
+    "you_are_text",
+    "flavour_text",
+    "important_text",
     // 说话动词（says/asks/exclaims/whispers/sings/yells 及各 mob 变体如 beeps/signs/hisses；
     // 运行时在 say.dm 的 say_quote 整串反查落地）。
     "verb_say",
@@ -143,6 +160,41 @@ const SINK_VARS: &[&str] = &[
 /// 抽进目录，靠聊天 AC 子串层翻译。含 {0} 的插值模板排除（那需 LANG 改写、且会被 AC 守卫跳过）。
 /// examine 信号处理器（COMSIG_ATOM_EXAMINE）的累加器参数名——`examine_list += "…"` 等，
 /// 是 examine 输出、必玩家可见，与裸 `.` 同等处理（全抽 + 改写为 LANG）。
+/// 当前所在 proc 的语义标记。决定「裸 `.`」和具名累加器该怎么解读。
+#[derive(Clone, Copy)]
+pub struct ProcCtx {
+    /// update_overlays 等：裸 `.` 累加的是 icon_state/标识符，不是文案。
+    pub ident: bool,
+    /// 「显示描述符」proc：整个 proc 的 return 字面量都是给玩家看的短语。
+    pub display_return: bool,
+    /// examine 家族：proc 体内**任何**具名累加器收到的字面量都是给玩家看的 examine 行。
+    /// 原来只认一张手写的变量名白名单（examine_list/combined_msg/…），于是
+    /// `how_cool_are_your_threads += "[src]'s storage opens when…"` 这种局部名一路漏到
+    /// 玩家眼前。按 proc 语义界定比按变量名穷举稳，也不会漏到 examine 之外。
+    pub examine: bool,
+}
+
+/// examine 家族 proc：输出**一定**是玩家可见的检查文本。
+pub fn is_examine_proc(proc_name: &str) -> bool {
+    matches!(proc_name, "examine" | "examine_more" | "examine_tags")
+        || proc_name.starts_with("on_examine")
+}
+
+/// 「显示描述符」proc：材料属性等把玩家可见短语从 switch 里 `return` 出来（"very rigid"、
+/// "slightly reactive"…）。这些短语无句末标点、首字母小写，激进 pass 的整句闸一律挡掉，于是
+/// 材料详检那一长串形容词整类没进目录。按 **proc 名**界定（同 examine 家族的做法），
+/// 比按变量名穷举稳。
+pub fn is_display_descriptor_proc(proc_name: &str) -> bool {
+    matches!(proc_name, "get_descriptor" | "get_tooltip")
+}
+
+/// 玩家可见的「显示字段」名：这些字段在 proc 里被 `+=` 追加时，追加内容一定是给玩家看的
+/// （desc 补充说明、幽灵角色入场文字的分支段落…），不受整句闸的首字母大写要求限制。
+/// `name` 不在其中——它常被 `if(name == "…")` 比较。
+pub fn is_display_accumulator_var(id: &str) -> bool {
+    matches!(id, "desc" | "description" | "flavour_text" | "flavor_text")
+}
+
 pub fn is_examine_accumulator(id: &str) -> bool {
     matches!(
         id,
@@ -152,6 +204,83 @@ pub fn is_examine_accumulator(id: &str) -> bool {
         // 「See combat information」面板，含「约需 {0} 击倒敌人」等插值行 → 改 LANG 才能翻插值结构）。
         "examine_list" | "examine_text" | "examine_strings" | "combined_msg" | "check_list" | "readout"
     )
+}
+
+/// examine 家族 proc 里具名累加器字面量的准入闸门。
+///
+/// 比 `is_sentence_like` 松一点：**允许插值占位符**（`{0}'s storage opens when…` 正是要抽的，
+/// 它必须走 LANG 才能翻出插值结构）。但仍要求整句形态，否则 examine proc 里那些拼句用的碎片
+/// 会被当独立条目抽走——`" and "`、`" (good)"`、`"{0} glass sheets "` 各自翻译只会拼出语序错乱
+/// 的中文，而 `"\"nuclear_disk\"."` 之流本就是标识符。
+///
+/// 三条：含空格；首字符是大写字母或占位符（排除碎片与续写片段）；去掉尾部 `\n`/空白后以句末
+/// 标点收尾（排除 `"{0}: {1}\" class=\"tooltip\">{2}"` 这种 HTML 属性片段与半截从句）。
+/// 把 `a + b + c` 的字符串拼接链摊平成各操作数；非拼接表达式返回空（调用方另有整条链的处理）。
+/// 只在链里**确实有多段文本**时才拆——单段链整条抽就够了，拆了反而多出重复键。
+/// 摊平 `"[span_notice("…")]"` —— 内插串里嵌着的表达式。
+///
+/// `. += "[span_notice("[desc] - growth progress: [growth]%")]"` 这种写法，整条
+/// `build_template` 只会得到一个光杆 `{0}`（内插位置就是占位符），真正的句子藏在被插的表达式里，
+/// 于是整行漏抽。把嵌入表达式拿出来各自抽一遍。
+fn split_interp_parts(expr: &Expression) -> Vec<&Expression> {
+    let Expression::Base { term, follow } = expr else {
+        return Vec::new();
+    };
+    if !follow.is_empty() {
+        return Vec::new();
+    }
+    let Term::InterpString(lead, parts) = &term.elem else {
+        return Vec::new();
+    };
+    // **只认「整条就是一个内插」这一种形状**（`"[span_notice("…")]"`：lead 与各段尾巴都是空的）。
+    //
+    // 放宽到任意内插会捅穿 build_template 的一道正经防线：它对整条去标签后不含字母的表达式返回
+    // None。VV 管理面板的 `VV_DROPDOWN_OPTION` 展开成 `"<option value='…[cmd]…'>[name]</option>"`,
+    // 正是靠这条被挡在目录外——里面的 [cmd] 是 admin 操作标识符，抽进目录、再被反查改掉就等于
+    // 把 VV 面板弄坏。那种形状 lead 非空，这里直接不碰。
+    if !lead.as_str().trim().is_empty() {
+        return Vec::new();
+    }
+    if parts.iter().any(|(_, lit)| !lit.trim().is_empty()) {
+        return Vec::new();
+    }
+    let embedded: Vec<&Expression> = parts.iter().filter_map(|(opt, _)| opt.as_ref()).collect();
+    if embedded.len() != 1 {
+        return Vec::new();
+    }
+    embedded
+}
+
+fn split_concat_parts(expr: &Expression) -> Vec<&Expression> {
+    fn flatten<'e>(e: &'e Expression, out: &mut Vec<&'e Expression>) {
+        if let Expression::BinaryOp { op: dm::ast::BinaryOp::Add, lhs, rhs } = e {
+            flatten(lhs, out);
+            flatten(rhs, out);
+        } else {
+            out.push(e);
+        }
+    }
+    let mut parts = Vec::new();
+    flatten(expr, &mut parts);
+    if parts.len() < 2 {
+        return Vec::new();
+    }
+    parts
+}
+
+fn is_examine_sentence(t: &str) -> bool {
+    let trimmed = t.trim();
+    if !trimmed.contains(' ') || !trimmed.chars().any(|c| c.is_ascii_lowercase()) {
+        return false;
+    }
+    let starts_ok = trimmed.starts_with('{')
+        || trimmed.chars().next().is_some_and(|c| c.is_ascii_uppercase());
+    if !starts_ok {
+        return false;
+    }
+    let body = trimmed.trim_end_matches(|c: char| c.is_whitespace());
+    let body = body.strip_suffix("\\n").unwrap_or(body).trim_end();
+    matches!(body.chars().last(), Some('.') | Some('!') | Some('?') | Some(':'))
 }
 
 fn is_sentence_like(s: &str) -> bool {
@@ -660,6 +789,14 @@ fn sink_message_args(name: &str) -> Option<&'static [usize]> {
         "notify_ghosts" => Some(&[0]),
         // 机器打印到纸上的正文（字面量实参必是作者写的印刷体；玩家书写永远是变量）。与 rewrite.rs 同表。
         "add_raw_text" => Some(&[0]),
+        // 手术每一步的可见/痛觉消息。整个 surgery 模块的玩家可见文本几乎都从这两个 proc 出去，
+        // 而它们只是包了一层 visible_message/to_chat，通用 sink 检测看不穿 → 整模块没进目录。
+        // display_results(surgeon, target, self_message, detailed_message, vague_message, …)
+        // display_pain(target, pain_message, …)
+        // **只加在 extract 侧**：这些消息全是插值句，进目录后由聊天层的模板逆匹配引擎
+        // （lang_template_apply）落地，不需要改写调用点。rewrite.rs 不加，就不会生成目录外的 key。
+        "display_results" => Some(&[2, 3, 4]),
+        "display_pain" => Some(&[1]),
         _ => None,
     }
 }
@@ -758,7 +895,8 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
             // 自定义 examine 文本变量（dry_desc 类）、pick 表、未列入 SINK_VARS 的长尾自动入目录
             // （句末标点闸门挡住标识符/枚举名）；显示靠反查表/字面 AC/模板逆匹配引擎。
             if let Some(expr) = &type_var.value.expression {
-                visit_expr(expr, &var_scope, &mut catalog, suppress_aggressive, false);
+                let var_ctx = ProcCtx { ident: false, examine: false, display_return: false };
+                visit_expr(expr, &var_scope, &mut catalog, suppress_aggressive, var_ctx);
             }
             if !is_sink && !is_config_default && !is_aas_template && !is_law_list && !is_slogan
                 && !is_speech_pool && !is_steps_list
@@ -811,8 +949,12 @@ pub fn run(dme: &Path, out: &Path, dry_run: bool) -> Result<()> {
             let proc_scope = format!("{}#{}()", ty.path, proc_name);
             for proc_value in type_proc.value.iter() {
                 if let Some(block) = &proc_value.code {
-                    let ident_proc = is_identifier_dot_proc(proc_name);
-                    visit_block(block, &proc_scope, &mut catalog, suppress_aggressive, ident_proc);
+                    let ctx = ProcCtx {
+                        ident: is_identifier_dot_proc(proc_name),
+                        examine: is_examine_proc(proc_name),
+                        display_return: is_display_descriptor_proc(proc_name),
+                    };
+                    visit_block(block, &proc_scope, &mut catalog, suppress_aggressive, ctx);
                     // verb 命令面板显示名：`set name = "X"`（Statement::Setting）。非 sink、非类型变量，
                     // 单独抽。仅安全显示名（is_safe_verb_name 排除 .click/body-chest 等 keybind 标识符）。
                     // 编译期由 rewrite::run_verbs 注入译文（verb 名无法运行时本地化）。
@@ -989,6 +1131,149 @@ fn block_is_pure(block: &[dm::ast::Spanned<Statement>]) -> bool {
 }
 
 /// `type_path` = 完整 DM 类型路径（flavor.rs 等无类型来源传裸命名空间名，见 Catalog::insert）。
+/// LANG 实参里的英文字面量。
+///
+/// 改写把 `"The [x ? "bolt" : "screw"] is [state]."` 变成 `LANG(key, list(x ? "bolt" : "screw", state))`
+/// —— 模板进了目录，**被抬成实参的那些字面量却没有任何抽取路径**（它们不再是 sink 实参，也不是
+/// 累加器右值）。运行期 `lang_localize_arg` 会拿实参去反查，目录里没有键 → 整句译文里嵌着一截
+/// 英文。全仓 800+ 个 LANG 调用点属于这一类（"is secured and ready to be used!"、"hurts!"、
+/// "weighs you down." …）。这里把这些字面量按 LANG 的命名空间补进目录，反查即通。
+///
+/// 必须绕开的两类**非显示**字面量：
+///   - 下标键（`ded["name"]`、`data["role"]`）——是程序用的键名，翻了就查不到值。故不下探 `Follow::Index`。
+///   - 嵌套 LANG 的 key 本身（`LANG("datum.eb109e14", …)`）——形如 `<ns>.<hash>`，翻了目录就崩。
+fn collect_lang_arg_literals(expr: &Expression, out: &mut Vec<String>) {
+    match expr {
+        Expression::Base { term, follow } => {
+            collect_lang_arg_literals_term(&term.elem, out);
+            for f in follow.iter() {
+                // Follow::Index 的下标是键名，不是文案 —— 整支跳过。
+                if let Follow::Call(_, name, args) = &f.elem {
+                    let key_idx = lang_format_key_index(name.as_str());
+                    for (i, a) in args.iter().enumerate() {
+                        if Some(i) == key_idx {
+                            continue;
+                        }
+                        collect_lang_arg_literals(a, out);
+                    }
+                }
+            }
+        }
+        Expression::BinaryOp { lhs, rhs, .. } => {
+            collect_lang_arg_literals(lhs, out);
+            collect_lang_arg_literals(rhs, out);
+        }
+        Expression::AssignOp { rhs, .. } => collect_lang_arg_literals(rhs, out),
+        Expression::TernaryOp { cond, if_, else_ } => {
+            collect_lang_arg_literals(cond, out);
+            collect_lang_arg_literals(if_, out);
+            collect_lang_arg_literals(else_, out);
+        }
+    }
+}
+
+fn collect_lang_arg_literals_term(term: &Term, out: &mut Vec<String>) {
+    match term {
+        Term::String(s) => out.push(s.clone()),
+        Term::Expr(inner) => collect_lang_arg_literals(inner, out),
+        Term::List(args) => {
+            for a in args.iter() {
+                collect_lang_arg_literals(a, out);
+            }
+        }
+        Term::Call(name, args) => {
+            let key_idx = lang_format_key_index(name.as_str());
+            for (i, a) in args.iter().enumerate() {
+                if Some(i) == key_idx {
+                    continue;
+                }
+                collect_lang_arg_literals(a, out);
+            }
+        }
+        Term::InterpString(_, parts) => {
+            for (expr, _) in parts.iter() {
+                if let Some(e) = expr {
+                    collect_lang_arg_literals(e, out);
+                }
+            }
+        }
+        _ => {}
+    }
+}
+
+/// `lang_format(key, args)` / `lang_format_for(user, key, args)` 的 key 实参下标（LANG/LANGU
+/// 是 #define，AST 里已展开成这两个名字）。非 LANG 调用返回 None。
+fn lang_format_key_index(name: &str) -> Option<usize> {
+    match name {
+        "lang_format" => Some(0),
+        "lang_format_for" => Some(1),
+        _ => None,
+    }
+}
+
+/// 去掉 HTML 标签（含 `<span class='notice'>` 这种源码里被截断成半截的开标签）。
+/// 只用于「这串里还有没有真文案」的判断，不改写入目录的内容。
+fn strip_html_tags(s: &str) -> String {
+    let mut out = String::with_capacity(s.len());
+    let mut depth = 0usize;
+    for c in s.chars() {
+        match c {
+            '<' => depth += 1,
+            '>' => depth = depth.saturating_sub(1),
+            _ if depth == 0 => out.push(c),
+            _ => {}
+        }
+    }
+    out
+}
+
+/// LANG 实参字面量是否值得进目录。
+///
+/// 挡掉三类噪音：语法碎片（复数 "s"、空串、纯标点/空白）、目录 key 形态（嵌套 LANG 漏网时的兜底）、
+/// 以及一眼是标识符的串（含 `{}` 占位符的模板片段由 LANG 自己管，不在这里重复抽）。
+fn is_lang_arg_text(s: &str) -> bool {
+    let t = s.trim();
+    if t.len() < 3 || t.contains('{') {
+        return false;
+    }
+    // `<ns>.<8 位十六进制>` = 目录 key，绝不能当文案抽。
+    if let Some((ns, hash)) = t.split_once('.') {
+        if !ns.is_empty()
+            && ns.chars().all(|c| c.is_ascii_lowercase() || c == '_')
+            && hash.len() == 8
+            && hash.chars().all(|c| c.is_ascii_hexdigit())
+        {
+            return false;
+        }
+    }
+    // **只收多词**。单 token 的 LANG 实参里标识符浓度极高：act/topic/wire 键（`activate`、`attach`、
+    // `unlock`、`datumedit`、`targetvar`）、黑板键与 var 名（`all_damage`、`turbine_max_rpm`）、存档路径、
+    // 全大写常量（`APC`/`LMB`/`NULL`）。放进目录 = 反查表把它们变异成中文，`switch`/下标比较当场失效
+    // ——`nova-i18n lint` 一次就报出 12 条高置信 + 98 条单词类碰撞。而单词类实参本来就有专门的精确
+    // 表兜底（`lang_localize_arg` 第一步查 `_state_words.json`：open/closed/lit…），不靠这条路径。
+    // 与 P1 多词门槛、AC 字典多词过滤、首字母大写变体是同一条安全线。
+    if !t.chars().any(char::is_whitespace) {
+        return false;
+    }
+    // 只有标记、没有文案的串（`span_*` 宏在 AST 里展开成的 `"<span class='notice'>"` 这类半截
+    // 标签）必须挡掉：翻了就是把 class 名译成中文、样式直接失效。判据是**剥掉标签之后**还剩不剩字。
+    let without_tags = strip_html_tags(t);
+    let t = without_tags.trim();
+    // 至少要有一段连续两个以上的字母，挡掉 "s"/"es"/"%"/"1/5" 之流。
+    let mut run = 0usize;
+    for c in t.chars() {
+        if c.is_alphabetic() {
+            run += 1;
+            if run >= 2 {
+                return true;
+            }
+        } else {
+            run = 0;
+        }
+    }
+    false
+}
+
 pub(crate) fn emit(catalog: &mut Catalog, type_path: &str, template: &str) {
     if !template.chars().any(|c| c.is_alphabetic()) {
         return;
@@ -1000,30 +1285,37 @@ pub(crate) fn emit(catalog: &mut Catalog, type_path: &str, template: &str) {
 
 // ---- 语句/表达式遍历：找到汇聚点调用 ----
 
-fn visit_block(block: &[dm::ast::Spanned<Statement>], ns: &str, catalog: &mut Catalog, suppress: bool, ident_proc: bool) {
+fn visit_block(block: &[dm::ast::Spanned<Statement>], ns: &str, catalog: &mut Catalog, suppress: bool, ctx: ProcCtx) {
     for stmt in block.iter() {
-        visit_stmt(&stmt.elem, ns, catalog, suppress, ident_proc);
+        visit_stmt(&stmt.elem, ns, catalog, suppress, ctx);
     }
 }
 
-fn visit_stmt(stmt: &Statement, ns: &str, catalog: &mut Catalog, suppress: bool, ident_proc: bool) {
+fn visit_stmt(stmt: &Statement, ns: &str, catalog: &mut Catalog, suppress: bool, ctx: ProcCtx) {
     match stmt {
-        Statement::Expr(e) => visit_expr(e, ns, catalog, suppress, ident_proc),
-        Statement::Return(Some(e)) => visit_expr(e, ns, catalog, suppress, ident_proc),
+        Statement::Expr(e) => visit_expr(e, ns, catalog, suppress, ctx),
+        Statement::Return(Some(e)) => {
+            if ctx.display_return {
+                if let Some(template) = build_template(e) {
+                    emit(catalog, ns, &template);
+                }
+            }
+            visit_expr(e, ns, catalog, suppress, ctx)
+        }
         Statement::While { condition, block } => {
-            visit_expr(condition, ns, catalog, suppress, ident_proc);
-            visit_block(block, ns, catalog, suppress, ident_proc);
+            visit_expr(condition, ns, catalog, suppress, ctx);
+            visit_block(block, ns, catalog, suppress, ctx);
         }
         Statement::If { arms, else_arm } => {
             for (cond, blk) in arms.iter() {
-                visit_expr(&cond.elem, ns, catalog, suppress, ident_proc);
-                visit_block(blk, ns, catalog, suppress, ident_proc);
+                visit_expr(&cond.elem, ns, catalog, suppress, ctx);
+                visit_block(blk, ns, catalog, suppress, ctx);
             }
             if let Some(blk) = else_arm {
-                visit_block(blk, ns, catalog, suppress, ident_proc);
+                visit_block(blk, ns, catalog, suppress, ctx);
             }
         }
-        Statement::ForInfinite { block } => visit_block(block, ns, catalog, suppress, ident_proc),
+        Statement::ForInfinite { block } => visit_block(block, ns, catalog, suppress, ctx),
         Statement::ForLoop {
             init,
             test,
@@ -1031,91 +1323,91 @@ fn visit_stmt(stmt: &Statement, ns: &str, catalog: &mut Catalog, suppress: bool,
             block,
         } => {
             if let Some(s) = init {
-                visit_stmt(s, ns, catalog, suppress, ident_proc);
+                visit_stmt(s, ns, catalog, suppress, ctx);
             }
             if let Some(e) = test {
-                visit_expr(e, ns, catalog, suppress, ident_proc);
+                visit_expr(e, ns, catalog, suppress, ctx);
             }
             if let Some(s) = inc {
-                visit_stmt(s, ns, catalog, suppress, ident_proc);
+                visit_stmt(s, ns, catalog, suppress, ctx);
             }
-            visit_block(block, ns, catalog, suppress, ident_proc);
+            visit_block(block, ns, catalog, suppress, ctx);
         }
         Statement::Switch {
             input,
             cases,
             default,
         } => {
-            visit_expr(input, ns, catalog, suppress, ident_proc);
+            visit_expr(input, ns, catalog, suppress, ctx);
             // 修复：之前 `..` 漏掉了 cases —— switch 各 case 分支体里的语句全部没被抽取。
             for (_case_conditions, blk) in cases.iter() {
-                visit_block(blk, ns, catalog, suppress, ident_proc);
+                visit_block(blk, ns, catalog, suppress, ctx);
             }
             if let Some(blk) = default {
-                visit_block(blk, ns, catalog, suppress, ident_proc);
+                visit_block(blk, ns, catalog, suppress, ctx);
             }
         }
         Statement::Spawn { delay, block } => {
             if let Some(e) = delay {
-                visit_expr(e, ns, catalog, suppress, ident_proc);
+                visit_expr(e, ns, catalog, suppress, ctx);
             }
-            visit_block(block, ns, catalog, suppress, ident_proc);
+            visit_block(block, ns, catalog, suppress, ctx);
         }
         Statement::Var(v) => {
             if let Some(e) = &v.value {
-                visit_expr(e, ns, catalog, suppress, ident_proc);
+                visit_expr(e, ns, catalog, suppress, ctx);
             }
         }
         Statement::Vars(vs) => {
             for v in vs.iter() {
                 if let Some(e) = &v.value {
-                    visit_expr(e, ns, catalog, suppress, ident_proc);
+                    visit_expr(e, ns, catalog, suppress, ctx);
                 }
             }
         }
-        Statement::Setting { value, .. } => visit_expr(value, ns, catalog, suppress, ident_proc),
+        Statement::Setting { value, .. } => visit_expr(value, ns, catalog, suppress, ctx),
         // for-in / for-range / do-while / try-catch / label 体：此前全部落进 `_ => {}` ——
         // **所有 for(x in list) 循环体内的字符串（sink 实参 + 激进 pass）都没被抽取**
         // （实测：bitrunning get_available_domains 的 "Limited scanning capabilities…" 漏抽）。
         // lint.rs / labels.rs 早已覆盖这些变体，唯 extract 漏；rewrite.rs 同样缺失（见 README 已知事项）。
         Statement::DoWhile { block, condition } => {
-            visit_block(block, ns, catalog, suppress, ident_proc);
-            visit_expr(&condition.elem, ns, catalog, suppress, ident_proc);
+            visit_block(block, ns, catalog, suppress, ctx);
+            visit_expr(&condition.elem, ns, catalog, suppress, ctx);
         }
         Statement::ForList(f) => {
             if let Some(e) = &f.in_list {
-                visit_expr(e, ns, catalog, suppress, ident_proc);
+                visit_expr(e, ns, catalog, suppress, ctx);
             }
-            visit_block(&f.block, ns, catalog, suppress, ident_proc);
+            visit_block(&f.block, ns, catalog, suppress, ctx);
         }
         Statement::ForKeyValue(f) => {
             if let Some(e) = &f.in_list {
-                visit_expr(e, ns, catalog, suppress, ident_proc);
+                visit_expr(e, ns, catalog, suppress, ctx);
             }
-            visit_block(&f.block, ns, catalog, suppress, ident_proc);
+            visit_block(&f.block, ns, catalog, suppress, ctx);
         }
         Statement::ForRange(f) => {
-            visit_expr(&f.start, ns, catalog, suppress, ident_proc);
-            visit_expr(&f.end, ns, catalog, suppress, ident_proc);
+            visit_expr(&f.start, ns, catalog, suppress, ctx);
+            visit_expr(&f.end, ns, catalog, suppress, ctx);
             if let Some(e) = &f.step {
-                visit_expr(e, ns, catalog, suppress, ident_proc);
+                visit_expr(e, ns, catalog, suppress, ctx);
             }
-            visit_block(&f.block, ns, catalog, suppress, ident_proc);
+            visit_block(&f.block, ns, catalog, suppress, ctx);
         }
         Statement::TryCatch {
             try_block,
             catch_block,
             ..
         } => {
-            visit_block(try_block, ns, catalog, suppress, ident_proc);
-            visit_block(catch_block, ns, catalog, suppress, ident_proc);
+            visit_block(try_block, ns, catalog, suppress, ctx);
+            visit_block(catch_block, ns, catalog, suppress, ctx);
         }
-        Statement::Label { block, .. } => visit_block(block, ns, catalog, suppress, ident_proc),
+        Statement::Label { block, .. } => visit_block(block, ns, catalog, suppress, ctx),
         _ => {}
     }
 }
 
-fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog, suppress: bool, ident_proc: bool) {
+fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog, suppress: bool, ctx: ProcCtx) {
     match expr {
         Expression::Base { term, follow } => {
             // 激进 pass：独立字符串/插值串字面量，句子型即入目录（含 {N} 模板）。
@@ -1140,14 +1432,24 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog, suppress: bool
                 // 注意匹配的是**宏展开后**的名字：LANG/LANGU 是 `#define`
                 // （code/__DEFINES/~nova_defines/i18n.dm），SpacemanDMM 的预处理器在建 AST
                 // 之前就把它们展开成 lang_format/lang_format_for 了，AST 里根本没有 "LANG"。
-                let key_arg = match name.as_str() {
-                    "lang_format" => Some(0),
-                    "lang_format_for" => Some(1), // LANGU(user, key, args)
-                    _ => None,
-                };
+                let key_arg = lang_format_key_index(name.as_str());
                 if let Some(idx) = key_arg {
                     if let Some(key) = args.get(idx).and_then(plain_string) {
                         catalog.note_scope(&key, ns);
+                    }
+                    // 被改写抬成实参的英文字面量：模板译了、实参还是英文。见
+                    // collect_lang_arg_literals 的说明。
+                    let mut literals = Vec::new();
+                    for (i, a) in args.iter().enumerate() {
+                        if i <= idx {
+                            continue; // key 及其之前的实参（LANGU 的 user）不是文案
+                        }
+                        collect_lang_arg_literals(a, &mut literals);
+                    }
+                    for literal in literals {
+                        if is_lang_arg_text(&literal) {
+                            emit(catalog, ns, literal.trim());
+                        }
                     }
                 }
             }
@@ -1185,9 +1487,9 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog, suppress: bool
             // 日志/调试/管理员后台调用的实参不进激进抽取（其余抽取路径不受影响）。
             let term_suppress = suppress
                 || matches!(&term.elem, Term::Call(name, _) if is_non_player_sink(name.as_str()));
-            recurse_term(&term.elem, ns, catalog, term_suppress, ident_proc);
+            recurse_term(&term.elem, ns, catalog, term_suppress, ctx);
             for f in follow.iter() {
-                recurse_follow(&f.elem, ns, catalog, suppress, ident_proc);
+                recurse_follow(&f.elem, ns, catalog, suppress, ctx);
             }
         }
         Expression::BinaryOp { op, lhs, rhs } => {
@@ -1202,22 +1504,77 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog, suppress: bool
                     }
                 }
             }
-            visit_expr(lhs, ns, catalog, child_suppress, ident_proc);
-            visit_expr(rhs, ns, catalog, child_suppress, ident_proc);
+            visit_expr(lhs, ns, catalog, child_suppress, ctx);
+            visit_expr(rhs, ns, catalog, child_suppress, ctx);
         }
         Expression::AssignOp { op, lhs, rhs } => {
             // examine / 消息累加：`. += <text>`（裸 `.`）原样抽；具名累加器（combined_msg += span_*("…")
             // 等，self-examine、descriptor 等）仅抽「静态句子型」串供聊天 AC 兜底——span 是宏、AST 判不出
             // 包裹，故用内容启发式；插值模板(含 {0})排除（那需 LANG 改写）。
             if matches!(op, AssignOp::AddAssign) {
+                // 运行期往**别的对象**的显示字段上追加的后缀：`new_bounty.description += "…high
+                // priority…"`、器官手术 desc 的「每个器官只能做一次」等。追加发生在 proc 里、目标是
+                // `X.desc` 而不是裸标识符，上面那套累加器规则（只认 `Term::Ident` + 空 follow）看不到，
+                // 于是后缀整类没进目录：基础句译好了，拼上后缀之后**整串不再是目录键**，精确反查连
+                // 基础句一起 miss → 玩家看到整条英文（三条高优先赏金即此）。
+                // 只收 desc/description 这种纯显示字段；`name` 常被 `if(name == "…")` 比较，不能碰。
+                if let Expression::Base { term: _, follow } = lhs.as_ref() {
+                    if let Some(last) = follow.last() {
+                        if let Follow::Field(_, field) = &last.elem {
+                            if is_display_accumulator_var(field.as_str()) {
+                                if let Some(template) = build_template(rhs) {
+                                    emit(catalog, ns, &template);
+                                }
+                            }
+                        }
+                    }
+                }
                 if let Expression::Base { term, follow } = lhs.as_ref() {
                     if follow.is_empty() {
                         if let Term::Ident(id) = &term.elem {
+                            // 内插里嵌的表达式是**整条** span_*() 消息（`. += "[span_notice("…")]"`）。
+                            // 这一步必须在 build_template 之外做：整条渲染出来是个光杆 `{0}`，
+                            // 去标签后不含字母 → build_template 返回 None → 下面整块都进不去，
+                            // 于是「{0} - growth progress: {1}%」这类整行 examine 一条都没抽到。
+                            if (id == "." && !ctx.ident) || is_examine_accumulator(id) {
+                                for part in split_interp_parts(rhs) {
+                                    if let Some(t) = build_template(part) {
+                                        emit(catalog, ns, &t);
+                                    }
+                                }
+                            }
+                            // SINK_VARS 里的**显示字段**在 proc 里 `+=` 追加：整句闸（要求首字母大写）
+                            // 会把「续写句」全挡掉——幽灵角色入场文字就是 `flavour_text += "you're an
+                            // exile from…"`，是完整句子却以小写开头，四个变体一条都没进目录，玩家看到
+                            // 的是「译好的基础段 + 整段英文」。这些字段本就是玩家可见的，无条件抽。
+                            if is_display_accumulator_var(id) {
+                                if let Some(template) = build_template(rhs) {
+                                    emit(catalog, ns, &template);
+                                }
+                            }
                             if let Some(template) = build_template(rhs) {
                                 // 裸 `.` 与 examine 信号处理器的累加器（examine_list/text/strings）：
                                 // examine 输出，必玩家可见 → 全抽（含插值，供 LANG）。其它具名累加器只抽静态句供 AC。
                                 // ident_proc（update_overlays 等）：bare-`.` 是 icon_state/标识符，不抽。
-                                if (id == "." && !ident_proc) || is_examine_accumulator(id) {
+                                if (id == "." && !ctx.ident)
+                                    || is_examine_accumulator(id)
+                                    || (ctx.examine && is_examine_sentence(&template))
+                                {
+                                    // `. += span_notice("A") + "\n" + span_notice("B")`：整条链
+                                    // build_template 会把兄弟 span_* 当成 {0}/{1}，抽出
+                                    // `"{0}\n{1}\nIt can also be…"` 这种废键——改写侧永远跳过它
+                                    // （一行里多个字面量，无从判断该换哪个），于是整段 examine
+                                    // 卡在英文。拆开逐段抽，各自成条，显示交给聊天 AC 子串层。
+                                    // 拼接链拆出来的段要过整句闸门：链里另一半往往是
+                                    // `"\n- "`、`"there is a "` 这种续写碎片，单独入目录后会被
+                                    // 聊天 AC 层在半句处替换，拼出语序错乱的中文。
+                                    for part in split_concat_parts(rhs) {
+                                        if let Some(t) = build_template(part) {
+                                            if is_examine_sentence(&t) {
+                                                emit(catalog, ns, &t);
+                                            }
+                                        }
+                                    }
                                     emit(catalog, ns, &template);
                                 } else if is_sentence_like(&template)
                                     && !is_option_accumulator(id)
@@ -1246,9 +1603,12 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog, suppress: bool
                     // proc 内运行期 `desc = "<字面量>"` 赋值（含插值）：examine 显示点反查只救非插值串,
                     // 插值 desc（"A [dried?…]trail of [X]."）整串非目录键 → 在此抽模板、由 rewrite 改 LANG。
                     // 仅 desc（display-only,安全）；不动 name（常被 `if(name=="…")` 比较,LANG 化会破坏比较）。
+                    // spread_text 同理：它在 /datum/disease/advance/set_spread() 里按 flag **在 proc 内**
+                    // 重新赋值（"Fluids"/"Skin contact"/"Respiration"…），类型变量初值那条路抽不到，
+                    // 而 New() 的反查早在赋值之前就跑完了 → 医疗扫描的「Type:」整类显英文。
                     else if follow.is_empty() {
                         if let Term::Ident(id) = &term.elem {
-                            if id == "desc" {
+                            if id == "desc" || id == "spread_text" {
                                 if let Some(template) = build_template(rhs) {
                                     if !template.trim().is_empty() {
                                         emit(catalog, ns, &template);
@@ -1259,26 +1619,26 @@ fn visit_expr(expr: &Expression, ns: &str, catalog: &mut Catalog, suppress: bool
                     }
                 }
             }
-            visit_expr(lhs, ns, catalog, suppress, ident_proc);
-            visit_expr(rhs, ns, catalog, suppress, ident_proc);
+            visit_expr(lhs, ns, catalog, suppress, ctx);
+            visit_expr(rhs, ns, catalog, suppress, ctx);
         }
         Expression::TernaryOp {
             cond, if_, else_, ..
         } => {
-            visit_expr(cond, ns, catalog, suppress, ident_proc);
-            visit_expr(if_, ns, catalog, suppress, ident_proc);
-            visit_expr(else_, ns, catalog, suppress, ident_proc);
+            visit_expr(cond, ns, catalog, suppress, ctx);
+            visit_expr(if_, ns, catalog, suppress, ctx);
+            visit_expr(else_, ns, catalog, suppress, ctx);
         }
     }
 }
 
-fn recurse_term(term: &Term, ns: &str, catalog: &mut Catalog, suppress: bool, ident_proc: bool) {
+fn recurse_term(term: &Term, ns: &str, catalog: &mut Catalog, suppress: bool, ctx: ProcCtx) {
     match term {
-        Term::Expr(e) => visit_expr(e, ns, catalog, suppress, ident_proc),
+        Term::Expr(e) => visit_expr(e, ns, catalog, suppress, ctx),
         Term::InterpString(_, parts) => {
             for (opt, _) in parts.iter() {
                 if let Some(e) = opt {
-                    visit_expr(e, ns, catalog, suppress, ident_proc);
+                    visit_expr(e, ns, catalog, suppress, ctx);
                 }
             }
         }
@@ -1288,21 +1648,21 @@ fn recurse_term(term: &Term, ns: &str, catalog: &mut Catalog, suppress: bool, id
         | Term::List(args)
         | Term::GlobalCall(_, args) => {
             for a in args.iter() {
-                visit_expr(a, ns, catalog, suppress, ident_proc);
+                visit_expr(a, ns, catalog, suppress, ctx);
             }
         }
         Term::DynamicCall(a, b) => {
             for e in a.iter() {
-                visit_expr(e, ns, catalog, suppress, ident_proc);
+                visit_expr(e, ns, catalog, suppress, ctx);
             }
             for e in b.iter() {
-                visit_expr(e, ns, catalog, suppress, ident_proc);
+                visit_expr(e, ns, catalog, suppress, ctx);
             }
         }
         Term::NewImplicit { args } | Term::NewMiniExpr { args, .. } => {
             if let Some(args) = args {
                 for e in args.iter() {
-                    visit_expr(e, ns, catalog, suppress, ident_proc);
+                    visit_expr(e, ns, catalog, suppress, ctx);
                 }
             }
         }
@@ -1328,24 +1688,24 @@ fn recurse_term(term: &Term, ns: &str, catalog: &mut Catalog, suppress: bool, id
             }
             if let Some(args) = args {
                 for e in args.iter() {
-                    visit_expr(e, ns, catalog, suppress, ident_proc);
+                    visit_expr(e, ns, catalog, suppress, ctx);
                 }
             }
         }
         Term::Input { args, in_list, .. } => {
             for e in args.iter() {
-                visit_expr(e, ns, catalog, suppress, ident_proc);
+                visit_expr(e, ns, catalog, suppress, ctx);
             }
             if let Some(e) = in_list {
-                visit_expr(e, ns, catalog, suppress, ident_proc);
+                visit_expr(e, ns, catalog, suppress, ctx);
             }
         }
         Term::Locate { args, in_list } => {
             for e in args.iter() {
-                visit_expr(e, ns, catalog, suppress, ident_proc);
+                visit_expr(e, ns, catalog, suppress, ctx);
             }
             if let Some(e) = in_list {
-                visit_expr(e, ns, catalog, suppress, ident_proc);
+                visit_expr(e, ns, catalog, suppress, ctx);
             }
         }
         Term::ExternalCall {
@@ -1354,20 +1714,20 @@ fn recurse_term(term: &Term, ns: &str, catalog: &mut Catalog, suppress: bool, id
             args,
         } => {
             if let Some(e) = library {
-                visit_expr(e, ns, catalog, suppress, ident_proc);
+                visit_expr(e, ns, catalog, suppress, ctx);
             }
-            visit_expr(function, ns, catalog, suppress, ident_proc);
+            visit_expr(function, ns, catalog, suppress, ctx);
             for e in args.iter() {
-                visit_expr(e, ns, catalog, suppress, ident_proc);
+                visit_expr(e, ns, catalog, suppress, ctx);
             }
         }
         _ => {}
     }
 }
 
-fn recurse_follow(follow: &Follow, ns: &str, catalog: &mut Catalog, suppress: bool, ident_proc: bool) {
+fn recurse_follow(follow: &Follow, ns: &str, catalog: &mut Catalog, suppress: bool, ctx: ProcCtx) {
     match follow {
-        Follow::Index(_, e) => visit_expr(e, ns, catalog, suppress, ident_proc),
+        Follow::Index(_, e) => visit_expr(e, ns, catalog, suppress, ctx),
         Follow::Call(_, name, args) => {
             // 方法调用形式的汇聚点（`user.visible_message(...)`/`src.say(...)`/`M.balloon_alert(...)` 等）。
             // 此前只检测裸调用 `Term::Call`，漏掉了大量 `X.sink(...)` 形式（战斗/交互可见消息多为此形）。
@@ -1398,7 +1758,7 @@ fn recurse_follow(follow: &Follow, ns: &str, catalog: &mut Catalog, suppress: bo
             // 方法形式的日志/后台调用同样抑制激进抽取（如 SSblackbox.record_feedback）。
             let call_suppress = suppress || is_non_player_sink(name.as_str());
             for a in args.iter() {
-                visit_expr(a, ns, catalog, call_suppress, ident_proc);
+                visit_expr(a, ns, catalog, call_suppress, ctx);
             }
         }
         _ => {}

@@ -13,7 +13,7 @@
 	. = ..()
 	if((. & EMP_PROTECT_SELF) || !owner)
 		return
-	if(prob(10 * severity))
+	if(prob(100 / severity))
 		return
 	to_chat(owner, span_warning(LANG("obj.f5f60c63", null)))
 	owner.flash_act(visual = 1)
@@ -786,13 +786,13 @@
 	var/threat_level = victim.assess_threat(threat_flags, lasercolor)
 	switch (threat_level)
 		if (THREAT_ASSESS_MAXIMUM to INFINITY)
-			override_strings += span_boldwarning("Assessed threat level of [threat_level]! Extreme danger of criminal activity!")
+			override_strings += span_boldwarning(LANG("obj.c69a29d7", list(threat_level)))
 		if (THREAT_ASSESS_DANGEROUS to THREAT_ASSESS_MAXIMUM)
-			override_strings += span_warning("Assessed threat level of [threat_level]. Criminal scum detected!")
+			override_strings += span_warning(LANG("obj.1f380981", list(threat_level)))
 		if (1 to THREAT_ASSESS_DANGEROUS)
-			override_strings += span_notice("Assessed threat level of [threat_level]. Probably not dangerous... yet.")
+			override_strings += span_notice(LANG("obj.8dfb2f75", list(threat_level)))
 		else
-			override_strings += span_notice("Seems to be a trustworthy individual.")
+			override_strings += span_notice(LANG("obj.8779a8db", null))
 
 	examine_overrides[EXAMINE_OVERRIDE_PRIORITY_IFF] = override_strings
 
