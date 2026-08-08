@@ -846,6 +846,9 @@
     "tgui:ExodroneConsole",
     "tgui:RBMK2"
   ],
+  "Adamantine Armor": [
+    "dm:labels"
+  ],
   "Adaptation": [
     "dm:labels"
   ],
@@ -2436,6 +2439,9 @@
   ],
   "Away from keyboard": [
     "tgui:OrbitBlade"
+  ],
+  "Axe": [
+    "dm:labels"
   ],
   "Axolotl": [
     "dm:labels"
@@ -5368,6 +5374,9 @@
   "Cavalry Uniform": [
     "dm:labels"
   ],
+  "Celestial Armor": [
+    "dm:labels"
+  ],
   "Celestial Gateway Report": [
     "tgui:ClockworkSlab"
   ],
@@ -5423,6 +5432,9 @@
   ],
   "Certain features require an ID card login.": [
     "tgui:NtosCyborgRemoteMonitor"
+  ],
+  "Chainmail": [
+    "dm:labels"
   ],
   "Challenges": [
     "tgui:TableOfContents"
@@ -9171,6 +9183,9 @@
   "Dragon Maid Uniform": [
     "dm:labels"
   ],
+  "Dragon Scale Armor": [
+    "dm:labels"
+  ],
   "Dragon Undergarment": [
     "dm:labels"
   ],
@@ -10429,6 +10444,9 @@
   "Ethereal": [
     "dm:labels"
   ],
+  "Ethereal Armor": [
+    "dm:labels"
+  ],
   "Ethereal Raincoat": [
     "dm:labels"
   ],
@@ -10492,6 +10510,9 @@
   ],
   "Evolution Tree": [
     "tgui:BorerEvolution"
+  ],
+  "Excalibur": [
+    "dm:labels"
   ],
   "Excavator": [
     "dm:labels"
@@ -11948,6 +11969,9 @@
   "Full Makeup": [
     "tgui:DnaConsoleEnzymes"
   ],
+  "Full Plate Armor": [
+    "dm:labels"
+  ],
   "Full Preview": [
     "tgui:GreyscaleModifyMenu"
   ],
@@ -12171,6 +12195,9 @@
     "tgui:Gateway"
   ],
   "Gay": [
+    "dm:labels"
+  ],
+  "Gear": [
     "dm:labels"
   ],
   "Gear Harness": [
@@ -12675,6 +12702,9 @@
   "Gravity Control": [
     "tgui:Portagrav"
   ],
+  "Greatsword": [
+    "dm:labels"
+  ],
   "Green": [
     "dm:labels"
   ],
@@ -12843,6 +12873,9 @@
   "Guncase": [
     "dm:labels"
   ],
+  "Gungnir": [
+    "dm:labels"
+  ],
   "Guns": [
     "tgui:ScannerGate"
   ],
@@ -12926,6 +12959,9 @@
     "dm:labels"
   ],
   "Hakama": [
+    "dm:labels"
+  ],
+  "Halberd": [
     "dm:labels"
   ],
   "Half Bob": [
@@ -15764,6 +15800,9 @@
     "dm:labels",
     "tgui:PaiCard"
   ],
+  "Leather Armor": [
+    "dm:labels"
+  ],
   "Leather Jacket": [
     "dm:labels"
   ],
@@ -16722,6 +16761,9 @@
     "tgui:CargoHelp"
   ],
   "Macadamia": [
+    "dm:labels"
+  ],
+  "Mace": [
     "dm:labels"
   ],
   "Machine": [
@@ -17836,6 +17878,9 @@
     "tgui:Main"
   ],
   "Mixologist": [
+    "dm:labels"
+  ],
+  "Mjolnir": [
     "dm:labels"
   ],
   "Mob": [
@@ -22163,6 +22208,9 @@
   ],
   "Plate": [
     "tgui:GlassBlowing"
+  ],
+  "Plate Armor": [
+    "dm:labels"
   ],
   "Plating": [
     "dm:labels"
@@ -29376,6 +29424,9 @@
   "Switchblade Comb": [
     "dm:labels"
   ],
+  "Sword": [
+    "dm:labels"
+  ],
   "Sylvan": [
     "dm:labels"
   ],
@@ -33158,6 +33209,9 @@
   "Void": [
     "tgui:CrimeWatcher"
   ],
+  "Void Armor": [
+    "dm:labels"
+  ],
   "Void Magnet": [
     "dm:labels"
   ],
@@ -33545,6 +33599,9 @@
     "dm:labels"
   ],
   "Warehouse Technician": [
+    "dm:labels"
+  ],
+  "Warhammer": [
     "dm:labels"
   ],
   "Warm Coat (Colorable)": [
