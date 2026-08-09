@@ -1,0 +1,31 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"cWM" = (
+/obj/effect/turf_decal/tile/dark_green/half,
+/obj/machinery/computer/dna_console{
+	dir = 1
+	},
+/obj/machinery/light/cold/directional/south,
+/turf/open/floor/iron/dark/smooth_edge,
+/area/centcom/holding/cafe)
+"fok" = (
+/obj/effect/turf_decal/tile/dark_green/half,
+/obj/machinery/dna_scannernew,
+/turf/open/floor/iron/dark/smooth_edge,
+/area/centcom/holding/cafe)
+"yaw" = (
+/obj/effect/turf_decal/tile/dark_green/anticorner,
+/obj/machinery/dna_infuser,
+/turf/open/floor/iron/dark/smooth_corner{
+	dir = 1
+	},
+/area/centcom/holding/cafe)
+
+(1,1,1) = {"
+fok
+"}
+(2,1,1) = {"
+cWM
+"}
+(3,1,1) = {"
+yaw
+"}

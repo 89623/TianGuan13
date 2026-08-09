@@ -1,0 +1,128 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aFK" = (
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder{
+	pixel_x = 6
+	},
+/turf/open/floor/wood/large,
+/area/centcom/holding/cafe)
+"cLA" = (
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder{
+	pixel_y = 8
+	},
+/turf/open/floor/wood/wood_3,
+/area/centcom/holding/cafe)
+"fVE" = (
+/obj/structure/closet/crate/freezer{
+	name = "Cooler"
+	},
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/beer/light,
+/obj/item/reagent_containers/cup/glass/bottle/hcider{
+	pixel_x = 7;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/cup/glass/bottle/kahlua{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/glass/bottle/gin{
+	pixel_x = -7;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/cup/glass/bottle/cognac{
+	pixel_x = -10;
+	pixel_y = 7
+	},
+/obj/machinery/light/directional/north,
+/obj/item/reagent_containers/cup/glass/bottle/goldschlager,
+/obj/item/reagent_containers/cup/glass/bottle/sake{
+	pixel_x = 10;
+	pixel_y = 11
+	},
+/turf/open/floor/wood/wood_7,
+/area/centcom/holding/cafe)
+"gLx" = (
+/obj/structure/falsewall/sandstone,
+/obj/structure/fans/tiny/invisible,
+/obj/effect/turf_decal/weather/snow,
+/turf/open/floor/iron/showroomfloor,
+/area/centcom/holding/cafe)
+"jbN" = (
+/turf/open/floor/wood/wood_3,
+/area/centcom/holding/cafe)
+"pBH" = (
+/turf/closed/wall/mineral/sandstone,
+/area/centcom/holding/cafe)
+"qdu" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/condiment/enzyme,
+/obj/machinery/light/directional/south,
+/obj/item/reagent_containers/cup/beaker/bluespace{
+	luminosity = 3;
+	name = "floofmagic beaker";
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,150,200,250,500);
+	volume = 500
+	},
+/obj/item/reagent_containers/cup/beaker/bluespace{
+	luminosity = 3;
+	name = "floofmagic beaker";
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,150,200,250,500);
+	volume = 500
+	},
+/turf/open/floor/wood/large,
+/area/centcom/holding/cafe)
+"qIS" = (
+/obj/machinery/chem_master/condimaster,
+/turf/open/floor/wood/wood_7,
+/area/centcom/holding/cafe)
+"rNB" = (
+/obj/machinery/door/window/left/directional/north{
+	name = "Resort Bar"
+	},
+/turf/open/floor/wood/wood_7,
+/area/centcom/holding/cafe)
+"vzV" = (
+/obj/machinery/vending/dorms,
+/obj/effect/turf_decal/weather/snow,
+/turf/open/floor/iron/showroomfloor,
+/area/centcom/holding/cafe)
+"vAJ" = (
+/turf/open/floor/wood/wood_7,
+/area/centcom/holding/cafe)
+"wUc" = (
+/obj/effect/turf_decal/weather/snow,
+/turf/open/floor/iron/showroomfloor,
+/area/centcom/holding/cafe)
+
+(1,1,1) = {"
+qdu
+pBH
+pBH
+gLx
+"}
+(2,1,1) = {"
+aFK
+pBH
+vzV
+wUc
+"}
+(3,1,1) = {"
+pBH
+pBH
+pBH
+pBH
+"}
+(4,1,1) = {"
+pBH
+fVE
+jbN
+qIS
+"}
+(5,1,1) = {"
+rNB
+jbN
+vAJ
+cLA
+"}

@@ -1,0 +1,17 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"pnw" = (
+/obj/machinery/door/poddoor{
+	id = "interlink_shuttles"
+	},
+/turf/open/floor/plating,
+/area/centcom/interlink)
+
+(1,1,1) = {"
+pnw
+pnw
+pnw
+pnw
+pnw
+pnw
+pnw
+"}

@@ -1,0 +1,13 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"puO" = (
+/obj/machinery/door/poddoor/ert,
+/turf/open/floor/iron/smooth_large,
+/area/centcom/interlink)
+
+(1,1,1) = {"
+puO
+puO
+puO
+puO
+puO
+"}

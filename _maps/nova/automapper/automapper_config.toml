@@ -542,3 +542,118 @@ directory = "_maps/nova/automapper/templates/kilostation/"
 required_map = "KiloStation.dmm"
 coordinates = [117, 108, 1]
 trait_name = "Station"
+
+# ═══ 互联中枢 (CentCom_nova_z2 / The Interlink) ═══
+# 这些模板取代了过去对 _maps/map_files/generic/CentCom_nova_z2.dmm 的直接编辑。
+# 该文件由上游维护，直接改动会导致每次同步都在一个数千行的地图文件上冲突，
+# 且此前它被存成了非 TGM 格式，使 mapmerge2 完全失效。
+# required_map 必须写 CentCom_nova_z2.dmm 而不是 "builtin"：preload_templates_from_toml
+# 在每个 LoadGroup 内部调用，而 "builtin" 的判定只看站点地图、不看当前组，
+# 于是会在基础 CentCom 那一组就匹配上——那时 CentCom 只有 1 层，coordinates[3]=2 会越界，
+# 一旦越界整个模板循环中断，后续模板全部静默丢失。
+# coordinates 第三项是 levels_by_trait("CentCom") 的索引：1 = 基础 CentCom，
+# 2 = 互联中枢（由 modular_nova/modules/mapping/code/interlink_helper.dm 在其后加载）。
+
+# 互联中枢主体改建（占全部下游改动的 98.9%） — 61×85，含 3144 格改动
+[templates.interlink_rework]
+map_files = ["interlink_rework.dmm"]
+directory = "_maps/nova/automapper/templates/centcom/"
+required_map = "CentCom_nova_z2.dmm"
+coordinates = [85, 161, 2]
+trait_name = "CentCom"
+
+# 移除西侧自供电风扇 — 1×7，含 7 格改动
+[templates.interlink_fans_west]
+map_files = ["interlink_fans_west.dmm"]
+directory = "_maps/nova/automapper/templates/centcom/"
+required_map = "CentCom_nova_z2.dmm"
+coordinates = [44, 167, 2]
+trait_name = "CentCom"
+
+# 移除北侧自供电风扇 — 1×5，含 5 格改动
+[templates.interlink_fans_north]
+map_files = ["interlink_fans_north.dmm"]
+directory = "_maps/nova/automapper/templates/centcom/"
+required_map = "CentCom_nova_z2.dmm"
+coordinates = [70, 198, 2]
+trait_name = "CentCom"
+
+# 咖啡厅化学区物品替换 — 10×5，含 4 格改动
+[templates.interlink_cafe_chem]
+map_files = ["interlink_cafe_chem.dmm"]
+directory = "_maps/nova/automapper/templates/centcom/"
+required_map = "CentCom_nova_z2.dmm"
+coordinates = [167, 194, 2]
+trait_name = "CentCom"
+
+# 东侧化学区物品替换 — 5×4，含 3 格改动
+[templates.interlink_cafe_chem_east]
+map_files = ["interlink_cafe_chem_east.dmm"]
+directory = "_maps/nova/automapper/templates/centcom/"
+required_map = "CentCom_nova_z2.dmm"
+coordinates = [226, 133, 2]
+trait_name = "CentCom"
+
+# 展示品替换为可用的 DNA 设备 — 3×1，含 3 格改动
+[templates.interlink_dna_machines]
+map_files = ["interlink_dna_machines.dmm"]
+directory = "_maps/nova/automapper/templates/centcom/"
+required_map = "CentCom_nova_z2.dmm"
+coordinates = [145, 164, 2]
+trait_name = "CentCom"
+
+# 东侧烧杯替换 — 1×2，含 2 格改动
+[templates.interlink_beakers_east]
+map_files = ["interlink_beakers_east.dmm"]
+directory = "_maps/nova/automapper/templates/centcom/"
+required_map = "CentCom_nova_z2.dmm"
+coordinates = [200, 170, 2]
+trait_name = "CentCom"
+
+# 移除南侧气闸喷漆器 — 2×1，含 2 格改动
+[templates.interlink_painters_south]
+map_files = ["interlink_painters_south.dmm"]
+directory = "_maps/nova/automapper/templates/centcom/"
+required_map = "CentCom_nova_z2.dmm"
+coordinates = [165, 149, 2]
+trait_name = "CentCom"
+
+# 移除种子、烧杯替换 — 2×1，含 2 格改动
+[templates.interlink_seeds]
+map_files = ["interlink_seeds.dmm"]
+directory = "_maps/nova/automapper/templates/centcom/"
+required_map = "CentCom_nova_z2.dmm"
+coordinates = [176, 203, 2]
+trait_name = "CentCom"
+
+# 移除北侧气闸喷漆器 — 1×2，含 2 格改动
+[templates.interlink_painters_north]
+map_files = ["interlink_painters_north.dmm"]
+directory = "_maps/nova/automapper/templates/centcom/"
+required_map = "CentCom_nova_z2.dmm"
+coordinates = [186, 198, 2]
+trait_name = "CentCom"
+
+# 吊舱地板材质调整 — 1×1，含 1 格改动
+[templates.interlink_pod_floor]
+map_files = ["interlink_pod_floor.dmm"]
+directory = "_maps/nova/automapper/templates/centcom/"
+required_map = "CentCom_nova_z2.dmm"
+coordinates = [224, 144, 2]
+trait_name = "CentCom"
+
+# 中部烧杯替换 — 1×1，含 1 格改动
+[templates.interlink_beaker_mid]
+map_files = ["interlink_beaker_mid.dmm"]
+directory = "_maps/nova/automapper/templates/centcom/"
+required_map = "CentCom_nova_z2.dmm"
+coordinates = [147, 169, 2]
+trait_name = "CentCom"
+
+# 地毯改木地板 — 1×1，含 1 格改动
+[templates.interlink_wood_floor]
+map_files = ["interlink_wood_floor.dmm"]
+directory = "_maps/nova/automapper/templates/centcom/"
+required_map = "CentCom_nova_z2.dmm"
+coordinates = [76, 187, 2]
+trait_name = "CentCom"

@@ -1,0 +1,33 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"sZP" = (
+/obj/structure/table/wood,
+/obj/item/gun/energy/floragun,
+/obj/item/gun/energy/floragun,
+/obj/item/gun/energy/floragun,
+/obj/item/geneshears,
+/obj/item/geneshears,
+/obj/item/geneshears,
+/obj/item/seeds/starfruit,
+/obj/item/seeds/starfruit,
+/obj/item/seeds/starfruit,
+/turf/open/indestructible/hoteltile{
+	icon_state = "darkfull"
+	},
+/area/centcom/holding/cafe)
+"vhR" = (
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder{
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/beaker/large,
+/turf/open/indestructible/hoteltile{
+	icon_state = "darkfull"
+	},
+/area/centcom/holding/cafe)
+
+(1,1,1) = {"
+sZP
+"}
+(2,1,1) = {"
+vhR
+"}

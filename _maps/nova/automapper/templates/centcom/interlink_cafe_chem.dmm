@@ -1,0 +1,406 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"dcn" = (
+/obj/machinery/barsign/all_access/directional/north,
+/obj/machinery/vending/wardrobe/bar_wardrobe,
+/turf/open/floor/wood/wood_1,
+/area/centcom/holding/cafe)
+"dsT" = (
+/obj/structure/table/wood,
+/turf/open/floor/iron/checker,
+/area/centcom/holding/cafe)
+"dIf" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/brick,
+/area/centcom/holding/cafe)
+"dRj" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/turf/open/indestructible/kitchen,
+/area/centcom/holding/cafe)
+"ghW" = (
+/turf/open/floor/iron/checker,
+/area/centcom/holding/cafe)
+"iRw" = (
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/soda_cans/nova/welding_fizz{
+	pixel_x = 14;
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/cup/soda_cans/nova/welding_fizz{
+	pixel_x = 14;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/soda_cans/nova/welding_fizz{
+	pixel_x = 14
+	},
+/turf/open/floor/wood/wood_1,
+/area/centcom/holding/cafe)
+"kVI" = (
+/obj/structure/extinguisher_cabinet{
+	pixel_x = 27
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/structure/sink/kitchen/directional/west,
+/turf/open/indestructible/kitchen,
+/area/centcom/holding/cafe)
+"ldx" = (
+/obj/item/reagent_containers/cup/glass/bottle/gin{
+	pixel_x = -7;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_x = 1;
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/cup/glass/bottle/sake{
+	pixel_x = 10;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/cup/glass/bottle/kahlua{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/glass/bottle/wine{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing{
+	pixel_x = -8;
+	pixel_y = 6
+	},
+/turf/open/floor/iron/checker,
+/area/centcom/holding/cafe)
+"lDT" = (
+/obj/machinery/light/directional/east,
+/turf/open/indestructible/kitchen,
+/area/centcom/holding/cafe)
+"mdM" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 6
+	},
+/turf/open/floor/iron/dark/brick,
+/area/centcom/holding/cafe)
+"mAG" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 10
+	},
+/turf/open/floor/iron/dark/brick,
+/area/centcom/holding/cafe)
+"mAP" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/dark{
+	dir = 5
+	},
+/obj/machinery/reagentgrinder{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/machinery/processor{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/dark/brick,
+/area/centcom/holding/cafe)
+"nfI" = (
+/obj/item/reagent_containers/cup/glass/bottle/wine{
+	pixel_x = 9;
+	pixel_y = 19
+	},
+/obj/item/reagent_containers/cup/glass/bottle/tequila{
+	pixel_y = 17
+	},
+/obj/item/reagent_containers/cup/glass/bottle/vermouth{
+	pixel_x = -15;
+	pixel_y = 15
+	},
+/obj/item/reagent_containers/cup/glass/bottle/patron{
+	pixel_x = -5;
+	pixel_y = 16
+	},
+/obj/item/reagent_containers/cup/glass/bottle/hcider{
+	pixel_x = 7;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/cup/glass/bottle/cognac{
+	pixel_x = -10;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
+	pixel_y = 6
+	},
+/obj/structure/table/wood,
+/turf/open/floor/iron/checker,
+/area/centcom/holding/cafe)
+"ngA" = (
+/turf/open/indestructible/kitchen,
+/area/centcom/holding/cafe)
+"nhA" = (
+/obj/structure/closet/crate,
+/obj/item/storage/box/ingredients/vegetarian,
+/obj/item/storage/box/ingredients/italian,
+/obj/item/storage/box/ingredients/fruity,
+/obj/item/storage/box/ingredients/fiesta,
+/obj/item/storage/box/ingredients/american,
+/obj/item/storage/box/ingredients/exotic,
+/obj/item/reagent_containers/condiment/flour{
+	list_reagents = list(/datum/reagent/consumable/flour = 90);
+	name = "large flour sack";
+	possible_transfer_amounts = list(1,5,10,15,30,60,90);
+	volume = 90
+	},
+/obj/item/reagent_containers/condiment/flour{
+	list_reagents = list(/datum/reagent/consumable/flour = 90);
+	name = "large flour sack";
+	possible_transfer_amounts = list(1,5,10,15,30,60,90);
+	volume = 90
+	},
+/obj/item/storage/box/donkpockets{
+	pixel_x = 7
+	},
+/obj/item/choice_beacon/ingredient,
+/obj/item/choice_beacon/ingredient,
+/obj/item/choice_beacon/ingredient,
+/obj/item/choice_beacon/ingredient,
+/obj/item/reagent_containers/condiment/red_bay,
+/obj/item/reagent_containers/condiment/curry_powder,
+/obj/item/storage/box/stockparts/deluxe,
+/obj/item/storage/part_replacer/bluespace/tier4,
+/turf/open/indestructible/kitchen,
+/area/centcom/holding/cafe)
+"nWK" = (
+/obj/structure/table/wood,
+/obj/item/rag,
+/turf/open/floor/iron/checker,
+/area/centcom/holding/cafe)
+"ote" = (
+/obj/machinery/vending/dinnerware,
+/turf/open/indestructible/kitchen,
+/area/centcom/holding/cafe)
+"oXP" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 3
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/wood/wood_1,
+/area/centcom/holding/cafe)
+"pzB" = (
+/obj/item/knife{
+	pixel_x = 10;
+	pixel_y = 3
+	},
+/obj/item/storage/bag/tray,
+/obj/item/storage/box/drinkingglasses{
+	pixel_x = -5;
+	pixel_y = 7
+	},
+/obj/item/storage/box/cups{
+	pixel_x = -5
+	},
+/obj/item/kitchen/rollingpin{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/structure/table/wood,
+/obj/item/sharpener,
+/turf/open/floor/iron/dark/brick,
+/area/centcom/holding/cafe)
+"qmc" = (
+/obj/item/reagent_containers/cup/beaker/bluespace{
+	luminosity = 3;
+	name = "floofmagic beaker";
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,150,200,250,500);
+	volume = 500
+	},
+/obj/item/reagent_containers/cup/beaker/bluespace{
+	luminosity = 3;
+	name = "floofmagic beaker";
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,150,200,250,500);
+	volume = 500
+	},
+/obj/item/reagent_containers/cup/beaker/bluespace{
+	luminosity = 3;
+	name = "floofmagic beaker";
+	possible_transfer_amounts = list(5,10,15,20,25,30,50,100,150,200,250,500);
+	volume = 500
+	},
+/obj/structure/table/wood,
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_x = 11;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/condiment/peppermill{
+	pixel_x = 11;
+	pixel_y = 2
+	},
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/iron/dark/brick,
+/area/centcom/holding/cafe)
+"qnu" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 3
+	},
+/turf/open/floor/wood/wood_1,
+/area/centcom/holding/cafe)
+"qpi" = (
+/obj/structure/table/wood,
+/turf/open/floor/iron/dark/brick,
+/area/centcom/holding/cafe)
+"qBj" = (
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 4
+	},
+/turf/open/indestructible/kitchen,
+/area/centcom/holding/cafe)
+"qGS" = (
+/obj/machinery/vending/wardrobe/chef_wardrobe,
+/turf/open/indestructible/kitchen,
+/area/centcom/holding/cafe)
+"qMO" = (
+/obj/effect/turf_decal/siding/dark,
+/turf/open/floor/iron/dark/brick,
+/area/centcom/holding/cafe)
+"qSR" = (
+/turf/closed/indestructible/wood,
+/area/centcom/holding/cafe)
+"sCy" = (
+/obj/machinery/button/door{
+	id = "ghostcafekitchen";
+	name = "Kitchen Shutters Control";
+	pixel_x = -1;
+	pixel_y = -24
+	},
+/obj/machinery/food_cart,
+/turf/open/indestructible/kitchen,
+/area/centcom/holding/cafe)
+"vlA" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "ghostcafekitchen";
+	name = "Kitchen Shutters"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/cooking_to_serve_man{
+	pixel_x = -9;
+	pixel_y = -3
+	},
+/obj/item/book/granter/crafting_recipe/cooking_sweets_101{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/turf/open/indestructible/hoteltile{
+	icon_state = "plating"
+	},
+/area/centcom/holding/cafe)
+"voK" = (
+/obj/effect/turf_decal/siding/dark/corner{
+	dir = 8
+	},
+/obj/structure/table/rolling,
+/turf/open/floor/iron/dark/brick,
+/area/centcom/holding/cafe)
+"xmR" = (
+/obj/machinery/chem_master/condimaster,
+/obj/machinery/light/directional/north,
+/turf/open/floor/wood/wood_1,
+/area/centcom/holding/cafe)
+"xmV" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "ghostcafekitchen";
+	name = "Kitchen Shutters"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/table/reinforced,
+/obj/structure/desk_bell{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/turf/open/indestructible/hoteltile{
+	icon_state = "plating"
+	},
+/area/centcom/holding/cafe)
+
+(1,1,1) = {"
+dRj
+dIf
+qMO
+ngA
+nhA
+"}
+(2,1,1) = {"
+dRj
+dIf
+voK
+mAG
+sCy
+"}
+(3,1,1) = {"
+qBj
+dIf
+qpi
+qMO
+ngA
+"}
+(4,1,1) = {"
+dRj
+dIf
+pzB
+qMO
+ngA
+"}
+(5,1,1) = {"
+dRj
+mAP
+qmc
+mdM
+qGS
+"}
+(6,1,1) = {"
+kVI
+lDT
+ngA
+ngA
+ote
+"}
+(7,1,1) = {"
+qSR
+qSR
+vlA
+xmV
+qSR
+"}
+(8,1,1) = {"
+dcn
+oXP
+ghW
+ghW
+ghW
+"}
+(9,1,1) = {"
+xmR
+qnu
+dsT
+ldx
+ghW
+"}
+(10,1,1) = {"
+iRw
+qnu
+nWK
+nfI
+ghW
+"}
