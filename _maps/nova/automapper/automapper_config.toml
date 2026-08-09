@@ -634,14 +634,6 @@ required_map = "CentCom_nova_z2.dmm"
 coordinates = [186, 198, 2]
 trait_name = "CentCom"
 
-# 吊舱地板材质调整 — 1×1，含 1 格改动
-[templates.interlink_pod_floor]
-map_files = ["interlink_pod_floor.dmm"]
-directory = "_maps/nova/automapper/templates/centcom/"
-required_map = "CentCom_nova_z2.dmm"
-coordinates = [224, 144, 2]
-trait_name = "CentCom"
-
 # 中部烧杯替换 — 1×1，含 1 格改动
 [templates.interlink_beaker_mid]
 map_files = ["interlink_beaker_mid.dmm"]
