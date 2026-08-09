@@ -49,7 +49,7 @@ To stay mergeable with upstream tgstation, **almost all NovaSector changes go in
 - **New content** → `modular_nova/modules/<module_id>/`. Inside, separate by type: `code/` (`.dm`), `icons/` (`.dmi`), `sound/`. **Do NOT mirror the core folder structure** inside a module (`modular_nova/modules/foo/code/thing.dm`, not `.../code/modules/antagonists/...`). Non-trivial modules need a `readme.md` (template: `modular_nova/module_template.md`).
 - **Overrides of core files** (overriding a core proc, adding vars to a core type) → `modular_nova/master_files/`, which **must mirror the core path** (`code/modules/mob/living/living.dm` → `modular_nova/master_files/code/modules/mob/living/living.dm`). Prefer extending via `. = ..()` over copy-pasting whole upstream procs.
 - **Defines** used across more than one file → `code/__DEFINES/~nova_defines/`. Single-file defines should be declared at the top and `#undef`'d at the bottom of that file.
-- **Maps**: never edit upstream `.dmm` maps directly (held to the same standard as icons). Use the **automapper** (`modular_nova/modules/automapper`, config in `automapper_config.toml`) — template automapper for rooms, simple area automapper for single items.
+- **Maps**: never edit upstream `.dmm` maps directly (held to the same standard as icons). Use the **automapper** (`modular_nova/modules/automapper`, config in `automapper_config.toml`) — template automapper for rooms, simple area automapper for single items. See [Mapping the Interlink](#mapping-the-interlink) for the one map people keep getting this wrong on.
 - **Binaries/assets**: never modify core binary files. New clothing icons go into the existing files in the `master_files` clothing section.
 
 ### NOVA EDIT comments (when core edits are unavoidable)
@@ -71,6 +71,24 @@ something = 2 // NOVA EDIT CHANGE - ORIGINAL: something = 1
 Avoid multiline single-`CHANGE` edits — use a REMOVAL block + ADDITION block instead. In **modular** files don't comment out dead code, delete it (git blame exists); this rule does not apply to core/NOVA-EDIT changes.
 
 > **DM indentation is syntax — the `/* … */` REMOVAL block above is only safe at column 0, i.e. when removing whole top-level definitions.** To remove lines *inside a proc body*, use a single-line indented comment instead (`\t// NOVA EDIT REMOVAL - MODULE_ID - ORIGINAL: <the line>`). A `*/` sitting at column 0 **terminates the enclosing proc**, and every remaining body line is then parsed as a new type definition — producing dozens of misleading `duplicate definition` / `empty type name (indentation error?)` errors far from the real cause. Neither `nova-i18n extract` nor DreamChecker catches this (their parsers are more lenient); **only a real DreamMaker compile does**, so compile before you push.
+
+### Mapping the Interlink
+
+互联中枢（Ghost Cafe 所在的 CentCom z2）**不要**编辑 `_maps/map_files/generic/CentCom_nova_z2.dmm`。那是上游维护的文件，已恢复为上游原样，所有下游改动都活在 automapper 模板里：
+
+- 主体改建 → `_maps/nova/automapper/templates/centcom/interlink_rework.dmm`（61×85，覆盖绝大多数改动）
+- 零散单点 → 同目录下的 `interlink_*.dmm` 小模板，配置见 `_maps/nova/automapper/automapper_config.toml`
+
+改完不需要动底图，automapper 会在开局时把模板覆盖上去。
+
+写新的互联中枢模板时注意两点，都踩过：
+
+- **`required_map` 必须写 `"CentCom_nova_z2.dmm"`，不能写 `"builtin"`。** `preload_templates_from_toml` 在每个 `LoadGroup` 内部都会调用，而 `"builtin"` 的判定看的是站点地图、不看当前组，于是会在**基础 CentCom** 那一组就匹配上——那时 CentCom 只有一层，`coordinates[3] = 2` 直接越界，而**一次越界会中断整个模板循环，后面所有模板静默消失且不报明显错误**。
+- `coordinates` 第三项是 `levels_by_trait("CentCom")` 的**索引**：1 = 基础 CentCom，2 = 互联中枢（由 `modular_nova/modules/mapping/code/interlink_helper.dm` 在 `..()` 之后加载）。
+
+**改完必须真起一局验证**，只编译不算数：模板是运行时加载的，不进 `.dmb`，编译永远是绿的。看 `runtime.log` 里的 `AUTOMAPPER: Successfully loaded map template ...` 条数对不对、有没有 `bad turf` 或 `index out of bounds`。
+
+> 这张图曾被存成**普通 DMM 而非 TGM**，导致网格区每行都与上游不同、`mapmerge2` 完全失效，git 层面永远无法有意义地合并。副作用是绘图者基于过期副本整份保存时，会把上游的类型重命名**覆盖回旧路径**——迁移时发现了三处这样的死路径（`/turf/open/floor/pod/light`、`/obj/item/food/grown/poppy/geranium`、一个裸 `/area`），其中地板那处会让 turf 建不出来、退化成 space。用地图编辑器前请确认它按 TGM 保存。
 
 ### Modular TGUI
 
