@@ -29,4 +29,4 @@
 	speed = 2
 
 /obj/projectile/beam/disabler
-	speed = 2.5
+	speed = 3
