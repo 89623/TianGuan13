@@ -7771,6 +7771,7 @@
 #include "modular_nova\master_files\code\modules\uplink\suits.dm"
 #include "modular_nova\master_files\code\modules\vehicles\sealed.dm"
 #include "modular_nova\master_files\code\modules\vehicles\snowmobile.dm"
+#include "modular_nova\modules\round_logs_archive\code\round_logs_archive.dm"
 #include "modular_nova\modules\access_helpers\accesshelpers.dm"
 #include "modular_nova\modules\additional_circuit\code\_designs.dm"
 #include "modular_nova\modules\additional_circuit\code\cell_reader.dm"
