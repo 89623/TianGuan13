@@ -19,7 +19,7 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 		var/list/choices = flist(path)
 		if(path != root)
 			choices.Insert(1,"/")
-		choices = sort_list(choices) + "Download Folder"
+		choices = sort_list(choices) + list("Download Folder", "Download Folder (Archive)") // TIANGUAN EDIT CHANGE - ROUND_LOGS_ARCHIVE - ORIGINAL: choices = sort_list(choices) + "Download Folder"
 
 		var/choice = input(src,"Choose a file to access:","Download",null) as null|anything in choices
 		switch(choice)
@@ -36,6 +36,13 @@ GLOBAL_VAR_INIT(fileaccess_timer, 0)
 				for(var/file in comp_flist)
 					src << ftp(path + file)
 				return
+			// TIANGUAN EDIT ADDITION START - ROUND_LOGS_ARCHIVE
+			if("Download Folder (Archive)")
+				// Confirmation, rate limiting and rights checks all live in the module proc.
+				if(!download_folder_as_archive(path))
+					continue
+				return
+			// TIANGUAN EDIT ADDITION END
 		path += choice
 
 		if(copytext_char(path, -1) != "/") //didn't choose a directory, no need to iterate again
