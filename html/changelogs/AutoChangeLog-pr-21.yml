@@ -1,0 +1,5 @@
+author: "mohu19"
+delete-after: True
+changes:
+  - admin: "新增「Download Folder (Archive)」选项，把整个日志文件夹打包成单个压缩包下载，不再需要每个文件确认一次"
+  - admin: "新增「下载当前回合日志」管理 verb，一键打包下载当前回合全部日志"
