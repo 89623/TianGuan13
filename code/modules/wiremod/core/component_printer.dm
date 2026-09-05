@@ -542,6 +542,11 @@
 			"desc" = design["desc"],
 			"cost" = cost,
 			"id" = "[index]",
+			// 修复：ComponentPrinter 前端界面点击设计图时发送的是 design.path（design_path 参数），
+			// 而后端 ui_act 用 text2num(params["design_path"]) 解析。此前这里缺少 "path" 字段，
+			// 导致前端发送 undefined，text2num() 得到 0，触发 design_id < 1 检查而静默失败（点击无反应）。
+			// DesignBrowser 也使用 design.path 作为分类索引键，补充该字段后打印功能恢复正常。
+			"path" = "[index]",
 			"icon" = "integrated_circuit",
 			"categories" = list("/Saved Circuits"),
 		)
