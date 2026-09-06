@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><base href="../../"><link rel="stylesheet" href="dmdoc.css"><title>modular_tianguan/modules/round_logs_archive/readme.md - /tg/ Station 13</title></head><body><header><a href="index.html">/tg/ Station 13</a> - <a href="index.html#modules">Modules</a> - <a href="index.html#types">Types</a></header><main><h1>回合日志打包下载 (Round Logs Archive) <aside>modular_tianguan/modules/round_logs_archive/readme.md</aside> <a href="https://github.com/89623/TianGuan13/blob/9b1eb0a502a934cffa6815521015310965f9bc34/modular_tianguan/modules/round_logs_archive/readme.md"><img src="git.png" width="16" height="16" title="modular_tianguan/modules/round_logs_archive/readme.md"></a></h1><table class="summary" cellspacing="0"><tr><td colspan="2"><p>模块 ID：ROUND_LOGS_ARCHIVE</p>
+<h3 id="说明">说明：</h3>
+<p>管理员下载日志时，原来的「Download Folder」会对文件夹里每个文件各发一次 <code>ftp()</code>，客户端需要为每一个文件点一次保存确认——下载一整局日志要反复确认十几次。本模块新增：</p>
+<ol>
+<li><strong>「Download Folder (Archive)」选项</strong>：在日志浏览对话框原「Download Folder」旁新增，用系统 tar 把整个文件夹（递归含子目录）打包成单个压缩包，只发一次 <code>ftp()</code>，客户端只需保存一次。原有「Download Folder」行为保持不变（逐个文件下载）。</li>
+<li><strong>「Download Current Round Logs」管理 verb</strong>：管理员面板一键下载当前回合的全部日志，无需进入文件浏览界面。</li>
+</ol>
+<p>选项名用「Archive」而不是「ZIP」：Linux 分支产出的是 <code>.tar.gz</code>，只有 Windows 分支才是 <code>.zip</code>。</p>
+<h3 id="实现要点">实现要点：</h3>
+<ul>
+<li>打包通过 <code>world.shelleo()</code> 调用系统 tar，因此要求 DreamDaemon 以 <strong>Trusted 模式</strong>运行（TGS 部署默认即 Trusted，见 <code>.tgs.yml</code> 的 <code>security: Trusted</code>）。用 <code>shelleo()</code> 而非裸 <code>shell()</code> 是为了拿到退出码和 stderr，失败时能给出真实原因。
+<ul>
+<li>Linux：GNU tar <code>-czf</code> 生成 <code>.tar.gz</code></li>
+<li>Windows：bsdtar <code>tar -a -c -f</code> 生成 <code>.zip</code>（Win10 1803+ 自带 <code>System32\tar.exe</code>，走 PATH 解析，不写死绝对路径）</li>
+</ul>
+</li>
+<li><strong>tar 退出码 1 不当作失败</strong>：当前回合的日志正在被写入，GNU/bsd tar 都会以 1 退出并提示 &quot;file changed as we read it&quot;，但归档本身有效。只有产物不存在才算失败。</li>
+<li>打包在服务器端同步执行，超大日志文件夹会令服务器短暂卡顿，确认弹窗已注明。</li>
+<li><strong>拒绝对日志根目录 <code>data/logs/</code> 打包</strong>：那会把有史以来每一局都打进去，服务器全程冻结。</li>
+<li><strong>归档写在 <code>data/log_archives/</code>，不在日志树内</strong>：否则会出现在下次浏览列表里（<code>gz</code> 在 <code>valid_extensions</code> 内）、被父目录的归档递归吞进去、并被日志收集一起带走。</li>
+<li>归档文件名 = 扁平化的源路径 + UTC 时间戳，不同文件夹与重复下载互不覆盖。</li>
+<li><strong>清理有两道</strong>：发送后 30 分钟定时删除；定时器不跨重启，所以每回合首次使用时会清空整个 <code>data/log_archives/</code>。</li>
+<li><strong>路径白名单</strong>：日志路径虽由服务器生成，但日志根可由 DreamDaemon 命令行参数 <code>-params</code> 覆盖（见 <code>world.dm</code> 的 <code>OVERRIDE_LOG_DIRECTORY_PARAMETER</code>），而 sh 的双引号并不阻止 <code>$()</code> / 反引号 / <code>$VAR</code> 展开。因此交给 shell 前先过 <code>^[A-Za-z0-9_./ -]+$</code>。</li>
+<li><code>download_folder_as_archive()</code> 自己做 <code>check_rights_for(src, R_ADMIN)</code> 与 <code>file_spam_check()</code>，不依赖调用方；确认框返回后会重新校验目录仍然存在（input-stalling）。</li>
+</ul>
+<h3 id="核心文件-proc-改动">核心文件 / Proc 改动：</h3>
+<ul>
+<li><code>code/__HELPERS/files.dm</code>：<code>proc/browse_files</code> —— 两处 <code>TIANGUAN EDIT</code> 标记钩子：
+<ul>
+<li>选项列表行（<code>TIANGUAN EDIT CHANGE</code>）：追加 <code>&quot;Download Folder (Archive)&quot;</code> 选项；</li>
+<li>switch 分支（<code>TIANGUAN EDIT ADDITION</code>）：调用模块 proc <code>download_folder_as_archive()</code>，返回 FALSE（管理员取消）时 <code>continue</code> 回到浏览界面。</li>
+<li>为什么不能完全模块化：选项列表与分支在 core 的 <code>browse_files()</code> 函数体内，DM 无运行时反射/函数体注入，必须留最小触点；逻辑本身全部在模块内。</li>
+<li>同步上游时注意：钩子按 <code>TIANGUAN EDIT</code> 标记包裹，冲突时保留标记块即可。</li>
+</ul>
+</li>
+</ul>
+<h3 id="模块化覆盖">模块化覆盖：</h3>
+<ul>
+<li><code>modular_tianguan/modules/round_logs_archive/code/round_logs_archive.dm</code>：
+<ul>
+<li><code>proc/prepare_log_archive_dir</code>（新，全局）</li>
+<li><code>proc/delete_log_archive</code>（新，全局）</li>
+<li><code>proc/download_folder_as_archive</code>（新，/client）</li>
+<li><code>ADMIN_VERB(download_current_round_logs)</code>（新）</li>
+</ul>
+</li>
+</ul>
+<h3 id="defines">Defines：</h3>
+<ul>
+<li><code>LOG_ARCHIVE_DIR</code> / <code>LOG_ARCHIVE_LIFETIME</code> / <code>LOG_ARCHIVE_FORBIDDEN_ROOT</code>：单文件使用，已在文件末尾 <code>#undef</code>。</li>
+</ul>
+<h3 id="本模块目录外的依赖文件">本模块目录外的依赖文件：</h3>
+<ul>
+<li>无（仅使用内置 proc / <code>world.shelleo()</code> / 系统 tar）</li>
+</ul>
+<h3 id="测试方式">测试方式：</h3>
+<ul>
+<li>DreamMaker 编译通过（0 errors）。</li>
+<li>Windows bsdtar <code>tar -a -c -f</code> 实测生成有效 .zip（递归含子目录）；GNU tar <code>tar -czf</code> 实测生成有效 .tar.gz。</li>
+<li>本地起服实测：两个入口（verb / Archive 选项）均成功下载，归档内容完整（含 attack/game/debug 等实数据）；原有「Download Folder」逐文件下载行为保持正常。</li>
+<li>实现前提：<code>shelleo()</code> 需要 DreamDaemon Trusted 模式（TGS 部署默认，见 <code>.tgs.yml</code>）。</li>
+<li>已知注意点：Windows 资源管理器直接双击预览 bsdtar 生成的 zip 可能显示为空（bsdtar zip 与 Explorer 内置解压器的兼容性问题，zip 本身有效，解压后内容完整，7-Zip/WinRAR 预览正常）。</li>
+</ul>
+<h3 id="致谢">致谢：</h3>
+<ul>
+<li>mohu19（作者）</li>
+</ul></td></tr></table></main><footer>tgstation.dme <a href="https://github.com/89623/TianGuan13/tree/9b1eb0a502a934cffa6815521015310965f9bc34">9b1eb0a</a> (master) — <a href="https://github.com/SpaceManiac/SpacemanDMM/blob/master/crates/dmdoc/README.md">dmdoc 1.11.0</a></footer></body></html>
