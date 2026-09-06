@@ -541,6 +541,12 @@
 			"desc" = design["desc"],
 			"cost" = cost,
 			"id" = "[index]",
+			// Fix: The ComponentPrinter frontend sends design.path (as the design_path param) when a design
+			// is clicked, and the backend ui_act parses it with text2num(params["design_path"]). This "path"
+			// field was previously missing, so the frontend sent undefined, text2num() yielded 0, and the
+			// design_id < 1 check failed silently (clicking did nothing). DesignBrowser also uses design.path
+			// as a category index key; adding this field restores the print functionality.
+			"path" = "[index]",
 			"icon" = "integrated_circuit",
 			"categories" = list("/Saved Circuits"),
 		)
