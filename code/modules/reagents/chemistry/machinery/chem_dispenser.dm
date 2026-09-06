@@ -199,6 +199,27 @@
 	use_energy(active_power_usage * seconds_per_tick) //Additional power cost before charging the cell.
 	charge_cell(recharge_amount * seconds_per_tick, cell) //This also costs power.
 
+/// The machine runs off its internal cell when the area power is out, so as long as the cell has charge we count as powered.
+/obj/machinery/chem_dispenser/powered(chan = power_channel, ignore_use_power = FALSE)
+	if(!QDELETED(cell) && cell.charge > 0)
+		return TRUE
+	return ..()
+
+/**
+ * Draws energy from the internal cell, and re-evaluates our power state if the cell runs dry.
+ *
+ * Necessary because area power_change() signals won't fire again while the area is already unpowered,
+ * so an empty cell would otherwise leave us stuck in a "powered" state.
+ *
+ * Arguments:
+ * * amount - the amount of energy to use from the cell
+ */
+/obj/machinery/chem_dispenser/proc/use_cell_energy(amount)
+	if(QDELETED(cell))
+		return FALSE
+	. = cell.use(amount)
+	if(cell.charge <= 0)
+		power_change()
 
 /obj/machinery/chem_dispenser/proc/display_beaker()
 	var/mutable_appearance/b_o = beaker_overlay || mutable_appearance(icon, "disp_beaker")
@@ -355,7 +376,7 @@
 					if(!to_dispense)
 						say("The container is full!")
 						return
-					if(!cell.use(to_dispense * power_cost))
+					if(!use_cell_energy(to_dispense * power_cost))
 						say("Not enough energy to complete operation!")
 						return
 					beaker.add_hiddenprint(ui.user)
@@ -405,7 +426,7 @@
 					var/to_dispense = max(0, min(dispense_amount, holder.maximum_volume - holder.total_volume))
 					if(!to_dispense)
 						continue
-					if(!cell.use(to_dispense * power_cost))
+					if(!use_cell_energy(to_dispense * power_cost))
 						say("Not enough energy to complete operation!")
 						return
 					beaker.add_hiddenprint(ui.user)
@@ -518,8 +539,10 @@
 	chem_splash(get_turf(src), null, 3, R)
 	if(beaker?.reagents)
 		beaker.reagents.remove_all()
-	cell.use(total * power_cost)
+	use_cell_energy(total * power_cost)
 	cell.emp_act(severity)
+	if(cell.charge <= 0) //The EMP discharge may have drained us dry, re-evaluate in case the area is unpowered
+		power_change()
 	work_animation()
 	visible_message(span_danger("[src] malfunctions, spraying chemicals everywhere!"))
 
@@ -878,6 +901,8 @@
 		/datum/reagent/plantnutriment/eznutriment,
 		/datum/reagent/plantnutriment/left4zednutriment,
 		/datum/reagent/plantnutriment/robustharvestnutriment,
+		/datum/reagent/plantnutriment/endurogrow,
+		/datum/reagent/plantnutriment/liquidearthquake,
 		/datum/reagent/water,
 		/datum/reagent/toxin/plantbgone,
 		/datum/reagent/toxin/plantbgone/weedkiller,
@@ -953,7 +978,7 @@
 		/datum/reagent/toxin,
 		/datum/reagent/toxin/plasma,
 		/datum/reagent/uranium,
-		/datum/reagent/consumable/liquidelectricity/enriched,
+		/datum/reagent/consumable/liquidelectricity,
 		/datum/reagent/medicine/c2/synthflesh,
 	)
 	// NOVA EDIT ADDITION START
