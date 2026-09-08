@@ -10087,6 +10087,7 @@
 #include "modular_tianguan\modules\uplink_item\code\uplink_override.dm"
 #include "modular_tianguan\modules\admin\loud_meow.dm"
 #include "modular_tianguan\modules\round_logs_archive\code\round_logs_archive.dm"
+#include "modular_tianguan\modules\pen_shortcut_hint\code\pen_shortcut_hint.dm"
 
 
 
