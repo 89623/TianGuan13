@@ -1,4 +1,8 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
+// TIANGUAN EDIT - VENDATRAY_TEMP - 本文件含临时核心补丁，上游同步 / nova-i18n rewrite 可能覆盖，改动说明见 modular_tianguan/modules/vendatray_temp/readme.md
+//   · /obj/structure/displaycase/forsale/item_interaction —— 恢复"托盘打开时把物品放上展示台"的分支（上游无此功能，天关自行补的）
+//   · 同步上游之后必须复查：grep -n VENDATRAY_TEMP code/game/objects/structures/displaycase.dm
+//   · 症状：分支丢失后，托盘开着也放不进食物（物品被静默丢弃，无任何报错）
 /obj/structure/displaycase
 	name = "display case"
 	icon = 'icons/obj/structures.dmi'
@@ -660,6 +664,13 @@
 
 	if(istype(tool, /obj/item/modular_computer))
 		return ITEM_INTERACT_BLOCKING
+
+	// TIANGUAN EDIT ADDITION START - VENDATRAY_TEMP - 上游的 /forsale 完全覆盖了父类型的插入分支，托盘打开时物品会被静默丢弃，这里按父类型同形恢复
+	if(open && !showpiece)
+		insert_showpiece(tool, user)
+		SStgui.update_uis(src)
+		return ITEM_INTERACT_SUCCESS //cancel the attack chain, whether we successfully placed an item or not
+	// TIANGUAN EDIT ADDITION END
 
 	SStgui.update_uis(src)
 	return ITEM_INTERACT_SUCCESS
