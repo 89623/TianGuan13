@@ -1,4 +1,12 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
+
+// TIANGUAN EDIT LEDGER START - 本文件仅含过渡性修复；上游更新时可直接整体覆盖，无需合并。
+// 2026-09-19 HOLOSIGN_Z_LAYER_FIX: 新增 /obj/structure/plasticflaps/update_overlays() 重建 vis overlay。
+//   update_icon() 的 UPDATE_OVERLAYS 分支会清掉 managed_vis_overlays，导致 on_changed_z_level() 里刚补的 gen_overlay()
+//   立刻被随后的 ..() / update_appearance() 抹掉（跨 plane offset，如穿梭机往返 CentCom 时）。
+// 复检: grep -n "TIANGUAN EDIT" code/game/objects/structures/plasticflaps.dm
+// TIANGUAN EDIT LEDGER END
+
 /obj/structure/plasticflaps
 	name = "airtight plastic flaps"
 	desc = "Heavy duty, airtight, plastic flaps. Definitely can't get past those. No way."
@@ -127,6 +135,19 @@
 		alpha = flaps_alpha,
 		add_appearance_flags = RESET_ALPHA,
 	)
+
+// TIANGUAN EDIT ADDITION START - HOLOSIGN_Z_LAYER_FIX
+/**
+ * /atom/proc/update_icon() deletes managed_vis_overlays before calling this proc and never restores
+ * them, so the flaps went invisible whenever something forced an appearance update - notably the
+ * update_icon() that /atom/movable/proc/on_changed_z_level() triggers when the plane offset changes
+ * (e.g. a shuttle trip between the station z level and CentCom or transit), which also ate the
+ * gen_overlay() that on_changed_z_level() had just done.
+ */
+/obj/structure/plasticflaps/update_overlays()
+	. = ..()
+	gen_overlay()
+// TIANGUAN EDIT ADDITION END - HOLOSIGN_Z_LAYER_FIX
 
 /obj/structure/plasticflaps/vv_edit_var(var_name, var_val)
 	. = ..()

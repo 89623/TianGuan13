@@ -1,6 +1,17 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
 
 //holographic signs and barriers
+// TIANGUAN EDIT LEDGER START - 本文件仅含过渡性修复；上游更新时可直接整体覆盖，无需合并。
+// 2026-09-19 HOLOSIGN_Z_LAYER_FIX: 修复 holosign 在 z 层 plane offset 变化（如补给穿梭机往返 CentCom）后贴图丢失。
+//   update_icon() 的 UPDATE_OVERLAYS 分支会清掉 managed_vis_overlays，而 holosign 只靠 vis overlay 渲染，
+//   于是 /atom/movable/proc/on_changed_z_level() 触发的 update_appearance() 会让它永久不可见。
+//   改动：新增 /obj/structure/holosign/update_overlays() 重建 vis overlay；新增 overlay_alpha/overlay_appearance_flags；
+//   barrier/update_icon_state() 不再直接建 overlay；barrier/proc/open() 与 medical/Bumped() 改调 update_appearance(UPDATE_ICON_STATE|UPDATE_OVERLAYS)；
+//   barrier/atmos 的 clearview_transparency()/reset_transparency() 改走 create_vis_overlay() 并新增 clearview 状态变量。
+//   medical/Bumped() 的 deny 贴图上游从来显示不出来（icon_state 被随后无条件的 barrier/update_icon_state() 覆写）：
+//   新增 medical/var/deny 与 medical/update_icon_state() 覆写，让 update_icon_state() 保持唯一权威。
+// 复检: grep -n "TIANGUAN EDIT" code/game/objects/structures/holosign.dm
+// TIANGUAN EDIT LEDGER END
 
 /obj/structure/holosign
 	name = "holo sign"
@@ -12,6 +23,12 @@
 	resistance_flags = FREEZE_PROOF
 	var/obj/item/holosign_creator/projector
 	var/use_vis_overlay = TRUE
+	// TIANGUAN EDIT ADDITION START - HOLOSIGN_Z_LAYER_FIX
+	/// Alpha applied to src. The vis overlay is what is actually rendered, so this is usually 0.
+	var/overlay_alpha = 0
+	/// Appearance flags applied to the vis overlay.
+	var/overlay_appearance_flags = KEEP_APART|RESET_ALPHA
+	// TIANGUAN EDIT ADDITION END - HOLOSIGN_Z_LAYER_FIX
 
 /datum/armor/structure_holosign
 	bullet = 50
@@ -67,11 +84,27 @@
 		return
 
 	var/turf/our_turf = get_turf(src)
-	alpha = 0
+	// TIANGUAN EDIT CHANGE - HOLOSIGN_Z_LAYER_FIX - ORIGINAL: alpha = 0
+	alpha = overlay_alpha
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	var/obj/effect/overlay/vis/overlay = SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir, add_appearance_flags = KEEP_APART|RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+	// TIANGUAN EDIT CHANGE - HOLOSIGN_Z_LAYER_FIX - ORIGINAL: add_appearance_flags = KEEP_APART|RESET_ALPHA
+	var/obj/effect/overlay/vis/overlay = SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir, add_appearance_flags = overlay_appearance_flags) //you see mobs under it, but you hit them like they are above it
 	if (color || cached_color_filter)
 		overlay.add_atom_colour(cached_color_filter || color, FIXED_COLOUR_PRIORITY)
+
+// TIANGUAN EDIT ADDITION START - HOLOSIGN_Z_LAYER_FIX
+/**
+ * /atom/proc/update_icon() re-adds regular overlays through this proc, but it deletes vis overlays
+ * (managed_vis_overlays) outright beforehand and never restores them. Holosigns only ever render
+ * through their vis overlay, so any update_icon() call - most notably the one that
+ * /atom/movable/proc/on_changed_z_level() runs when the plane offset changes, e.g. when a shuttle
+ * moves between a station z level and CentCom or transit - left them permanently invisible.
+ * Rebuilding the vis overlay here keeps it in sync with the current icon_state/plane/dir.
+ */
+/obj/structure/holosign/update_overlays()
+	. = ..()
+	create_vis_overlay()
+// TIANGUAN EDIT ADDITION END - HOLOSIGN_Z_LAYER_FIX
 
 /obj/structure/holosign/wetsign
 	name = "wet floor sign"
@@ -131,7 +164,9 @@
 	else
 		icon_state = pass_icon_state
 
-	create_vis_overlay()
+	// TIANGUAN EDIT CHANGE - HOLOSIGN_Z_LAYER_FIX - ORIGINAL: create_vis_overlay()
+	// The vis overlay is rebuilt by /obj/structure/holosign/update_overlays() instead, so that it
+	// survives update_icon()'s vis overlay purge. Callers should refresh via update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS).
 	. = ..()
 
 /obj/structure/holosign/barrier/proc/open(user)
@@ -152,7 +187,8 @@
 		opened = FALSE
 		playsound(src, 'sound/machines/door/door_close.ogg', 50, TRUE)
 
-	update_icon_state()
+	// TIANGUAN EDIT CHANGE - HOLOSIGN_Z_LAYER_FIX - ORIGINAL: update_icon_state()
+	update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 	COOLDOWN_START(src, cooldown_open, 1 SECONDS)
 
 /obj/structure/holosign/barrier/wetsign
@@ -192,20 +228,32 @@
 	alpha = 150
 	rad_insulation = RAD_LIGHT_INSULATION
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
+	// TIANGUAN EDIT ADDITION START - HOLOSIGN_Z_LAYER_FIX
+	/// Is this holofirelock currently rendered in the projector's clearview mode?
+	var/clearview = FALSE
+	// TIANGUAN EDIT ADDITION END - HOLOSIGN_Z_LAYER_FIX
 
 /obj/structure/holosign/barrier/atmos/proc/clearview_transparency()
+	// TIANGUAN EDIT CHANGE - HOLOSIGN_Z_LAYER_FIX - ORIGINAL: alpha = 25 + a bare SSvis_overlays.remove_vis_overlay()/add_vis_overlay() pair
+	// Going through create_vis_overlay() keeps the vis overlay, and the state needed to rebuild it, in one place.
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	alpha = 25
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	var/turf/our_turf = get_turf(src)
-	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir)
+	clearview = TRUE
+	overlay_alpha = 25
+	overlay_appearance_flags = NONE
+	create_vis_overlay()
 
 /obj/structure/holosign/barrier/atmos/proc/reset_transparency()
+	// TIANGUAN EDIT CHANGE - HOLOSIGN_Z_LAYER_FIX - ORIGINAL: alpha = initial(alpha) + a bare SSvis_overlays.remove_vis_overlay()/add_vis_overlay() pair with add_appearance_flags = RESET_ALPHA
+	// The overlay returns to the exact state create_vis_overlay() gives a freshly made holofirelock.
+	// Note the original set src.alpha = initial(alpha), i.e. the atmos subtype's declared 150, while
+	// create_vis_overlay() always renders through the vis overlay and zeroes src.alpha - so a
+	// clearview cycle used to leave the holofirelock drawing its own sprite at 150 on top of the
+	// overlay, unlike a freshly placed one. Restoring overlay_alpha keeps both paths identical.
 	mouse_opacity = initial(mouse_opacity)
-	alpha = initial(alpha)
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-	var/turf/our_turf = get_turf(src)
-	SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir, add_appearance_flags = RESET_ALPHA)
+	clearview = FALSE
+	overlay_alpha = initial(overlay_alpha)
+	overlay_appearance_flags = initial(overlay_appearance_flags)
+	create_vis_overlay()
 
 /obj/structure/holosign/barrier/atmos/sturdy
 	name = "sturdy holofirelock"
@@ -253,6 +301,28 @@
 	max_integrity = 1
 	openable = FALSE
 	COOLDOWN_DECLARE(virus_detected)
+	// TIANGUAN EDIT ADDITION START - HOLOSIGN_Z_LAYER_FIX
+	/// Transient visual state: are we showing the deny icon state after detecting a malicious virus?
+	var/deny = FALSE
+	// TIANGUAN EDIT ADDITION END - HOLOSIGN_Z_LAYER_FIX
+
+// TIANGUAN EDIT ADDITION START - HOLOSIGN_Z_LAYER_FIX
+/**
+ * /obj/structure/holosign/barrier/update_icon_state() unconditionally re-derives icon_state from
+ * `opened`, which is always FALSE here (medical is not openable). Bumped() used to set
+ * icon_state = "holo_medical-deny" and then call that proc, so the deny icon was overwritten - and
+ * the vis overlay regenerated from the overwritten value - before it could ever render.
+ * Keeping deny as a variable and translating it here keeps update_icon_state() the single authority.
+ */
+/obj/structure/holosign/barrier/medical/update_icon_state()
+	. = ..()
+	if(!deny)
+		return
+	icon_state = "holo_medical-deny"
+	// ..() already rebuilt the overlay from the pre-deny state, so rebuild it for callers that
+	// invoke update_icon_state() without the UPDATE_OVERLAYS flag.
+	create_vis_overlay()
+// TIANGUAN EDIT ADDITION END - HOLOSIGN_Z_LAYER_FIX
 
 /obj/structure/holosign/barrier/medical/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
@@ -267,8 +337,10 @@
 
 /obj/structure/holosign/barrier/medical/Bumped(atom/movable/AM)
 	. = ..()
-	icon_state = base_icon_state
-	update_icon_state()
+	// TIANGUAN EDIT CHANGE - HOLOSIGN_Z_LAYER_FIX - ORIGINAL: icon_state = base_icon_state + update_icon_state()
+	// update_icon_state() already returns to base_icon_state while deny is FALSE.
+	deny = FALSE
+	update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 	if(!ishuman(AM) && CheckHuman(AM))
 		return
 
@@ -277,8 +349,9 @@
 
 	playsound(get_turf(src),'sound/machines/buzz/buzz-sigh.ogg', 65, TRUE, 4)
 	COOLDOWN_START(src, virus_detected, 1 SECONDS)
-	icon_state = "holo_medical-deny"
-	update_icon_state()
+	// TIANGUAN EDIT CHANGE - HOLOSIGN_Z_LAYER_FIX - ORIGINAL: icon_state = "holo_medical-deny" + update_icon_state()
+	deny = TRUE
+	update_appearance(UPDATE_ICON_STATE | UPDATE_OVERLAYS)
 
 /obj/structure/holosign/barrier/medical/proc/CheckHuman(mob/living/carbon/human/sickboi)
 	var/threat = sickboi.check_virus()
