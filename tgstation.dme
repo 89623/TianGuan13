@@ -9957,9 +9957,19 @@
 #include "modular_nova\modules\ticket_counter\code\counter.dm"
 #include "modular_nova\modules\time_clock\code\off_duty_component.dm"
 #include "modular_nova\modules\title_screen\code\_title_screen_defines.dm"
-#include "modular_nova\modules\title_screen\code\new_player.dm"
+// TIANGUAN EDIT REMOVAL START - TG_LOBBY
+// play_lobby_button_sound()（按钮音效）在本文件里，DM 不允许同类型同 proc 重复定义，
+// 故从清单移除上游那份，改由 modular_tianguan\modules\tg_lobby\code\new_player.dm 提供
+// （与 title_screen_html.dm 同样的接管做法）。modular_nova/ 目录本身保持零改动。
+//#include "modular_nova\modules\title_screen\code\new_player.dm"
+// TIANGUAN EDIT REMOVAL END - TG_LOBBY
 #include "modular_nova\modules\title_screen\code\title_screen_controls.dm"
-#include "modular_nova\modules\title_screen\code\title_screen_html.dm"
+// TIANGUAN EDIT REMOVAL START - TG_LOBBY
+// get_title_html() 定义在本文件里，而 DM 不允许同类型同 proc 重复定义（后 include 会直接编译报错），
+// 因此从清单移除上游那份，改由 modular_tianguan\modules\tg_lobby\code\title_screen_html.dm 提供同名 proc。
+// 这样 modular_nova/ 目录本身保持零改动。上游本文件更新时需人工比对同步，见该模块 readme.md。
+//#include "modular_nova\modules\title_screen\code\title_screen_html.dm"
+// TIANGUAN EDIT REMOVAL END - TG_LOBBY
 #include "modular_nova\modules\title_screen\code\title_screen_pref_middleware.dm"
 #include "modular_nova\modules\title_screen\code\title_screen_subsystem.dm"
 #include "modular_nova\modules\toolset_buffs\code\tools.dm"
@@ -10105,6 +10115,9 @@
 #include "modular_tianguan\modules\round_logs_archive\code\round_logs_archive.dm"
 #include "modular_tianguan\modules\pen_shortcut_hint\code\pen_shortcut_hint.dm"
 #include "modular_tianguan\modules\sponsor_loadout_items\code\sponsor_loadout_items.dm"
+#include "modular_tianguan\modules\tg_lobby\code\lobby_card.dm"
+#include "modular_tianguan\modules\tg_lobby\code\new_player.dm"
+#include "modular_tianguan\modules\tg_lobby\code\title_screen_html.dm"
 
 
 
