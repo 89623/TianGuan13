@@ -406,6 +406,7 @@
 #include "~nova\opposing_force.dm"
 #include "~nova\runtime_stability.dm"
 #include "~nova\shuttle.dm"
+#include "~nova\tianguan_sponsor_loadout.dm"
 #include "~nova\tts_controls.dm"
 // NOVA EDIT END
 // END_INCLUDE
