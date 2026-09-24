@@ -82,12 +82,16 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
 
 ### 核心文件 / Proc 改动：
 
-- 无（不改任何核心文件；只覆盖一个 core proc 的模块化写法，代码都在本模块目录内）。
+- 无核心逻辑改动；只覆盖一个 core proc 的模块化写法，代码都在本模块目录内。
+- 单元测试 `code/modules/unit_tests/~nova/tianguan_sponsor_loadout.dm`（在 `_unit_tests.dm` 的
+  `NOVA EDIT` 块内登记）：逐条确认清单里的 item_path 都落到了已解锁的配装条目上，
+  并确认三条自建条目都是 `donator_only`。
 
 ### Defines：
 
 - `TIANGUAN_SPONSOR_ITEM_PATHS` —— 本模块内部的解锁清单（148 条 item_path），文件末尾 `#undef`。
-  清理后无全局残留。
+  运行期经 `tianguan_sponsor_item_paths()` 惰性建成 `item_path → TRUE` 查找表（proc 内 static，
+  不用 `GLOBAL_LIST_INIT`：配装单例本身就在另一个全局的初始化里创建，先后顺序不受控）。
 
 ### 本模块目录外的依赖文件：
 
@@ -98,12 +102,14 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
 ### 测试方式：
 
 - DreamMaker 编译通过（0 errors；`dm.exe tgstation.dme`，BYOND 516.1659）。
+- 单元测试 `/datum/unit_test/tianguan_sponsor_loadout` 通过。
 - 游戏内用 `config/nova/donators.txt` 里的 ckey 打开配装界面，逐页签确认：
   - 解锁条目都在，且带「Donator-Only」标记；
   - 选上后开局能带到身上；
   - 有职业限定的（如舰长的 `Captain's Dress`、矿工的 `Ahab's Spear Retool Kit`、
     安保的 `Banded Uniform`、NTC 的 hubert 三件与 razurath 两件）用其它职业选上 → 发放被拒并提示 `job restrictions`。
-- 用不在名单里的 ckey 复验：`ckey_whitelist` 已清空的条目仍显示，选中后开局被拒并提示 `donator`。
+- 用不在名单里的 ckey 复验：配装页**看不到**这些条目（`ItemDisplay.tsx` 的 `FilterItemList`
+  对非捐赠者隐藏 `donator_only` 条目）；服务端 `can_be_applied_to()` 另有一道 `donator` 拦截兜底。
 - 「保持原样」的 7 条：用任意 ckey（非捐赠者）确认仍可正常领取 —— 验证没有被本模块误变成专属。
 - 改 `config/nova/donators.txt` 加一个 ckey 后重启，确认对方能领 —— 验证「名单只改 config」这条。
 
@@ -113,8 +119,8 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
   1 条（硬光轮椅）上游无条目故自建。需求文件里 `caligram_parkaa` 系笔误，实际类型为 `caligram_parka`。
 - 加物品：只在 `TIANGUAN_SPONSOR_ITEM_PATHS` 里加一行即可（上游已有该 item_path 的条目为前提）。
 - **上游同步注意**：Nova 若改动 `donator_personal.dm` 中这些条目的 `item_path`／白名单／职业限制，
-  或新增同 `item_path` 的条目，需要回来核对本清单；被重命名的 item_path 会静默失去解锁
-  （清单匹配不上，不影响其它条目）。
+  或新增同 `item_path` 的条目，需要回来核对本清单。item_path 失配时游戏里不会报错，
+  但单元测试 `tianguan_sponsor_loadout` 会点名报出是哪一条。
 
 ### 致谢：
 

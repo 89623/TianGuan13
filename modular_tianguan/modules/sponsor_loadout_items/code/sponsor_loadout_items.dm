@@ -23,8 +23,8 @@
 /// 收录标准：上游条目原本带 ckeywhitelist（某位 Nova 捐赠者的私人配装）或已设 donator_only ——
 /// 对这些条目做「解锁」，赞助者才拿得到。上游本来就没设限制（对所有人开放）的条目**不收录**，
 /// 免得把它们变成赞助者专属（＝对其他人收回）；见文件末尾的「保持原样」清单。
-/// 清单变动 = 改这里一处；上游若重命名/删除某条 item_path，对应条目会静默失去解锁
-/// （下面 tianguan_unlock_sponsor_item() 之外的逻辑不受影响）。
+/// 清单变动 = 改这里一处；上游若重命名/删除某条 item_path，单元测试
+/// /datum/unit_test/tianguan_sponsor_loadout 会报出失配的那一条。
 #define TIANGUAN_SPONSOR_ITEM_PATHS list(\
 	/* belts (1) */ \
 	/obj/item/storage/belt/fannypack/occult, \
@@ -192,7 +192,7 @@
 /// 为什么在运行期改、而不是在类型体里写 donator_only = TRUE / ckeywhitelist = null：
 ///   - ckeywhitelist 必须运行期清 —— DM 里跨文件把继承变量赋成 null 会静默失效
 ///     （null 等于默认值，编译器不记录这次变更；实测「赋非默认值生效、赋 null 不生效」）；
-///   - 本批 155 条逐条写类型体既冗余又容易漏，且上游重命名后无法察觉。
+///   - 本批 148 条逐条写类型体既冗余又容易漏。
 /proc/tianguan_unlock_sponsor_item(datum/loadout_item/entry)
 	entry.ckeywhitelist = null
 	entry.donator_only = TRUE
@@ -204,13 +204,23 @@
 /// 本文件在 tgstation.dme 中排在 modular_nova 之后，同名 proc 的后定义者生效，..() 链到 core 那份。
 /datum/loadout_item/New(category)
 	. = ..()
-	if(item_path in TIANGUAN_SPONSOR_ITEM_PATHS)
+	if(tianguan_sponsor_item_paths()[item_path])
 		tianguan_unlock_sponsor_item(src)
 
+/// 解锁清单的查找表（item_path → TRUE），惰性构建。
+/// 不用 GLOBAL_LIST_INIT：配装单例本身就是在 GLOBAL_LIST_INIT(all_loadout_categories) 里创建的，
+/// 两个全局的初始化先后不受控，先跑到这里时 GLOB 那份还是 null。
+/proc/tianguan_sponsor_item_paths()
+	var/static/list/lookup
+	if(isnull(lookup))
+		lookup = list()
+		for(var/path in TIANGUAN_SPONSOR_ITEM_PATHS)
+			lookup[path] = TRUE
+	return lookup
+
 // ——— 上游没有配装条目、需本模块新建的条目 ———
-// 这些物件的 item_path 不在 donator_personal.dm 里，新建 datum 声明 name/item_path 即可；
-// donator_only 由上面的统一解锁逻辑设置（两条创始批物品的 item_path 已写死在各自类型体里，
-// 不依赖清单匹配）。
+// 这些物件的 item_path 不在 donator_personal.dm 里，也不在上面的清单里，
+// 所以每条都要在类型体里自己写 donator_only = TRUE（非默认值，编译期赋值有效）。
 
 /// 长气球盒 —— Toys 页签（Nova 的玩具类配装都挂这里：蜡笔/激光笔/骰子/毛绒玩具…），该页签上限 3 件
 /datum/loadout_item/toys/sponsor_box_of_long_balloons
@@ -231,6 +241,7 @@
 /datum/loadout_item/pocket_items/sponsor_hardlight_wheelchair
 	name = "hardlight wheelchair emitter"
 	item_path = /obj/item/holosign_creator/hardlight_wheelchair
+	donator_only = TRUE
 
 // ——— 上游有条目、但需求方额外要求加职业限定的 ———
 
@@ -250,7 +261,6 @@
 //  /obj/item/clothing/suit/armor/donator/duke_armored_coat        list(JOB_CAPTAIN)
 //  /obj/item/clothing/suit/armor/hos/trenchcoat/melon             list(JOB_HEAD_OF_SECURITY)
 //  /obj/item/clothing/suit/armor/skyy                             list(JOB_HEAD_OF_PERSONNEL, JOB_NT_REP)
-//  /obj/item/clothing/suit/armor/vest/caligram_parka_vest     （已移出清单：上游无白名单，见下方「保持原样」）
 //  /obj/item/clothing/suit/armor/vest/nanotrasen_consultant/hubert list(JOB_NT_REP)
 //  /obj/item/clothing/suit/armor/vest/warden/rax                  list(ALL_JOBS_SEC)
 //  /obj/item/clothing/suit/hooded/explorer/melon                  list(JOB_SHAFT_MINER)
