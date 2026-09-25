@@ -1,0 +1,70 @@
+[
+	{
+		"_说明": "团结联盟（Union of Allied Republics）：纳米的敌对组织，走天关新增的第三个阵营 —— faction=uar（默认权重 30%，见 readme「三个阵营」一节）。ui_theme=uar 会套用 uar 主题与那张徽记背景",
+		"enabled": true,
+		"name": "团结联盟",
+		"faction": "uar",
+		"outcome": "normal",
+		"ui_theme": "uar",
+		"introduction": "你是{name}潜伏特工",
+		"allies": "当你遇到其他辛迪加特工时，请极尽所能的消灭，这包括向安保部举报他们。不要与非人类有任何多嘴，如果他们妨碍到你，秘密做掉。如果有敌对力量想要攻占站点和发起大规模进攻，你的任务就会终止并转变为帮助纳米传讯，必要时可以公布自己的身份。",
+		"goal": "不要暴露你的身份，尽可能避免波及公民。",
+		"uplink": "为了有合理的推诿理由，你已通过上行链路配备了一系列缴获的辛迪加武器。",
+		"roundend_report": "曾是团结联盟的一名潜伏特工。"
+	},
+	{
+		"_说明": "↓ 以下 5 条是配置示例，全部 enabled=false（不生效，要哪条改成 true）。带 // 注释的讲解版在 modular_tianguan/modules/custom_employers/readme.md 的「完整示例集」—— 示例 1/5：最小可用，只填两个必填字段，其余全走默认值（辛迪加 / normal / 阵营默认主题）",
+		"enabled": false,
+		"name": "极光联合体",
+		"introduction": "你是{name}的叛徒。"
+	},
+	{
+		"_说明": "示例 2/5：全字段 —— 显式指定阵营、结局、主题，并写全所有文本字段",
+		"enabled": false,
+		"name": "深空航运工会",
+		"faction": "syndicate",
+		"outcome": "normal",
+		"ui_theme": "syndicate",
+		"introduction": "你是{name}的叛徒。",
+		"allies": "你可以与其他辛迪加特工合作，前提是他们支持我们的目标。",
+		"goal": "别搞无谓的屠杀，拿到东西就撤——这是我们的行事风格。",
+		"uplink": "你已获得一台标准辛迪加上行链路，用它完成任务。",
+		"roundend_report": "曾是{name}的一名特工。"
+	},
+	{
+		"_说明": "示例 3/5：纳米传讯侧 + 不限结局 —— 阵营先按 40%/30%/30% 抽，纳米侧比辛迪加侧少见；both = 两种结局的局都能出现",
+		"enabled": false,
+		"name": "纳米传讯审计署",
+		"faction": "nanotrasen",
+		"outcome": "both",
+		"ui_theme": "ntos",
+		"introduction": "你是{name}派来的审计员。",
+		"allies": "不要向任何人暴露你的身份，从阴影中行动。",
+		"goal": "铲除站内的腐败。你有杀人执照，但多余的破坏会让你的合同被终止。",
+		"uplink": "为了撇清关系，你获得了一批缴获的辛迪加装备。",
+		"roundend_report": "曾是纳米传讯审计署的一员。"
+	},
+	{
+		"_说明": "示例 4/5：只在劫机局出现 —— 劫机局要求本局 >=30 人且只有 10% 概率，人少的测试服一局都不会有；想经常看到就用 normal 或 both",
+		"enabled": false,
+		"name": "戈莱克斯敢死队",
+		"faction": "syndicate",
+		"outcome": "hijack",
+		"ui_theme": "syndicate",
+		"introduction": "你是{name}的突击手。",
+		"allies": "本局只有你一个人被派来，其他自称同僚的一律不信。",
+		"goal": "把整艘船连同它的记录一起带走，别留活口去作证。",
+		"uplink": "标准的辛迪加上行链路，够你打穿安保部了。",
+		"roundend_report": "是{name}的一名突击手。"
+	},
+	{
+		"_说明": "示例 5/5：只填部分字段 —— 没填的自动用通用中文默认句；句子完全不写 {name} 也可以；主题换中立灰 neutral",
+		"enabled": false,
+		"name": "联合收割者",
+		"faction": "syndicate",
+		"outcome": "both",
+		"ui_theme": "neutral",
+		"introduction": "你受雇于联合收割者。",
+		"goal": "收割一切有价值的东西，然后消失在黑暗里。"
+	}
+]

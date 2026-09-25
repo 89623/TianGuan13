@@ -1,0 +1,28 @@
+// THIS IS A TIANGUAN UI FILE
+//
+// 团结联盟（UAR）主题 —— 配色取自徽记：深红底、银白 V 形、蓝色五角星。
+// 主题名会被 Layout 拼成 `theme-uar` 挂到 document.documentElement 上（见 tgui/packages/tgui/layouts/Layout.tsx），
+// 所以这里用 `.theme-uar:root` 定义变量；变量名沿用 tgui-core 那套（参考 theme-syndicate）。
+//
+// 用在: config/tianguan/employers.json 里雇主填 "ui_theme": "uar"。
+.theme-uar {
+  &:root {
+    --color-base: #5c0e12; // 徽记的深红底
+    --color-primary: #c9cdd6; // 银白（V 形）
+    --secondary-lightness-adjustment: 11.5;
+    --base-gradient-spread: 6;
+    --button-background-selected: #1f3a8a; // 蓝色五角星
+    --button-background-caution: #b06a1f;
+    --button-background-danger: #a33a3a;
+    --notice-box-background: #7d0d12;
+    --notice-box-color: var(--color-text-fixed-white);
+    --progress-bar-background: rgba(0, 0, 0, 0.5);
+    --tooltip-background-lightness: 25;
+  }
+
+  // 背景图由界面在运行期用 resolveAsset() 铺（asset 的 URL 只有运行期才知道，CSS 拿不到），
+  // 这里先把主题自带的装饰背景关掉，免得和徽记叠在一起。
+  .Layout__content {
+    background-image: none;
+  }
+}

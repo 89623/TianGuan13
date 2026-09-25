@@ -1,6 +1,7 @@
 import { BlockQuote, Button, Section, Stack } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
+import { resolveAsset } from '../assets'; // TIANGUAN EDIT ADDITION - TRAITOR_BACKGROUND
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Rules } from './AntagInfoRules'; // NOVA EDIT ADDITION
@@ -197,9 +198,25 @@ const CodewordsSection = (props) => {
 export const AntagInfoTraitor = (props) => {
   const { data } = useBackend<Info>();
   const { theme, given_uplink } = data;
+  // TIANGUAN EDIT ADDITION - TRAITOR_BACKGROUND
+  // 只有团结联盟（雇主的 ui_theme: "uar"，也是 uar 阵营的兜底主题）铺这张徽记背景；
+  // 其他雇主沿用各自主题自带的底纹，不受影响。
+  const isUnionTheme = theme === 'uar';
   return (
     <Window width={620} height={650} theme={theme}>
-      <Window.Content>
+      <Window.Content
+        style={
+          isUnionTheme
+            ? {
+                // 第一个 linear-gradient 图层是压暗用的，改 0.45 即可调明暗（0 = 不压暗，1 = 全黑）
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)), url("${resolveAsset('tianguan_traitor_background.png')}")`,
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+                backgroundSize: 'cover',
+              }
+            : undefined
+        }
+      >
         <Stack vertical fill>
           <Stack.Item grow>
             <Stack fill>
