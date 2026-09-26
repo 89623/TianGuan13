@@ -60,6 +60,10 @@
 @include meta.load-css('./themes/clockwork.scss');
 // NOVA EDIT ADDITION END
 
+// TIANGUAN EDIT ADDITION START - TRAITOR_BACKGROUND（团结联盟 uar 主题）
+@include meta.load-css('./themes/uar.scss');
+// TIANGUAN EDIT ADDITION END
+
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');
 @include meta.load-css('./layouts/NtosHeader.scss');

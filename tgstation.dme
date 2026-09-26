@@ -10118,6 +10118,8 @@
 #include "modular_tianguan\modules\tg_lobby\code\lobby_card.dm"
 #include "modular_tianguan\modules\tg_lobby\code\new_player.dm"
 #include "modular_tianguan\modules\tg_lobby\code\title_screen_html.dm"
+#include "modular_tianguan\modules\custom_employers\code\custom_employers.dm"
+#include "modular_tianguan\modules\traitor_background\code\traitor_background.dm"
 
 
 

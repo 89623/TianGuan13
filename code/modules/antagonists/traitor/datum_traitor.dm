@@ -2,6 +2,10 @@
 #define FLAVOR_FACTION_SYNDICATE "syndicate"
 ///all the employers that are Nanotrasen
 #define FLAVOR_FACTION_NANOTRASEN "nanotrasen"
+// TIANGUAN EDIT ADDITION START - CUSTOM_EMPLOYERS
+///all the employers that belong to the third faction: Union of Allied Republics (团结联盟)
+#define FLAVOR_FACTION_UAR "uar"
+// TIANGUAN EDIT ADDITION END
 
 /datum/antagonist/traitor
 	name = "\improper Traitor"
@@ -100,10 +104,13 @@
 
 /datum/antagonist/traitor/proc/pick_employer()
 	if(!employer)
-		var/faction = prob(75) ? FLAVOR_FACTION_SYNDICATE : FLAVOR_FACTION_NANOTRASEN
+		// TIANGUAN EDIT CHANGE - CUSTOM_EMPLOYERS - ORIGINAL: var/faction = prob(75) ? FLAVOR_FACTION_SYNDICATE : FLAVOR_FACTION_NANOTRASEN
+		// 阵营掷骰挪给天关模块，好加入第三个阵营（团结联盟 / uar）；三方权重也配在那边：
+		// modular_tianguan/modules/custom_employers/code/custom_employers.dm
+		var/faction = tianguan_roll_employer_faction()
 		var/list/possible_employers = list()
 
-		possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
+		possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers, GLOB.tianguan_uar_employers) // TIANGUAN EDIT CHANGE - CUSTOM_EMPLOYERS - ORIGINAL: possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
 
 		if(istype(ending_objective, /datum/objective/hijack))
 			possible_employers -= GLOB.normal_employers
@@ -113,8 +120,15 @@
 		switch(faction)
 			if(FLAVOR_FACTION_SYNDICATE)
 				possible_employers -= GLOB.nanotrasen_employers
+				possible_employers -= GLOB.tianguan_uar_employers // TIANGUAN EDIT ADDITION - CUSTOM_EMPLOYERS
 			if(FLAVOR_FACTION_NANOTRASEN)
 				possible_employers -= GLOB.syndicate_employers
+				possible_employers -= GLOB.tianguan_uar_employers // TIANGUAN EDIT ADDITION - CUSTOM_EMPLOYERS
+			// TIANGUAN EDIT ADDITION START - CUSTOM_EMPLOYERS
+			if(FLAVOR_FACTION_UAR)
+				possible_employers -= GLOB.syndicate_employers
+				possible_employers -= GLOB.nanotrasen_employers
+			// TIANGUAN EDIT ADDITION END
 		employer = pick(possible_employers)
 	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
 
@@ -342,6 +356,7 @@
 
 #undef FLAVOR_FACTION_SYNDICATE
 #undef FLAVOR_FACTION_NANOTRASEN
+#undef FLAVOR_FACTION_UAR // TIANGUAN EDIT ADDITION - CUSTOM_EMPLOYERS
 
 /datum/antagonist/traitor/on_respawn(mob/new_character)
 	SSjob.equip_rank(new_character, new_character.mind.assigned_role, new_character.client)
