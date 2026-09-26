@@ -10121,6 +10121,9 @@
 #include "modular_tianguan\modules\custom_employers\code\custom_employers.dm"
 #include "modular_tianguan\modules\traitor_background\code\traitor_background.dm"
 #include "modular_tianguan\modules\fax_networks\code\fax_networks.dm"
+#include "modular_tianguan\modules\guide_browser\code\guide_config.dm"
+#include "modular_tianguan\modules\guide_browser\code\guide_browser.dm"
+#include "modular_tianguan\modules\guide_browser\code\guide_admin.dm"
 
 
 
