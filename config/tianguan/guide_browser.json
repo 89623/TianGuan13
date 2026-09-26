@@ -1,0 +1,433 @@
+[
+  {
+    "label": "新手入门",
+    "children": [
+      {
+        "label": "维基首页",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E9%A6%96%E9%A1%B5"
+      },
+      {
+        "label": "初学者指南",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%88%9D%E5%AD%A6%E8%80%85%E6%8C%87%E5%8D%97"
+      },
+      {
+        "label": "安保的新手操典",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%AE%89%E4%BF%9D%E7%9A%84%E6%96%B0%E6%89%8B%E6%93%8D%E5%85%B8"
+      },
+      {
+        "label": "新玩家入口",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E6%96%B0%E7%8E%A9%E5%AE%B6%E5%85%A5%E5%8F%A3"
+      },
+      {
+        "label": "新人九九八十一难",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E6%96%B0%E4%BA%BA%E4%B9%9D%E4%B9%9D%E5%85%AB%E5%8D%81%E4%B8%80%E9%9A%BE%E4%B8%8E%E5%A6%82%E4%BD%95%E5%8F%96%E5%BE%97%E5%A4%AA%E7%A9%BA%E7%9C%9F%E7%BB%8F%E6%8C%87%E5%8D%97"
+      },
+      {
+        "label": "术语表",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E6%9C%AF%E8%AF%AD%E8%A1%A8"
+      },
+      {
+        "label": "指南总览",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E6%8C%87%E5%8D%97"
+      },
+      {
+        "label": "语言",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E8%AF%AD%E8%A8%80"
+      }
+    ]
+  },
+  {
+    "label": "规则与政策",
+    "children": [
+      {
+        "label": "服务器规则",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%A7%84%E5%88%99"
+      },
+      {
+        "label": "避免封禁指南",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E9%81%BF%E5%85%8D%E5%B0%81%E7%A6%81%E6%8C%87%E5%8D%97"
+      },
+      {
+        "label": "幽灵角色规则",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%B9%BD%E7%81%B5%E8%A7%92%E8%89%B2%E8%A7%84%E5%88%99"
+      },
+      {
+        "label": "太空法",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%A4%AA%E7%A9%BA%E6%B3%95"
+      },
+      {
+        "label": "DNR（勿复活）",
+        "url": "https://tianguanstation.miraheze.org/wiki/DNR"
+      },
+      {
+        "label": "执法程序",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E6%89%A7%E6%B3%95%E7%A8%8B%E5%BA%8F"
+      },
+      {
+        "label": "大团结联盟共和国宪法",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%A4%A7%E5%9B%A2%E7%BB%93%E8%81%94%E7%9B%9F%E5%85%B1%E5%92%8C%E5%9B%BD%E5%AE%AA%E6%B3%95"
+      },
+      {
+        "label": "太阳系联邦防御条约",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%A4%AA%E9%98%B3%E7%B3%BB%E8%81%94%E9%82%A6%E9%98%B2%E5%BE%A1%E6%9D%A1%E7%BA%A6"
+      }
+    ]
+  },
+  {
+    "label": "角色与扮演",
+    "children": [
+      {
+        "label": "角色",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E8%A7%92%E8%89%B2"
+      },
+      {
+        "label": "角色扮演教程",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E8%A7%92%E8%89%B2%E6%89%AE%E6%BC%94%E6%95%99%E7%A8%8B"
+      },
+      {
+        "label": "人种学与深层扮演指南",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E4%BA%BA%E7%A7%8D%E5%AD%A6%E4%B8%8E%E6%B7%B1%E5%B1%82%E6%89%AE%E6%BC%94%E6%8C%87%E5%8D%97"
+      },
+      {
+        "label": "背景故事",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E8%83%8C%E6%99%AF%E6%95%85%E4%BA%8B"
+      },
+      {
+        "label": "背景故事入门指南",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E8%83%8C%E6%99%AF%E6%95%85%E4%BA%8B%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97"
+      },
+      {
+        "label": "人类",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E4%BA%BA%E7%B1%BB"
+      },
+      {
+        "label": "硅基",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E7%A1%85%E5%9F%BA"
+      },
+      {
+        "label": "警戒等级，你应该做什么",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E8%AD%A6%E6%88%92%E7%AD%89%E7%BA%A7%EF%BC%8C%E4%BD%A0%E5%BA%94%E8%AF%A5%E5%81%9A%E4%BB%80%E4%B9%88"
+      }
+    ]
+  },
+  {
+    "label": "部门标准作业程序",
+    "children": [
+      {
+        "label": "标准操作程序总表",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E6%A0%87%E5%87%86%E6%93%8D%E4%BD%9C%E7%A8%8B%E5%BA%8F"
+      },
+      {
+        "label": "通用标准操作程序",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E9%80%9A%E7%94%A8%E6%A0%87%E5%87%86%E6%93%8D%E4%BD%9C%E7%A8%8B%E5%BA%8F"
+      },
+      {
+        "label": "指挥标准操作程序",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E6%8C%87%E6%8C%A5%E6%A0%87%E5%87%86%E6%93%8D%E4%BD%9C%E7%A8%8B%E5%BA%8F"
+      },
+      {
+        "label": "安全标准操作程序",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%AE%89%E5%85%A8%E6%A0%87%E5%87%86%E6%93%8D%E4%BD%9C%E7%A8%8B%E5%BA%8F"
+      },
+      {
+        "label": "医疗标准操作程序",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%8C%BB%E7%96%97%E6%A0%87%E5%87%86%E6%93%8D%E4%BD%9C%E7%A8%8B%E5%BA%8F"
+      },
+      {
+        "label": "工程标准操作程序",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%B7%A5%E7%A8%8B%E6%A0%87%E5%87%86%E6%93%8D%E4%BD%9C%E7%A8%8B%E5%BA%8F"
+      },
+      {
+        "label": "科研标准操作程序",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E7%A7%91%E7%A0%94%E6%A0%87%E5%87%86%E6%93%8D%E4%BD%9C%E7%A8%8B%E5%BA%8F"
+      },
+      {
+        "label": "供应标准操作程序",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E4%BE%9B%E5%BA%94%E6%A0%87%E5%87%86%E6%93%8D%E4%BD%9C%E7%A8%8B%E5%BA%8F"
+      },
+      {
+        "label": "服务标准操作程序",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E6%9C%8D%E5%8A%A1%E6%A0%87%E5%87%86%E6%93%8D%E4%BD%9C%E7%A8%8B%E5%BA%8F"
+      },
+      {
+        "label": "中央指挥部标准操作程序",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E4%B8%AD%E5%A4%AE%E6%8C%87%E6%8C%A5%E9%83%A8%E6%A0%87%E5%87%86%E6%93%8D%E4%BD%9C%E7%A8%8B%E5%BA%8F"
+      }
+    ]
+  },
+  {
+    "label": "职业手册",
+    "children": [
+      {
+        "label": "职业一览",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E8%81%8C%E4%B8%9A"
+      },
+      {
+        "label": "舰长",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E8%88%B0%E9%95%BF"
+      },
+      {
+        "label": "人事部长",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E4%BA%BA%E4%BA%8B%E9%83%A8%E9%95%BF"
+      },
+      {
+        "label": "军需官",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%86%9B%E9%9C%80%E5%AE%98"
+      },
+      {
+        "label": "研究主管",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E7%A0%94%E7%A9%B6%E4%B8%BB%E7%AE%A1"
+      },
+      {
+        "label": "总工程师",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E6%80%BB%E5%B7%A5%E7%A8%8B%E5%B8%88"
+      },
+      {
+        "label": "首席医疗官",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E9%A6%96%E5%B8%AD%E5%8C%BB%E7%96%97%E5%AE%98"
+      },
+      {
+        "label": "安保主管",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%AE%89%E4%BF%9D%E4%B8%BB%E7%AE%A1"
+      },
+      {
+        "label": "医生",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%8C%BB%E7%94%9F"
+      },
+      {
+        "label": "急救员",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E6%80%A5%E6%95%91%E5%91%98"
+      },
+      {
+        "label": "验尸官",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E9%AA%8C%E5%B0%B8%E5%AE%98"
+      },
+      {
+        "label": "病毒学家",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E7%97%85%E6%AF%92%E5%AD%A6%E5%AE%B6"
+      },
+      {
+        "label": "心理学家",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%BF%83%E7%90%86%E5%AD%A6%E5%AE%B6"
+      },
+      {
+        "label": "工程师",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%B7%A5%E7%A8%8B%E5%B8%88"
+      },
+      {
+        "label": "大气技术员",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%A4%A7%E6%B0%94%E6%8A%80%E6%9C%AF%E5%91%98"
+      },
+      {
+        "label": "厨师",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%8E%A8%E5%B8%88"
+      },
+      {
+        "label": "舰桥助理",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E8%88%B0%E6%A1%A5%E5%8A%A9%E7%90%86"
+      },
+      {
+        "label": "纳米顾问",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E7%BA%B3%E7%B1%B3%E9%A1%BE%E9%97%AE"
+      },
+      {
+        "label": "团结联盟政府审查官",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%9B%A2%E7%BB%93%E8%81%94%E7%9B%9F%E6%94%BF%E5%BA%9C%E5%AE%A1%E6%9F%A5%E5%AE%98"
+      },
+      {
+        "label": "特殊工作",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E7%89%B9%E6%AE%8A%E5%B7%A5%E4%BD%9C"
+      }
+    ]
+  },
+  {
+    "label": "玩法指南",
+    "children": [
+      {
+        "label": "传真指南",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E4%BC%A0%E7%9C%9F%E6%8C%87%E5%8D%97"
+      },
+      {
+        "label": "元盾指南",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%85%83%E7%9B%BE%E6%8C%87%E5%8D%97"
+      },
+      {
+        "label": "水培指南",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E6%B0%B4%E5%9F%B9%E6%8C%87%E5%8D%97"
+      },
+      {
+        "label": "硅基指南",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E7%A1%85%E5%9F%BA%E6%8C%87%E5%8D%97"
+      },
+      {
+        "label": "食物烹饪",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E9%A3%9F%E7%89%A9%E7%83%B9%E9%A5%AA"
+      },
+      {
+        "label": "Guide to food",
+        "url": "https://tianguanstation.miraheze.org/wiki/Guide_to_food"
+      },
+      {
+        "label": "食物烹饪（临时页）",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E9%A3%9F%E7%89%A9%E7%83%B9%E9%A5%AA%E4%B8%B4%E6%97%B6"
+      },
+      {
+        "label": "星际旅行",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E6%98%9F%E9%99%85%E6%97%85%E8%A1%8C"
+      },
+      {
+        "label": "地图",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%9C%B0%E5%9B%BE"
+      },
+      {
+        "label": "行星分类",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E8%A1%8C%E6%98%9F%E5%88%86%E7%B1%BB"
+      },
+      {
+        "label": "太阳系",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%A4%AA%E9%98%B3%E7%B3%BB"
+      },
+      {
+        "label": "特殊模式",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E7%89%B9%E6%AE%8A%E6%A8%A1%E5%BC%8F"
+      },
+      {
+        "label": "综合",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E7%BB%BC%E5%90%88"
+      },
+      {
+        "label": "械日科技",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E6%A2%B0%E6%97%A5%E7%A7%91%E6%8A%80"
+      }
+    ]
+  },
+  {
+    "label": "背景与势力",
+    "children": [
+      {
+        "label": "反派综合",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%8F%8D%E6%B4%BE%E7%BB%BC%E5%90%88"
+      },
+      {
+        "label": "叛徒",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%8F%9B%E5%BE%92"
+      },
+      {
+        "label": "辛迪加",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E8%BE%9B%E8%BF%AA%E5%8A%A0"
+      },
+      {
+        "label": "辛迪加独立旅",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E8%BE%9B%E8%BF%AA%E5%8A%A0%E7%8B%AC%E7%AB%8B%E6%97%85"
+      },
+      {
+        "label": "纳米传讯",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E7%BA%B3%E7%B1%B3%E4%BC%A0%E8%AE%AF"
+      },
+      {
+        "label": "团结联盟共和国",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%9B%A2%E7%BB%93%E8%81%94%E7%9B%9F%E5%85%B1%E5%92%8C%E5%9B%BD"
+      },
+      {
+        "label": "世界社会主义共和国",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E4%B8%96%E7%95%8C%E7%A4%BE%E4%BC%9A%E4%B8%BB%E4%B9%89%E5%85%B1%E5%92%8C%E5%9B%BD"
+      },
+      {
+        "label": "中华联合工业",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E4%B8%AD%E5%8D%8E%E8%81%94%E5%90%88%E5%B7%A5%E4%B8%9A"
+      },
+      {
+        "label": "中央指挥部",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E4%B8%AD%E5%A4%AE%E6%8C%87%E6%8C%A5%E9%83%A8"
+      },
+      {
+        "label": "静日联盟国",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E9%9D%99%E6%97%A5%E8%81%94%E7%9B%9F%E5%9B%BD"
+      },
+      {
+        "label": "阿库拉",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E9%98%BF%E5%BA%93%E6%8B%89"
+      },
+      {
+        "label": "列热系",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%88%97%E7%83%AD%E7%B3%BB"
+      },
+      {
+        "label": "列热革命",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%88%97%E7%83%AD%E9%9D%A9%E5%91%BD"
+      },
+      {
+        "label": "劫掠事件",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%8A%AB%E6%8E%A0%E4%BA%8B%E4%BB%B6"
+      },
+      {
+        "label": "血日",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E8%A1%80%E6%97%A5"
+      },
+      {
+        "label": "大轨道战争",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%A4%A7%E8%BD%A8%E9%81%93%E6%88%98%E4%BA%89"
+      },
+      {
+        "label": "第一次太空战争",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E7%AC%AC%E4%B8%80%E6%AC%A1%E5%A4%AA%E7%A9%BA%E6%88%98%E4%BA%89"
+      },
+      {
+        "label": "历史",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E5%8E%86%E5%8F%B2"
+      },
+      {
+        "label": "阵营统计",
+        "url": "https://tianguanstation.miraheze.org/wiki/FactionStats"
+      }
+    ]
+  },
+  {
+    "label": "管理员资料",
+    "children": [
+      {
+        "label": "管理员规则",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E7%AE%A1%E7%90%86%E5%91%98%E8%A7%84%E5%88%99"
+      },
+      {
+        "label": "管理员清单",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E7%AE%A1%E7%90%86%E5%91%98%E6%B8%85%E5%8D%95"
+      },
+      {
+        "label": "管理员体系指南",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E7%AE%A1%E7%90%86%E5%91%98%E4%BD%93%E7%B3%BB%E6%8C%87%E5%8D%97"
+      },
+      {
+        "label": "管理员工具指南",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E7%AE%A1%E7%90%86%E5%91%98%E5%B7%A5%E5%85%B7%E6%8C%87%E5%8D%97"
+      }
+    ]
+  },
+  {
+    "_说明": "示例：分组里还能再套一层分组；不写 open 就是出厂默认的「游戏内浏览器弹窗」。",
+    "enabled": false,
+    "label": "示例分组（默认游戏内浏览器）",
+    "children": [
+      {
+        "label": "示例子条目",
+        "url": "https://tianguanstation.miraheze.org/wiki/%E9%A6%96%E9%A1%B5"
+      },
+      {
+        "label": "示例：再套一层",
+        "children": [
+          {
+            "label": "示例孙条目",
+            "url": "https://tianguanstation.miraheze.org/wiki/%E9%A6%96%E9%A1%B5"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "_说明": "示例：open = \"browser\" ⇒ 本条交给系统默认浏览器（可选值：window 游戏内弹窗【出厂默认】/ panel 游戏内面板 / frame 本窗口内嵌 / browser 系统浏览器；frame 要求站点允许被内嵌）。",
+    "enabled": false,
+    "label": "示例：系统浏览器跳转",
+    "open": "browser",
+    "url": "https://tianguanstation.miraheze.org/wiki/%E9%A6%96%E9%A1%B5"
+  }
+]
