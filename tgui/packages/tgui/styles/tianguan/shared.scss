@@ -1,0 +1,26 @@
+// THIS IS A TIANGUAN UI FILE
+//
+// 天关共享 UI 样式 —— 跨界面/跨模块共用、且必须打在**全局**的规则放这里。
+// 由 main.scss 里那条 `TIANGUAN EDIT ADDITION - TIANGUAN_SHARED` include 加载 —— 那是上游 main.scss 里唯一的足迹（1 行）。
+// 单个模块自己的样式仍放各自的文件（如 themes/uar.scss 是 uar 主题），不要往这里堆。
+
+// ── 按钮色档：tgui-core 没有的那几档在这里补 ───────────────────────────────────
+// 背景：TGUI 的 <Button color="x"> 只拼一个 class（`Button--color--x`），底色由 `.Button--color--x { --color: … }`
+// 提供；档位来自 tgui-core 那张固定的 `$color-map`（node_modules/tgui-core/styles/colors.scss）。
+// node_modules 不能改，缺档只能在仓库侧手写同名类补。
+//
+// 三条硬约束（都踩过）：
+//   1. **档名必须带前缀**：用 `uar_darkred` 而不是 CSS 标准色名 `darkred`。上游哪天把 `darkred` 加进
+//      color-map，本文件同权重、靠后加载会**静默盖掉上游那档**；带前缀的档名与上游零重名。
+//   2. **只能写在全局（这里），不能塞进 `.theme-xxx`**：传真界面一般跑在默认主题下，
+//      塞进主题就只有那个主题看得见这个档。
+//   3. 屏幕上的底色会被 tgui 的 button-color() mixin 按 `--adjust-color`（tgui-core/styles/base.scss = 5）
+//      再压暗一档：`#8b0000` 的 l≈27.3% → 22.3% → 实物约 `#720000`。全站按钮同款算法，不是写错。
+//
+// 影响面（2026-09-26 全仓核查）：只命中带该 class 的元素。全仓只有 modular_tianguan/modules/fax_networks
+// 会发出 `uar_darkred`（`grep -rn darkred tgui/packages` 另两处：Pandemic/Beaker.tsx 的是 **ProgressBar**，
+// 走它的 raw CSS 分支、发的是 `ProgressBar--color--*`；PersonalityPage.tsx 的是内联 borderColor）
+// → 对既有界面零影响。
+.Button--color--uar_darkred {
+  --color: #8b0000; // 团结联盟深红；更深 → #5c0e12（徽记底色）；更亮 → #a00000
+}

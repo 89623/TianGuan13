@@ -64,6 +64,10 @@
 @include meta.load-css('./themes/uar.scss');
 // TIANGUAN EDIT ADDITION END
 
+// TIANGUAN EDIT ADDITION START - TIANGUAN_SHARED（天关共享 UI 样式：内容全在 tianguan/shared.scss，本行是上游唯一足迹）
+@include meta.load-css('./tianguan/shared.scss');
+// TIANGUAN EDIT ADDITION END
+
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');
 @include meta.load-css('./layouts/NtosHeader.scss');

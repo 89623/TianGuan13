@@ -10120,6 +10120,7 @@
 #include "modular_tianguan\modules\tg_lobby\code\title_screen_html.dm"
 #include "modular_tianguan\modules\custom_employers\code\custom_employers.dm"
 #include "modular_tianguan\modules\traitor_background\code\traitor_background.dm"
+#include "modular_tianguan\modules\fax_networks\code\fax_networks.dm"
 
 
 
