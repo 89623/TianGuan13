@@ -10124,6 +10124,7 @@
 #include "modular_tianguan\modules\guide_browser\code\guide_config.dm"
 #include "modular_tianguan\modules\guide_browser\code\guide_browser.dm"
 #include "modular_tianguan\modules\guide_browser\code\guide_admin.dm"
+#include "modular_tianguan\modules\uar_marine_modsuit\code\uar_marine_modsuit.dm"
 
 
 

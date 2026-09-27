@@ -235,7 +235,7 @@
 		if(delayed_activation())
 			playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, frequency = 6000)
 			if(!malfunctioning)
-				wearer.playsound_local(get_turf(src), 'sound/vehicles/mecha/nominal.ogg', 50)
+				wearer.playsound_local(get_turf(src), activation_sound || 'sound/vehicles/mecha/nominal.ogg', 50) // TIANGUAN EDIT CHANGE - UAR_MARINE_MODSUIT - ORIGINAL: wearer.playsound_local(get_turf(src), 'sound/vehicles/mecha/nominal.ogg', 50)
 		else
 			activating = FALSE
 			for(var/obj/item/sealed_part as anything in sealed_parts)
