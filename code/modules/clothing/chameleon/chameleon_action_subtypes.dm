@@ -182,6 +182,8 @@
 	add_chameleon_items(/obj/item/card/id/advanced/centcom)
 	// explicitly include the captain's spare id, even though it could be manually constructed from the gold id, for ease
 	add_chameleon_items(/obj/item/card/id/advanced/gold/captains_spare, only_root = TRUE)
+	// TIANGUAN EDIT ADD - UAR_MARINE_MODSUIT - 让特工卡的外观菜单里能选团结联盟武装部卡（只复制外观：图标/徽记/部门色/secHUD 状态，不复制 access）
+	add_chameleon_items(/obj/item/card/id/advanced/uar_marine, only_root = TRUE)
 
 /datum/action/item_action/chameleon/change/id/update_item(obj/item/picked_item)
 	. = ..()
@@ -274,6 +276,7 @@
 		/datum/id_trim/pirate,
 		/datum/id_trim/syndicom,
 		/datum/id_trim/technician_id,
+		/datum/id_trim/uar_marine, // TIANGUAN EDIT ADD - UAR_MARINE_MODSUIT - 特工卡的“身份”菜单里也能选团结联盟武装部（同样只换外观）
 	))
 
 	for(var/trim_path in chameleon_whitelist)
