@@ -66,8 +66,20 @@
 				UNSEALED_LAYER = NECK_LAYER,
 				UNSEALED_CLOTHING = SNUG_FIT,
 				SEALED_CLOTHING = THICKMATERIAL|STOPSPRESSUREDAMAGE|BLOCK_GAS_SMOKE_EFFECT|HEADINTERNALS,
-				UNSEALED_INVISIBILITY = HIDEFACIALHAIR,
-				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT,
+				// 未密封态也要藏掉头发：本主题的未密封头盔素材本身也是全封闭头盔
+				// （不像多数模块服未密封时是敞开露脸的），头发会画在封闭头盔外面/之上，很怪。
+				// 上游同类「未密封也是封闭头盔」的主题同样这么写：
+				//   /datum/mod_theme/mining 第 568 行、/datum/mod_theme/loader 第 675 行、
+				//   死亡小队 apocryphal 都是 HIDEEARS|HIDEHAIR；civilian 把整个脸都藏了。
+				// 摘掉头盔部件后自动恢复显示头发（这几个 flags 来自所穿部件，与主题无关）。
+				// ⚠ 别把 HIDEHAIR 同时写进下面两张表：seal_part() 解封时是
+				//   flags_inv &= ~visor_flags_inv   （mod_activation.dm:287）
+				// 也就是"从 flags_inv 里减掉密封表"——凡是两张表都有的位，密封→未密封 之后会被清掉。
+				// 早期版本就是这么写的（两表都有 HIDEHAIR），结果解封那一刻头发又冒出来。
+				// 正解与上游 mining / loader 的封闭头盔范本一致：要"两态都藏"的位只放未密封表，
+				// 密封表只放"密封时额外要藏的"。
+				UNSEALED_INVISIBILITY = HIDEHAIR|HIDEFACIALHAIR,
+				SEALED_INVISIBILITY = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT,
 				SEALED_COVER = HEADCOVERSMOUTH|HEADCOVERSEYES|PEPPERPROOF,
 				UNSEALED_MESSAGE = HELMET_UNSEAL_MESSAGE,
 				SEALED_MESSAGE = HELMET_SEAL_MESSAGE,

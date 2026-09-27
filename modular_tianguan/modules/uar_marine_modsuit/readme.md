@@ -1,4 +1,6 @@
-https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
+https://github.com/89623/TianGuan13/pull/30
+
+（本模块的贴图对齐 / 旗标修复见后续 PR）
 
 # 团结联盟海军陆战队第四代模块服 + 武装部 ID 卡 (UAR Marine MODsuit)
 
@@ -123,7 +125,18 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
 - **非人类种族**：本主题没有另外画蜥蜴人（digitigrade）/兽吻（snouted）变体，`MOD_DIGITIGRADE_ICON_OVERRIDE` / `MOD_SNOUT_ICON_OVERRIDE` 指向同一份人类穿戴图 —— 宁可腿型和人类一致，也好过部件整片不可见。以后要单独画，另建 `mod_clothing_mutant.dmi` 并把这两行指过去。
 - **物品态胸甲**、**头盔背向的密封态**、**物品态手套/靴子的密封态**都是复用同一张素材（需求方没给对应素材），游戏内这两态的差别本来也很小；有素材后按上表替换即可。
 - 素材落点规则见上表：**穿戴态素材必须按槽位对齐**，不要直接按原图坐标放；判据见上面「对齐判据」小节。
-- **手套素材每只比上游宽 1px**（5px vs 上游 4px），所以只能做到"成对中心对齐 x=15"，左右各外露 1px（占 x6..24，上游是 7..23）。要完全贴合手臂列得重画或裁窄素材。
+- **手套素材每只比上游宽 1px**（5px vs 上游 4px）：先把两只手套的**成对中心**对齐到人体中心 x=15，再由 `trim_outside` 把超出人体剪影的外侧像素剪掉 → 最终和上游一样占 7..23。
+- **头盔 ↔ 胸甲接缝**：四个朝向都做过一次「颈部接缝」修补（构建脚本里的 `seal_neck_seam`）——素材原本在**正面 y11 中间空 7px（x12-18）**，看起来像头盔没接到甲上（背面/侧面各还有零星 1px 缺口）。做法：取头盔上一行覆盖的横向范围（= 颈部宽度），范围内凡是下一行有像素的空位，就用下一行的颜色往上补一格 —— 等于把胸甲领口往上接 1 行，和上游领口从 y10 就填满的几何一致。**只在头盔足迹内部补，不会长出轮廓外**，每个状态最多动 12 像素（只在 y9-11）。改素材后重跑构建脚本会自动重补。
+- **头盔必须包住整个头**：构建脚本的 `cover_head` 会把头盔贴图往 `human_head_m` 剪影里膨胀最多 3 轮（颜色取相邻的头盔像素），只在头部剪影内补。原因是**侧面原本鼻子/头皮露在头盔轮廓外 1px**（d2 的 (20,7)）。注意 **未密封态**（`UNSEALED_LAYER = NECK_LAYER`）头盔画在头部**下面**，露脸是上游正常表现（syndicate 未密封同样是一整张脸盖在头盔之上）；只有**密封态**（头盔在上）才需要贴图完全盖住头。
+- **手套不得超出人体剪影**：构建脚本的 `trim_outside` 按 `bodyparts_greyscale` 的「躯干 + 双上臂 + 双手 + 双腿」剪影逐行裁掉外侧像素 —— 正/背面各剪掉 2px（x6、x24 各一个），剪完手套 bbox = **(7,18)-(23,21)，与上游 syndicate / magnate 手套完全一致**。
+- **侧面两个朝向（d2/d3）必须互为镜像**：上游所有模块服的同一部件都满足 `d3 == mirror(d2)`（实测 syndicate / magnate 镜差 0）。本模块的侧面素材是两个独立文件，摆位会差 1px，**判据 = 镜差 + 「部件中心相对人体同名部位中心」两个指标都收敛**。实测与处理：
+  - **头盔**：镜差 **27px → 0px**（把 d2 那顶整体右移 1px，改 `HELMET_OFF["d2"]` / `HELMET_ON["d2"]` 为 `(1, -10)`；`helmet-visor` 的 d2 同步右移 1 保持一致）。右移后 d2 头盔中心 15.5 正对头部中心 16.0，**顺带消掉了 d2 那侧鼻尖外露**（不再需要靠补像素）。
+  - **背包（control）**：镜差 20px，同样是 d2 差 1px（上游相对偏移 -5.5，我们是 -6.5）→ 未动，要修就把 control 的 d2 偏移 `+1`，镜差即归零、外凸 91→81。
+  - **手套（gauntlets）**：镜差 16px，但两侧相对**手中心**分别是 -2.5 / +3.5（上游是 0.0 / 0.0）—— 是素材本身画偏 2~3px，不是 1px 摆位问题；任何 ±1 修正只会把偏移换个边，故未动（要彻底修得重画或平移整只手套）。
+  - 胸甲（6px）、靴子（0px）已经足够对称，不动。
+- **头发：两态都要藏，而且只能写在未密封表里**：本主题未密封头盔素材本身就是全封闭头盔（不像多数模块服未密封时敞开露脸），所以两态都不该渲染头发 ⇒ `UNSEALED_INVISIBILITY = HIDEHAIR|HIDEFACIALHAIR`（上游 `mining`:568 / `loader`:675 / 死亡小队 `apocryphal` 这些"未密封也是封闭头盔"的主题都这么写）。
+  ⚠ **HIDEHAIR 绝不能同时写进密封表**：`seal_part()`（`mod_activation.dm:273-288`）密封是 `flags_inv |= visor_flags_inv`、解封是 `flags_inv &= ~visor_flags_inv` —— **两张表共有的位会在「密封→未密封」那一刻被减掉**。早期版本两表都写了 HIDEHAIR，症状就是**解封瞬间头发又冒出来**。引擎实测复现：旧密封表 4592 → 解封后 flags 只剩 **512**（HIDEFACIALHAIR，HIDEHAIR 丢了，头发出现）；现在密封表 4336 → 解封后 **768**（HIDEHAIR 还在 ✓）。规律：**两态都要藏的位只放未密封表**。
+  （顺带：`HIDEEARS` 现在只在密封表 ⇒ 未密封时耳朵类图层仍可见；要像 mining 那样两态都藏，把它挪进 `UNSEALED_INVISIBILITY` 即可。）
 - **「厚重」tag 核实结论（2026-09）**：游戏里**没有**叫「厚重」的独立 tag。模块服上看到的 **「笨重」是重量级 tag**：`items.dm:441` `parent_tags.Insert(1, weight_class_to_text(w_class))`，`/obj/item/mod/control` 的 `w_class = WEIGHT_CLASS_BULKY` → "bulky"，自动显示、不是可配置项。而 **「厚实的」/thick 是衣物 tag**：`clothing.dm:371` `if(clothing_flags & THICKMATERIAL)` → `.["thick"]`（中文名见 `strings/i18n/zh-Hans/_examine_tags.json` 的 `tag_thick`）。本主题**头盔（密封态）+ 胸甲/手套/靴（非密封态）已经带 `THICKMATERIAL`**，与死亡小队秘典逐行同写法 ⇒ **不用再加**。若希望**密封态的胸甲/手套/靴也显示「厚实的」**（上游密封态只剩「抗压的」），把对应的 `SEALED_CLOTHING` 改成 `THICKMATERIAL|STOPSPRESSUREDAMAGE` 即可。
 - 上游新增 `mod_theme` 变量/proc 时的落点：主题子类型只 override 数据，不重定义 proc；若上游给 `/obj/item/mod/control` 加了 `activation_sound` 同名 var，改成复用上游那个。
 
