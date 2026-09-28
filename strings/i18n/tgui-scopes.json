@@ -40037,5 +40037,8 @@
   ],
   "∞ minutes": [
     "tgui:ExoscannerConsole"
+  ],
+  "回合开始时不自动显示左上角的「指南浏览器」按钮。勾/取消不会当场改变按钮，下个回合开始（或重新进服）时生效；当前回合的显示/隐藏请用 OOC 栏的指令。": [
+    "tgui:tianguan_guide_button"
   ]
 }

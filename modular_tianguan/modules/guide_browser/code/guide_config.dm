@@ -60,8 +60,22 @@ GLOBAL_VAR_INIT(tianguan_guide_default_id, null)
 GLOBAL_VAR_INIT(tianguan_guide_ready, FALSE)
 /// 上次成功读取到的配置原文，用来判断「文件没变就不重载、不关界面」
 GLOBAL_VAR_INIT(tianguan_guide_raw_snapshot, null)
+/// 上次成功读取到的配置原文的 md5（对外可复核：同一份文件算出来必须一样）
+GLOBAL_VAR_INIT(tianguan_guide_raw_md5, null)
+/// 左上角按钮的图标（从模块 icons/ 目录里的 .dmi 读出来的运行时图标）；null = 用上游内置图标
+GLOBAL_VAR_INIT(tianguan_guide_button_icon, null)
+/// 上面那个图标用哪个 icon_state（取 .dmi 里的第一个）
+GLOBAL_VAR_INIT(tianguan_guide_button_icon_state, null)
+/// 本局被玩家用 OOC 指令手动关掉按钮的 ckey（每局开局清空、不落盘）
+GLOBAL_LIST_INIT(tianguan_guide_round_hidden, list())
+/// 本局被玩家用 OOC 指令「打开指南按钮」明确要过按钮的 ckey —— 盖过「永久关闭」偏好（同样每局开局清空）
+GLOBAL_LIST_INIT(tianguan_guide_round_forced, list())
 
-/// 读配置 → 校验 → 重建 GLOB 表。返回可用的链接条数。任何失败只记日志，不中断启动。
+/// 读配置 → 校验 → 重建 GLOB 表。
+/// 返回值：**读到并提交成功** ⇒ 可用链接条数（可能为 0，表示配置合法但一条可用链接都没有）；
+/// **读不到 / 解析不了** ⇒ -1。
+/// ⚠ 这个区分很重要：以前失败路径也 `return` 上次的条数，于是"文件被移走"时管理员重载会看到
+/// 「已重载：可用链接 91 条」这种谎报（实测就是这么被误导的）。失败必须是可识别的。
 /// force = TRUE 时忽略「文件没变就短路」（管理员手动重载用）。
 /proc/tianguan_load_guide_config(force = FALSE)
 	var/guide_file = tianguan_guide_config_path()
@@ -70,16 +84,18 @@ GLOBAL_VAR_INIT(tianguan_guide_raw_snapshot, null)
 		return length(GLOB.tianguan_guide_pages) // 文件没变：什么都不做，也不碰任何人的界面
 
 	if(!fexists(guide_file))
-		log_world("GUIDE_BROWSER: 找不到 [guide_file]，指南浏览器不发放按钮")
-		return length(GLOB.tianguan_guide_pages)
+		log_world("GUIDE_BROWSER: 找不到 [guide_file]（服务器工作目录里没有这个文件），本次沿用内存里的旧目录（[length(GLOB.tianguan_guide_pages)] 条）；请把配置文件放回该路径")
+		return -1
 	if(!raw_file)
-		log_world("GUIDE_BROWSER: 无法读取 [guide_file]（文件为空或读取失败）")
-		return length(GLOB.tianguan_guide_pages)
+		log_world("GUIDE_BROWSER: 无法读取 [guide_file]（文件为空或读取失败），本次沿用内存里的旧目录（[length(GLOB.tianguan_guide_pages)] 条）")
+		return -1
 
 	var/list/decoded = json_decode(raw_file)
+	// 指纹：出问题时能一眼确认「服务器读的是哪一份文件、哪个版本」（md5 可以用外部工具复核）
+	var/file_md5 = md5(raw_file)
 	if(!islist(decoded))
-		log_world("GUIDE_BROWSER: [guide_file] 解析失败（顶层必须是 JSON 数组），本次沿用旧目录；修好文件后可用管理员指令 重载指南浏览器配置")
-		return length(GLOB.tianguan_guide_pages)
+		log_world("GUIDE_BROWSER: [guide_file] 解析失败（顶层必须是 JSON 数组），本次沿用内存里的旧目录（[length(GLOB.tianguan_guide_pages)] 条）；修好文件后可用管理员指令 重载指南浏览器配置")
+		return -1
 
 	var/list/state = list(
 		"tree" = list(),
@@ -105,12 +121,14 @@ GLOBAL_VAR_INIT(tianguan_guide_raw_snapshot, null)
 			skipped++
 
 	GLOB.tianguan_guide_raw_snapshot = raw_file
+	GLOB.tianguan_guide_raw_md5 = file_md5
 	tianguan_commit_guide_config(state)
 
 	var/group_count = state["groups"]
 	var/page_count = length(state["pages"])
 	var/list/lines = list()
 	lines += "GUIDE_BROWSER: [guide_file] 读到 [length(decoded)] 条，启用 [length(decoded) - disabled] 条（分组 [group_count] 个 / 链接 [page_count] 条），已禁用 [disabled] 条，跳过 [skipped] 条"
+	lines += "GUIDE_BROWSER: 配置指纹 → md5=[file_md5] 长度=[length(raw_file)] 字节（改完文件重载后这行会变，可用外部工具对同一文件算 md5 复核）"
 	if(!page_count)
 		lines += "GUIDE_BROWSER: 没有任何可用链接 ⇒ 指南浏览器不发放按钮（检查每条的 label 与 url）"
 	else
@@ -336,43 +354,188 @@ GLOBAL_VAR_INIT(tianguan_guide_raw_snapshot, null)
 	DIRECT_OUTPUT(user, link(page["url"]))
 	return TRUE
 
+/// 按钮图标目录 —— 把 .dmi 丢进这个文件夹就生效（不用改代码、不用重编译）
+/proc/tianguan_guide_icon_dir()
+	return "modular_tianguan/modules/guide_browser/icons"
+
+/// 扫图标目录：取排序后**第一个**能读出来的 .dmi，用它的第一个 icon_state 当左上角按钮的图标。
+/// 目录不存在/为空/文件读不出来 ⇒ 保持 null，按钮继续用上游内置图标（不报错、不影响开服）。
+/proc/tianguan_guide_load_button_icon()
+	GLOB.tianguan_guide_button_icon = null
+	GLOB.tianguan_guide_button_icon_state = null
+	var/dir = "[tianguan_guide_icon_dir()]/"
+	if(!fexists(dir))
+		log_world("GUIDE_BROWSER: 没有图标目录 [dir]，左上角按钮用内置图标")
+		return
+	var/list/found = sort_list(flist(dir))
+	if(!length(found))
+		log_world("GUIDE_BROWSER: 图标目录 [dir] 是空的，左上角按钮用内置图标")
+		return
+	for(var/entry in found)
+		if(!findtext(entry, ".dmi"))
+			continue
+		var/icon_path = "[dir][entry]"
+		var/icon/loaded = icon(file(icon_path))
+		if(!loaded)
+			log_world("GUIDE_BROWSER: [icon_path] 不是能读的 dmi，跳过")
+			continue
+		var/list/states = icon_states(loaded)
+		if(!length(states))
+			log_world("GUIDE_BROWSER: [icon_path] 里没有任何 icon_state，跳过")
+			continue
+		GLOB.tianguan_guide_button_icon = loaded
+		GLOB.tianguan_guide_button_icon_state = states[1]
+		log_world("GUIDE_BROWSER: 左上角按钮图标 → [icon_path]（state [states[1]]，共 [length(states)] 个）")
+		return
+	log_world("GUIDE_BROWSER: 图标目录 [dir] 里没有可用的 .dmi，左上角按钮用内置图标")
+
+/// 这个玩家现在该不该自动拿到按钮？**只看本回合状态**，不读设置 ——
+/// 设置（「回合开始时自动关闭指南按钮」）只在回合开始时被**播种**成 round_hidden（见 seed_round_autoclose），
+/// 之后本回合内它再也管不着按钮：局内只有 OOC 指令能改（这就是"设置只管开局开不开"的分工）。
+/// 优先级：本局强制（OOC 打开过）> 本局隐藏（OOC 关过 / 回合开始被设置播种）。
+/proc/tianguan_guide_button_suppressed(client/player)
+	if(!player)
+		return FALSE
+	if(GLOB.tianguan_guide_round_forced[player.ckey])
+		return FALSE
+	return GLOB.tianguan_guide_round_hidden[player.ckey] ? TRUE : FALSE
+
+/// 玩家是不是勾了设置里那条「回合开始时自动关闭指南按钮」（定义见 guide_prefs.dm）
+/proc/tianguan_guide_autoclose_on(client/player)
+	if(!player?.prefs)
+		return FALSE
+	return !!player.prefs.read_preference(/datum/preference/toggle/tianguan_guide_button)
+
+/// 按钮是不是真的挂在这个 mob 的 HUD 上（viewers 里要有该 HUD 对应的按钮对象）
+/proc/tianguan_guide_has_button(datum/action/guide_browser/action, mob/viewer)
+	if(!action || !viewer?.hud_used)
+		return FALSE
+	return action.viewers[viewer.hud_used] ? TRUE : FALSE
+
+/// OOC 指令用：本局隐藏 / 显示左上角按钮。
+///   hidden = TRUE    ⇒ 本局藏起来（同时撤掉本局的「强制显示」）
+///   force_show = TRUE ⇒ 本局强制要按钮，盖过「永久关闭」偏好（**不修改**玩家的设置）
+/// 返回值：显示请求是否**真的**挂上了按钮（隐藏请求恒 TRUE）。挂不上就如实返回 FALSE，别嘴硬。
+/proc/tianguan_guide_set_hidden(mob/user, hidden, force_show = FALSE)
+	if(!user?.client)
+		return FALSE
+	var/ckey = user.client.ckey
+	if(hidden)
+		GLOB.tianguan_guide_round_hidden[ckey] = TRUE
+		GLOB.tianguan_guide_round_forced -= ckey
+	else
+		GLOB.tianguan_guide_round_hidden -= ckey
+		if(force_show)
+			GLOB.tianguan_guide_round_forced[ckey] = TRUE
+	// 收/发按钮都走 ensure：它只动按钮本体，玩家正开着的指南窗口不会跟着关
+	var/datum/action/guide_browser/action = SStianguan_guide_browser.ensure_guide_action(user.client.persistent_client)
+	return hidden ? TRUE : !isnull(action)
+
 SUBSYSTEM_DEF(tianguan_guide_browser)
 	name = "Tianguan Guide Browser"
 	ss_flags = SS_NO_FIRE
 
 /datum/controller/subsystem/tianguan_guide_browser/Initialize()
+	tianguan_guide_load_button_icon()
 	tianguan_load_guide_config()
 	RegisterSignal(SSticker, COMSIG_TICKER_ENTER_PREGAME, PROC_REF(on_pregame))
 	RegisterSignal(SSdcs, COMSIG_GLOB_CLIENT_CONNECT, PROC_REF(on_client_connect))
 	return SS_INIT_SUCCESS
 
-/// 每局开局重读一次：管理员改完配置，开下一局自动生效。
+/// 每局开局：清掉本局标记 → **用设置播种本回合状态**（设置只在这一刻生效一次）→ 重读配置 → 按状态发放。
 /// （文件没改时 tianguan_load_guide_config 会短路，不会关掉别人正开着的窗口。）
 /datum/controller/subsystem/tianguan_guide_browser/proc/on_pregame(datum/source)
 	SIGNAL_HANDLER
+	GLOB.tianguan_guide_round_hidden = list()
+	GLOB.tianguan_guide_round_forced = list()
+	seed_round_autoclose()
 	tianguan_load_guide_config()
+	regrant_actions()
+
+/// 回合开始时把设置里的「回合开始时自动关闭指南按钮」**一次性**播种成本回合状态。
+/// 播种完就与本回合脱钩：本回合内设置再怎么勾/取消都不影响按钮（玩家要的正是这个分工），
+/// 管理员重载也只按本回合状态对齐、不会突然把谁的按钮收走。
+/// 进服/重连的人由 seed_client_autoclose() 单独播种（等于"本次会话开始时生效"）。
+/datum/controller/subsystem/tianguan_guide_browser/proc/seed_round_autoclose()
+	var/list/seeded = list()
+	for(var/datum/persistent_client/persistent as anything in GLOB.persistent_clients)
+		if(persistent.client && tianguan_guide_autoclose_on(persistent.client))
+			GLOB.tianguan_guide_round_hidden[persistent.client.ckey] = TRUE
+			seeded += persistent.client.ckey
+	if(length(seeded))
+		log_world("GUIDE_BROWSER: 回合开始 → 按设置播种 [length(seeded)] 人本回合不发按钮（[jointext(seeded, "、")]）")
+
+/// 按玩家偏好重新发放按钮（**不关任何人的界面** —— 与 reconcile_actions 的区别就在这）
+/datum/controller/subsystem/tianguan_guide_browser/proc/regrant_actions()
+	for(var/datum/persistent_client/persistent as anything in GLOB.persistent_clients)
+		ensure_guide_action(persistent)
 
 /datum/controller/subsystem/tianguan_guide_browser/proc/on_client_connect(datum/source, client/connected_client)
 	SIGNAL_HANDLER
-	if(GLOB.tianguan_guide_ready)
-		ensure_guide_action(connected_client.persistent_client)
+	if(!GLOB.tianguan_guide_ready)
+		return
+	// 审计行：把服务器**读到的设置值**写进日志（"我明明勾了"这类问题一眼可判）
+	var/autoclose_state = tianguan_guide_autoclose_on(connected_client) ? "开 ⇒ 本回合不发按钮" : "关 ⇒ 本回合照常发按钮"
+	log_world("GUIDE_BROWSER: [connected_client?.ckey || "?"] 进服 → 设置「回合开始时自动关闭指南按钮」= [autoclose_state]")
+	seed_client_autoclose(connected_client) // 进服/重连：按设置播种一次（= 本次会话开始时生效）
+	ensure_guide_action(connected_client.persistent_client)
 
-/// 把动作按钮发给某个 persistent_client（幂等；发现多余副本时只保留一个并清掉其余的）。
+/// 给**单个**玩家按设置播种本回合状态（进服 / 重连时用）。
+/// 只置 TRUE、**不**清除玩家自己关掉的状态（他本局 OOC 关过就别给翻回来）；
+/// 已经有「本局强制」的玩家一律不动（他明确要过按钮，那是最高优先级）。
+/datum/controller/subsystem/tianguan_guide_browser/proc/seed_client_autoclose(client/player)
+	if(!player?.ckey || GLOB.tianguan_guide_round_forced[player.ckey])
+		return
+	if(!tianguan_guide_autoclose_on(player))
+		return
+	GLOB.tianguan_guide_round_hidden[player.ckey] = TRUE
+	log_world("GUIDE_BROWSER: [player.ckey] 带着「回合开始时自动关闭指南按钮」进服 ⇒ 本回合不发按钮（想临时要回来：OOC →「打开指南按钮」）")
+
+/// 把动作按钮发给某个 persistent_client（幂等；坏副本/多余副本会清掉）。
+/// 看玩家偏好（见 tianguan_guide_button_suppressed）：该藏就**只收掉按钮本体、保留 action** ——
+/// 这样玩家正开着的指南窗口不会被连带关掉（窗口归 action 所有）。
+/// 返回值：成功挂上按钮 ⇒ action；被偏好压住 ⇒ action（按钮不在，但 action 还在）；
+///        **发不出去**（没有身体，或按钮没挂上 HUD）⇒ null，调用方据此如实反馈玩家。
 /datum/controller/subsystem/tianguan_guide_browser/proc/ensure_guide_action(datum/persistent_client/persistent)
 	if(!GLOB.tianguan_guide_ready || !persistent)
 		return
+	// 挑副本：qdel 过的（上游删 mob、目录不可用时留下的坏引用）直接扔掉，多余副本清掉
 	var/datum/action/guide_browser/action
 	for(var/datum/action/guide_browser/candidate as anything in persistent.player_actions)
-		if(action)
+		if(action || QDELETED(candidate))
 			persistent.player_actions -= candidate
-			qdel(candidate)
+			if(!QDELETED(candidate))
+				qdel(candidate)
 			continue
 		action = candidate
 	if(!action)
 		action = new(persistent)
 		persistent.player_actions += action
-	if(persistent.mob)
-		action.Grant(persistent.mob)
+	// 图标目录里放了 .dmi 就用它（运行时图标，客户端会收到这份图）；没放就保持上游内置图标
+	if(GLOB.tianguan_guide_button_icon && GLOB.tianguan_guide_button_icon_state)
+		action.button_icon = GLOB.tianguan_guide_button_icon
+		action.button_icon_state = GLOB.tianguan_guide_button_icon_state
+	var/mob/owner_mob = persistent.mob
+	if(!owner_mob) // 还没进游戏（没有身体/HUD）⇒ 发不出去，别假装成功
+		return null
+	if(tianguan_guide_button_suppressed(persistent.client))
+		action.Remove(owner_mob)
+		return action
+	if(action.owner != owner_mob)
+		action.Grant(owner_mob)
+	action.ShowTo(owner_mob) // 幂等：之前被藏过就把按钮补回来
+	// 自证 + 兜底：按钮必须真的挂在这个 HUD 上。没挂上就归零 owner 走一遍完整 Grant 再试。
+	// （归零前 ShowTo 会被 viewers 里的旧引用短路，这里等于强制重建。）
+	if(!tianguan_guide_has_button(action, owner_mob))
+		log_world("GUIDE_BROWSER: [persistent.client?.ckey || "?"] 的按钮第一次没挂上（owner=[action.owner]，hud=[owner_mob.hud_used]），再走一遍完整 Grant")
+		action.owner = null
+		action.Grant(owner_mob)
+	if(!tianguan_guide_has_button(action, owner_mob))
+		log_world("GUIDE_BROWSER: [persistent.client?.ckey || "?"] 的按钮发放失败（owner=[action.owner]，hud=[owner_mob.hud_used]）—— 请把这条日志报给模块维护者")
+		return null
+	// Grant 之后强制重建一次按钮图（apply_button_icon 对同 icon_state 会短路，所以必须 force）
+	if(GLOB.tianguan_guide_button_icon && GLOB.tianguan_guide_button_icon_state)
+		action.build_all_button_icons(force = TRUE)
 	return action
 
 /// 目录被重载（或变得不可用）时对齐所有人：该发的按钮发下去、选中的条目失效就回到默认项。
@@ -386,7 +549,8 @@ SUBSYSTEM_DEF(tianguan_guide_browser)
 			continue
 		if(!tianguan_guide_get_page(action.selected_page_id))
 			action.selected_page_id = GLOB.tianguan_guide_default_id
-		SStgui.close_uis(action)
+		// 目录变了：**推一份新数据**给开着的窗口（树 + 选中项一起刷新），而不是把人家窗口关掉
+		action.update_static_data_for_all_viewers()
 
 /// 收走某个 persistent_client 身上的指南浏览器按钮。
 /datum/controller/subsystem/tianguan_guide_browser/proc/remove_guide_actions(datum/persistent_client/persistent)

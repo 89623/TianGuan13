@@ -19,6 +19,18 @@
 	. = ..()
 	selected_page_id = GLOB.tianguan_guide_default_id
 
+/// 上游还有别的发放路径（登录、换 mob 时重发 player_actions）—— 都要看本回合状态，
+/// 否则「本局关闭 / 回合开始播种」会被那些路径绕过（按钮又冒出来）。
+/// ⚠ 不要写成 `return ..(null)`：父实现的 null 分支会走 `Remove(owner)`，而这里 owner 很可能
+/// 还是 null ⇒ `UnregisterSignal(null, "mob_key_down")` 运行时报错（实测刷进 runtime.log）。
+/// 没 owner 就代表本来就还没按钮，什么都不用做，直接返回即可。
+/datum/action/guide_browser/Grant(mob/grant_to)
+	if(!isnull(grant_to) && tianguan_guide_button_suppressed(grant_to.client))
+		if(!isnull(owner))
+			Remove(owner)
+		return
+	return ..()
+
 /datum/action/guide_browser/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!. || !GLOB.tianguan_guide_ready)
