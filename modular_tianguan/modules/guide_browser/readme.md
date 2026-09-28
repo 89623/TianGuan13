@@ -29,20 +29,53 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
 - 左侧目录树：分组可展开/折叠（标题上带条数），链接按配置顺序排列。
 - 点击链接条目 → 按该条目的 `open` 打开（出厂默认 **游戏内浏览器弹窗**：服务器不联网、页面由玩家客户端请求）。
 - 右上角常驻「在浏览器中打开」按钮：任何时候都能兜底交给系统浏览器。
-- 配置改动检测：文件内容没变就不重载、不关闭任何人正开着的窗口；变了才会重建并对齐。
-- 管理员指令「重载指南浏览器配置」当场重载，并把结果（可用链接条数 / 逐条跳过原因）写进日志。
+- 配置改动检测：文件内容没变就不重载、不碰任何人的界面；变了才重建，并把新数据**就地推给开着的窗口**
+  （`update_static_data_for_all_viewers`，不再把人家窗口关掉）。
+- 管理员指令「重载指南浏览器配置」当场重载，并报出**文件指纹**（路径 + md5 前 8 位 + 字节数）与
+  「内容到底变没变」；读不到文件时**如实报失败**（不再拿上次的条数谎报成功）。
+- 玩家侧三个开关：OOC 栏「关闭/打开指南按钮」（局内唯一开关）、**ESC → 设置（游戏偏好设置）**里的
+  「回合开始时自动关闭指南按钮」（**只管回合开始时开不开**，改了不影响当前回合）、
+  `icons/` 目录放 dmi 即换按钮图标（详见下一节）。
+
+### 玩家的三个开关（在哪、怎么开回来）
+
+| 开关 | 在哪 | 作用范围 | 怎么恢复 |
+| --- | --- | --- | --- |
+| 关闭 / 打开指南按钮 | **OOC 页签**两个指令（「关闭指南按钮」「打开指南按钮」） | **本局**（下一回合开始重算）；「打开」会记一个本局强制标记，盖过本局隐藏 | OOC →「打开指南按钮」 |
+| 回合开始时自动关闭指南按钮 | **ESC → 设置**（游戏偏好设置）→「指南浏览器」分区里的勾选框 | 生效时机只有两处：**回合开始**（对当时在线的人）与**进服/重连**（只对你自己）。⚠ 除此之外**改了不影响当前回合**：勾/取消不会当场改变按钮。**玩家级**设置（跟角色存档槽无关），默认**不勾** | 在同一个窗口取消勾选（下个回合开始或重新进服时恢复显示）；本回合就想用上 → OOC →「打开指南按钮」 |
+| 按钮图标 | `modular_tianguan/modules/guide_browser/icons/` 放一个 `.dmi` | 左上角按钮的图（不放就回退上游内置图标） | 删掉目录里的 dmi；换图后用管理员「重载指南浏览器配置」当场生效 |
+
+**职责分工（别混）**：
+- **设置**（ESC → 设置）只管"回合开始时开不开"：回合开始对在线的人播种一次（`seed_round_autoclose()`），进服/重连只给自己播种一次（`seed_client_autoclose()`）。播种之后本回合内**它再也管不着按钮**（所以故意没覆写 `apply_to_client`）。
+- **局内开关**只归 **OOC 指令**（本局有效，不修改设置）。
+- 判定只有一处真源 `tianguan_guide_button_suppressed()`：**本局强制（OOC 打开过）> 本局隐藏（OOC 关过 / 播种置上）** —— 播种只置 TRUE、不会把你 OOC 关掉的状态翻回来，也不会动你 OOC 强行打开过的状态。
+- 因此**管理员重载也不会突然把谁的按钮收走**（它只按本回合状态对齐，不读设置）。
+
+⚠️ **为什么这条设置放设置窗口、而不放指南窗口里**：勾了之后按钮就被收走，玩家也就**开不了指南窗口**
+去取消勾选 —— 等于把自己锁死（实测被这么问住过：「你把永久关闭设置在哪，我怎么再打开它」）。
+设置窗口（ESC → 设置）随时能开，所以那里才是正确的位置；OOC 的「打开指南按钮」只做**本局**强行发放，
+不去偷偷改玩家的设置。
+
+**为什么只加模块文件就够**：偏好条目是 `/datum/preference` 子类型，界面用
+`valid_subtypesof(/datum/preference)` 自动枚举；前端条目目录用 `require.context` 自动加载 ⇒
+`code/guide_prefs.dm` + `features/game_preferences/tianguan_guide_button.tsx` 两个新文件即可生效，
+**没有改动任何上游文件**（`savefile_key` 与前端导出的常量名必须一致，界面按它取值）。
 
 ### 新增或修改的文件
 
 | 文件 | 性质 | 说明 |
 | --- | --- | --- |
-| `modular_tianguan/modules/guide_browser/code/guide_config.dm` | 新增 | 配置读取 / 校验 / 提交 / 自检日志 / 子系统 / 动作发放 / 四种打开方式 |
+| `modular_tianguan/modules/guide_browser/code/guide_config.dm` | 新增 | 配置读取 / 校验 / 提交 / 自检日志 / 子系统 / 动作发放 / 四种打开方式 / 图标目录 |
+| `modular_tianguan/modules/guide_browser/code/guide_prefs.dm` | 新增 | ESC → 设置里的「永久关闭指南按钮」条目（`/datum/preference/toggle`，玩家级） |
 | `modular_tianguan/modules/guide_browser/code/guide_browser.dm` | 新增 | `/datum/action/guide_browser` 动作按钮 + tgui 交互 |
+| `modular_tianguan/modules/guide_browser/code/guide_verbs.dm` | 新增 | OOC 栏「关闭 / 打开指南按钮」两个指令 |
 | `modular_tianguan/modules/guide_browser/code/guide_admin.dm` | 新增 | 管理员指令 `reload_guide_browser` |
 | `modular_tianguan/modules/guide_browser/readme.md` | 新增 | 本文件 |
+| `modular_tianguan/modules/guide_browser/icons/`（含 `readme.md`） | 新增 | 按钮图标目录：丢一个 `.dmi` 进去即换图（没有就回退内置图标） |
 | `config/tianguan/guide_browser.json` | 新增 | 目录数据（生效条目 + 全部示例） |
 | `tgui/packages/tgui/interfaces/GuideBrowser.tsx` | 新增 | tgui 界面（顶部带 `// THIS IS A TIANGUAN UI FILE`） |
-| `tgstation.dme` | 修改 | 天关块内加 3 行 `#include`（项目清单，不是源码） |
+| `tgui/packages/tgui/interfaces/PreferencesMenu/preferences/features/game_preferences/tianguan_guide_button.tsx` | 新增 | 上面那条偏好在前端的条目（该目录 `require.context` 自动加载，**无需改上游文件**） |
+| `tgstation.dme` | 修改 | 天关块内加 5 行 `#include`（项目清单，不是源码） |
 
 ### 核心文件 / Proc 改动：
 
