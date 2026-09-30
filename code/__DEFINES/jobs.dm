@@ -148,6 +148,10 @@
 #define JOB_SOLFED "SolFed"
 #define JOB_SOLFED_LIASON "SolFed Liason"
 // NOVA EDIT ADDITION END
+// 团结联盟（天关新增部门，见 modular_tianguan/modules/uar_department/）
+// TIANGUAN EDIT ADDITION START - UAR_DEPARTMENT
+#define JOB_UAR_INSPECTOR "Alliance Inspector"
+// TIANGUAN EDIT ADDITION END
 
 //Lost crew
 #define JOB_LOSTCREW_ENGINEER "Visiting Engineer"
@@ -233,6 +237,12 @@
 /// human_ai/ai 同 index、疑为 flaky 来源，并为此改用 joinable_occupations 规避；但「人类 AI」站点特质
 /// 生效那局两者都在 joinable_occupations 里，仍会撞）。给它单列一个序号，排在赛博格之后。
 #define JOB_DISPLAY_ORDER_HUMAN_AI 3 //NOVA EDIT ADDITION
+// 团结联盟（天关新增部门内的职业）—— index 只在**同部门内**需要唯一：
+// 实际排序键是 display_order + 部门 display_order * 1000（见 _job.dm display_order_with_department()），
+// 本部门 display_order = 9 ⇒ 9001，与其余部门（≤8003 / 10000）不撞。
+// TIANGUAN EDIT ADDITION START - UAR_DEPARTMENT
+#define JOB_DISPLAY_ORDER_UAR_INSPECTOR 1
+// TIANGUAN EDIT ADDITION END
 
 // No department
 #define JOB_DISPLAY_ORDER_ASSISTANT 1
@@ -262,6 +272,10 @@
 #define DEPARTMENT_CAPTAIN "Captain"
 #define DEPARTMENT_BITFLAG_CENTRAL_COMMAND (1<<10) //NOVA EDIT CHANGE
 #define DEPARTMENT_CENTRAL_COMMAND "Central Command" //NOVA EDIT CHANGE
+// TIANGUAN EDIT ADDITION START - UAR_DEPARTMENT
+#define DEPARTMENT_BITFLAG_UAR (1<<11)
+#define DEPARTMENT_UAR "Union of Allied Republics"
+// TIANGUAN EDIT ADDITION END
 
 DEFINE_BITFIELD(departments_bitflags, list(
 	"SECURITY" = DEPARTMENT_BITFLAG_SECURITY,
@@ -274,6 +288,7 @@ DEFINE_BITFIELD(departments_bitflags, list(
 	"SILICON" = DEPARTMENT_BITFLAG_SILICON,
 	"ASSISTANT" = DEPARTMENT_BITFLAG_ASSISTANT,
 	"CAPTAIN" = DEPARTMENT_BITFLAG_CAPTAIN,
+	"UAR" = DEPARTMENT_BITFLAG_UAR, // TIANGUAN EDIT ADDITION - UAR_DEPARTMENT
 ))
 
 /* Job datum job_flags */

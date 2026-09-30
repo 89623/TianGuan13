@@ -625,6 +625,18 @@ export function JobsPage() {
                   hoveringOver={hoveringOver}
                   setHoveringOver={setHoveringOver}
                 />
+                {/* TIANGUAN EDIT ADDITION START - UAR_DEPARTMENT
+                    本文件是**硬编码**的部门分栏清单，抽取式菜单（JobSelection.tsx）能自动长出新部门，
+                    这一页不会 —— 新增部门必须在这里手工加一栏，字符串要与
+                    code/__DEFINES/jobs.dm 的 DEPARTMENT_UAR 完全一致（改名字两处都要改）。 */}
+                <Department
+                  department="Union of Allied Republics"
+                  dragging={dragging}
+                  setDragging={setDragging}
+                  hoveringOver={hoveringOver}
+                  setHoveringOver={setHoveringOver}
+                />
+                {/* TIANGUAN EDIT ADDITION END */}
               </Stack>
             </Stack.Item>
           </Stack>

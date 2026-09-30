@@ -66,6 +66,15 @@
 	starting_title = "Central Command SOP"
 	direct_wiki_url = "https://tianguanstation.miraheze.org/wiki/%E4%B8%AD%E5%A4%AE%E6%8C%87%E6%8C%A5%E9%83%A8%E6%A0%87%E5%87%86%E6%93%8D%E4%BD%9C%E7%A8%8B%E5%BA%8F"
 
+// 团结联盟（UAR）—— 新增部门必须在这里有自己的一本 + 下面 switch 里有一条分支，
+// 否则 tianguan_get_sop_book_type() 会落到函数末尾的默认值，发给玩家的是「通用SOP手册」。
+/obj/item/book/manual/wiki/sop/uar
+	name = "团结联盟SOP手册"
+	desc = "一本供团结联盟公务员查阅标准作业程序（SOP）的手册。"
+	icon_state = "sop_uar"
+	starting_title = "UAR SOP"
+	direct_wiki_url = "https://tianguanstation.miraheze.org/wiki/%E5%9B%A2%E7%BB%93%E8%81%94%E7%9B%9F%E6%A0%87%E5%87%86%E6%93%8D%E4%BD%9C%E7%A8%8B%E5%BA%8F"
+
 // 天关模块化改动：让 PTech cart 售货机出售除中央指挥部外的 SOP 手册。
 /obj/machinery/vending/cart
 	products = list(
@@ -84,6 +93,7 @@
 		/obj/item/book/manual/wiki/sop/service = 5,
 		/obj/item/book/manual/wiki/sop/science = 5,
 		/obj/item/book/manual/wiki/sop/engineering = 5,
+		/obj/item/book/manual/wiki/sop/uar = 5,
 	)
 
 /datum/outfit/job/proc/tianguan_get_sop_book_type(datum/job/equipped_job)
@@ -108,6 +118,8 @@
 			return /obj/item/book/manual/wiki/sop/service
 		if(/datum/job_department/assistant)
 			return /obj/item/book/manual/wiki/sop/general
+		if(/datum/job_department/uar)
+			return /obj/item/book/manual/wiki/sop/uar
 		if(/datum/job_department/silicon)
 			return null
 		if(/datum/job_department/undefined)
