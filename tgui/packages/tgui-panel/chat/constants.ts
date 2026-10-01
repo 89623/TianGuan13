@@ -73,7 +73,7 @@ export const MESSAGE_TYPES: MessageType[] = [
     name: 'Radio',
     description: 'All departments of radio messages',
     selector:
-      '.alert, .minorannounce, .syndradio, .centcomradio, .aiprivradio, .comradio, .secradio, .gangradio, .engradio, .medradio, .sciradio, .suppradio, .servradio, .radio, .deptradio, .binarysay, .resonate, .abductor, .alien, .changeling',
+      '.alert, .minorannounce, .syndradio, .centcomradio, .aiprivradio, .comradio, .secradio, .uarradio, .gangradio, .engradio, .medradio, .sciradio, .suppradio, .servradio, .radio, .deptradio, .binarysay, .resonate, .abductor, .alien, .changeling', //TIANGUAN EDIT CHANGE - UAR: 加 .uarradio，让 UAR 消息归入 Radio 筛选
   },
   {
     type: MESSAGE_TYPE_ENTERTAINMENT,

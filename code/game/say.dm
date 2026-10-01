@@ -11,6 +11,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	"[FREQ_SUPPLY]" = "suppradio",
 	"[FREQ_SERVICE]" = "servradio",
 	"[FREQ_SECURITY]" = "secradio",
+	"[FREQ_UAR]" = "uarradio", //TIANGUAN EDIT ADDITION - UAR 频道：登记 CSS 类名（聊天栏/输入框按类着色；.uarradio 定义在 tgchat 的 scss 里）
 	"[FREQ_COMMAND]" = "comradio",
 	"[FREQ_AI_PRIVATE]" = "aiprivradio",
 	"[FREQ_ENTERTAINMENT]" = "enteradio",

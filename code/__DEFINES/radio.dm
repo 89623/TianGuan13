@@ -61,6 +61,13 @@
 #define RADIO_CHANNEL_CENTCOM "CentCom"
 #define RADIO_KEY_CENTCOM "y"
 #define RADIO_TOKEN_CENTCOM ":y"
+// TIANGUAN EDIT ADDITION START - 团结联盟（UAR）无线电频道
+// 频道名 "UAR"、说话前缀 :ua、检视 token :ua、频率取 1361（SECURITY 1359 之后的下一个空闲奇数）
+#define RADIO_CHANNEL_UAR "UAR"
+#define RADIO_KEY_UAR "ua"
+#define RADIO_TOKEN_UAR ":ua"
+#define FREQ_UAR 1361 // Union of Allied Republics comms frequency, dark red
+// TIANGUAN EDIT ADDITION END
 #define RADIO_COLOR_CENTCOM "#2681a5"
 
 #define RADIO_CHANNEL_UPLINK "Uplink"

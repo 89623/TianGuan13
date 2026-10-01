@@ -167,7 +167,8 @@
 
 /obj/machinery/telecomms/server/presets/command
 	id = "Command Server"
-	freq_listening = list(FREQ_COMMAND)
+	//TIANGUAN EDIT CHANGE - UAR 频道：让 UAR 通话也进指挥那台通信服务器（存档/日志）
+	freq_listening = list(FREQ_COMMAND, FREQ_UAR)
 	autolinkers = list("command")
 
 /obj/machinery/telecomms/server/presets/command/New()

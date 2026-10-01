@@ -66,7 +66,10 @@
 /obj/machinery/telecomms/bus/preset_three
 	id = "Bus 3"
 	network = "tcommsat"
-	freq_listening = list(FREQ_SECURITY, FREQ_COMMAND)
+	//TIANGUAN EDIT CHANGE - UAR 频道：电信总线只中继 freq_listening 清单里的频率，
+	//  新频道不登记在这里 ⇒ 信号不会中继 ⇒ 谁都收不到（含发言者自己）。
+	//  挂在 Security/Command 这台（preset_three）上，与安保/指挥频道同路。
+	freq_listening = list(FREQ_SECURITY, FREQ_COMMAND, FREQ_UAR)
 	autolinkers = list("processor3", "security", "command")
 
 /obj/machinery/telecomms/bus/preset_four
