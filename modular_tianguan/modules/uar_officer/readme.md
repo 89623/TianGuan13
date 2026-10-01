@@ -63,8 +63,15 @@
 
 ## 四、权限与 ID
 
-`/datum/id_trim/job/uar_inspector` 的 `New()` 在运行期**整份复制纳米传讯顾问（NTC）trim 的 access**，
-而不是写死一张清单 —— 上游改 NTC 权限时这里自动跟随，不会有第二份真相。
+`/datum/id_trim/job/uar_inspector` 的 `New()` 在运行期把纳米传讯顾问（NTC）trim 的**源字段**
+（`minimal_access` / `extra_access` / 两个 `*_wildcard_access` / `template_access`）抄过来，
+再调 `refresh_trim_access()` 让基类重算 —— 而不是写死一张清单，上游改 NTC 权限时这里自动跟随。
+
+⚠️ **别只抄组合后的 `access`**：最终 access = `minimal_access`（`jobs_have_minimal_access` 为真时）
+或 `minimal | extra_access`（为假时），**再叠加 `template_access` 的模板展开**（`SSid_access`，`id_access.dm:201-205`）。
+NTC 的 `template_access = list(ACCESS_CAPTAIN, ACCESS_CHANGE_IDS)` —— **舰桥/指挥区的门就在这段模板里**，
+早先只抄 `access` 时权限看着是"39 条"却打不开舰桥，就是漏了它。
+启动日志会打印 `行政ID 已套用 NTC 权限（access N 条 / wildcard N 条 / 模板 N 项）` 便于核对。
 找不到 NTC 就在启动日志里**响亮**报错（`UAR_OFFICER: ⚠ ...`），不会静默给一张空卡。
 `world/New()` 里另有一条自检，把职业套装的六个槽位实际类型打进 `data/logs/**/runtime.log`。
 
@@ -88,7 +95,39 @@
 4. spawn 后 `runtime.log` 里会有一行 `UAR_OFFICER: spawn 实装 → …`（`post_equip` 打的），
    逐槽位印出**实际**穿的是哪个类型 —— 判断"没穿/穿错"时先看这行，别只看套装类型体。
 
-## 七、待办（尚未落地）
+## 七、无线电频道（UAR / `:ua`）
+
+新频道**必须逐处登记**，缺任何一处都表现为「发出去谁也没收到」或「频道名退化成 `[136.1]`」：
+
+| # | 位置 | 登记内容 |
+|---|---|---|
+| 1 | `code/__DEFINES/radio.dm` | `RADIO_CHANNEL_UAR` / `RADIO_KEY_UAR` / `RADIO_TOKEN_UAR` / `FREQ_UAR 1361` |
+| 2 | `code/game/communications.dm` | `default_radio_channels`（频道 → 频率） |
+| 3 | 同上 | `reserved_radio_frequencies`（频率 → 名字；漏了显示 `[136.1]`） |
+| 4 | 同上 | `reserved_radio_colors`（名字 → 颜色；与 ③ 联动，名字缺了颜色也拿不到） |
+| 5 | `code/modules/mob/living/living_say.dm` | `department_radio_keys`（`:ua` → 频道） |
+| 6 | `code/game/objects/items/devices/radio/headset.dm` | `channel_tokens` |
+| 7 | **电信接收机** `telecomms/machines/receiver.dm` | `freq_listening` —— **第一道闸门**，不在清单里信号根本进不了电信网 |
+| 8 | **电信总线** `telecomms/machines/bus.dm` | `freq_listening`（UAR 与安保/指挥同挂 `preset_three`） |
+| 9 | 通信服务器 `telecomms/machines/server.dm` | `freq_listening`（存档/日志） |
+| 10 | `code/game/say.dm` | `freqtospan`（频率 → CSS 类，决定聊天栏与说窗配色） |
+
+前端（`tgui/`）另有两处配套：`tgui-say/constants.ts` 的 `RADIO_PREFIXES`（`:ua ` → 左侧短标签）、
+`tgui-say/styles/colors.scss` 的 `$channel-map`（短名 → 颜色，生成 `.window-<短名>` / `.button-<短名>` 等类）。
+
+**两处「只认单字符前缀」的地雷**（前后端各一颗，两字符前缀会被吞掉或直接不识别）：
+- 后端 `code/modules/mob/mob_say.dm` 的 `get_message_mods()`；
+- 前端 `tgui/packages/tgui-say/helpers.ts` 的 `getPrefix()`（`CHANNEL_REGEX` + `slice(0, 3)`）。
+
+两处都已改为**先试两字符、命中优先**；单字符频道（`:u` 补给、`:s` 安保、`:c` 指挥）不受影响。
+
+**加密钥匙**：每把钥匙要**显式写全自己拥有的频道** —— 子类的 `channels` 会整体覆盖父类的表，
+父类 `Initialize` 的兜底对子类无效（漏写就会出现「耳机有频道、钥匙没挂上」）。
+
+**构建坑**：改了前端后须在 `tgui/` 跑 `bun run tgui:build`，**并删掉 `.rsc` 再编译 DM** ——
+DM 编译器只按文件清单判断资源是否变化，bundle 内容变了它**不会**重写 `.rsc`，客户端会继续用旧前端。
+
+## 八、待办（尚未落地）
 
 - **团结联盟SOP手册**：计划加进现成的 `sop_book` 模块（`/obj/item/book/manual/wiki/sop/uar`，
   `direct_wiki_url` 指向团结联盟标准操作程序 wiki 页，图标加进该模块的 `sop_books.dmi`）。

@@ -59,6 +59,12 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
 
 ### 部门/职业的所有可选项（新增部门时照这个表对照）
 
+**只允许人类角色可选**：job datum 上写 `species_whitelist = list(SPECIES_HUMAN = 1)`（`SPECIES_HUMAN` = `"human"`）。
+判定在 `modular_nova/modules/customization/modules/jobs/_job.dm:34` 的 `has_banned_species()`：
+白名单里查不到该物种 id 即判为不可选；消费点是 `SSjob`（`subsystem/job.dm:1006`）与 `new_player.dm:187`
+—— **职业偏好菜单与真正入服两条路都会拦**。注意必须写成**关联表** `list(SPECIES_HUMAN = 1)`：
+`has_banned_species()` 是按物种 id 查键，写成 plain `list(SPECIES_HUMAN)` 会把所有物种（含人类）一起拦掉。
+
 | 字段 | 本模块取值 | 不写会怎样 |
 | --- | --- | --- |
 | `department_name` | `DEPARTMENT_UAR` | 显示为 `No Department` |

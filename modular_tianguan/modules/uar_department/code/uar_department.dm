@@ -64,6 +64,9 @@
 	job_flags = STATION_JOB_FLAGS
 	config_tag = "UAR_INSPECTOR"
 	rpg_title = "Inspector"
+	// 只有人类角色可选：has_banned_species() 里"白名单里没有的物种 = 不可选"（modular_nova/.../jobs/_job.dm:34），
+	// 消费点在 SSjob 与 new_player（选择时与真正入服时都会拦）。
+	species_whitelist = list(SPECIES_HUMAN = 1)
 	// job_icons 单测要求：带 JOB_CREW_MANIFEST 的职业必须有 tgui_icon（fontawesome 常量，清单见 code/__DEFINES/font_awesome_icons.dm）
 	tgui_icon = FA_ICON_USER_TIE
 

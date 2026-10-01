@@ -37,6 +37,7 @@ $_channel_map: (
   'SolFed': hsl(68, 70%, 60%),
   'Whis': hsl(238, 55%, 67%),
   'Do': hsl(137, 64%, 60%), // NOVA EDIT ADDITION END
+  'UAR': hsl(0, 100%, 27.3%), //TIANGUAN EDIT ADDITION - UAR 频道：深红（= #8b0000，部门色）；键名须与 tgui-say/constants.ts 的 ':ua ' 值一致
 );
 
 $channel_keys: map.keys($_channel_map) !default;

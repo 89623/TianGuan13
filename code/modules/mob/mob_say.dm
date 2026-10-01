@@ -221,9 +221,18 @@ GAME_VERB(/mob, me_verb, VERB_ME, null)
 			if(!IS_UNCONSCIOUS_OR_CRIT(src)) //necessary indentation so it gets stripped of the semicolon anyway.
 				mods[MODE_HEADSET] = TRUE
 		else if((key in GLOB.department_radio_prefixes) && length(message) > length(key) + 1 && !mods[RADIO_EXTENSION])
-			mods[RADIO_KEY] = LOWER_TEXT(message[1 + length(key)])
-			mods[RADIO_EXTENSION] = GLOB.department_radio_keys[mods[RADIO_KEY]]
-			chop_to = length(key) + 2
+			// TIANGUAN EDIT ADDITION START - 多字符频道键（:ua）
+			// 原版只取前缀后的**一个**字符，:ua 会被当成 :u（补给频道）。改为先试两字符键，命中优先。
+			var/uar_two_char_key = LOWER_TEXT(copytext_char(message, 1 + length(key), 3 + length(key)))
+			if(length(message) > length(key) + 2 && GLOB.department_radio_keys[uar_two_char_key])
+				mods[RADIO_KEY] = uar_two_char_key
+				mods[RADIO_EXTENSION] = GLOB.department_radio_keys[uar_two_char_key]
+				chop_to = length(key) + 3
+			else
+				mods[RADIO_KEY] = LOWER_TEXT(message[1 + length(key)])
+				mods[RADIO_EXTENSION] = GLOB.department_radio_keys[mods[RADIO_KEY]]
+				chop_to = length(key) + 2
+			// TIANGUAN EDIT ADDITION END
 		else if(key == "," && !mods[LANGUAGE_EXTENSION])
 			for(var/datum/language/LD as anything in GLOB.all_languages)
 				var/lang_key = LD::key

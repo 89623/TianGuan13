@@ -92,8 +92,9 @@
 	//   不写就会继承它、去穿戴 dmi 里找 "headset"（不存在）⇒ 小人身上一片空白。
 	//   上游自定义耳机（cent_headset_alt）同样是 icon_state 与 worn_icon_state 同名双写。
 	worn_icon_state = "uar_headset"
-	keyslot = new /obj/item/encryptionkey/headset_com
-	keyslot2 = new /obj/item/encryptionkey/headset_cent/ccrep
+	// UAR 频道（:ua）：两把钥匙都在原频道基础上挂上 UAR（见文件末尾 /obj/item/encryptionkey/uar/*）
+	keyslot = new /obj/item/encryptionkey/uar/com
+	keyslot2 = new /obj/item/encryptionkey/uar/ccrep
 
 /obj/item/radio/headset/heads/uar_inspector/alt
 	name = "团结联盟战术耳机（防闪）"
@@ -135,7 +136,10 @@
 	sechud_icon_state = "huduar_inspector"
 	job = /datum/job/uar_inspector
 
-/// 权限对齐纳米传讯顾问（NTC）：不写死清单，运行期把 NTC trim 的 access 整份抄过来。
+/// 权限对齐纳米传讯顾问（NTC）：不写死清单，运行期把 NTC trim 的**源字段**抄过来再让基类重算。
+/// 注意抄的是源字段而不是已组合的 `access`：最终 access 由 refresh_trim_access() 按
+/// `jobs_have_minimal_access` 开关在 minimal/extra 之间取并集，再叠加 `template_access` 的模板展开
+/// （舰桥/指挥区的门就在模板里，见 SSid_access，id_access.dm:201-205）。
 /// 找不到就**响亮**地在启动日志里报出来（而不是静默给一张空卡）。
 /datum/id_trim/job/uar_inspector/New()
 	. = ..()
@@ -148,11 +152,16 @@
 		if(!istype(any_trim, /datum/id_trim/job))   // job 这个 var 只在 /datum/id_trim/job 上有，先判类型
 			continue
 		var/datum/id_trim/job/trims = any_trim
-		if(trims.job == ntc)
-			access = trims.access.Copy()
-			wildcard_access = trims.wildcard_access.Copy()
-			log_world("UAR_OFFICER: 行政ID 已套用 NTC 权限（[length(access)] 条 access / [length(wildcard_access)] 条 wildcard）")
-			return
+		if(trims.job != ntc)
+			continue
+		minimal_access = trims.minimal_access.Copy()
+		extra_access = trims.extra_access.Copy()
+		minimal_wildcard_access = trims.minimal_wildcard_access.Copy()
+		extra_wildcard_access = trims.extra_wildcard_access.Copy()
+		template_access = trims.template_access?.Copy()
+		refresh_trim_access()                        // 用抄来的源字段重算 access / wildcard_access
+		log_world("UAR_OFFICER: 行政ID 已套用 NTC 权限（access [length(access)] 条 / wildcard [length(wildcard_access)] 条 / 模板 [length(template_access)] 项）")
+		return
 	log_world("UAR_OFFICER: ⚠ 没找到 NTC 的 id_trim 单例，行政ID 未套用 NTC 权限")
 
 // ———————————————————————————————— 两面旗帜（结构态 + 可携带折叠态）
@@ -324,3 +333,52 @@
 		"一把左轮 + 两个快速换弹器 + 备弹" = /obj/item/storage/toolbox/guncase/nova/pistol/trappiste_small_case/uar_revolver,
 	)
 	return selectable_gun_types
+
+// ———————————————————————————————— 无线电：团结联盟频道（:ua）
+// 频道本体在核心文件里，均带 TIANGUAN EDIT 标记：
+//   code/__DEFINES/radio.dm                   RADIO_CHANNEL_UAR "UAR" / RADIO_KEY_UAR "ua" / FREQ_UAR 1361
+//   code/game/communications.dm               default_radio_channels 登记 频道→频率
+//   code/modules/mob/living/living_say.dm     department_radio_keys 登记 :ua → UAR
+//   code/game/objects/items/devices/radio/headset.dm  channel_tokens（检视钥匙时显示 :ua）
+//   code/modules/mob/mob_say.dm               解析器扩成"先试两字符键"（否则 :ua 会被当成 :u = 补给频道）
+// 这里只放钥匙：子类照抄目标钥匙的频道，UAR 由父类的 Initialize 兜底挂上，不会漏。
+
+/obj/item/encryptionkey/uar
+	name = "团结联盟频道加密钥匙"
+	desc = "只挂团结联盟频道（:ua）的加密钥匙。"
+	channels = list(RADIO_CHANNEL_UAR = 1)
+
+// ⚠️ 每把钥匙都要**显式**写全自己的频道：别指望在父类 Initialize 里给子类补挂 UAR
+//    （实测：子类的 channels 会覆盖父类的表，兜底不会生效，探针验过 {"Command":1} 里没有 UAR）
+/obj/item/encryptionkey/uar/com
+	name = "团结联盟指挥频道加密钥匙"
+	channels = list(RADIO_CHANNEL_UAR = 1, RADIO_CHANNEL_COMMAND = 1)   // 镜像 headset_com + UAR
+
+/obj/item/encryptionkey/uar/ccrep
+	name = "团结联盟中央指挥部加密钥匙"
+	channels = list(RADIO_CHANNEL_UAR = 1, RADIO_CHANNEL_CENTCOM = 1, RADIO_CHANNEL_SECURITY = 1)   // 镜像 ccrep + UAR
+
+// 全频段：全部部门 + AI 私有 + 纳米中央指挥部（含 RADIO_SPECIAL_CENTCOM）+ 团结联盟
+/obj/item/encryptionkey/uar/all_band
+	name = "团结联盟全频段加密钥匙"
+	desc = "同时接入所有部门频道、AI 私有频道、纳米中央指挥部频道与团结联盟频道（:ua）的加密钥匙。"
+	special_channels = RADIO_SPECIAL_CENTCOM
+	channels = list(
+		RADIO_CHANNEL_UAR = 1,
+		RADIO_CHANNEL_COMMAND = 1,
+		RADIO_CHANNEL_SECURITY = 1,
+		RADIO_CHANNEL_ENGINEERING = 1,
+		RADIO_CHANNEL_SCIENCE = 1,
+		RADIO_CHANNEL_MEDICAL = 1,
+		RADIO_CHANNEL_SUPPLY = 1,
+		RADIO_CHANNEL_SERVICE = 1,
+		RADIO_CHANNEL_ENTERTAINMENT = 1,
+		RADIO_CHANNEL_AI_PRIVATE = 1,
+		RADIO_CHANNEL_CENTCOM = 1,
+	)
+
+/obj/item/radio/headset/heads/uar_inspector/all_band
+	name = "团结联盟全频段战争耳机"
+	desc = "团结联盟制式全频段战争耳机：可收听全部部门频道、AI 私有频道、纳米中央指挥部频道，以及团结联盟频道（:ua）。"
+	keyslot = new /obj/item/encryptionkey/uar/all_band
+	keyslot2 = null

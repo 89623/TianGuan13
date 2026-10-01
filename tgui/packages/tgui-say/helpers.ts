@@ -49,7 +49,8 @@ function setWindowVisibility(visible: boolean, scale: boolean): void {
   });
 }
 
-const CHANNEL_REGEX = /^[:.]\w\s/;
+//TIANGUAN EDIT CHANGE - UAR 频道：原为 /^[:.]\w\s/（只认「冒号+1 字符+空白」）⇒ 两字符前缀 :ua 永远不匹配
+const CHANNEL_REGEX = /^[:.]\w{1,2}\s/;
 
 /** Tests for a channel prefix, returning it or none */
 export function getPrefix(
@@ -58,6 +59,17 @@ export function getPrefix(
   if (!value || value.length < 3 || !CHANNEL_REGEX.test(value)) {
     return;
   }
+
+  //TIANGUAN EDIT ADDITION START - UAR 频道：先试两字符前缀（:ua ），命中优先；再退回单字符（:u = 补给）
+  const twoChar = value
+    .slice(0, 4)
+    ?.toLowerCase()
+    ?.replace('.', ':') as keyof typeof RADIO_PREFIXES;
+
+  if (RADIO_PREFIXES[twoChar]) {
+    return twoChar;
+  }
+  //TIANGUAN EDIT ADDITION END
 
   const adjusted = value
     .slice(0, 3)

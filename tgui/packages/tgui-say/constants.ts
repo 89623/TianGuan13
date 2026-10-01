@@ -28,6 +28,7 @@ export const RADIO_PREFIXES = {
   ':o ': 'AI',
   ':p ': 'Ent',
   ':s ': 'Sec',
+  ':ua ': 'UAR', // TIANGUAN EDIT ADDITION - UAR 频道：让 say 窗识别 :ua（左侧显示短标签）
   ':t ': 'Synd',
   ':u ': 'Supp',
   ':v ': 'Svc',
