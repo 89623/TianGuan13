@@ -18,13 +18,25 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
 上游条目自带的**职业限定原样保留**（清单内有 19 条带 `restricted_roles`）——
 即需求方要的「赞助者专属」叠加上「职业限定」：选上后若当前职业不在限制内，开局发放会被拒并提示。
 
-**② 本模块自建条目（3 条，上游没有对应配装 datum）**
+**② 本模块自建条目（6 条，上游没有对应配装 datum）**
 
 | 物品（显示名） | item_path | 配装页签 |
 | --- | --- | --- |
 | box of long balloons | `/obj/item/storage/box/balloons` | Toys（上限 3 件） |
 | B@L00NY skillchip | `/obj/item/skillchip/job/clown` | Other（上限 3 件） |
 | hardlight wheelchair emitter | `/obj/item/holosign_creator/hardlight_wheelchair` | Other（上限 3 件） |
+| 辛迪莉亚娃娃 | `/obj/item/toy/plush/tianguan/xindiliya` | Toys（Plushies 分组） |
+| 绘兔娃娃 | `/obj/item/toy/plush/tianguan/huitu` | Toys（Plushies 分组） |
+| Luna娃娃 | `/obj/item/toy/plush/tianguan/luna` | Toys（Plushies 分组） |
+
+**三只赞助者玩偶**（`code/sponsor_plushies.dm` + `icons/plushies.dmi`）是本模块唯一自带美术的物品：
+类型挂 `/obj/item/toy/plush/tianguan`（只把 `icon` 指到本模块图集），继承基类玩偶的全部行为
+（捏响、塞东西/拆填充、*love* 系列、可给玩偶改名与写描述）。三条配装条目挂
+`/datum/loadout_item/toys/plush` ⇒ 进 Toys 页签的「Plushies」分组、可改名，`donator_only = TRUE`
+写在类型体里（非默认值 ⇒ 编译期生效，不走 148 条清单那套运行期解锁）。
+
+玩偶**不进随机刷新池**（`/obj/effect/spawner/random/entertainment/plushie` 等）：它们是赞助者专属，
+不能出现在随机玩偶箱里。
 
 **③ 保持原样、不做任何处理（7 条）**
 
@@ -101,11 +113,23 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
 
 ### 测试方式：
 
-- DreamMaker 编译通过（0 errors；`dm.exe tgstation.dme`，BYOND 516.1659）。
-- 单元测试 `/datum/unit_test/tianguan_sponsor_loadout` 通过。
+- DreamMaker 编译通过（0 errors；`dm.exe -DCBT tgstation.dme`，BYOND 516.1659）。
+- 单元测试 `/datum/unit_test/tianguan_sponsor_loadout` 通过（清单 148 条 + 自建 6 条都断言到；
+  三只玩偶已加进该测试的「自建条目」清单）。
+- 无头探针（真引擎里读的运行期事实，2026-10-01，本模块玩偶那批）：
+  - `loadout_entry_<三只>=1`、`donator_only_<三只>=1`、`ckey_wl_len_<三只>=0`、
+    `group=Plushies`、`category=Toys`、`entries_sharing_path=1`（每只只有一条 datum，没撞键）；
+  - 物品实例：`spawned=1`、`state_in_dmi=1`（`icons/plushies.dmi` 里真有该 icon_state）、
+    `name/desc` 与需求文本一致、`stuffed=1`；
+  - 手持渲染真跑了一遍 `build_worn_icon(isinhands = TRUE)`：返回的 appearance 与上游玩偶
+    （`/obj/item/toy/plush/nova/borbplushie` 对照组）**表现完全相同**（`inhand_state_in_file=0/0`）
+    ⇒ 没有引入这类玩偶之外的手持行为；
+  - `sponsor_list_len=148`（解锁清单没被改动）、`toys_max_allowed=3`（页签上限未变）。
 - 游戏内用 `config/nova/donators.txt` 里的 ckey 打开配装界面，逐页签确认：
   - 解锁条目都在，且带「Donator-Only」标记；
   - 选上后开局能带到身上；
+  - **三只玩偶在 Toys → Plushies 分组里**（页签上限 3 件，与其它玩具共享额度），选上后
+    背包里出现的是对应玩偶（图标、名字、描述、捏响音效）；
   - 有职业限定的（如舰长的 `Captain's Dress`、矿工的 `Ahab's Spear Retool Kit`、
     安保的 `Banded Uniform`、NTC 的 hubert 三件与 razurath 两件）用其它职业选上 → 发放被拒并提示 `job restrictions`。
 - 用不在名单里的 ckey 复验：配装页**看不到**这些条目（`ItemDisplay.tsx` 的 `FilterItemList`
@@ -118,6 +142,17 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
 - 物品来源：需求方提供的清单（`预添加的物品.md`，156 条）。其中 148 条解锁、7 条保持原样、
   1 条（硬光轮椅）上游无条目故自建。需求文件里 `caligram_parkaa` 系笔误，实际类型为 `caligram_parka`。
 - 加物品：只在 `TIANGUAN_SPONSOR_ITEM_PATHS` 里加一行即可（上游已有该 item_path 的条目为前提）。
+- **三只玩偶的贴图**：`icons/plushies.dmi`（32×32、dirs=1、单帧），来源是需求方给的三张稿。
+  装配口径（**1:1 放像素，绝不重采样出糊边**）：原稿原生多大就多大 —— 绘兔/Luna 的稿是 32×32 稿的
+  16 倍放大图，还原回 32×32 后**不动一个像素**（缩放比 = 1.000）；只有辛迪莉亚（原生 64×64、
+  内容 35×33）超过画布，才按 0.857 用 **NEAREST** 缩到 30×28。此外只做两件事：
+  alpha 二值化（阈值 128，切掉 AI 稿的半透明柔光）+ 内容居中、底部留 1px。
+  **不量化调色板、不补描边**（原稿多少色就多少色；描边会让玩偶发胖并吃掉画布）。
+  生成脚本与对照预览图在仓库外的素材工作区（`Desktop/Hermes/projects/donator_plushies/`，
+  `build_sprites.py` / `preview.py`）——要改尺寸/阈值就改常量重跑，
+  再把 `out/<state>.png` 写回本模块的 `icons/plushies.dmi`。
+- **不改上游玩偶清单**：玩偶不进 `/obj/effect/spawner/random/entertainment/plushie(_delux)` 等随机池
+  （赞助者专属，不该出现在随机玩偶箱里），也不动 `icons/obj/toys/plushes.dmi`。
 - **上游同步注意**：Nova 若改动 `donator_personal.dm` 中这些条目的 `item_path`／白名单／职业限制，
   或新增同 `item_path` 的条目，需要回来核对本清单。item_path 失配时游戏里不会报错，
   但单元测试 `tianguan_sponsor_loadout` 会点名报出是哪一条。
