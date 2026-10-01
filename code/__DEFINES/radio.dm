@@ -20,6 +20,8 @@
 #define RADIO_KEY_COMMAND "c"
 #define RADIO_TOKEN_COMMAND ":c"
 #define RADIO_COLOR_COMMAND "#fcdf03"
+//TIANGUAN EDIT ADDITION - UAR 频道：部门色（深红），供电信日志条目显示频道名与颜色
+#define RADIO_COLOR_UAR "#8b0000"
 
 #define RADIO_CHANNEL_SCIENCE "Science"
 #define RADIO_KEY_SCIENCE "n"

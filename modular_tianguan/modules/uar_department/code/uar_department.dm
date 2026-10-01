@@ -67,6 +67,11 @@
 	// 只有人类角色可选：has_banned_species() 里"白名单里没有的物种 = 不可选"（modular_nova/.../jobs/_job.dm:34），
 	// 消费点在 SSjob 与 new_player（选择时与真正入服时都会拦）。
 	species_whitelist = list(SPECIES_HUMAN = 1)
+	// 仅「新星」（Nova Star）玩家可选：服务器需开启 ENABLE_NOVA_STAR_RESTRICTIONS（源码默认 FALSE ⇒ 必须显式开），
+	// 名单见 config/nova/nova_star_players.txt（旧版）或 SQL 玩家等级系统；管理员自动放行。
+	// 判定链：SSplayer_ranks.is_nova_star()（modular_nova/modules/player_ranks/code/subsystem/player_ranks.dm:91）
+	//   拦截点：SSjob（code/controllers/subsystem/job.dm:994）与 new_player（code/modules/mob/dead/new_player/new_player.dm:185）。
+	nova_stars_only = TRUE
 	// job_icons 单测要求：带 JOB_CREW_MANIFEST 的职业必须有 tgui_icon（fontawesome 常量，清单见 code/__DEFINES/font_awesome_icons.dm）
 	tgui_icon = FA_ICON_USER_TIE
 

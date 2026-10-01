@@ -159,6 +159,8 @@
 		minimal_wildcard_access = trims.minimal_wildcard_access.Copy()
 		extra_wildcard_access = trims.extra_wildcard_access.Copy()
 		template_access = trims.template_access?.Copy()
+		// 持枪证：与舰长/安保一致，ID 带 ACCESS_WEAPONS 时 HUD 显示 permit 图标（放 minimal 侧，不受 jobs_have_minimal_access 开关影响）
+		minimal_access += ACCESS_WEAPONS
 		refresh_trim_access()                        // 用抄来的源字段重算 access / wildcard_access
 		log_world("UAR_OFFICER: 行政ID 已套用 NTC 权限（access [length(access)] 条 / wildcard [length(wildcard_access)] 条 / 模板 [length(template_access)] 项）")
 		return
@@ -210,6 +212,11 @@
 /datum/outfit/job/uar_inspector
 	name = JOB_UAR_INSPECTOR
 	jobtype = /datum/job/uar_inspector
+	// 心盾（免疫洗脑）：与舰长/安保/典狱长/探员同一机制 —— outfit 的 implants 列表
+	// 判定消费：TRAIT_MINDSHIELD（洗脑/催眠免疫），HUD 上也会多一个心盾图标
+	implants = list(/obj/item/implant/mindshield)
+	// 持枪证：ID 需要 ACCESS_WEAPONS，HUD 才显示 permit 图标
+	// （/obj/item/proc/get_gun_permit_iconstate() 检查 ACCESS_WEAPONS，见 data_huds.dm:276）
 
 	id = /obj/item/card/id/advanced/uar_admin
 	id_trim = /datum/id_trim/job/uar_inspector
