@@ -10132,6 +10132,8 @@
 #include "modular_tianguan\modules\guide_browser\code\guide_prefs.dm"
 #include "modular_tianguan\modules\guide_browser\code\guide_verbs.dm"
 #include "modular_tianguan\modules\uar_marine_modsuit\code\uar_marine_modsuit.dm"
+#include "modular_tianguan\modules\uar_department\code\uar_department.dm"
+#include "modular_tianguan\modules\uar_officer\code\uar_officer.dm"
 
 
 

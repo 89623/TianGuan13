@@ -1436,6 +1436,9 @@
   "All zombie types will be detected, including dormant zombies.": [
     "tgui:ScannerGate"
   ],
+  "Alliance Inspector": [
+    "dm:labels"
+  ],
   "Allied Sectors": [
     "tgui:Main"
   ],
@@ -35406,6 +35409,9 @@
     "dm:labels"
   ],
   "Union Requisitions Officer": [
+    "dm:labels"
+  ],
+  "Union of Allied Republics": [
     "dm:labels"
   ],
   "Unique Enzyme": [
