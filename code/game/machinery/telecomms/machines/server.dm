@@ -177,6 +177,11 @@
 		"name" = RADIO_CHANNEL_COMMAND,
 		"color" = RADIO_COLOR_COMMAND
 	)
+	//TIANGUAN EDIT ADDITION - UAR 频道：不登记这里，日志条目就没有频道名/颜色 ⇒ 游戏内日志里看不到该频道
+	frequency_infos["[FREQ_UAR]"] = list(
+		"name" = RADIO_CHANNEL_UAR,
+		"color" = RADIO_COLOR_UAR
+	)
 
 /obj/machinery/telecomms/server/presets/engineering
 	id = "Engineering Server"
