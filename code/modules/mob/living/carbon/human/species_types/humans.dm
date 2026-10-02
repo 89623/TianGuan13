@@ -14,10 +14,18 @@
 	human.set_hairstyle("Business Hair", update = TRUE)
 
 /datum/species/human/get_species_description()
+	//TIANGUAN EDIT ADDITION START - UAR_HUMAN_LORE
+	if(uar_species_description)
+		return uar_species_description
+	//TIANGUAN EDIT ADDITION END
 	return "Humans are the dominant species in the known galaxy. \
 		Their kind extend from old Earth to the edges of known space."
 
 /datum/species/human/get_species_lore()
+	//TIANGUAN EDIT ADDITION START - UAR_HUMAN_LORE
+	if(length(uar_species_lore))
+		return uar_species_lore
+	//TIANGUAN EDIT ADDITION END
 	return list(
 		"These primate-descended creatures, originating from the mostly harmless Earth, \
 		have long-since outgrown their home and semi-benign designation. \
