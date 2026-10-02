@@ -367,7 +367,8 @@
 	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, radio_message, spans, message_mods)
 
 	// Independent radios, on the CentCom frequency, reach all independent radios
-	if ((special_channels & RADIO_SPECIAL_CENTCOM) && (freq == FREQ_CENTCOM || freq == FREQ_STATUS_DISPLAYS || freq == FREQ_FACTION || freq == FREQ_CYBERSUN || freq == FREQ_INTERDYNE || freq == FREQ_GUILD || freq == FREQ_TARKON || freq == FREQ_SOLFED)) // NOVA EDIT CHANGE - Original: if ((special_channels & RADIO_SPECIAL_CENTCOM) && (freq == FREQ_CENTCOM || freq == FREQ_STATUS_DISPLAYS))
+	//TIANGUAN EDIT ADDITION - 追加 UAR：与中央指挥部同款，走超空间直投（不经站点电信网，电信侧无法窃听也无法掐断）
+	if (((special_channels & RADIO_SPECIAL_CENTCOM) && (freq == FREQ_CENTCOM || freq == FREQ_STATUS_DISPLAYS || freq == FREQ_FACTION || freq == FREQ_CYBERSUN || freq == FREQ_INTERDYNE || freq == FREQ_GUILD || freq == FREQ_TARKON || freq == FREQ_SOLFED)) || ((special_channels & RADIO_SPECIAL_UAR) && freq == FREQ_UAR)) // NOVA EDIT CHANGE - Original: if ((special_channels & RADIO_SPECIAL_CENTCOM) && (freq == FREQ_CENTCOM || freq == FREQ_STATUS_DISPLAYS))
 		signal.data["compression"] = 0
 		signal.transmission_method = TRANSMISSION_SUPERSPACE
 		signal.levels = list(0)
@@ -448,6 +449,9 @@
 			return FALSE
 
 	if (input_frequency == FREQ_SYNDICATE && !(special_channels & RADIO_SPECIAL_SYNDIE))
+		return FALSE
+	//TIANGUAN EDIT ADDITION - UAR 内部频道：非 UAR 电台/耳机不得接收该频率（与辛迪加同款守卫）
+	if (input_frequency == FREQ_UAR && !(special_channels & RADIO_SPECIAL_UAR))
 		return FALSE
 
 	// allow checks: are we listening on that frequency?
