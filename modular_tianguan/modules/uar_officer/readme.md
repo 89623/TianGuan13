@@ -107,10 +107,24 @@ NTC 的 `template_access = list(ACCESS_CAPTAIN, ACCESS_CHANGE_IDS)` —— **舰
 | 4 | 同上 | `reserved_radio_colors`（名字 → 颜色；与 ③ 联动，名字缺了颜色也拿不到） |
 | 5 | `code/modules/mob/living/living_say.dm` | `department_radio_keys`（`:ua` → 频道） |
 | 6 | `code/game/objects/items/devices/radio/headset.dm` | `channel_tokens` |
-| 7 | **电信接收机** `telecomms/machines/receiver.dm` | `freq_listening` —— **第一道闸门**，不在清单里信号根本进不了电信网 |
-| 8 | **电信总线** `telecomms/machines/bus.dm` | `freq_listening`（UAR 与安保/指挥同挂 `preset_three`） |
-| 9 | 通信服务器 `telecomms/machines/server.dm` | `freq_listening`（存档/日志） |
+| 7 | ~~电信接收机~~ `telecomms/machines/receiver.dm` | **已摘除** —— UAR 改走超空间直投（见 12~15），不再进站点电信网 |
+| 8 | ~~电信总线~~ `telecomms/machines/bus.dm` | **已摘除**（同上） |
+| 9 | ~~通信服务器~~ `telecomms/machines/server.dm` | **已摘除**（同上；日志频道表 `frequency_infos` 亦随之移除） |
 | 10 | `code/game/say.dm` | `freqtospan`（频率 → CSS 类，决定聊天栏与说窗配色） |
+| 11 | `code/game/machinery/telecomms/machine_interactions.dm` | `banned_frequencies` —— 内部频道**双保险**（UAR 已不走站点网；此条防日后误登记，并禁止任何机器调谐到该频率） |
+| 12 | `code/__DEFINES/radio.dm` | `RADIO_SPECIAL_UAR`（`1<<3`）—— **内部频道位**，与中央指挥部同款 |
+| 13 | `code/game/objects/items/devices/radio/radio.dm` | 发送端：带该位且频率为 UAR ⇒ `TRANSMISSION_SUPERSPACE`；`can_receive()` 守卫：非 UAR 电台即便调到 136.1 也收不到 |
+| 14 | `code/game/machinery/telecomms/broadcasting.dm` | 投递端：超空间分支按频率选位（UAR ⇒ `RADIO_SPECIAL_UAR`），且不受 Z 层限制 |
+| 15 | 本模块 `code/uar_officer.dm` | 钥匙 `special_channels = RADIO_SPECIAL_UAR`（`radio.dm` 的 `recalculateChannels()` 会把它 OR 进耳机本体） |
+
+### 内部频道（超空间直投）—— 为何站点电信网里"查无此频道"
+
+中央指挥部与辛迪加**不在**站点电信网：它们走 `RADIO_SPECIAL_*` 位 + `TRANSMISSION_SUPERSPACE`，
+由 `broadcasting.dm` 的超空间分支**电台直投**（跨 Z 层）。UAR 现采用同一机制：
+
+- **电信侧**：站点接收机/总线/服务器都不再登记该频率 ⇒ **既不产生日志，也无从调谐、更掐不断**；
+- **耳机侧**：只有挂 `RADIO_SPECIAL_UAR` 的 UAR 钥匙/耳机能收发 `:ua`，普通电台调到 136.1 也会被 `can_receive()` 拒绝；
+- **无需**中央指挥部那张图上的电信机器（`CentCom.dmm` 的 `allinone/nuclear` 是 CC 自用），超空间直投不依赖任何机器。
 
 前端（`tgui/`）另有两处配套：`tgui-say/constants.ts` 的 `RADIO_PREFIXES`（`:ua ` → 左侧短标签）、
 `tgui-say/styles/colors.scss` 的 `$channel-map`（短名 → 颜色，生成 `.window-<短名>` / `.button-<短名>` 等类）。

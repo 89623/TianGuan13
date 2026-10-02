@@ -168,7 +168,7 @@
 /obj/machinery/telecomms/server/presets/command
 	id = "Command Server"
 	//TIANGUAN EDIT CHANGE - UAR 频道：让 UAR 通话也进指挥那台通信服务器（存档/日志）
-	freq_listening = list(FREQ_COMMAND, FREQ_UAR)
+	freq_listening = list(FREQ_COMMAND) //TIANGUAN EDIT REMOVAL - 不再含 FREQ_UAR（UAR 走超空间直投，站点电信服务器不再记录该频道）
 	autolinkers = list("command")
 
 /obj/machinery/telecomms/server/presets/command/New()
@@ -177,11 +177,9 @@
 		"name" = RADIO_CHANNEL_COMMAND,
 		"color" = RADIO_COLOR_COMMAND
 	)
-	//TIANGUAN EDIT ADDITION - UAR 频道：不登记这里，日志条目就没有频道名/颜色 ⇒ 游戏内日志里看不到该频道
-	frequency_infos["[FREQ_UAR]"] = list(
-		"name" = RADIO_CHANNEL_UAR,
-		"color" = RADIO_COLOR_UAR
-	)
+	//TIANGUAN EDIT REMOVAL - UAR 频道已改走超空间直投（RADIO_SPECIAL_UAR，见 radio.dm / broadcasting.dm），
+	//  信号不再进站点电信网 ⇒ 本服务器永不产生 UAR 日志，故此处不再登记频道名/颜色（原登记见 git 历史）。
+	//  聊天栏的频道名与深红配色走 communications.dm 的 reserved_radio_frequencies / reserved_radio_colors，不受影响。
 
 /obj/machinery/telecomms/server/presets/engineering
 	id = "Engineering Server"

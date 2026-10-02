@@ -59,7 +59,7 @@
 	autolinkers = list("receiverA") // link to relay
 	//TIANGUAN EDIT CHANGE - UAR 频道：接收机是信号入网的第一道闸门（receiver.dm:20 is_freq_listening），
 	//  新频道不登记在这里 ⇒ 信号进不了电信网 ⇒ 谁都收不到（含发言者自己）。总线只是第二道。
-	freq_listening = list(FREQ_SCIENCE, FREQ_MEDICAL, FREQ_SUPPLY, FREQ_SERVICE, FREQ_ENTERTAINMENT, FREQ_UAR)
+	freq_listening = list(FREQ_SCIENCE, FREQ_MEDICAL, FREQ_SUPPLY, FREQ_SERVICE, FREQ_ENTERTAINMENT) //TIANGUAN EDIT REMOVAL - 不再含 FREQ_UAR：UAR 改走超空间直投（RADIO_SPECIAL_UAR），不进站点电信网
 
 
 //--PRESET RIGHT--//
@@ -68,7 +68,7 @@
 	network = "tcommsat"
 	autolinkers = list("receiverB") // link to relay
 	//TIANGUAN EDIT CHANGE - UAR 频道（同上；这台是"指挥/工程/安保"那路接收机）
-	freq_listening = list(FREQ_COMMAND, FREQ_ENGINEERING, FREQ_SECURITY, FREQ_UAR)
+	freq_listening = list(FREQ_COMMAND, FREQ_ENGINEERING, FREQ_SECURITY) //TIANGUAN EDIT REMOVAL - 不再含 FREQ_UAR（同见 receiver 上方说明）
 
 /obj/machinery/telecomms/receiver/preset_right/Initialize(mapload)
 	. = ..()

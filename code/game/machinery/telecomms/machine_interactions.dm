@@ -14,6 +14,12 @@
 		FREQ_CTF_YELLOW,
 		FREQ_CTF_GREEN,
 		FREQ_CTF_BLUE,
+		//TIANGUAN EDIT ADDITION - UAR 频道：与中央指挥部/辛迪加同级，属"内部频道"
+		//  效果：① 电信服务器不为其建日志（server.dm:45 的注释即此意）② 任何电信机器都无法被手动调谐到该频率
+		//  （machine_interactions.dm:123）；中继不受影响（server 后续照常 relay_information），耳机收发正常。
+		//  注：UAR 现已改走超空间直投（RADIO_SPECIAL_UAR，见 radio.dm / broadcasting.dm），不再进站点电信网；
+		//  本行保留为双保险 —— 万一日后有人把 UAR 重新登记进站点网，电信侧依然既记不到也调不到。
+		FREQ_UAR,
 	)
 
 /obj/machinery/telecomms/screwdriver_act(mob/living/user, obj/item/tool)

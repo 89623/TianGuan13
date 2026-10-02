@@ -354,6 +354,8 @@
 	name = "团结联盟频道加密钥匙"
 	desc = "只挂团结联盟频道（:ua）的加密钥匙。"
 	channels = list(RADIO_CHANNEL_UAR = 1)
+	//TIANGUAN EDIT ADDITION - UAR 为内部频道（与中央指挥部同款超空间直投）；此位让钥匙/host 端有权收发 UAR，普通电台即便调到 136.1 也收不到（见 radio.dm 的 can_receive 守卫）
+	special_channels = RADIO_SPECIAL_UAR
 
 // ⚠️ 每把钥匙都要**显式**写全自己的频道：别指望在父类 Initialize 里给子类补挂 UAR
 //    （实测：子类的 channels 会覆盖父类的表，兜底不会生效，探针验过 {"Command":1} 里没有 UAR）
@@ -369,7 +371,7 @@
 /obj/item/encryptionkey/uar/all_band
 	name = "团结联盟全频段加密钥匙"
 	desc = "同时接入所有部门频道、AI 私有频道、纳米中央指挥部频道与团结联盟频道（:ua）的加密钥匙。"
-	special_channels = RADIO_SPECIAL_CENTCOM
+	special_channels = RADIO_SPECIAL_CENTCOM | RADIO_SPECIAL_UAR   //TIANGUAN EDIT: 追加 UAR 内部频道位（否则该耳机收不到 :ua）
 	channels = list(
 		RADIO_CHANNEL_UAR = 1,
 		RADIO_CHANNEL_COMMAND = 1,
