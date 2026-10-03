@@ -204,6 +204,11 @@
 
 	var/music_volume = prefs.read_preference(/datum/preference/numeric/volume/sound_lobby_volume) * volume_multiplier
 	if((prefs && music_volume) && !CONFIG_GET(flag/disallow_title_music))
+		//TIANGUAN EDIT ADDITION START - LOBBY_MUSIC_PLAYLIST
+		// 模块接管大厅 BGM：一首播完自动随机切下一首；模块不在/池为空时返回 FALSE，走下面原逻辑
+		if(tianguan_lobby_playlist_start(music_volume))
+			return
+		//TIANGUAN EDIT ADDITION END
 		SEND_SOUND(src, sound(SSticker.login_music, repeat = 0, wait = 0, volume = music_volume, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
 
 ///get a random frequency.
