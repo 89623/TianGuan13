@@ -282,6 +282,17 @@ const FunTab = (props) => {
     <Stack fill vertical>
       <Stack.Item>
         <Stack fill>
+          {/* TIANGUAN EDIT ADDITION START - ADMIN_COUNTDOWN */}
+          <Stack.Item>
+            <Button
+              icon="hourglass-half"
+              lineHeight={lineHeightNormal}
+              width={buttonWidthNormal}
+              content="全局倒计时"
+              onClick={() => act('tianguan_countdown_open')}
+            />
+          </Stack.Item>
+          {/* TIANGUAN EDIT ADDITION END */}
           <Stack.Item>
             <Button
               icon="robot"
@@ -667,7 +678,8 @@ export const Secrets = (props) => {
   const TabComponent = TAB2NAME[tabIndex - 1].component();
 
   return (
-    <Window title="Secrets Panel" width={500} height={520} theme="admin">
+    <Window title="Secrets Panel" width={660} height={520} theme="admin">
+      {/* TIANGUAN EDIT CHANGE - ADMIN_COUNTDOWN - 原为 width={500} height={520}（多一个按钮后 Fun 首行会溢出） */}
       <Window.Content>
         <Flex direction="column" height="100%">
           <Flex.Item mb={1}>

@@ -48,6 +48,10 @@ ADMIN_VERB(secrets, R_NONE, "秘密", "Abuse harder than you ever have before wi
 		return
 	if((action != "admin_log" || action != "show_admins") && !check_rights(R_ADMIN))
 		return
+	// TIANGUAN EDIT ADDITION START - ADMIN_COUNTDOWN
+	if(tianguan_countdown_ui_act(action, params, holder))
+		return
+	// TIANGUAN EDIT ADDITION END
 	switch(action)
 		//Generic Buttons anyone can use.
 		if("admin_log")

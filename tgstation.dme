@@ -10137,6 +10137,7 @@
 #include "modular_tianguan\modules\sponsor_loadout_items\code\sponsor_plushies.dm"
 #include "modular_tianguan\modules\uar_human_lore\code\uar_human_lore.dm"
 #include "modular_tianguan\modules\lobby_music_playlist\code\lobby_music_playlist.dm"
+#include "modular_tianguan\modules\admin_countdown\code\admin_countdown.dm"
 
 
 
