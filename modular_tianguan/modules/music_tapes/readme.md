@@ -25,29 +25,52 @@
 `Resident Evil Main Title Theme`、`Midnightride`、`One Bad Man`、`宽体`、`Ultimate Battle`、
 `Pompeii`、`运动员进行曲`。
 
-## ⚠️ 已知问题（尚未解决，用户实测上报）
+## 货舱订购的四条机制（上游行为，不是本模块的 bug）
 
-> **货舱订购这些磁带后，部分商品送不到（用户反馈：英文歌名的磁带到不了）。**
+> **用户实测记录**（同一局 `cargo.html`，一次订 10 盘）：
+> `2 orders in this shipment, worth 400 credits. 100 credits left.` →
+> 13 分钟后 `7 orders in this shipment, worth 1400 credits. 100 credits left.`
+> ⇒ 第一趟只到 2 盘、其余在下一趟到齐。**与歌名/语言无关。**
 
-已排查并确认的机制（供后续接手用）：
+**1. 一趟能发几单，由「货舱账户余额」决定（最关键）**
 
-1. **箱子只能落在穿梭机的空格地板上**：`code/modules/shuttle/mobile_port/variants/supply.dm` 的
-   `buy()` 里 `if(!empty_turfs.len) break` —— 穿梭机地板被占满（通常是上几趟没搬走的旧箱子）时，
-   **静默跳过、箱子根本不生成，订单仍挂在购物车**。⇒ 看穿梭机地板上有没有堆箱子即可判断。
-2. **商品分类必须挂在「存在的父类型」下**：目录由 `subtypesof(/datum/supply_pack)` 构建
-   （`code/controllers/subsystem/shuttle.dm:162`），分类来自父类型的 `group`
-   （`/datum/supply_pack/service` → `group = "Service"`）。**此前误挂在 `/datum/supply_pack/general`
-   之下（仓库里没有这个父类型）⇒ `group = ""` ⇒ 界面里这几个商品没有分类**。本模块已改为 `service/`。
-3. **商品 id**：`/datum/supply_pack` 的 `id = type`（`code/modules/cargo/packs/_packs.dm:37`），
-   前端加购发的是 `pack.id`（`tgui/.../Cargo/CargoCatalog.tsx`），服务端按 id 回查
-   `SSshuttle.supply_packs[id]` ⇒ id 必须是类型路径、唯一。
-4. 已排除：地图不缺货舱穿梭机模板（模板按名字在 `_maps/shuttles/` 下递归加载，三张图绑的模板均存在）；
-   控制台的 `cargo_shuttle`/`docking_home`/`docking_away` 三个 id 与地图一致；
-   服务器启动日志无 asset/icon 报错。
+`code/modules/shuttle/mobile_port/variants/supply.dm` 的 `buy()` 逐单发货并**从货舱账户扣钱**
+（每箱 = `pack.cost`，磁带 = `CARGO_CRATE_VALUE` = 200）：
 
-**仍未定位的部分**：为何**英文歌名**的那几盘在实测中到不了、而中文歌名的能到（见 3 的 id 链条与
-i18n 的形状差异），需要在**有客户端的真实跑局**里逐单核对（无头探针只能验数值/状态，
-验不了穿梭机的实际往返与卸货）。
+```dm
+if(!paying_for_this.adjust_money(-price, "Cargo: [spawning_order.pack.name]"))
+	if(!spawning_order.can_be_cancelled)   // 普通订单可取消 ⇒ 不删，留在购物车
+		SSshuttle.shopping_list -= spawning_order
+		continue
+```
+
+- **余额不足的订单留在购物车，等下一趟（账户攒够钱后）继续发** ⇒ 「一次订 10 盘、只到 2 盘、
+  其余随后才到」就是这么来的；
+- 排在**购物车前面**的先轮到钱 ⇒ 表现为「有的先到有的后到」，**与商品/歌名/语言无关**；
+- ⇒ **想一趟全收到，先保证货舱账户余额 ≥ 商品总价**（10 盘磁带 = 2000）。
+
+**2. 需要两次点击（去 + 回）**
+
+装货只发生在「**从采购点出发**」那一刻（同文件的 `initiate_docking`）：
+
+```dm
+if(getDockedId() == "cargo_away")   // 只有从采购点出发时
+	buy()                             // 才逐单扣款发货、装箱上穿梭机
+```
+
+控制台那一个按钮两种状态（`code/modules/cargo/orderconsole.dm:418`）：
+在站 ⇒ 派它去采购（空车去）；在采购点 ⇒ 召回。⇒ 点「送出」+ 再点一次。
+
+**3. ⚠️ 派车离开站时，穿梭机上没搬走的箱子会被当出口物资自动卖掉**
+
+`buy()`/`sell()` 在到达采购点时会结算穿梭机上的货物（实测日志：
+`contents sold for 400 credits. Contents: 运动员进行曲 - #4724,宽体 - #4723`）
+⇒ **货到了要第一时间从穿梭机上搬下来**，否则连箱带货一起被回收。
+
+**4. 装货还需要「空格地板」**
+
+箱子落在穿梭机地板空格上，`if(!empty_turfs.len) break`。梭机地板实测 55 格（`cargo_delta.dmm`），
+正常一趟装十几箱不成问题；但旧箱子堆着不搬走会逐渐减少可用格数，仍建议每趟清空。
 
 ## 新增与修改的文件
 
