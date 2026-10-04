@@ -23,6 +23,31 @@ type Data = {
   title_color: string;
   countdown_color: string;
   end_color: string;
+  silent: boolean;
+  music_catalog: MusicOption[];
+  music_selection: string[];
+  music_rate_manual: number;
+  music_volume: number;
+  music_interval: number;
+  music_status: MusicStatus;
+};
+
+/** 曲库条目：key = 点唱机上传目录里的文件名（唯一），name = 显示名 */
+type MusicOption = { key: string; name: string };
+
+/** 传输状态：每个在线玩家一行（pushed/total + 是否已推完） */
+type MusicStatus = {
+  players: {
+    ckey: string;
+    name: string;
+    pushed: number;
+    total: number;
+    ready: boolean;
+    online: boolean;
+  }[];
+  ready_count: number;
+  online_count: number;
+  total: number;
 };
 
 const STATE_TEXT = ['未进行任何设置', '倒计时中', '已暂停', '显示结束文本'];
@@ -131,6 +156,13 @@ export const TianGuanCountdown = (props) => {
     title_color,
     countdown_color,
     end_color,
+    silent,
+    music_catalog,
+    music_selection,
+    music_rate_manual,
+    music_volume,
+    music_interval,
+    music_status,
   } = data;
 
   const [inputTitle, setInputTitle] = useState(title);
@@ -148,7 +180,7 @@ export const TianGuanCountdown = (props) => {
   const active = state !== 0;
 
   return (
-    <Window title="全局倒计时" width={440} height={640}>
+    <Window title="全局倒计时" width={560} height={760}>
       <Window.Content scrollable>
         <Section title="当前状态">
           <LabeledList>
@@ -328,6 +360,141 @@ export const TianGuanCountdown = (props) => {
                   </Button>
                 </Stack.Item>
               </Stack>
+            </Stack.Item>
+          </Stack>
+        </Section>
+
+        <Section title="倒计时音乐（预传输）">
+          <Stack vertical>
+            <Stack.Item>
+              <Button.Checkbox
+                checked={silent}
+                onClick={() => act('set_silent', { silent: !silent })}
+              >
+                纯准备模式（倒计时不给玩家显示，只在本面板里走）
+              </Button.Checkbox>
+            </Stack.Item>
+
+            <Stack.Item>
+              <Stack align="center">
+                <Stack.Item grow>
+                  <Box bold>曲目（来自点唱机曲库 / 管理员上传的音频）</Box>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    icon="upload"
+                    tooltip="复用「点唱机上传音乐」（文件名需 标题+节拍.ogg）"
+                    onClick={() => act('upload_music')}
+                  >
+                    上传音频
+                  </Button>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    icon="rotate"
+                    tooltip="上传完成后点一下，新曲目立刻出现在列表里"
+                    onClick={() => act('refresh_music')}
+                  >
+                    刷新列表
+                  </Button>
+                </Stack.Item>
+              </Stack>
+              <Box height="9rem" overflowY="auto" mt={0.5}>
+                {music_catalog.length === 0 && (
+                  <Box color="bad">
+                    点唱机曲库为空 —— 先用「点唱机上传音乐」上传 .ogg
+                  </Box>
+                )}
+                {music_catalog.map((song) => {
+                  const selected = music_selection.includes(song.key);
+                  return (
+                    <Stack key={song.key} align="center">
+                      <Stack.Item grow>
+                        <Button.Checkbox
+                          checked={selected}
+                          onClick={() => {
+                            const next = selected
+                              ? music_selection.filter((k) => k !== song.key)
+                              : [...music_selection, song.key];
+                            act('set_music', { selection: next });
+                          }}
+                        >
+                          {song.name}
+                        </Button.Checkbox>
+                      </Stack.Item>
+                      <Stack.Item>
+                        <Button
+                          icon="headphones"
+                          tooltip="试听（只有你能听见）"
+                          onClick={() => act('preview_music', { song: song.key })}
+                        />
+                      </Stack.Item>
+                    </Stack>
+                  );
+                })}
+              </Box>
+            </Stack.Item>
+
+            <Stack.Item>
+              <Stack align="center">
+                <Stack.Item width="7rem">音量</Stack.Item>
+                <Stack.Item grow>
+                  <NumberInput
+                    fluid
+                    minValue={1}
+                    maxValue={100}
+                    unit="%"
+                    value={music_volume}
+                    onChange={(value) =>
+                      act('set_music_volume', { volume: value })
+                    }
+                  />
+                </Stack.Item>
+              </Stack>
+            </Stack.Item>
+
+            <Stack.Item>
+              <Stack align="center">
+                <Stack.Item width="7rem">传输节奏</Stack.Item>
+                <Stack.Item grow>
+                  <NumberInput
+                    fluid
+                    minValue={0}
+                    maxValue={600}
+                    step={1}
+                    unit="秒/份"
+                    value={music_rate_manual}
+                    onChange={(value) => act('set_music_rate', { rate: value })}
+                  />
+                </Stack.Item>
+                <Stack.Item width="17rem" color="label">
+                  0 = 自动（当前 {music_interval.toFixed(1)} 秒/份；只有一首歌时 =「秒/人」）
+                </Stack.Item>
+              </Stack>
+            </Stack.Item>
+
+            <Stack.Item>
+              <Stack align="center">
+                <Stack.Item grow>
+                  <Box bold>
+                    传输状态（已选 {music_selection.length} 首 · 在线{' '}
+                    {music_status.online_count} 人 · 就绪{' '}
+                    {music_status.ready_count} 人）
+                  </Box>
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    icon="table-list"
+                    tooltip="表格版：按玩家数铺开，每人一条进度条"
+                    onClick={() => act('open_transfer')}
+                  >
+                    查看传输详情
+                  </Button>
+                </Stack.Item>
+              </Stack>
+              <Box color="label" mt={0.5}>
+                玩家多时点「查看传输详情」：那边按人数自动换行铺成表格，每个玩家名字下面一条进度条。
+              </Box>
             </Stack.Item>
           </Stack>
         </Section>

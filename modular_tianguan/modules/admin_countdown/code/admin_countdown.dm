@@ -15,6 +15,9 @@
 
 GLOBAL_DATUM(tianguan_countdown, /datum/tianguan_countdown)
 
+/// 打开着的倒计时面板（运行中每秒刷新「传输状态表」用）
+GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
+
 #define TIANGUAN_CD_IDLE 0
 #define TIANGUAN_CD_RUNNING 1
 #define TIANGUAN_CD_PAUSED 2
@@ -72,6 +75,28 @@ GLOBAL_DATUM(tianguan_countdown, /datum/tianguan_countdown)
 	var/end_color = "#FFFFFF"
 	var/atom/movable/screen/tianguan_countdown/hud
 	var/timer_id
+	// ── 倒计时音乐（预传输 + 到点播放，实现见同目录 countdown_music.dm）──
+	/// 纯准备模式：不给玩家显示任何屏幕元素（倒计时只在管理员面板里走，专用来当放歌准备窗）
+	var/silent = FALSE
+	/// 选中的曲目（显示名，取自 tianguan_countdown_music_catalog()）
+	var/list/music_selection = list()
+	/// 传输节奏：0 = 自动（剩余时间 ÷ 剩余份数），>0 = 管理员指定的每份间隔秒数
+	/// 一份 = 一个玩家的一首歌 ⇒ 只有一首歌时就是「秒/人」
+	var/music_rate_manual = 0
+	/// 播放音量 1~100（仍会按每个玩家自己的音量偏好逐个折算）
+	var/music_volume = 60
+	/// 每个玩家的传输状态：ckey → list(name, pushed, ready, left)
+	var/list/music_status = list()
+	/// 待推送队列：list(list(ckey, 曲目序号)) —— 全局单条，份与份之间天然错峰
+	var/list/music_transfer_queue = list()
+	/// 推送队列的推进定时器（全局只有一个）
+	var/music_transfer_timer
+	/// 已推送总次数（面板汇总用）
+	var/music_pushed_total = 0
+	/// 连播进度（到点后按顺序播第几首）
+	var/music_play_index = 0
+	/// 连播推进定时器（与传输定时器分开：收尾清理不会掐掉刚开始的播放）
+	var/music_play_timer
 
 /datum/tianguan_countdown/New()
 	. = ..()
@@ -101,6 +126,7 @@ GLOBAL_DATUM(tianguan_countdown, /datum/tianguan_countdown)
 	end_deadline = 0
 	start_ticking()
 	refresh_all()
+	music_begin_transfer()
 
 /// 暂停 ⇄ 继续（只在倒计时阶段有意义）
 /datum/tianguan_countdown/proc/toggle_pause()
@@ -117,6 +143,7 @@ GLOBAL_DATUM(tianguan_countdown, /datum/tianguan_countdown)
 
 /// 结束：文本与计时全部消失，回到「未进行任何设置」
 /datum/tianguan_countdown/proc/stop()
+	music_cleanup_transfer()
 	if(timer_id)
 		deltimer(timer_id)
 		timer_id = null
@@ -132,6 +159,10 @@ GLOBAL_DATUM(tianguan_countdown, /datum/tianguan_countdown)
 		hud.maptext = ""
 	for(var/client/player as anything in GLOB.clients)
 		player?.screen -= hud
+	music_selection = list()
+	music_status = list()
+	music_pushed_total = 0
+	music_cleanup_transfer() // 清掉推送定时器与队列（幂等：上面已清过一次也无妨）
 
 /// 颜色校验：只接受 #RGB/#RGBA/#RRGGBB/#RRGGBBAA 或少量常用色名；
 /// 非法值一律回退白色 —— 颜色会被拼进 maptext 的内联 CSS，不校验等于把任意字符串塞进 HTML。
@@ -201,7 +232,11 @@ GLOBAL_DATUM(tianguan_countdown, /datum/tianguan_countdown)
 	//   逐跳累减会把这类抖动累积成误差；以截止时刻为准 ⇒ 与真实时间始终一致，且卡顿后自动追上。
 	if(state == TIANGUAN_CD_RUNNING)
 		remaining = max(running_deadline - world.time, 0)
+		// 倒计时途中新加入的玩家：每秒补登一次，把他们的份额追加进推送队列
+		if(length(music_selection) && remaining > 0)
+			music_register_online_players()
 		if(remaining <= 0)
+			music_play() // 到点播放（曲目已在倒计时里预传输 ⇒ 客户端命中本地缓存）
 			if(end_text && end_seconds > 0)
 				state = TIANGUAN_CD_ENDTEXT
 				end_remaining = end_seconds * 10
@@ -215,9 +250,23 @@ GLOBAL_DATUM(tianguan_countdown, /datum/tianguan_countdown)
 			stop()
 			return
 	refresh_all()
+	// 让打开着的面板每秒回显一次「传输状态表」（面板刷新只能由服务端推）
+	for(var/datum/tianguan_countdown_ui/panel as anything in GLOB.tianguan_countdown_uis)
+		SStgui.update_uis(panel)
+	for(var/datum/tianguan_countdown_transfer_ui/window as anything in GLOB.tianguan_countdown_transfer_uis)
+		SStgui.update_uis(window)
 
 /// 挂到所有客户端（顺带收编新登录的玩家 —— 故无需核心登录钩子）+ 刷新文本
 /datum/tianguan_countdown/proc/refresh_all()
+	if(silent)
+		// 纯准备模式：不给玩家挂任何屏幕元素
+		for(var/client/hidden_player as anything in GLOB.clients)
+			if(QDELETED(hidden_player))
+				continue
+			hidden_player.screen -= hud
+		if(hud)
+			hud.maptext = ""
+		return
 	for(var/client/player as anything in GLOB.clients)
 		if(QDELETED(player))
 			continue
@@ -227,6 +276,8 @@ GLOBAL_DATUM(tianguan_countdown, /datum/tianguan_countdown)
 		hud.maptext = build_maptext()
 
 /datum/tianguan_countdown/proc/build_maptext()
+	if(silent)
+		return ""
 	if(state == TIANGUAN_CD_IDLE)
 		return ""
 	if(state == TIANGUAN_CD_ENDTEXT)
@@ -255,6 +306,7 @@ GLOBAL_DATUM(tianguan_countdown, /datum/tianguan_countdown)
 		holder = user_mob?.client
 
 /datum/tianguan_countdown_ui/Destroy()
+	GLOB.tianguan_countdown_uis -= src
 	holder = null
 	return ..()
 
@@ -262,6 +314,7 @@ GLOBAL_DATUM(tianguan_countdown, /datum/tianguan_countdown)
 	return ADMIN_STATE(R_ADMIN)
 
 /datum/tianguan_countdown_ui/ui_interact(mob/user, datum/tgui/ui)
+	GLOB.tianguan_countdown_uis |= src
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "TianGuanCountdown")
@@ -299,6 +352,14 @@ GLOBAL_DATUM(tianguan_countdown, /datum/tianguan_countdown)
 	data["title_color"] = countdown.title_color
 	data["countdown_color"] = countdown.countdown_color
 	data["end_color"] = countdown.end_color
+	data["silent"] = countdown.silent
+	// 曲库来自点唱机上传目录：只下发「文件名 + 显示名」，路径与时长留在服务端
+	data["music_catalog"] = tianguan_countdown_music_options()
+	data["music_selection"] = countdown.music_selection
+	data["music_rate_manual"] = countdown.music_rate_manual
+	data["music_volume"] = countdown.music_volume
+	data["music_interval"] = countdown.music_interval_seconds()
+	data["music_status"] = countdown.music_status_table()
 	return data
 
 /datum/tianguan_countdown_ui/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -345,4 +406,59 @@ GLOBAL_DATUM(tianguan_countdown, /datum/tianguan_countdown)
 			INVOKE_ASYNC(src, PROC_REF(pick_color), holder, "countdown")
 		if("pick_end_color")
 			INVOKE_ASYNC(src, PROC_REF(pick_color), holder, "end")
+		if("set_silent")
+			// 纯准备模式：倒计时不给玩家显示，只在面板里走（专用来当放歌准备窗）
+			countdown.silent = !!params["silent"]
+			countdown.refresh_all()
+			log_admin("[key_name(holder)] 把全局倒计时设为[countdown.silent ? "纯准备（静默）" : "正常显示"]模式。")
+		if("set_music")
+			var/list/requested = params["selection"]
+			if(!islist(requested))
+				requested = list()
+			// 只接受曲库内的显示名：不把任意字符串带进后续逻辑
+			var/list/catalog = tianguan_countdown_music_catalog()
+			var/list/accepted = list()
+			for(var/song in requested)
+				if(catalog[song])
+					accepted += song
+			countdown.music_selection = accepted
+			log_admin("[key_name(holder)] 选了 [length(accepted)] 首倒计时曲目。")
+		if("set_music_rate")
+			var/rate = text2num(params["rate"])
+			countdown.music_rate_manual = clamp(isnull(rate) ? 0 : rate, 0, 600)
+			log_admin("[key_name(holder)] 把倒计时传输节奏设为[countdown.music_rate_manual ? "[countdown.music_rate_manual] 秒/首" : "自动"]。")
+		if("set_music_volume")
+			var/volume = text2num(params["volume"])
+			countdown.music_volume = clamp(isnull(volume) ? 60 : volume, 1, 100)
+			log_admin("[key_name(holder)] 把倒计时音乐音量设为 [countdown.music_volume]。")
+		if("preview_music")
+			// 试听：只放给按按钮的管理员自己，用来确认音量与曲目
+			var/song = params["song"]
+			var/list/track = tianguan_countdown_music_catalog()[song]
+			if(track && holder?.mob)
+				// 与点唱机一致的构造方式（sound(路径) + CHANNEL_JUKEBOX）——
+				// 实测 CHANNEL_ADMIN 那条路在客户端无声，详见 countdown_music.dm 的注释
+				var/sound/preview = sound(track["path"])
+				log_world("TIANGUAN_COUNTDOWN_MUSIC: 试听 [track["name"]] file=[track["path"]] 存在=[fexists(track["path"]) ? 1 : 0] 音量=[countdown.music_volume] 目标=[holder.mob]")
+				preview.channel = CHANNEL_JUKEBOX
+				preview.volume = countdown.music_volume
+				SEND_SOUND(holder.mob, preview)
+		if("upload_music")
+			// 直接复用现成的「点唱机上传音乐」verb（走 SSadmin_verbs 的正规入口，
+			// 权限检查与参数收集都由它负责）⇒ 本模块不复制一份上传逻辑
+			if(!check_rights(R_SERVER, FALSE))
+				return
+			INVOKE_ASYNC(SSadmin_verbs, TYPE_PROC_REF(/datum/controller/subsystem/admin_verbs, dynamic_invoke_verb), holder, /datum/admin_verb/upload_jukebox_music)
+		if("refresh_music")
+			// 上传走的是异步对话框，返回时面板已经刷过一次 ⇒ 给管理员一个手动刷新按钮：
+			// 曲库按「目录清单是否变化」判断，这里只要触发一次 ui 刷新即可。
+			. = TRUE
+		if("open_transfer")
+			// 打开独立的「传输详情」窗口（表格版，玩家多时才铺得开）
+			var/datum/tianguan_countdown_transfer_ui/window = holder.tianguan_countdown_transfer_ui
+			if(!window)
+				window = new /datum/tianguan_countdown_transfer_ui(holder)
+				holder.tianguan_countdown_transfer_ui = window
+			window.ui_interact(holder.mob)
+			. = TRUE
 	return TRUE
