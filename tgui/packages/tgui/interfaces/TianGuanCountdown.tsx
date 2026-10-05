@@ -34,6 +34,8 @@ type Data = {
   music_remaining: number;
   music_duration: number;
   music_follow_screen: boolean;
+  music_delta: number;
+  music_from_end: boolean;
 };
 
 /** 曲库条目：key = 点唱机上传目录里的文件名（唯一），name = 显示名 */
@@ -55,6 +57,12 @@ type MusicStatus = {
 };
 
 const STATE_TEXT = ['未进行任何设置', '倒计时中', '已暂停', '显示结束文本'];
+
+/** 秒 ⇒ M:SS（面板里所有时长都按这个显示，不再裸用"秒"） */
+const fmt = (sec: number) => {
+  const safe = Math.max(Math.round(sec), 0);
+  return `${Math.floor(safe / 60)}:${String(safe % 60).padStart(2, '0')}`;
+};
 
 const COLOR_PRESETS = [
   { name: '白', value: '#FFFFFF' },
@@ -171,13 +179,15 @@ export const TianGuanCountdown = (props) => {
     music_remaining,
     music_duration,
     music_follow_screen,
+    music_delta,
+    music_from_end,
   } = data;
 
   const [inputTitle, setInputTitle] = useState(title);
   const [inputSeconds, setInputSeconds] = useState(60);
   const [inputEndText, setInputEndText] = useState(end_text);
   const [inputEndSeconds, setInputEndSeconds] = useState(end_seconds || 10);
-  // 初值取自后台（0 = 与明面倒计时同长），改动时会回写后台
+  // 初值取自后台（0 = 与全局倒计时同长），改动时会回写后台
   const [musicDuration, setMusicDuration] = useState(music_duration);
   const [editTitle, setEditTitle] = useState('');
   const [editEndText, setEditEndText] = useState('');
@@ -439,7 +449,7 @@ export const TianGuanCountdown = (props) => {
 
         <Section title="内部倒计时（放歌准备窗）">
           <Box color="label">
-            它与上面的明面倒计时
+            它与上面的全局倒计时
             <Box inline bold>
               {' 各自独立计时 '}
             </Box>
@@ -447,7 +457,7 @@ export const TianGuanCountdown = (props) => {
             <Box inline bold>
               {' 这个归零时就播放 '}
             </Box>
-            。想让「明面走一段之后才播」⇒ 把它填得比明面短即可。
+            。想让「全局倒计时走一段之后才播」⇒ 把它填得比全局倒计时短即可。
           </Box>
           <Box mt={0.5}>
             <Button.Checkbox
@@ -456,7 +466,7 @@ export const TianGuanCountdown = (props) => {
                 act('set_follow', { follow: !music_follow_screen })
               }
             >
-              跟随明面倒计时一起启动（勾上后点上面的「开始倒计时」即可，同长、到时自动播放）
+              跟随全局倒计时一起启动（勾上后点上面的「开始倒计时」即可，同长、到时自动播放）
             </Button.Checkbox>
           </Box>
           {music_follow_screen && music_selection.length === 0 && (
@@ -464,6 +474,19 @@ export const TianGuanCountdown = (props) => {
               ⚠ 未勾选曲目 ⇒ 跟随不生效
             </Box>
           )}
+          <Stack align="center" mt={0.5}>
+            <Stack.Item>
+              <Button.Checkbox
+                checked={music_from_end}
+                tooltip="开 = 按「距全局倒计时结束」算；关 = 按「从全局倒计时开始算」"
+                onClick={() =>
+                  act('set_from_end', { from_end: !music_from_end })
+                }
+              >
+                按「距全局倒计时结束」算
+              </Button.Checkbox>
+            </Stack.Item>
+          </Stack>
           <Stack align="center" mt={0.5}>
             <Stack.Item width="4rem">时长</Stack.Item>
             <Stack.Item width="9rem">
@@ -518,15 +541,19 @@ export const TianGuanCountdown = (props) => {
             </Stack.Item>
             <Stack.Item color="label">
               {music_state
-                ? `进行中，剩余 ${Math.max(Math.round(music_remaining), 0)} 秒`
+                ? `进行中 · 距播放还有 ${fmt(music_remaining)}${
+                    state === 1
+                      ? `（全局倒计时结束${music_delta >= 0 ? '后' : '前'} ${fmt(Math.abs(music_delta))}）`
+                      : ''
+                  }`
                 : music_duration > 0
-                  ? `未启动（上次设定 ${Math.floor(music_duration / 60)} 分 ${music_duration % 60} 秒）`
-                  : '未启动（时长 0:00 ⇒ 与明面同长）'}
+                  ? `未启动（上次设定 ${fmt(music_duration)}）`
+                  : '未启动（时长 0:00 ⇒ 与全局倒计时同长）'}
             </Stack.Item>
           </Stack>
           <Box mt={0.5} color="label">
-            时长填 0:00 ⇒ 与明面倒计时同长（明面结束时正好播放）；
-            填比如 1 分 0 秒 ⇒ 明面走到第 60 秒就播放（配合上面的「跟随」一次点击即可）。
+            默认按「距全局倒计时结束」算：音乐填 1:00 ⇒ 总倒计时还剩 1:00 时播放（全局倒计时 3:00 就是第 2 分钟播）；
+            0:00 ⇒ 与全局倒计时同长（结束时播）。
           </Box>
         </Section>
 
@@ -565,6 +592,9 @@ export const TianGuanCountdown = (props) => {
                   </Button>
                 </Stack.Item>
               </Stack>
+              <Box color="label" mt={0.5}>
+                勾选多个会根据勾选先后顺序依次播放
+              </Box>
               <Box height="9rem" overflowY="auto" mt={0.5}>
                 {music_catalog.length === 0 && (
                   <Box color="bad">

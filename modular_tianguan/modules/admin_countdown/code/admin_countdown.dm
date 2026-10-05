@@ -67,15 +67,20 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 	var/end_deadline = 0
 	/// 结束文本总时长（秒，界面回显用）
 	var/end_seconds = 0
-	/// 明面倒计时总时长（秒，用于算「已过了多久」⇒ 阶段切换的依据）
+	/// 全局倒计时总时长（秒，用于算「已过了多久」⇒ 阶段切换的依据）
 	var/total_seconds = 0
 	/// 标题阶段：list(list("at" = 从倒计时开始算的**秒数（绝对时刻）**, "text" = 该阶段起显示的标题,
 	/// "color" = 该阶段的标题颜色，空则用全局 title_color))。
 	/// 到点自动切换；为空则一直用静态 title。维护时按 at 升序排好。
 	var/list/title_stages = list()
-	/// 内部倒计时是否跟随明面倒计时自动启动（同长 ⇒ 同时结束并播放）。
+	/// 内部倒计时是否跟随全局倒计时自动启动（同长 ⇒ 同时结束并播放）。
 	/// 勾上后点「开始倒计时」一步到位，不必再单独开内部倒计时。
 	var/music_follow_screen = TRUE
+	/// 内部倒计时的「时长」按哪种口径解释：
+	///   TRUE（默认）= 按「距全局倒计时结束」：音乐填 1 分钟 ⇒ **全局倒计时还剩 1 分钟时播放**
+	///                 （例：全局倒计时 3:00 + 音乐 1:00 ⇒ 在总倒计时剩 1:00 时播）
+	///   FALSE        = 从全局倒计时开始算：音乐填 1 分钟 ⇒ 开始后 1 分钟播放
+	var/music_from_end = TRUE
 	/// 标题颜色（#RRGGBB / #RGB / 常用色名；非法值回退白色）
 	var/title_color = "#FFFFFF"
 	/// 倒计时颜色（同上）
@@ -106,7 +111,7 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 	var/music_play_index = 0
 	/// 连播推进定时器（与传输定时器分开：收尾清理不会掐掉刚开始的播放）
 	var/music_play_timer
-	// ── 内部倒计时（放歌准备窗）：与明面倒计时**各自独立计时**，归零即播放 ──
+	// ── 内部倒计时（放歌准备窗）：与全局倒计时**各自独立计时**，归零即播放 ──
 	/// 内部倒计时状态（复用同一套状态常量）
 	var/music_state = TIANGUAN_CD_IDLE
 	/// 内部倒计时剩余（分秒）
@@ -145,12 +150,12 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 	end_deadline = 0
 	start_ticking()
 	refresh_all()
-	// 内部倒计时：默认**跟随明面**一起启动（一步到位，不必再点下面那个按钮）。
-	// 时长优先用面板上给内部填过的值（⇒「明面 120 秒、第 60 秒播」也是一次点击）；
-	// 没填过（0）就与明面同长 ⇒ 明面结束时正好播放。
+	// 内部倒计时：默认**跟随全局倒计时**一起启动（一步到位，不必再点下面那个按钮）。
+	// 时长直接传 music_duration：**0 = 与全局倒计时同长**，由 begin_music() 按当前口径翻译成播放点
+	// （默认口径下 = 全局倒计时结束时播；从开始算口径下 = 全局倒计时那么长之后播）。
 	if(music_follow_screen && length(music_selection))
-		begin_music(music_duration > 0 ? music_duration : seconds)
-		log_admin("（自动）「跟随明面倒计时一起启动」带起了内部倒计时：[music_duration] 秒后播放。")
+		begin_music(music_duration)
+		log_admin("（自动）「跟随全局倒计时一起启动」带起了内部倒计时（音乐时长 [music_duration] 秒，口径：[music_from_end ? "距全局倒计时结束" : "从开始算"]）。")
 	else if(music_follow_screen)
 		// 勾了跟随但没选曲目 ⇒ 说清楚，别让它"静默不动"（这正是之前排查卡住的原因）
 		log_admin("（自动）跟随已勾选，但没有选中任何曲目 ⇒ 未启动内部倒计时。")
@@ -168,8 +173,8 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 		return
 	refresh_all()
 
-/// 只收掉「明面」这一套（屏幕元素 + 明面计时），**不碰**内部倒计时与放歌状态。
-/// 明面自动走完时用它 —— 两个计时器独立，明面先结束不该掐掉还在放的歌。
+/// 只收掉「全局倒计时」这一套（屏幕元素 + 全局倒计时计时），**不碰**内部倒计时与放歌状态。
+/// 全局倒计时自动走完时用它 —— 两个计时器独立，全局倒计时先结束不该掐掉还在放的歌。
 /datum/tianguan_countdown/proc/reset_screen()
 	state = TIANGUAN_CD_IDLE
 	title = ""
@@ -184,14 +189,14 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 	for(var/client/player as anything in GLOB.clients)
 		player?.screen -= hud
 
-/// 管理员点「结束」：明面 + 内部倒计时 + 传输全部收掉，回到「未进行任何设置」
+/// 管理员点「结束」：全局倒计时 + 内部倒计时 + 传输全部收掉，回到「未进行任何设置」
 /datum/tianguan_countdown/proc/stop()
 	reset_screen()
 	if(timer_id)
 		deltimer(timer_id)
 		timer_id = null
 	// ⚠️ 刻意**不**清空 music_selection：结束倒计时不该让管理员重挑歌；
-	//    而且「跟随明面一起启动」依赖它 —— 清掉会导致下次点「开始倒计时」时不带内部倒计时（实测踩到过）。
+	//    而且「跟随全局倒计时一起启动」依赖它 —— 清掉会导致下次点「开始倒计时」时不带内部倒计时（实测踩到过）。
 	music_status = list()
 	music_pushed_total = 0
 	music_state = TIANGUAN_CD_IDLE
@@ -257,7 +262,7 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 	timer_id = addtimer(CALLBACK(src, PROC_REF(tick)), 1 SECONDS, TIMER_LOOP | TIMER_STOPPABLE)
 
 /datum/tianguan_countdown/proc/tick()
-	// 两个计时器任一在跑，循环就得活着（只启动内部倒计时时明面是 IDLE）
+	// 两个计时器任一在跑，循环就得活着（只启动内部倒计时时全局倒计时是 IDLE）
 	if(state == TIANGUAN_CD_IDLE && music_state == TIANGUAN_CD_IDLE)
 		if(timer_id)
 			deltimer(timer_id)
@@ -277,15 +282,15 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 				end_remaining = end_seconds * 10
 				end_deadline = world.time + end_remaining
 			else
-				reset_screen() // 只收明面：内部倒计时（放歌准备窗）若还在跑，继续
+				reset_screen() // 只收全局倒计时：内部倒计时（放歌准备窗）若还在跑，继续
 				return
 	else if(state == TIANGUAN_CD_ENDTEXT)
 		end_remaining = max(end_deadline - world.time, 0)
 		if(end_remaining <= 0)
-			reset_screen() // 同上：明面结束文本到期只收明面
+			reset_screen() // 同上：全局倒计时结束文本到期只收全局倒计时
 			return
-	// ── 内部倒计时：与明面完全独立地推进；归零即播放 ──
-	//    （明面先走一段、内部到点就播，就是"两个时长填不一样"自然得到的效果）
+	// ── 内部倒计时：与全局倒计时完全独立地推进；归零即播放 ──
+	//    （全局倒计时先走一段、内部到点就播，就是"两个时长填不一样"自然得到的效果）
 	if(music_state == TIANGUAN_CD_RUNNING)
 		music_remaining = max(music_deadline - world.time, 0)
 		if(length(music_selection) && music_remaining > 0)
@@ -307,7 +312,7 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 /// 挂到所有客户端（顺带收编新登录的玩家 —— 故无需核心登录钩子）+ 刷新文本
 /datum/tianguan_countdown/proc/refresh_all()
 	if(silent || state == TIANGUAN_CD_IDLE)
-		// 纯准备模式 / 明面未启动：不给玩家挂任何屏幕元素
+		// 纯准备模式 / 全局倒计时未启动：不给玩家挂任何屏幕元素
 		// （「只启动内部倒计时」时玩家屏幕上就该什么都没有）
 		for(var/client/player as anything in GLOB.clients)
 			if(QDELETED(player))
@@ -413,11 +418,14 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 	data["music_volume"] = countdown.music_volume
 	data["music_interval"] = countdown.music_interval_seconds()
 	data["music_status"] = countdown.music_status_table()
-	// 内部倒计时（放歌准备窗）：与明面各自独立计时
+	// 内部倒计时（放歌准备窗）：与全局倒计时各自独立计时
 	data["music_state"] = countdown.music_state
 	data["music_remaining"] = countdown.music_remaining / 10
 	data["music_duration"] = countdown.music_duration
+	// 内部倒计时与全局倒计时的"相对差"（秒）：>0 = 全局倒计时结束后过这么久播放；<0 = 全局倒计时结束前
+	data["music_delta"] = (countdown.music_remaining - countdown.remaining) / 10
 	data["music_follow_screen"] = countdown.music_follow_screen
+	data["music_from_end"] = countdown.music_from_end
 	return data
 
 /datum/tianguan_countdown_ui/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -496,11 +504,11 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 		if("set_music_duration")
 			// 面板上「内部倒计时时长」的输入框改动即回写这里。
 			// ⚠️ 必须回写：跟随启动时按 music_duration 取时长，不回写的话它会一直是 0
-			//    ⇒ 明明填了 1 分钟却退化成"与明面同长"（实测踩到过）。
+			//    ⇒ 明明填了 1 分钟却退化成"与全局倒计时同长"（实测踩到过）。
 			var/duration = text2num(params["seconds"])
 			countdown.music_duration = clamp(isnull(duration) ? 0 : round(duration), 0, 36000)
 		if("start_music")
-			// 启动内部倒计时（放歌准备窗）：与明面独立；归零即播放
+			// 启动内部倒计时（放歌准备窗）：与全局倒计时独立；归零即播放
 			var/music_seconds = text2num(params["music_seconds"])
 			// 防呆：没勾曲目就直接拦住并弹框（没有歌的内部倒计时没有意义）
 			if(!length(countdown.music_selection))
@@ -512,9 +520,13 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 			countdown.stop_music()
 			log_admin("[key_name(holder)] 停止了内部倒计时。")
 		if("set_follow")
-			// 「跟随明面倒计时一起启动」：勾上后点「开始倒计时」就自动带内部倒计时同长启动
+			// 「跟随全局倒计时一起启动」：勾上后点「开始倒计时」就自动带内部倒计时同长启动
 			countdown.music_follow_screen = !!params["follow"]
-			log_admin("[key_name(holder)] 把「跟随明面倒计时一起启动」设为 [countdown.music_follow_screen ? "开" : "关"]。")
+			log_admin("[key_name(holder)] 把「跟随全局倒计时一起启动」设为 [countdown.music_follow_screen ? "开" : "关"]。")
+		if("set_from_end")
+			// 时长口径：关 = 从全局倒计时开始算（旧逻辑）；开 = 按「距全局倒计时结束」算
+			countdown.music_from_end = !!params["from_end"]
+			log_admin("[key_name(holder)] 把音乐时长的口径设为[countdown.music_from_end ? "按「距全局倒计时结束」" : "按「从开始算」"]。")
 		if("preview_music")
 			// 试听：只放给按按钮的管理员自己，用来确认音量与曲目
 			var/song = params["song"]
@@ -677,7 +689,7 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_stage_uis)
 		picked = stage
 	return picked
 
-/// 明面倒计时的「已过秒数」：总时长 − 剩余
+/// 全局倒计时的「已过秒数」：总时长 − 剩余
 /datum/tianguan_countdown/proc/elapsed_seconds()
 	return max(total_seconds - round(remaining / 10), 0)
 
