@@ -30,6 +30,10 @@ type Data = {
   music_volume: number;
   music_interval: number;
   music_status: MusicStatus;
+  music_state: number;
+  music_remaining: number;
+  music_duration: number;
+  music_follow_screen: boolean;
 };
 
 /** 曲库条目：key = 点唱机上传目录里的文件名（唯一），name = 显示名 */
@@ -163,12 +167,18 @@ export const TianGuanCountdown = (props) => {
     music_volume,
     music_interval,
     music_status,
+    music_state,
+    music_remaining,
+    music_duration,
+    music_follow_screen,
   } = data;
 
   const [inputTitle, setInputTitle] = useState(title);
   const [inputSeconds, setInputSeconds] = useState(60);
   const [inputEndText, setInputEndText] = useState(end_text);
   const [inputEndSeconds, setInputEndSeconds] = useState(end_seconds || 10);
+  // 初值取自后台（0 = 与明面倒计时同长），改动时会回写后台
+  const [musicDuration, setMusicDuration] = useState(music_duration);
   const [editTitle, setEditTitle] = useState('');
   const [editEndText, setEditEndText] = useState('');
   const [inputTitleColor, setInputTitleColor] = useState(title_color);
@@ -236,15 +246,55 @@ export const TianGuanCountdown = (props) => {
               />
             </Stack.Item>
             <Stack.Item>
-              <NumberInput
-                fluid
-                step={10}
-                minValue={10}
-                maxValue={36000}
-                unit="秒"
-                value={inputSeconds}
-                onChange={(value) => setInputSeconds(value)}
-              />
+              <Stack align="center">
+                <Stack.Item grow color="label">
+                  想让标题随倒计时变化（开始后第 N 秒换成别的文本）⇒ 用「标题阶段」
+                </Stack.Item>
+                <Stack.Item>
+                  <Button
+                    icon="list-ol"
+                    tooltip="阶段 = 时间点 + 文本；可设任意多条"
+                    onClick={() => act('open_stages')}
+                  >
+                    编辑标题阶段
+                  </Button>
+                </Stack.Item>
+              </Stack>
+            </Stack.Item>
+            <Stack.Item>
+              <Stack align="center">
+                <Stack.Item grow>
+                  <NumberInput
+                    fluid
+                    minValue={0}
+                    maxValue={600}
+                    step={1}
+                    unit="分"
+                    value={Math.floor(inputSeconds / 60)}
+                    onChange={(value) =>
+                      setInputSeconds(
+                        Math.max(Math.round(value), 0) * 60 + (inputSeconds % 60),
+                      )
+                    }
+                  />
+                </Stack.Item>
+                <Stack.Item grow>
+                  <NumberInput
+                    fluid
+                    minValue={0}
+                    maxValue={59}
+                    step={1}
+                    unit="秒"
+                    value={inputSeconds % 60}
+                    onChange={(value) =>
+                      setInputSeconds(
+                        Math.floor(inputSeconds / 60) * 60 +
+                          Math.max(Math.min(Math.round(value), 59), 0),
+                      )
+                    }
+                  />
+                </Stack.Item>
+              </Stack>
             </Stack.Item>
             <Stack.Item>
               <Input
@@ -254,17 +304,40 @@ export const TianGuanCountdown = (props) => {
                 onChange={setInputEndText}
               />
             </Stack.Item>
-            <Stack.Item>
-              <NumberInput
-                fluid
-                step={5}
-                minValue={0}
-                maxValue={3600}
-                unit="秒"
-                value={inputEndSeconds}
-                onChange={(value) => setInputEndSeconds(value)}
-              />
-            </Stack.Item>
+              <Stack align="center">
+                <Stack.Item grow>
+                  <NumberInput
+                    fluid
+                    minValue={0}
+                    maxValue={60}
+                    step={1}
+                    unit="分"
+                    value={Math.floor(inputEndSeconds / 60)}
+                    onChange={(value) =>
+                      setInputEndSeconds(
+                        Math.max(Math.round(value), 0) * 60 +
+                          (inputEndSeconds % 60),
+                      )
+                    }
+                  />
+                </Stack.Item>
+                <Stack.Item grow>
+                  <NumberInput
+                    fluid
+                    minValue={0}
+                    maxValue={59}
+                    step={1}
+                    unit="秒"
+                    value={inputEndSeconds % 60}
+                    onChange={(value) =>
+                      setInputEndSeconds(
+                        Math.floor(inputEndSeconds / 60) * 60 +
+                          Math.max(Math.min(Math.round(value), 59), 0),
+                      )
+                    }
+                  />
+                </Stack.Item>
+              </Stack>
             <Stack.Item>
               <Button
                 fluid
@@ -364,7 +437,100 @@ export const TianGuanCountdown = (props) => {
           </Stack>
         </Section>
 
-        <Section title="倒计时音乐（预传输）">
+        <Section title="内部倒计时（放歌准备窗）">
+          <Box color="label">
+            它与上面的明面倒计时
+            <Box inline bold>
+              {' 各自独立计时 '}
+            </Box>
+            ：可以只启动这个（玩家屏幕上什么都不显示）、也可以两个一起跑；
+            <Box inline bold>
+              {' 这个归零时就播放 '}
+            </Box>
+            。想让「明面走一段之后才播」⇒ 把它填得比明面短即可。
+          </Box>
+          <Box mt={0.5}>
+            <Button.Checkbox
+              checked={music_follow_screen}
+              onClick={() =>
+                act('set_follow', { follow: !music_follow_screen })
+              }
+            >
+              跟随明面倒计时一起启动（勾上后点上面的「开始倒计时」即可，同长、到时自动播放）
+            </Button.Checkbox>
+          </Box>
+          {music_follow_screen && music_selection.length === 0 && (
+            <Box mt={0.5} color="bad" bold>
+              ⚠ 未勾选曲目 ⇒ 跟随不生效
+            </Box>
+          )}
+          <Stack align="center" mt={0.5}>
+            <Stack.Item width="4rem">时长</Stack.Item>
+            <Stack.Item width="9rem">
+              <Stack align="center">
+                <Stack.Item width="4.5rem">
+                  <NumberInput
+                    fluid
+                    minValue={0}
+                    maxValue={60}
+                    step={1}
+                    unit="分"
+                    value={Math.floor(musicDuration / 60)}
+                    onChange={(value) => {
+                      const next =
+                        Math.max(Math.round(value), 0) * 60 + (musicDuration % 60);
+                      setMusicDuration(next);
+                      act('set_music_duration', { seconds: next });
+                    }}
+                  />
+                </Stack.Item>
+                <Stack.Item width="4.5rem">
+                  <NumberInput
+                    fluid
+                    minValue={0}
+                    maxValue={59}
+                    step={1}
+                    unit="秒"
+                    value={musicDuration % 60}
+                    onChange={(value) => {
+                      const next =
+                        Math.floor(musicDuration / 60) * 60 +
+                        Math.max(Math.min(Math.round(value), 59), 0);
+                      setMusicDuration(next);
+                      act('set_music_duration', { seconds: next });
+                    }}
+                  />
+                </Stack.Item>
+              </Stack>
+            </Stack.Item>
+            <Stack.Item>
+              <Button
+                color={music_state ? 'bad' : 'good'}
+                icon={music_state ? 'stop' : 'play'}
+                onClick={() =>
+                  act(music_state ? 'stop_music' : 'start_music', {
+                    music_seconds: musicDuration,
+                  })
+                }
+              >
+                {music_state ? '停止内部倒计时' : '启动内部倒计时'}
+              </Button>
+            </Stack.Item>
+            <Stack.Item color="label">
+              {music_state
+                ? `进行中，剩余 ${Math.max(Math.round(music_remaining), 0)} 秒`
+                : music_duration > 0
+                  ? `未启动（上次设定 ${Math.floor(music_duration / 60)} 分 ${music_duration % 60} 秒）`
+                  : '未启动（时长 0:00 ⇒ 与明面同长）'}
+            </Stack.Item>
+          </Stack>
+          <Box mt={0.5} color="label">
+            时长填 0:00 ⇒ 与明面倒计时同长（明面结束时正好播放）；
+            填比如 1 分 0 秒 ⇒ 明面走到第 60 秒就播放（配合上面的「跟随」一次点击即可）。
+          </Box>
+        </Section>
+
+        <Section title="曲目与传输（给上面的内部倒计时用）">
           <Stack vertical>
             <Stack.Item>
               <Button.Checkbox
@@ -502,3 +668,5 @@ export const TianGuanCountdown = (props) => {
     </Window>
   );
 };
+
+
