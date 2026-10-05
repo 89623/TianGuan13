@@ -67,6 +67,15 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 	var/end_deadline = 0
 	/// 结束文本总时长（秒，界面回显用）
 	var/end_seconds = 0
+	/// 明面倒计时总时长（秒，用于算「已过了多久」⇒ 阶段切换的依据）
+	var/total_seconds = 0
+	/// 标题阶段：list(list("at" = 从倒计时开始算的**秒数（绝对时刻）**, "text" = 该阶段起显示的标题,
+	/// "color" = 该阶段的标题颜色，空则用全局 title_color))。
+	/// 到点自动切换；为空则一直用静态 title。维护时按 at 升序排好。
+	var/list/title_stages = list()
+	/// 内部倒计时是否跟随明面倒计时自动启动（同长 ⇒ 同时结束并播放）。
+	/// 勾上后点「开始倒计时」一步到位，不必再单独开内部倒计时。
+	var/music_follow_screen = TRUE
 	/// 标题颜色（#RRGGBB / #RGB / 常用色名；非法值回退白色）
 	var/title_color = "#FFFFFF"
 	/// 倒计时颜色（同上）
@@ -97,6 +106,15 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 	var/music_play_index = 0
 	/// 连播推进定时器（与传输定时器分开：收尾清理不会掐掉刚开始的播放）
 	var/music_play_timer
+	// ── 内部倒计时（放歌准备窗）：与明面倒计时**各自独立计时**，归零即播放 ──
+	/// 内部倒计时状态（复用同一套状态常量）
+	var/music_state = TIANGUAN_CD_IDLE
+	/// 内部倒计时剩余（分秒）
+	var/music_remaining = 0
+	/// 内部倒计时截止时刻（world.time；运行中以它反推剩余）
+	var/music_deadline = 0
+	/// 内部倒计时设定时长（秒，面板回显用）
+	var/music_duration = 0
 
 /datum/tianguan_countdown/New()
 	. = ..()
@@ -123,10 +141,19 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 	end_seconds = max(round(new_end_seconds), 0)
 	end_remaining = end_seconds * 10
 	running_deadline = world.time + remaining
+	total_seconds = max(round(seconds), 1)
 	end_deadline = 0
 	start_ticking()
 	refresh_all()
-	music_begin_transfer()
+	// 内部倒计时：默认**跟随明面**一起启动（一步到位，不必再点下面那个按钮）。
+	// 时长优先用面板上给内部填过的值（⇒「明面 120 秒、第 60 秒播」也是一次点击）；
+	// 没填过（0）就与明面同长 ⇒ 明面结束时正好播放。
+	if(music_follow_screen && length(music_selection))
+		begin_music(music_duration > 0 ? music_duration : seconds)
+		log_admin("（自动）「跟随明面倒计时一起启动」带起了内部倒计时：[music_duration] 秒后播放。")
+	else if(music_follow_screen)
+		// 勾了跟随但没选曲目 ⇒ 说清楚，别让它"静默不动"（这正是之前排查卡住的原因）
+		log_admin("（自动）跟随已勾选，但没有选中任何曲目 ⇒ 未启动内部倒计时。")
 
 /// 暂停 ⇄ 继续（只在倒计时阶段有意义）
 /datum/tianguan_countdown/proc/toggle_pause()
@@ -141,12 +168,9 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 		return
 	refresh_all()
 
-/// 结束：文本与计时全部消失，回到「未进行任何设置」
-/datum/tianguan_countdown/proc/stop()
-	music_cleanup_transfer()
-	if(timer_id)
-		deltimer(timer_id)
-		timer_id = null
+/// 只收掉「明面」这一套（屏幕元素 + 明面计时），**不碰**内部倒计时与放歌状态。
+/// 明面自动走完时用它 —— 两个计时器独立，明面先结束不该掐掉还在放的歌。
+/datum/tianguan_countdown/proc/reset_screen()
 	state = TIANGUAN_CD_IDLE
 	title = ""
 	end_text = ""
@@ -159,9 +183,20 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 		hud.maptext = ""
 	for(var/client/player as anything in GLOB.clients)
 		player?.screen -= hud
-	music_selection = list()
+
+/// 管理员点「结束」：明面 + 内部倒计时 + 传输全部收掉，回到「未进行任何设置」
+/datum/tianguan_countdown/proc/stop()
+	reset_screen()
+	if(timer_id)
+		deltimer(timer_id)
+		timer_id = null
+	// ⚠️ 刻意**不**清空 music_selection：结束倒计时不该让管理员重挑歌；
+	//    而且「跟随明面一起启动」依赖它 —— 清掉会导致下次点「开始倒计时」时不带内部倒计时（实测踩到过）。
 	music_status = list()
 	music_pushed_total = 0
+	music_state = TIANGUAN_CD_IDLE
+	music_remaining = 0
+	music_deadline = 0
 	music_cleanup_transfer() // 清掉推送定时器与队列（幂等：上面已清过一次也无妨）
 
 /// 颜色校验：只接受 #RGB/#RGBA/#RRGGBB/#RRGGBBAA 或少量常用色名；
@@ -222,7 +257,8 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 	timer_id = addtimer(CALLBACK(src, PROC_REF(tick)), 1 SECONDS, TIMER_LOOP | TIMER_STOPPABLE)
 
 /datum/tianguan_countdown/proc/tick()
-	if(state == TIANGUAN_CD_IDLE)
+	// 两个计时器任一在跑，循环就得活着（只启动内部倒计时时明面是 IDLE）
+	if(state == TIANGUAN_CD_IDLE && music_state == TIANGUAN_CD_IDLE)
 		if(timer_id)
 			deltimer(timer_id)
 			timer_id = null
@@ -236,34 +272,47 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 		if(length(music_selection) && remaining > 0)
 			music_register_online_players()
 		if(remaining <= 0)
-			music_play() // 到点播放（曲目已在倒计时里预传输 ⇒ 客户端命中本地缓存）
 			if(end_text && end_seconds > 0)
 				state = TIANGUAN_CD_ENDTEXT
 				end_remaining = end_seconds * 10
 				end_deadline = world.time + end_remaining
 			else
-				stop()
+				reset_screen() // 只收明面：内部倒计时（放歌准备窗）若还在跑，继续
 				return
 	else if(state == TIANGUAN_CD_ENDTEXT)
 		end_remaining = max(end_deadline - world.time, 0)
 		if(end_remaining <= 0)
-			stop()
+			reset_screen() // 同上：明面结束文本到期只收明面
 			return
+	// ── 内部倒计时：与明面完全独立地推进；归零即播放 ──
+	//    （明面先走一段、内部到点就播，就是"两个时长填不一样"自然得到的效果）
+	if(music_state == TIANGUAN_CD_RUNNING)
+		music_remaining = max(music_deadline - world.time, 0)
+		if(length(music_selection) && music_remaining > 0)
+			music_register_online_players()
+		if(music_remaining <= 0)
+			music_play() // 曲目已在内部倒计时里预传输 ⇒ 客户端命中本地缓存
+			music_state = TIANGUAN_CD_IDLE
+			music_remaining = 0
+			music_deadline = 0
 	refresh_all()
 	// 让打开着的面板每秒回显一次「传输状态表」（面板刷新只能由服务端推）
 	for(var/datum/tianguan_countdown_ui/panel as anything in GLOB.tianguan_countdown_uis)
 		SStgui.update_uis(panel)
 	for(var/datum/tianguan_countdown_transfer_ui/window as anything in GLOB.tianguan_countdown_transfer_uis)
 		SStgui.update_uis(window)
+	for(var/datum/tianguan_countdown_stage_ui/editor as anything in GLOB.tianguan_countdown_stage_uis)
+		SStgui.update_uis(editor)
 
 /// 挂到所有客户端（顺带收编新登录的玩家 —— 故无需核心登录钩子）+ 刷新文本
 /datum/tianguan_countdown/proc/refresh_all()
-	if(silent)
-		// 纯准备模式：不给玩家挂任何屏幕元素
-		for(var/client/hidden_player as anything in GLOB.clients)
-			if(QDELETED(hidden_player))
+	if(silent || state == TIANGUAN_CD_IDLE)
+		// 纯准备模式 / 明面未启动：不给玩家挂任何屏幕元素
+		// （「只启动内部倒计时」时玩家屏幕上就该什么都没有）
+		for(var/client/player as anything in GLOB.clients)
+			if(QDELETED(player))
 				continue
-			hidden_player.screen -= hud
+			player.screen -= hud
 		if(hud)
 			hud.maptext = ""
 		return
@@ -283,8 +332,9 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 	if(state == TIANGUAN_CD_ENDTEXT)
 		return MAPTEXT_PIXELLARI("<center><span style='color: [end_color]'>[end_text]</span></center>")
 	var/list/lines = list()
-	if(title)
-		lines += "<span style='color: [title_color]'>[title]</span>"
+	var/shown_title = current_title()
+	if(shown_title)
+		lines += "<span style='color: [current_title_color()]'>[shown_title]</span>"
 	if(state == TIANGUAN_CD_PAUSED)
 		lines += "<span style='color: [countdown_color]'>已暂停 [DisplayTimeText(remaining, 1)]</span>"
 	else
@@ -315,6 +365,9 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 
 /datum/tianguan_countdown_ui/ui_interact(mob/user, datum/tgui/ui)
 	GLOB.tianguan_countdown_uis |= src
+	// 诊断：面板每次打开都记一行「曲库几首 / 当前已选几首」——
+	// 这样"面板上有没有曲子可勾"与"后台认为选了几首"都能从日志看出来，不用猜。
+	log_world("TIANGUAN_CD_UI: 面板打开 —— 曲库 [length(tianguan_countdown_music_options())] 首，已选 [length(tianguan_countdown_controller().music_selection)] 首")
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
 		ui = new(user, src, "TianGuanCountdown")
@@ -360,6 +413,11 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 	data["music_volume"] = countdown.music_volume
 	data["music_interval"] = countdown.music_interval_seconds()
 	data["music_status"] = countdown.music_status_table()
+	// 内部倒计时（放歌准备窗）：与明面各自独立计时
+	data["music_state"] = countdown.music_state
+	data["music_remaining"] = countdown.music_remaining / 10
+	data["music_duration"] = countdown.music_duration
+	data["music_follow_screen"] = countdown.music_follow_screen
 	return data
 
 /datum/tianguan_countdown_ui/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -377,6 +435,9 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 				seconds = 60
 			if(isnull(end_seconds))
 				end_seconds = 0
+			// 防呆：勾了「跟随」却一首曲目都没选 ⇒ 弹框说清楚（否则只会静默不播放）
+			if(countdown.music_follow_screen && !length(countdown.music_selection))
+				INVOKE_ASYNC(src, PROC_REF(alert_no_songs), holder)
 			countdown.begin(params["title"], clamp(seconds, 1, 24 HOURS / 10), params["end_text"], clamp(end_seconds, 0, 1 HOURS / 10))
 			log_admin("[key_name(holder)] 启动了全局倒计时（[clamp(seconds, 1, 24 HOURS / 10)] 秒）。")
 		if("pause")
@@ -422,15 +483,38 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 				if(catalog[song])
 					accepted += song
 			countdown.music_selection = accepted
-			log_admin("[key_name(holder)] 选了 [length(accepted)] 首倒计时曲目。")
+			// 诊断：分别记「收到几条」与「接受几条」—— 若收到>0 而接受=0 ⇒ 键名对不上（而不是没点）
+			log_admin("[key_name(holder)] 选了 [length(accepted)] 首倒计时曲目（收到 [length(requested)] 条）。")
 		if("set_music_rate")
 			var/rate = text2num(params["rate"])
 			countdown.music_rate_manual = clamp(isnull(rate) ? 0 : rate, 0, 600)
 			log_admin("[key_name(holder)] 把倒计时传输节奏设为[countdown.music_rate_manual ? "[countdown.music_rate_manual] 秒/首" : "自动"]。")
 		if("set_music_volume")
-			var/volume = text2num(params["volume"])
-			countdown.music_volume = clamp(isnull(volume) ? 60 : volume, 1, 100)
+			var/vol = text2num(params["volume"])
+			countdown.music_volume = clamp(isnull(vol) ? 60 : vol, 1, 100)
 			log_admin("[key_name(holder)] 把倒计时音乐音量设为 [countdown.music_volume]。")
+		if("set_music_duration")
+			// 面板上「内部倒计时时长」的输入框改动即回写这里。
+			// ⚠️ 必须回写：跟随启动时按 music_duration 取时长，不回写的话它会一直是 0
+			//    ⇒ 明明填了 1 分钟却退化成"与明面同长"（实测踩到过）。
+			var/duration = text2num(params["seconds"])
+			countdown.music_duration = clamp(isnull(duration) ? 0 : round(duration), 0, 36000)
+		if("start_music")
+			// 启动内部倒计时（放歌准备窗）：与明面独立；归零即播放
+			var/music_seconds = text2num(params["music_seconds"])
+			// 防呆：没勾曲目就直接拦住并弹框（没有歌的内部倒计时没有意义）
+			if(!length(countdown.music_selection))
+				INVOKE_ASYNC(src, PROC_REF(alert_no_songs), holder)
+				return TRUE
+			countdown.begin_music(isnull(music_seconds) ? 60 : music_seconds)
+			log_admin("[key_name(holder)] 启动了内部倒计时（放歌准备窗）：[countdown.music_duration] 秒。")
+		if("stop_music")
+			countdown.stop_music()
+			log_admin("[key_name(holder)] 停止了内部倒计时。")
+		if("set_follow")
+			// 「跟随明面倒计时一起启动」：勾上后点「开始倒计时」就自动带内部倒计时同长启动
+			countdown.music_follow_screen = !!params["follow"]
+			log_admin("[key_name(holder)] 把「跟随明面倒计时一起启动」设为 [countdown.music_follow_screen ? "开" : "关"]。")
 		if("preview_music")
 			// 试听：只放给按按钮的管理员自己，用来确认音量与曲目
 			var/song = params["song"]
@@ -461,4 +545,155 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 				holder.tianguan_countdown_transfer_ui = window
 			window.ui_interact(holder.mob)
 			. = TRUE
+		if("open_stages")
+			// 打开「标题阶段」编辑器（独立窗口，专门用来增删改阶段）
+			var/datum/tianguan_countdown_stage_ui/editor = holder.tianguan_countdown_stage_ui
+			if(!editor)
+				editor = new /datum/tianguan_countdown_stage_ui(holder)
+				holder.tianguan_countdown_stage_ui = editor
+			editor.ui_interact(holder.mob)
+			. = TRUE
 	return TRUE
+
+/// 把阶段按 at 升序排好（切换逻辑靠顺序逐个比较；阶段数量很小，手写插入排序即可）
+/datum/tianguan_countdown/proc/sort_title_stages()
+	var/list/sorted = title_stages.Copy()
+	for(var/i in 2 to length(sorted))
+		var/list/key = sorted[i]
+		var/j = i - 1
+		while(j >= 1 && sorted[j]["at"] > key["at"])
+			sorted[j + 1] = sorted[j]
+			j--
+		sorted[j + 1] = key
+	return sorted
+
+// ───────────────────────── 标题阶段编辑器（TGUI：TianGuanCountdownStages） ─────────────────────────
+// 单独一个窗口：阶段是「时间点 + 文本」的列表，在主面板里塞不下，也容易误触。
+
+/// 打开着的阶段编辑器（编辑时实时刷新回显用）
+GLOBAL_LIST_EMPTY(tianguan_countdown_stage_uis)
+
+/client/var/datum/tianguan_countdown_stage_ui/tianguan_countdown_stage_ui
+
+/datum/tianguan_countdown_stage_ui
+	var/client/holder
+
+/datum/tianguan_countdown_stage_ui/New(user)
+	if(istype(user, /client))
+		holder = user
+	else
+		var/mob/user_mob = user
+		holder = user_mob?.client
+
+/datum/tianguan_countdown_stage_ui/Destroy()
+	GLOB.tianguan_countdown_stage_uis -= src
+	holder = null
+	return ..()
+
+/datum/tianguan_countdown_stage_ui/ui_state(mob/user)
+	return ADMIN_STATE(R_ADMIN)
+
+/datum/tianguan_countdown_stage_ui/ui_interact(mob/user, datum/tgui/ui)
+	GLOB.tianguan_countdown_stage_uis |= src
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "TianGuanCountdownStages")
+		ui.open()
+
+/datum/tianguan_countdown_stage_ui/ui_data(mob/user)
+	var/datum/tianguan_countdown/countdown = tianguan_countdown_controller()
+	var/list/data = list()
+	data["base_title"] = countdown.title
+	data["total_seconds"] = countdown.total_seconds
+	data["state"] = countdown.state
+	data["elapsed"] = countdown.elapsed_seconds()
+	data["current"] = countdown.current_title()
+	data["stages"] = countdown.title_stages
+	return data
+
+/// 弹出取色窗给某条阶段选标题颜色（阻塞式 ⇒ 必须由 ui_act 用 INVOKE_ASYNC 调起）
+/datum/tianguan_countdown_stage_ui/proc/pick_stage_color(client/picker, index)
+	var/datum/tianguan_countdown/countdown = tianguan_countdown_controller()
+	if(!index || index < 1 || index > length(countdown.title_stages))
+		return
+	var/list/stage = countdown.title_stages[index]
+	var/picked = tgui_color_picker(picker, "选择该阶段标题颜色", "标题阶段 · 取色", stage["color"] || countdown.title_color)
+	if(!picked)
+		return
+	stage["color"] = tianguan_countdown_sanitize_color(picked)
+	SStgui.update_uis(src)
+
+/datum/tianguan_countdown_stage_ui/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	var/datum/tianguan_countdown/countdown = tianguan_countdown_controller()
+	switch(action)
+		if("add_stage")
+			// 默认接在上一条之后 1 分钟 ⇒ 连点就是 1 分 / 2 分 / 3 分…一次一变，不用手算
+			var/next_at = 60
+			if(length(countdown.title_stages))
+				var/list/last_stage = countdown.title_stages[length(countdown.title_stages)]
+				next_at = last_stage["at"] + 60
+			countdown.title_stages += list(list("at" = next_at, "text" = "", "color" = null))
+			countdown.title_stages = countdown.sort_title_stages()
+			. = TRUE
+		if("set_stage")
+			var/index = text2num(params["index"])
+			if(!index || index < 1 || index > length(countdown.title_stages))
+				return
+			var/list/stage = countdown.title_stages[index]
+			if(!isnull(params["at"]))
+				stage["at"] = max(round(text2num(params["at"])), 0)
+			if(!isnull(params["text"]))
+				stage["text"] = "[params["text"]]"
+			if(!isnull(params["color"]))
+				stage["color"] = tianguan_countdown_sanitize_color("[params["color"]]")
+			countdown.title_stages = countdown.sort_title_stages()
+			. = TRUE
+		if("pick_stage_color")
+			// 取色窗（本仓现成的 tgui_color_picker）：与全局三色同一套；必须 INVOKE_ASYNC 调起
+			var/index = text2num(params["index"])
+			if(index && index >= 1 && index <= length(countdown.title_stages))
+				INVOKE_ASYNC(src, PROC_REF(pick_stage_color), holder, index)
+			. = TRUE
+		if("remove_stage")
+			var/index = text2num(params["index"])
+			if(index && index >= 1 && index <= length(countdown.title_stages))
+				countdown.title_stages.Cut(index, index + 1)
+			. = TRUE
+		if("clear_stages")
+			countdown.title_stages = list()
+			. = TRUE
+/// 当前生效的阶段（返回那条阶段 list；还没到第一条或没有阶段 ⇒ null）
+/datum/tianguan_countdown/proc/current_stage()
+	if(!length(title_stages))
+		return null
+	var/elapsed = elapsed_seconds()
+	var/list/picked = null
+	for(var/list/stage as anything in title_stages)
+		if(stage["at"] > elapsed)
+			break
+		picked = stage
+	return picked
+
+/// 明面倒计时的「已过秒数」：总时长 − 剩余
+/datum/tianguan_countdown/proc/elapsed_seconds()
+	return max(total_seconds - round(remaining / 10), 0)
+
+/// 当前应显示的标题文本：当前阶段有文本就用它，否则回退静态 title。
+/datum/tianguan_countdown/proc/current_title()
+	var/list/stage = current_stage()
+	if(!stage || isnull(stage["text"]))
+		return title
+	return stage["text"]
+
+/// 当前应显示的标题颜色：当前阶段有颜色就用它，否则用全局 title_color。
+/datum/tianguan_countdown/proc/current_title_color()
+	var/list/stage = current_stage()
+	if(!stage || !stage["color"])
+		return title_color
+	return stage["color"]
+/// 防呆提示：播放相关的设置开着却没勾曲目 ⇒ 弹框告知（阻塞式对话框 ⇒ 必须 INVOKE_ASYNC 调起）
+/datum/tianguan_countdown_ui/proc/alert_no_songs(client/warner)
+	tgui_alert(warner, "倒计时播放相关的设置已开启，但没有勾选任何曲目 ⇒ 到点不会播放。\n请到面板下方「曲目与传输」里勾选至少一首。", "倒计时音乐")

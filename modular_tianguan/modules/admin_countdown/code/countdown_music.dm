@@ -99,6 +99,31 @@
 		transport.register_asset(asset_key, file(track["path"]))
 	return asset_key
 
+// ───────────────────────── 内部倒计时（放歌准备窗）的启停 ─────────────────────────
+// 与明面倒计时**各自独立计时**：各自设时长、可单独启动、也可以同时跑。
+// 归零时播放（放在 tick() 里驱动，见 admin_countdown.dm）。
+
+/// 启动内部倒计时。三种典型用法：
+///   ① 两个都启动且时长相同 ⇒ 明面走完的同一刻播放；
+///   ② 只启动这一个 ⇒ 玩家屏幕上什么都不显示（原「纯准备模式」的效果）；
+///   ③ 明面填得比它长 ⇒ 明面先走一段，内部到点就播（明面继续走）。
+/datum/tianguan_countdown/proc/begin_music(seconds)
+	music_duration = max(round(seconds), 1)
+	music_remaining = music_duration * 10
+	music_deadline = world.time + music_remaining
+	music_state = TIANGUAN_CD_RUNNING
+	music_begin_transfer() // 立刻开始预传输（第一份立即推，进度条马上有动静）
+	start_ticking() // 明面没在跑时，也得把 1 秒循环带起来
+	refresh_all()
+
+/// 停止内部倒计时：清掉传输与正在放的歌；**不影响**明面倒计时。
+/datum/tianguan_countdown/proc/stop_music()
+	music_state = TIANGUAN_CD_IDLE
+	music_remaining = 0
+	music_deadline = 0
+	music_cleanup_transfer()
+	music_cleanup_playback()
+
 // ───────────────────────── 传输调度 ─────────────────────────
 // 每个在线玩家一条独立的「逐首推送」链；玩家之间用初始延迟错开，
 // 避免所有人在同一瞬间拉同一首。
