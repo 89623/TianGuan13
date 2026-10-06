@@ -100,23 +100,41 @@
 	return asset_key
 
 // ───────────────────────── 内部倒计时（放歌准备窗）的启停 ─────────────────────────
-// 与明面倒计时**各自独立计时**：各自设时长、可单独启动、也可以同时跑。
+// 与全局倒计时**各自独立计时**：各自设时长、可单独启动、也可以同时跑。
 // 归零时播放（放在 tick() 里驱动，见 admin_countdown.dm）。
 
 /// 启动内部倒计时。三种典型用法：
-///   ① 两个都启动且时长相同 ⇒ 明面走完的同一刻播放；
+///   ① 两个都启动且时长相同 ⇒ 全局倒计时走完的同一刻播放；
 ///   ② 只启动这一个 ⇒ 玩家屏幕上什么都不显示（原「纯准备模式」的效果）；
-///   ③ 明面填得比它长 ⇒ 明面先走一段，内部到点就播（明面继续走）。
+///   ③ 全局倒计时填得比它长 ⇒ 全局倒计时先走一段，内部到点就播（全局倒计时继续走）。
 /datum/tianguan_countdown/proc/begin_music(seconds)
-	music_duration = max(round(seconds), 1)
-	music_remaining = music_duration * 10
-	music_deadline = world.time + music_remaining
+	// seconds = 0 ⇒「与全局倒计时同长」。两种口径下它的含义分别是：
+	//   默认（距全局倒计时结束）⇒ 播放点 = 全局倒计时结束那一刻；
+	//   关闭  （从开始算）⇒ 播放点 = 开始后「全局倒计时那么长」。
+	// ⚠️ 这个 0 必须在**这里**翻译成"播放点"，不能在调用方换算 —— 否则默认口径下
+	//    「全局倒计时截止 − 全局倒计时时长」会得到"现在"（实测踩到过）。
+	var/effective = max(round(seconds), 0)
+	if(!effective)
+		music_duration = total_seconds ? total_seconds : 60
+		if(music_from_end && state == TIANGUAN_CD_RUNNING)
+			music_deadline = running_deadline
+		else
+			music_deadline = world.time + max(total_seconds * 10, 10)
+	else
+		music_duration = effective
+		var/span = effective * 10
+		if(music_from_end && state == TIANGUAN_CD_RUNNING)
+			// 音乐比全局倒计时还长时会算到过去去 ⇒ 下限夹到"现在"（即立刻播）
+			music_deadline = max(running_deadline - span, world.time)
+		else
+			music_deadline = world.time + span
+	music_remaining = max(music_deadline - world.time, 0)
 	music_state = TIANGUAN_CD_RUNNING
 	music_begin_transfer() // 立刻开始预传输（第一份立即推，进度条马上有动静）
-	start_ticking() // 明面没在跑时，也得把 1 秒循环带起来
+	start_ticking() // 全局倒计时没在跑时，也得把 1 秒循环带起来
 	refresh_all()
 
-/// 停止内部倒计时：清掉传输与正在放的歌；**不影响**明面倒计时。
+/// 停止内部倒计时：清掉传输与正在放的歌；**不影响**全局倒计时。
 /datum/tianguan_countdown/proc/stop_music()
 	music_state = TIANGUAN_CD_IDLE
 	music_remaining = 0
