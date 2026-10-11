@@ -14,7 +14,7 @@
 /// 样式契约（BYOND 的 browser 是 IE 内核，IE11 不支持 backdrop-filter / filter:blur，
 /// 因此"磨砂玻璃"用半透明底 + 高光渐变 + 亮边框 + 内阴影 + 细斜纹噪点来近似）：
 ///   .tg_glass   玻璃板基类
-///   .tg_side    左侧边栏
+///   .tg_side    左侧边栏（内含右下的两个外链框，靠嵌套一起移动）
 ///   .tg_art     侧边栏顶部展示图（GIF 必须用 <img>，IE 不播放动画背景图）
 ///   .tg_card/.tg_pname/.tg_pid/.tg_avatar
 ///   .tg_prefs   偏好摘要
@@ -50,6 +50,9 @@ GLOBAL_LIST_EMPTY(startup_messages)
 }
 
 /* ===================== 左侧边栏 ===================== */
+/* 侧边栏独占一屏高度，共用基类那条 158° 斜向渐变时会读成一片平色 ⇒ 这里换成**纵向**渐变：
+   顶部受光、底部接地，并把底色比内容板再压暗一档，让侧边栏和内容板之间有前后层次。
+   只用渐变 + 阴影（IE 内核不支持 blur/backdrop-filter，别在此处引入）。 */
 .tg_side {
 	position: absolute;
 	left: 0; top: 0;
@@ -61,19 +64,122 @@ GLOBAL_LIST_EMPTY(startup_messages)
 	overflow: hidden;
 	border-radius: 0;
 	border-left: none; border-top: none; border-bottom: none;
-	transition: left 0.22s ease-out;
+	background-color: rgba(36, 36, 36, 0.76);
+	background-image:
+		linear-gradient(to bottom,
+			rgba(255,255,255,0.14) 0%,
+			rgba(255,255,255,0.05) 12%,
+			rgba(255,255,255,0.008) 36%,
+			rgba(0,0,0,0.10) 60%,
+			rgba(0,0,0,0.26) 84%,
+			rgba(0,0,0,0.42) 100%),
+		repeating-linear-gradient(112deg, rgba(255,255,255,0.042) 0px, rgba(255,255,255,0.042) 1px, rgba(255,255,255,0) 1px, rgba(255,255,255,0) 4px);
+	border-right: 1px solid rgba(255,255,255,0.20);
+	box-shadow:
+		inset 0 1px 0 rgba(255,255,255,0.24),
+		inset 0 -1px 0 rgba(0,0,0,0.60),
+		3px 0 20px rgba(0,0,0,0.60);
+	/* 收起/展开时比右侧那两个跳转栏**晚 60ms** ⇒ 读起来是「跳转栏先收、侧边栏后收」 */
+	transition: left 0.22s ease-out 0.06s;
 }
 
-/* ===================== 侧边栏收起（纯 CSS checkbox，无 JS） =====================
-   input 必须排在 .tg_handle 和 .tg_side 之前，`~` 兄弟选择器才能命中它们。
-   默认未勾选 = 展开，符合"默认打开"。 */
-.tg_collapse_input { display: none; }
+/* ===================== 侧边栏右下：两个外部跳转 ===================== */
+/* 位置：贴着收起按钮的正下方、侧边栏右缘（left: 50vmin，与手柄同一列）。
+   过渡比主侧边栏快（0.14s vs 0.22s + 0.06s 延迟）⇒ 形成「先收这俩」的错位动画。 */
+.tg_extlinks {
+	/* 展开时钉在侧边栏右缘那一列（与手柄同列）；收起由 body.tg_collapsed 规则接管。
+	   ⚠️ 它必须是 .tg_dock 的**兄弟**（不能在里面）：在里面时 left 会相对 dock 叠加，
+	   实测表现为"展开时跑到屏幕右外很远"。 */
+	position: absolute;
+	left: 50vmin;
+	bottom: 3vmin; /* 贴着屏幕下方 */
+	z-index: 4;
+	display: block;
+	transition: left 0.14s ease-out;
+}
+
+.tg_ext {
+	display: block;
+	box-sizing: border-box;
+	width: 17vmin;
+	height: 4.4vmin;
+	line-height: 4.4vmin;
+	margin-bottom: 0.5vmin;
+	padding: 0 0.8vmin;
+	text-decoration: none;
+	font-family: "Fixedsys";
+	font-size: 2.2vmin;
+	color: #dcdcdc;
+	text-align: left;
+	white-space: nowrap;
+	overflow: hidden;
+	border: 1px solid rgba(255,255,255,0.20);
+	border-left: none;
+	border-radius: 0 4px 4px 0;
+	background-color: rgba(24, 24, 24, 0.86);
+	background-image: linear-gradient(to right, rgba(255,255,255,0.10), rgba(255,255,255,0.015));
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.16), 2px 0 12px rgba(0,0,0,0.50);
+}
+.tg_ext:hover { color: #fff9c4; border-color: rgba(255,255,255,0.34); }
+/* 图标放在文字**右侧** */
+.tg_ext img {
+	float: right;
+	height: 3vmin;
+	width: auto;
+	margin-top: 0.7vmin;
+	margin-left: 0.5vmin;
+}
+/* 像素图（游戏内钱袋子）用最近邻，别让浏览器插值糊掉 */
+.tg_ext img.tg_pixel { image-rendering: pixelated; -ms-interpolation-mode: nearest-neighbor; }
+
+/* 「支持我们」炫彩：持续变化 RGB。
+   ⚠️ IE 内核支持 @keyframes 动 color，但**不支持** filter/hue-rotate（那才是常见写法）⇒
+   这里用色相环上均匀取 6 个点循环，视觉上等价于「RGB 一直在变」。 */
+@keyframes tg_rainbow {
+	0%   { color: #ff5a5a; }
+	17%  { color: #ffd75a; }
+	33%  { color: #7dff7d; }
+	50%  { color: #5ad7ff; }
+	67%  { color: #9a8cff; }
+	83%  { color: #ff7ad7; }
+	100% { color: #ff5a5a; }
+}
+.tg_ext .tg_rainbow {
+	animation: tg_rainbow 4s linear infinite;
+	text-shadow: 0 0 5px rgba(255,255,255,0.26), 1px 1px 2px black;
+}
+.tg_ext:hover .tg_rainbow { animation-duration: 1.5s; }
+
+/* ===================== 侧边栏收起 =====================
+   状态由服务端持有（/mob/dead/new_player.tg_sidebar_collapsed）：
+   点手柄走 byond:// Topic ⇒ 服务端取反 ⇒ output("1"/"0", "nova_title_browser:tg_set_collapsed")
+   ⇒ 页面一行 JS 给 <body> 挂/摘 tg_collapsed 类 ⇒ 下面三条 CSS 规则一起动。
+   ⇒ 保留平滑动画（不重投页面、不闪）：.tg_dock/.tg_extlinks 先走(0.14s)、.tg_side 后走(0.22s+0.06s)。
+   ⚠️ .tg_extlinks 必须是 .tg_dock 的**兄弟**，不能放在里面 —— 在里面时 left 相对 dock 叠加，
+      实测表现为"展开时两个框跑到屏幕右外很远"（dock 50vmin + 框 50vmin = 100vmin）。 */
 /* 收到 -51vmin 而不是 -50：侧边栏内还有 1.1vmin 的 padding，只移 50 会漏出按钮右边缘的残影。 */
-.tg_collapse_input:checked ~ .tg_side { left: -51vmin; }
+
+.tg_dock {
+	position: absolute;
+	left: 50vmin; top: 0;
+	width: 0; height: 100%;
+	z-index: 4;
+	transition: left 0.14s ease-out; /* 比侧边栏快且无延迟 ⇒ 外壳先走、侧边栏后走（错位） */
+}
+
+/* 收起态：三处一起走 —— 手柄外壳/two 跳转框先走(0.14s)，侧边栏后走(0.22s+0.06s 延迟)。
+   状态由服务端持（tg_sidebar_collapsed），经 output() 投给页面 JS 挂到 <body> 上。 */
+body.tg_collapsed .tg_dock      { left: 2.5vmin; }   /* 手柄留在左缘，否则没法再展开 */
+/* 两个跳转框：和侧边栏一样**滑出屏幕左侧消失**（不是停在左缘）。
+   框宽 17vmin，展开时 left=50vmin ⇒ 收到 -20vmin 即完全滑出视野。 */
+body.tg_collapsed .tg_extlinks  { left: -20vmin; }
+body.tg_collapsed .tg_side      { left: -51vmin; }
+.tg_handle:after { content: "◀"; }
+body.tg_collapsed .tg_handle:after { content: "▶"; }
 
 .tg_handle {
 	position: absolute;
-	left: 50vmin; top: 50%;
+	left: 0; top: 50%;
 	width: 3.2vmin; height: 13vmin;
 	margin-top: -6.5vmin;
 	z-index: 4;
@@ -94,9 +200,7 @@ GLOBAL_LIST_EMPTY(startup_messages)
 	transition: left 0.22s ease-out;
 }
 .tg_handle:hover { color: #fff9c4; background-color: rgba(44, 44, 44, 0.90); }
-.tg_handle:after { content: "◀"; }
-.tg_collapse_input:checked ~ .tg_handle { left: 2.5vmin; }
-.tg_collapse_input:checked ~ .tg_handle:after { content: "▶"; }
+
 
 /* 顶部展示图 */
 .tg_art {
@@ -139,11 +243,15 @@ GLOBAL_LIST_EMPTY(startup_messages)
 	color: #9a9a9a;
 }
 
-/* 偏好摘要 */
+/* 偏好摘要：做成一条独立的浅色带（自带上下边线 + 极轻的纵向渐变），
+   在「角色卡」与「按钮区」之间再分出一层，同时把这条带与侧边栏底色的关系拉开。 */
 .tg_prefs {
-	border-top: 1px solid rgba(255,255,255,0.13);
-	border-bottom: 1px solid rgba(255,255,255,0.13);
-	padding: 0.7vmin 0;
+	background-color: rgba(255,255,255,0.035);
+	background-image: linear-gradient(to bottom, rgba(255,255,255,0.05), rgba(0,0,0,0.06));
+	border-top: 1px solid rgba(255,255,255,0.16);
+	border-bottom: 1px solid rgba(0,0,0,0.50);
+	box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+	padding: 0.7vmin 0.6vmin;
 	margin-bottom: 1.1vmin;
 	font-family: "Fixedsys";
 	font-size: 2.1vmin;
@@ -220,6 +328,15 @@ GLOBAL_LIST_EMPTY(startup_messages)
 </style>
 "}
 
+/// 把模块 icons/ 里的图发给客户端，返回可直接放进 <img src> 的短资源名。
+/// ⚠️ 必须走 browse_rsc（与顶部展示图同一套路）：直接写文件路径浏览器取不到。
+/// ⚠️ 资源名要带正确扩展名 —— browse_rsc 靠它判断类型。
+/mob/dead/new_player/proc/tg_lobby_ext_icon(rel_path, rsc_name)
+	if(!client || !fexists(rel_path))
+		return ""
+	src << browse_rsc(file(rel_path), rsc_name)
+	return rsc_name
+
 /mob/dead/new_player/proc/get_title_html()
 	var/dat = SStitle.title_html
 	dat += TG_LOBBY_CSS
@@ -230,83 +347,6 @@ GLOBAL_LIST_EMPTY(startup_messages)
 		dat += {"<div class="container_progress" id="progress_container"><div class="progress_bar" id="progress"><div class="sub_progress_bar" id="sub_progress"></div></div></div>"}
 
 		dat += {"
-		<script language="JavaScript">
-			var terminal = document.getElementById("terminal");
-			var terminal_lines = \[
-		"}
-
-		for(var/message in GLOB.startup_messages)
-			dat += {""[replacetext(message, "\"", "\\\"")]","}
-
-		dat += {"
-			\];
-
-			function append_terminal_text(text) {
-				if(text) {
-					terminal_lines.push(text);
-				}
-				while(terminal_lines.length > [MAX_STARTUP_MESSAGES]) {
-					terminal_lines.shift();
-				}
-
-				terminal.innerHTML = terminal_lines.join("");
-			}
-
-			append_terminal_text();
-
-			var progress_bar = document.getElementById("progress");
-			var sub_progress_bar = document.getElementById("sub_progress");
-			var progress_container = document.getElementById("progress_container");
-			// milliseconds, the actual realtime tick number
-			var previous_tick = new Date().getTime();
-			// These times are all in 10ths of a second, like byond.
-			var progress_current_time = [world.timeofday - SStitle.progress_reference_time];
-			var progress_completion_time = [SStitle.average_completion_time];
-			// Current progress bar position from 0-100
-			var progress_current_position = 0;
-			// Current start position from 0-100 of subprogress area. Zooming towards target_sub_start.
-			var progress_sub_start = 0;
-			// Target start position of progress area. A captured value of progress_current_position.
-			var target_sub_start = 0;
-
-			setInterval(function() {
-				// Compensate for shakey execution.
-				if(progress_current_time < progress_completion_time) {
-					var current_tick = new Date().getTime();
-					progress_current_time += (current_tick - previous_tick) / 100;
-					previous_tick = current_tick;
-				}
-
-				// Bound the new position between the old pos and 100: only go forwards
-				progress_current_position = Math.min(Math.max(progress_current_time / progress_completion_time * 100, progress_current_position), 100);
-
-				if(progress_sub_start == 0) {
-					// person just connected, jump to current real progress pos.
-					progress_sub_start = target_sub_start = progress_current_position;
-				} else {
-					// Animate the sub-progress position; requires old and new progress bar pos to know speed.
-					progress_sub_start = Math.min(progress_sub_start + 0.1, target_sub_start);
-				}
-
-				// Recalculate gap as a % within a % since they're nested.
-				var progress_sub_current_position = (progress_current_position - progress_sub_start) / progress_current_position * 100;
-
-				progress_bar.style.width = "" + progress_current_position + "%";
-				sub_progress_bar.style.width = "" + progress_sub_current_position + "%";
-			}, 16.666666667);
-
-			function update_loading_progress(current_time, total_time) {
-				progress_current_time = parseFloat(current_time);
-				progress_completion_time = parseFloat(total_time);
-				target_sub_start = progress_current_position;
-			}
-
-			function update_current_character() {}
-			function tg_set_avatar() {}
-			function tg_set_prefs() {}
-			function tg_set_name() {}
-			function tg_set_pid() {}
-		</script>
 		"}
 
 	else
@@ -320,10 +360,56 @@ GLOBAL_LIST_EMPTY(startup_messages)
 			dat += {"<p class="menu_notice" style="color:#7d93a8;font-size:1.9vmin">暂无新通知</p>"}
 		dat += "</div>"
 
-		// 侧边栏收起开关：纯 CSS（checkbox + label），无 JS、不刷新页面、默认展开。
-		// input 必须排在 .tg_handle / .tg_side 之前，:checked ~ 才能命中它们。
-		dat += {"<input type="checkbox" id="tg_collapse" class="tg_collapse_input">"}
-		dat += {"<label for="tg_collapse" class="tg_handle" title="收起/展开侧边栏"></label>"}
+		// 收起开关：走 byond:// Topic（与 READY / 开始游戏同一套），服务端存状态后用
+		// 手柄与两个外链框装进同一个 .tg_dock 外壳 ⇒ 外壳一移，里面的东西必然一起走。
+		// 收起状态直接算成值：位置写进行内 style、箭头出字符 ⇒ 不依赖任何前端机制。
+		dat += {"<div class="tg_dock">"}
+		dat += {"<a class="tg_handle" href='byond://?src=[text_ref(src)];tg_sidebar_toggle=1' title="收起/展开侧边栏"></a>"}
+		dat += {"</div>"}  // dock 到此为止 —— 下面两个跳转框是独立兄弟元素，位置不再叠加
+		// 两个外部跳转：**不再依附任何外壳**，位置由服务端直接写在它自己的行内 style 上
+		// （收起 2.5vmin / 展开 50vmin）。前几轮试过 :checked 兄弟选择器、轮询 JS、body 类、dock 外壳，
+		// 全都指望某个前端机制生效，结果框始终不动；现在位置直接进标记 ⇒ 不依赖任何选择器或脚本。
+		// 图标在文字右侧。
+		// ⚠️ 图标不能直接写文件路径：浏览器取不到，必须像顶部展示图那样走 browse_rsc 发给客户端。
+		// ⚠️ 外链不能写 http 的 href：BYOND 的浏览器只认 byond:// ⇒ 走 Topic 再用 link() 交给系统浏览器。
+		var/wiki_icon = tg_lobby_ext_icon("modular_tianguan/modules/tg_lobby/icons/wiki.png", "tg_ext_wiki.png")
+		var/moneybag_icon = tg_lobby_ext_icon("modular_tianguan/modules/tg_lobby/icons/moneybag.png", "tg_ext_moneybag.png")
+		dat += {"<div class="tg_extlinks">"}
+		dat += {"<a class="tg_ext" href='byond://?src=[text_ref(src)];tg_ext=wiki' title="天关维基（用系统浏览器打开）">天关wiki<img src="[wiki_icon]" alt=""></a>"}
+		dat += {"<a class="tg_ext" href='byond://?src=[text_ref(src)];tg_ext=afdian' title="爱发电 · 支持天关（用系统浏览器打开）"><span class="tg_rainbow">支持我们</span><img class="tg_pixel" src="[moneybag_icon]" alt=""></a>"}
+		dat += {"</div>"}
+
+
+
+		// 页面侧只做一件事：给 <body> 增/删 tg_collapsed 类，CSS 认这个类（平滑动画靠它）。
+		// ⚠️ 服务端投的是**字符串** "1"/"0"：投数字 0 时那次 JS 调用可能不触发（表现为"点一次能收、再点打不开"）。
+		// ⚠️ 不整块覆盖 className（会擦掉 body 上其它类，且 IE 内核下清空不总是生效），只增删这一个。
+		// ⚠️ DM 的 {"..."} 字符串里不能有正则字面量（\s 等是雷区），也不能有未转义的 [ ⇒ 写成 \[ \]。
+		dat += {"
+		<script language="JavaScript">
+			function tg_set_collapsed(on) {
+				var b = document.body;
+				if(!b) return;
+				var want = (on === 1 || on === "1" || on === true);
+				var cur = b.className ? (" " + b.className + " ") : " ";
+				var has = cur.indexOf(" tg_collapsed ") !== -1;
+				if(want && !has) {
+					b.className = b.className ? (b.className + " tg_collapsed") : "tg_collapsed";
+				}
+				else if(!want && has) {
+					var parts = cur.split(" ");
+					var out = "";
+					for(var i = 0; i < parts.length; i++) {
+						if(parts\[i\] && parts\[i\] !== "tg_collapsed") {
+							out = out ? (out + " " + parts\[i\]) : parts\[i\];
+						}
+					}
+					b.className = out;
+				}
+			}
+			tg_set_collapsed("\[tg_sidebar_collapsed ? 1 : 0\]");
+		</script>
+		"}
 
 		dat += {"<div class="tg_side tg_glass">"}
 
@@ -358,78 +444,11 @@ GLOBAL_LIST_EMPTY(startup_messages)
 		if(!is_guest_key(src.key))
 			dat += playerpolls()
 
+
 		dat += "</div>"
 		dat += "</div>"
 
 		dat += {"
-		<script language="JavaScript">
-			var ready_int = 0;
-			var ready_mark = document.getElementById("ready");
-			var ready_marks = \[ "<span class='unchecked'>☒</span> READY", "<span class='checked'>☑</span> READY" \];
-			function toggle_ready(setReady) {
-				if(setReady) {
-					ready_int = setReady;
-					ready_mark.innerHTML = ready_marks\[ready_int\];
-				}
-				else {
-					ready_int++;
-					if (ready_int === ready_marks.length)
-						ready_int = 0;
-					ready_mark.innerHTML = ready_marks\[ready_int\];
-				}
-			}
-			var antag_int = 0;
-			var antag_mark = document.getElementById("be_antag");
-			var antag_marks = \[ "<span class='unchecked'>☒</span> BE ANTAGONIST", "<span class='checked'>☑</span> BE ANTAGONIST" \];
-			function toggle_antag(setAntag) {
-				if(setAntag) {
-					antag_int = setAntag;
-					antag_mark.innerHTML = antag_marks\[antag_int\];
-				}
-				else {
-					antag_int++;
-					if (antag_int === antag_marks.length)
-						antag_int = 0;
-					antag_mark.innerHTML = antag_marks\[antag_int\];
-				}
-			}
-
-			var character_name_slot = document.getElementById("character_slot");
-			function update_current_character(name) {
-				character_name_slot.textContent = name.toUpperCase();
-			}
-
-			// 天关：侧边栏角色卡刷新，由 /client/proc/tg_push_lobby_card() 逐字段单标量推送。
-			// 不用一个函数收多参数：output() 到 browser 的文本按 URL 参数解析，多参打包不可靠。
-			// 另外 base64 里的 "+" 会被 URL 解码成空格，必须还原，否则 PNG 数据损坏、头像变叉。
-			function tg_set_avatar(base64_data) {
-				var avatar_node = document.getElementById("tg_avatar");
-				if(avatar_node && base64_data) {
-					avatar_node.src = "data:image/png;base64," + base64_data.replace(/ /g, "+");
-				}
-			}
-			function tg_set_prefs(prefs_html) {
-				var prefs_node = document.getElementById("tg_prefs");
-				if(prefs_node && prefs_html) {
-					prefs_node.innerHTML = prefs_html;
-				}
-			}
-			function tg_set_name(name) {
-				var name_node = document.getElementById("tg_pname");
-				if(name_node && name) {
-					name_node.textContent = name;
-				}
-			}
-			function tg_set_pid(text) {
-				var pid_node = document.getElementById("tg_pid");
-				if(pid_node && text) {
-					pid_node.textContent = text;
-				}
-			}
-
-			function append_terminal_text() {}
-			function update_loading_progress() {}
-		</script>
 		"}
 
 	// Tell the server this page loaded.
