@@ -5,6 +5,8 @@
 /mob/dead/new_player
 	/// Title screen is ready to receive signals
 	var/title_screen_is_ready = FALSE
+	/// 侧边栏是否收起（唯一真相在服务端；页面只负责把 tg_collapsed 类挂到 <body> 上）
+	var/tg_sidebar_collapsed = FALSE
 
 /mob/dead/new_player/Topic(href, href_list[])
 	if(src != usr)
@@ -19,6 +21,31 @@
 	if(href_list["observe"])
 		play_lobby_button_sound()
 		make_me_an_observer()
+		return
+
+	if(href_list["tg_sidebar_toggle"])
+		play_lobby_button_sound()
+		// 侧边栏收起/展开：状态存服务端。
+		tg_sidebar_collapsed = !tg_sidebar_collapsed
+		// 不重投页面（重投会闪、丢掉平滑动画）：只把状态投给页面里的 tg_set_collapsed()，
+		// 由它给 <body> 挂/摘 tg_collapsed 类，三条 CSS 规则一起动。
+		// ⚠️ 投字符串 "1"/"0"：投数字 0 时那次 JS 调用可能不触发（"点一次能收、再点打不开"）。
+		client << output(tg_sidebar_collapsed ? "1" : "0", "nova_title_browser:tg_set_collapsed")
+		return
+
+	if(href_list["tg_ext"])
+		play_lobby_button_sound()
+		// 侧边栏右下的两个外链。BYOND 的浏览器只跟 byond:// 形式的链接，
+		// 直接写 http 的 href 在这里点不动（上游大厅界面也没有直接外链）⇒
+		// 走 Topic 再用 link() 交给系统默认浏览器打开。
+		var/url
+		switch(href_list["tg_ext"])
+			if("wiki")
+				url = "https://tianguanstation.miraheze.org/wiki/%E4%B8%BB%E9%A1%B5"
+			if("afdian")
+				url = "https://afdian.com/a/lanhongqiu"
+		if(url)
+			client << link(url)
 		return
 
 	if(href_list["server_swap"])
