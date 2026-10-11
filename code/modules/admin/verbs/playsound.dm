@@ -5,7 +5,19 @@
 #define SHELLEO_STDERR 3
 
 ADMIN_VERB(play_sound, R_SOUND, "播放全局音效", "Play a sound to all connected players.", ADMIN_CATEGORY_FUN)
-	VERB_ARG(sound, VERB_ARG_TYPE_SOUND, VERB_ARG_SOURCE_INPUT)
+	// TIANGUAN EDIT ADDITION START - ADMIN_SOUND_BOARD
+	// 天关：这条 verb 改为打开「全局音效面板」（上传 → 预传输 → 全部就绪后才给播放按钮）。
+	// 原逻辑整体注释保留在下方，便于对照与回退；
+	// 详见 modular_tianguan/modules/admin_sound_board/readme.md
+	tianguan_sound_board_open(user)
+	return
+	// TIANGUAN EDIT ADDITION END
+	/* // TIANGUAN EDIT REMOVAL START - ADMIN_SOUND_BOARD
+	// 原逻辑停用原因：`VERB_ARG(sound, …)` 会在**进入本 proc 之前**由 admin_verb 框架先弹一个
+	// BYOND 文件对话框（见 code/__DEFINES/admin_verb.dm：调用 __avd_do_verb 之前框架先收集
+	// structured_args），那样管理员点「播放全局音效」只会看到原始文件框，永远进不到天关面板。
+	// 它同时是 `sound` 变量的声明处，故必须与下面整段一起停用（否则编译报 sound: undefined var）。
+	// 文件对话框改由面板内的「上传音频」按钮按需调起（走「点唱机上传音乐」）。
 	var/freq = 1
 	var/vol = tgui_input_number(user, LANG("datum.71bfda441f757f9e", null), max_value = 100)
 	if(!vol)
@@ -40,6 +52,7 @@ ADMIN_VERB(play_sound, R_SOUND, "播放全局音效", "Play a sound to all conne
 			admin_sound.volume = vol
 
 	BLACKBOX_LOG_ADMIN_VERB("Play Global Sound")
+	*/ // TIANGUAN EDIT REMOVAL END
 
 ADMIN_VERB(play_local_sound, R_SOUND, "播放本地音效", "Plays a sound only you can hear.", ADMIN_CATEGORY_FUN)
 	VERB_ARG(sound, VERB_ARG_TYPE_SOUND, VERB_ARG_SOURCE_INPUT)
