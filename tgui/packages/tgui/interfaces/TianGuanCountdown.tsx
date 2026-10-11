@@ -576,7 +576,7 @@ export const TianGuanCountdown = (props) => {
                 <Stack.Item>
                   <Button
                     icon="upload"
-                    tooltip="复用「点唱机上传音乐」（文件名需 标题+节拍.ogg）"
+                    tooltip="复用「点唱机上传音乐」（.ogg / .mp3 均可；文件名需 标题+节拍）"
                     onClick={() => act('upload_music')}
                   >
                     上传音频
@@ -598,7 +598,7 @@ export const TianGuanCountdown = (props) => {
               <Box height="9rem" overflowY="auto" mt={0.5}>
                 {music_catalog.length === 0 && (
                   <Box color="bad">
-                    点唱机曲库为空 —— 先用「点唱机上传音乐」上传 .ogg
+                    点唱机曲库为空 —— 先用「点唱机上传音乐」上传 .ogg / .mp3
                   </Box>
                 )}
                 {music_catalog.map((song) => {

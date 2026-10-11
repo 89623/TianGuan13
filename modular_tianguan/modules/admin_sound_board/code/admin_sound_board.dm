@@ -136,11 +136,32 @@
 			for(var/other_key in status)
 				queue += list(list(other_key, track_file))
 	known_files = files.Copy()
+	// 加固：待推队列 / 已激活清单里指向「已不在曲库里」的音频直接丢掉。
+	// 谁绕过面板直接删了音频文件也能自愈 —— 否则 enabled_files 会一直把「就绪」的分母撑住，
+	// 所有玩家都到不了就绪，播放按钮永远不亮（且待推份数会挂着永远消化不掉）。
+	for(var/stale_file in enabled_files.Copy())
+		if(!files[stale_file])
+			enabled_files -= stale_file
+			prune_queue_for(stale_file)
 	if(length(queue) && !push_timer)
 		push_now()
 
+/// 从待推队列里剔除某一首的所有份（该音频已被移除 / 已不存在）
+/datum/tianguan_sound_board/proc/prune_queue_for(track_file)
+	// 倒着遍历 + Cut：边遍历边改会让正序遍历漏项
+	for(var/i = length(queue); i >= 1; i--)
+		var/list/pair = queue[i]
+		if(pair && pair[2] == track_file)
+			queue.Cut(i, i + 1)
+
 /// 立刻推一份（避免第一份要等一个间隔才动）；其余按间隔排下去
 /datum/tianguan_sound_board/proc/push_now()
+	// ⚠️ 进入时先把句柄清掉：本 proc 就是刚触发的那个定时器的回调，此刻它已经作废。
+	//    不清的话，队列若恰好在这里排空就没人再续期 ⇒ push_timer 留着一个**失效的旧 id**，
+	//    而唯一的启动闸门是 `length(queue) && !push_timer` ⇒ 之后新入队的份永远推不动。
+	//    实测症状：放完一轮（队列排空过一次）之后再选多少首都只停在「待推」，
+	//    点「传输」也不动 —— 因为循环再也不被启动。
+	push_timer = null
 	push_one()
 	if(length(queue))
 		push_timer = addtimer(CALLBACK(src, PROC_REF(push_now)), max(round(interval * 10), 5), TIMER_STOPPABLE)
@@ -370,6 +391,10 @@ GLOBAL_LIST_EMPTY(tianguan_sound_board_uis)
 		var/list/entry = board.status[key]
 		if(entry && entry["files"])
 			entry["files"] -= track_file
+	// ⚠️ 队列里属于这个文件的份也要剔除：只清上面那三处的话，「待推 N 份」会留下
+	//    永远消化不掉的幽灵份（实测：选 3 首 × 51 人 = 153，面板却显示 154）。
+	//    倒着遍历 + Cut，避免边遍历边改造成的漏项。
+	board.prune_queue_for(track_file)
 	log_admin("[key_name(warner)] 从全局音效面板移除并删除了上传音频 [track_file]。")
 	to_chat(warner, span_notice("已删除「[track_name]」。（点唱机曲库同步生效）"))
 	board.start_ticking()

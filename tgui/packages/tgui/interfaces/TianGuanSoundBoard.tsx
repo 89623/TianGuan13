@@ -58,7 +58,7 @@ export const TianGuanSoundBoard = () => {
               </Button>
             </Stack.Item>
             <Stack.Item color="label">
-              上传的会自动开始传输；曲库里已有的点「传输」才传
+              支持 .ogg / .mp3。上传的自动开始传输；曲库里已有的点「传输」才传
             </Stack.Item>
           </Stack>
           <Stack align="center" mt={0.5}>
