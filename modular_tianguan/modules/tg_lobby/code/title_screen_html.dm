@@ -347,6 +347,79 @@ body.tg_collapsed .tg_handle:after { content: "▶"; }
 		dat += {"<div class="container_progress" id="progress_container"><div class="progress_bar" id="progress"><div class="sub_progress_bar" id="sub_progress"></div></div></div>"}
 
 		dat += {"
+		<script language="JavaScript">
+			var terminal = document.getElementById("terminal");
+			var terminal_lines = \[
+		"}
+
+		for(var/message in GLOB.startup_messages)
+			dat += {""[replacetext(message, "\"", "\\\"")]",}"}
+
+		dat += {"
+			\];
+
+			function append_terminal_text(text) {
+				if(text) {
+					terminal_lines.push(text);
+				}
+				while(terminal_lines.length > [MAX_STARTUP_MESSAGES]) {
+					terminal_lines.shift();
+				}
+
+				terminal.innerHTML = terminal_lines.join("");
+			}
+
+			append_terminal_text();
+
+			var progress_bar = document.getElementById("progress");
+			var sub_progress_bar = document.getElementById("sub_progress");
+			var progress_container = document.getElementById("progress_container");
+			// milliseconds, the actual realtime tick number
+			var previous_tick = new Date().getTime();
+			// These times are all in 10ths of a second, like byond.
+			var progress_current_time = [world.timeofday - SStitle.progress_reference_time];
+			var progress_completion_time = [SStitle.average_completion_time];
+			// Current progress bar position from 0-100
+			var progress_current_position = 0;
+			// Current start position from 0-100 of subprogress area. Zooming towards target_sub_start.
+			var progress_sub_start = 0;
+			// Target start position of progress area. A captured value of progress_current_position.
+			var target_sub_start = 0;
+
+			setInterval(function() {
+				// Compensate for shakey execution.
+				if(progress_current_time < progress_completion_time) {
+					var current_tick = new Date().getTime();
+					progress_current_time += (current_tick - previous_tick) / 100;
+					previous_tick = current_tick;
+				}
+
+				// Bound the new position between the old pos and 100: only go forwards
+				progress_current_position = Math.min(Math.max(progress_current_time / progress_completion_time * 100, progress_current_position), 100);
+
+				if(progress_sub_start == 0) {
+					// person just connected, jump to current real progress pos.
+					progress_sub_start = target_sub_start = progress_current_position;
+				} else {
+					// Animate the sub-progress position; requires old and new progress bar pos to know speed.
+					progress_sub_start = Math.min(progress_sub_start + 0.1, target_sub_start);
+				}
+
+				// Recalculate gap as a % within a % since they're nested.
+				var progress_sub_current_position = (progress_current_position - progress_sub_start) / progress_current_position * 100;
+
+				progress_bar.style.width = "" + progress_current_position + "%";
+				sub_progress_bar.style.width = "" + progress_sub_current_position + "%";
+			}, 16.666666667);
+
+			function update_loading_progress(current_time, total_time) {
+				progress_current_time = parseFloat(current_time);
+				progress_completion_time = parseFloat(total_time);
+				target_sub_start = progress_current_position;
+			}
+
+			function update_current_character() {}
+		</script>
 		"}
 
 	else
@@ -387,6 +460,65 @@ body.tg_collapsed .tg_handle:after { content: "▶"; }
 		// ⚠️ DM 的 {"..."} 字符串里不能有正则字面量（\s 等是雷区），也不能有未转义的 [ ⇒ 写成 \[ \]。
 		dat += {"
 		<script language="JavaScript">
+			// ── 以下 ready / antag / character 三块从上游同文件逐字搬回 ──
+			// （当初接管这个文件时整段 script 丢了 ⇒ 准备图标点了不变、加载终端不动）
+			var ready_int = 0;
+			var ready_mark = document.getElementById("ready");
+			var ready_marks = \[ "<span class='unchecked'>☒</span> READY", "<span class='checked'>☑</span> READY" \];
+			function toggle_ready(setReady) {
+				if(setReady) {
+					ready_int = setReady;
+					ready_mark.innerHTML = ready_marks\[ready_int\];
+				}
+				else {
+					ready_int++;
+					if (ready_int === ready_marks.length)
+						ready_int = 0;
+					ready_mark.innerHTML = ready_marks\[ready_int\];
+				}
+			}
+			var antag_int = 0;
+			var antag_mark = document.getElementById("be_antag");
+			var antag_marks = \[ "<span class='unchecked'>☒</span> BE ANTAGONIST", "<span class='checked'>☑</span> BE ANTAGONIST" \];
+			function toggle_antag(setAntag) {
+				if(setAntag) {
+					antag_int = setAntag;
+					antag_mark.innerHTML = antag_marks\[antag_int\];
+				}
+				else {
+					antag_int++;
+					if (antag_int === antag_marks.length)
+						antag_int = 0;
+					antag_mark.innerHTML = antag_marks\[antag_int\];
+				}
+			}
+
+			var character_name_slot = document.getElementById("character_slot");
+			function update_current_character(name) {
+				character_name_slot.textContent = name.toUpperCase();
+			}
+
+			// ── 天关追加：大厅角色卡的实时刷新接收端（lobby_card.dm 往这些函数名 push）──
+			// ⚠️ output() 到 browser 会按 URL 参数解析 ⇒ base64 里的 + 被解码成空格，必须还原，
+			//    否则 PNG 数据损坏、头像显示成一个叉。不用正则（DM 字符串雷区），用 split/join。
+			function tg_set_avatar(data) {
+				var e = document.getElementById("tg_avatar");
+				if(!e || !data) return;
+				e.src = "data:image/png;base64," + data.split(" ").join("+");
+			}
+			function tg_set_prefs(html) {
+				var e = document.getElementById("tg_prefs");
+				if(e) e.innerHTML = html;
+			}
+			function tg_set_name(name) {
+				var e = document.getElementById("tg_pname");
+				if(e) e.innerHTML = name;
+			}
+			function tg_set_pid(text) {
+				var e = document.getElementById("tg_pid");
+				if(e) e.innerHTML = text;
+			}
+
 			function tg_set_collapsed(on) {
 				var b = document.body;
 				if(!b) return;
@@ -407,7 +539,7 @@ body.tg_collapsed .tg_handle:after { content: "▶"; }
 					b.className = out;
 				}
 			}
-			tg_set_collapsed("\[tg_sidebar_collapsed ? 1 : 0\]");
+			tg_set_collapsed("[tg_sidebar_collapsed ? 1 : 0]");
 		</script>
 		"}
 

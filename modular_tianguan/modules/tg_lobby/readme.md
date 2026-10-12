@@ -45,7 +45,17 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
 - **改写**：`get_title_html()` 的 `else`（大厅）分支 —— 菜单区由居中 `.container_nav` 改为左侧 `.tg_side` 侧边栏；通知由居中改为右上 `.container_notice`；并插入收起用的 `<input>` + `<label>`
 - **大幅保留**：`GAME_STATE_STARTUP`（启动终端 + 进度条）分支、尾部 XHR `title_is_ready` 回报、`lang_localize_title_html()` 汉化表、页面 `<head>` 骨架仍取自 `config/nova/title_html.txt`
 - **新增 JS**：`tg_set_avatar()` / `tg_set_prefs()` / `tg_set_name()` —— 侧边栏角色卡的实时刷新接收端（启动分支里给了同名空实现占位）
-- **其余 JS**（`toggle_ready` / `toggle_antag` / `update_current_character` / `append_terminal_text` / `update_loading_progress`）与上游一致
+- **JS（本模块的坑，同步上游时必须逐字核对这一段）**：`toggle_ready` / `toggle_antag` /
+  `update_current_character` / `append_terminal_text` / `update_loading_progress`
+  **曾经整段丢失**（当初接管这个文件时没带过来）。症状：**加载界面不动**（看着像"卡加载"
+  —— 终端不滚、进度条不走）、**点准备后图标不从 ☒ 变 ☑**、头像/名字不刷新。
+  现已从上游同文件**逐字补齐**。
+  本模块另加的函数：`tg_set_avatar` / `tg_set_prefs` / `tg_set_name` / `tg_set_pid`
+  （大厅角色卡实时刷新的接收端，对应 `lobby_card.dm` 里那几条 `output(..., "nova_title_browser:…")`）
+  + `tg_set_collapsed`（侧边栏收起）。
+  ⚠️ 改这里的 JS 要记住 DM `{"..."}` 的两条雷区：**字面方括号要写 `\[`**；
+  **而需要 DM 求值的表达式恰恰不能转义** —— 写成 `\[tg_sidebar_collapsed ? 1 : 0\]` 会**原样输出**
+  字面括号，初始状态就永远注入不上（这个坑真踩过）。
 
 **2) `new_player.dm`**（上游：`modular_nova/modules/title_screen/code/new_player.dm`）
 
