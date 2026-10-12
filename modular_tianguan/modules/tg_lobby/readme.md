@@ -56,6 +56,13 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
   ⚠️ 改这里的 JS 要记住 DM `{"..."}` 的两条雷区：**字面方括号要写 `\[`**；
   **而需要 DM 求值的表达式恰恰不能转义** —— 写成 `\[tg_sidebar_collapsed ? 1 : 0\]` 会**原样输出**
   字面括号，初始状态就永远注入不上（这个坑真踩过）。
+  ⚠️⚠️ **本模块的 `<script>` 排在按钮之前（上游相反）⇒ 所有 `getElementById` 必须"惰性"
+  （写在函数内），不能像上游那样写成模块级变量**：
+  上游按钮（103 行）在脚本（128 行）之前，所以它那样写没事；我们把按钮挪进侧边栏后
+  **顺序反了**（脚本 462 行 / 按钮 556 行）⇒ 脚本求值时 `#ready` 还是 `null`
+  ⇒ `ready_mark` / `antag_mark` / `character_name_slot` 全是 `null`
+  ⇒ 每次赋值抛 `Cannot set properties of null (setting 'innerHTML')` ⇒ **图标永远不动**。
+  ⇒ 结论：**这个文件里的上游代码不能无脑逐字搬**，凡"脚本里提前抓节点"的写法都要改成惰性。
 
 **2) `new_player.dm`**（上游：`modular_nova/modules/title_screen/code/new_player.dm`）
 

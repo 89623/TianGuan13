@@ -460,42 +460,48 @@ body.tg_collapsed .tg_handle:after { content: "▶"; }
 		// ⚠️ DM 的 {"..."} 字符串里不能有正则字面量（\s 等是雷区），也不能有未转义的 [ ⇒ 写成 \[ \]。
 		dat += {"
 		<script language="JavaScript">
-			// ── 以下 ready / antag / character 三块从上游同文件逐字搬回 ──
+			// ── 以下 ready / antag / character 三块从上游同文件搬回 ──
 			// （当初接管这个文件时整段 script 丢了 ⇒ 准备图标点了不变、加载终端不动）
+			// ⚠️⚠️ 元素查找**必须惰性**（放在函数里），不能像上游那样写成模块级变量：
+			//   上游的 <script> 排在按钮**之后**，而我们这个 <script> 排在按钮**之前**
+			//   ⇒ 脚本求值时 document.getElementById("ready") 还是 null，
+			//   写成模块级变量会让三个 mark 全是 null、之后每次赋值都抛异常
+			//   ⇒ 图标永远不变（实测症状：点准备，左侧图标不动）。
+			//   惰性查找与顺序无关，以后再挪按钮也不会坏。
 			var ready_int = 0;
-			var ready_mark = document.getElementById("ready");
 			var ready_marks = \[ "<span class='unchecked'>☒</span> READY", "<span class='checked'>☑</span> READY" \];
 			function toggle_ready(setReady) {
+				var ready_mark = document.getElementById("ready");
+				if(!ready_mark) return;
 				if(setReady) {
 					ready_int = setReady;
-					ready_mark.innerHTML = ready_marks\[ready_int\];
 				}
 				else {
 					ready_int++;
 					if (ready_int === ready_marks.length)
 						ready_int = 0;
-					ready_mark.innerHTML = ready_marks\[ready_int\];
 				}
+				ready_mark.innerHTML = ready_marks\[ready_int\];
 			}
 			var antag_int = 0;
-			var antag_mark = document.getElementById("be_antag");
 			var antag_marks = \[ "<span class='unchecked'>☒</span> BE ANTAGONIST", "<span class='checked'>☑</span> BE ANTAGONIST" \];
 			function toggle_antag(setAntag) {
+				var antag_mark = document.getElementById("be_antag");
+				if(!antag_mark) return;
 				if(setAntag) {
 					antag_int = setAntag;
-					antag_mark.innerHTML = antag_marks\[antag_int\];
 				}
 				else {
 					antag_int++;
 					if (antag_int === antag_marks.length)
 						antag_int = 0;
-					antag_mark.innerHTML = antag_marks\[antag_int\];
 				}
+				antag_mark.innerHTML = antag_marks\[antag_int\];
 			}
 
-			var character_name_slot = document.getElementById("character_slot");
 			function update_current_character(name) {
-				character_name_slot.textContent = name.toUpperCase();
+				var slot = document.getElementById("character_slot");
+				if(slot && name) slot.textContent = name.toUpperCase();
 			}
 
 			// ── 天关追加：大厅角色卡的实时刷新接收端（lobby_card.dm 往这些函数名 push）──
