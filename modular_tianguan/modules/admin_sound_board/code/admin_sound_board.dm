@@ -47,6 +47,8 @@
 	var/tick_timer
 	/// 当前在播放的文件名（用于停止按钮显示）
 	var/playing_file
+	/// 播放结束自动复位的定时器（见 play()）
+	var/play_end_timer
 	/// 已知的目录清单：变了才把新文件纳入传输（上传后自动生效，无需回调）
 	var/list/known_files = list()
 	/// **已激活**的音频：只有这些才会被预传输。
@@ -62,6 +64,9 @@
 	if(push_timer)
 		deltimer(push_timer)
 		push_timer = null
+	if(play_end_timer)
+		deltimer(play_end_timer)
+		play_end_timer = null
 	return ..()
 
 /// 控制器单例
@@ -276,16 +281,39 @@
 		else
 			skipped++
 	playing_file = track_file
+	// 播完自动复位「正在播放」：BYOND 收不到「客户端播完了」这种通知，只能按曲目时长自己掐表
+	// （admin_countdown 的连播推进用的就是同一套办法）。
+	// ⚠️ 这里调 SSsounds.get_sound_length() 是安全的：点唱机加载曲库时已经对**同一批文件**调过它
+	//    （code/datums/components/jukebox.dm:108），长度已进 sound_lengths 缓存 ⇒ 这里是纯缓存命中、
+	//    不会再触发 rust-g 调用。取不到时长（返回 0）时**不排定时器** —— 宁可手动点停止，
+	//    也不要让按钮停在一个凭猜的状态上（单个 get_sound_length 在 rust-g 报错时会 CRASH 整个服）。
+	if(play_end_timer)
+		deltimer(play_end_timer)
+		play_end_timer = null
+	var/play_length_ds = max(round(SSsounds.get_sound_length(track["path"]) || 0), 0)
+	if(play_length_ds)
+		// +1 秒余量：客户端起播有网络延迟，掐太死会在尾声就复位
+		play_end_timer = addtimer(CALLBACK(src, PROC_REF(clear_playing)), play_length_ds + 1 SECONDS, TIMER_STOPPABLE)
 	log_admin("[key_name(user)] 播放了全局音效面板里的 [track["name"]]（送达 [heard] 人 / 因音量偏好为 0 跳过 [skipped] 人）。")
 	log_world("TIANGUAN_SOUND_BOARD: 播放 [track["name"]] 送达=[heard] 跳过=[skipped]")
 	start_ticking()
 	return TRUE
+
+/// 播放到点：复位「正在播放」。
+/// 服务端收不到客户端的"播放结束"通知，所以由 play() 按曲目时长排了这个定时器。
+/// 重新播放会先 deltimer 掉旧的 ⇒ 这里只可能是"当前这一首"到点。
+/datum/tianguan_sound_board/proc/clear_playing()
+	playing_file = null
+	play_end_timer = null
 
 /// 停止播放
 /datum/tianguan_sound_board/proc/stop(mob/user)
 	for(var/mob/player_mob as anything in GLOB.player_list)
 		SEND_SOUND(player_mob, sound(null, channel = CHANNEL_JUKEBOX))
 	playing_file = null
+	if(play_end_timer)
+		deltimer(play_end_timer)
+		play_end_timer = null
 	if(user)
 		log_admin("[key_name(user)] 停止了全局音效面板的播放。")
 
