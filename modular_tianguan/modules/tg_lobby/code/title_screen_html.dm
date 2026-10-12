@@ -374,75 +374,56 @@ body.tg_collapsed .tg_handle:after { content: "▶"; }
 			var progress_bar = document.getElementById("progress");
 			var sub_progress_bar = document.getElementById("sub_progress");
 			var progress_container = document.getElementById("progress_container");
-			// milliseconds, the actual realtime tick number
-			var previous_tick = new Date().getTime();
 			// These times are all in 10ths of a second, like byond.
 			var progress_current_time = [world.timeofday - SStitle.progress_reference_time];
 			var progress_completion_time = [SStitle.average_completion_time];
-			// 服务端内联渲染出来的这两个值是本页的"保底估计"：后面的推送若送来坏值就回退到它们，
-			// 绝不让 progress_completion_time 变成 NaN（否则进度条永远不动）。
-			var progress_fallback_current = progress_current_time;
-			var progress_fallback_total = progress_completion_time;
+			// ⚠️⚠️ 上游这套动画对"开服之后才连进来的人"是坏的（实测症状：加载条整根不动）：
+			//    progress_current_time 从**服务端开局**算起，而 progress_completion_time 只是
+			//    历史平均/默认估时 ⇒ 玩家隔几分钟才进来时 current 早已超过 completion
+			//    ⇒ 比例一上来就 ≥100% ⇒ 条满格不动，直到页面被换成大厅。
+			//    改法：从"服务端此刻的进度"出发，按**剩余估时**往前爬；剩余估时给 20 秒下限，
+			//    封顶 99%（最后 1% 留给页面切换）⇒ 只要还在加载页，条一定会动。
+			var progress_start_pct = progress_current_time / progress_completion_time * 100;
+			if(!(progress_start_pct >= 0)) progress_start_pct = 0;      // 兜住 NaN
+			if(progress_start_pct > 90) progress_start_pct = 90;        // 留出可见的爬行余量
+			var progress_remaining_ms = (progress_completion_time - progress_current_time) * 100;
+			if(!(progress_remaining_ms > 20000)) progress_remaining_ms = 20000;
+			var progress_started_ms = (new Date()).getTime();
 			// Current progress bar position from 0-100
-			var progress_current_position = 0;
+			var progress_current_position = progress_start_pct;
 			// Current start position from 0-100 of subprogress area. Zooming towards target_sub_start.
-			var progress_sub_start = 0;
+			var progress_sub_start = progress_start_pct;
 			// Target start position of progress area. A captured value of progress_current_position.
-			var target_sub_start = 0;
-
-			// ⚠️ 保底值：若连服务端内联渲染出来的估计值都是坏的（0/NaN），用 200 秒顶上 ——
-			//    宁可进度条走得不准，也不要它整根卡住不动。
-			if(!(progress_fallback_total > 0)) progress_fallback_total = 2000;
+			var target_sub_start = progress_start_pct;
 
 			setInterval(function() {
-				// ⚠️ 保底：任何来源把这两个值弄成 NaN 或 0 时回退到内联估计值，绝不让进度条卡死。
-				//    （NaN 与任何数比较都是 false ⇒ 下面这两个判断天然能兜住 NaN。）
-				if(!(progress_completion_time > 0)) progress_completion_time = progress_fallback_total;
-				if(!(progress_current_time >= 0)) progress_current_time = progress_fallback_current;
-				// Compensate for shakey execution.
-				if(progress_current_time < progress_completion_time) {
-					var current_tick = new Date().getTime();
-					progress_current_time += (current_tick - previous_tick) / 100;
-					previous_tick = current_tick;
-				}
-
-				// Bound the new position between the old pos and 100: only go forwards
-				progress_current_position = Math.min(Math.max(progress_current_time / progress_completion_time * 100, progress_current_position), 100);
-
-				if(progress_sub_start == 0) {
-					// person just connected, jump to current real progress pos.
-					progress_sub_start = target_sub_start = progress_current_position;
-				} else {
-					// Animate the sub-progress position; requires old and new progress bar pos to know speed.
-					progress_sub_start = Math.min(progress_sub_start + 0.1, target_sub_start);
-				}
-
-				// Recalculate gap as a % within a % since they're nested.
-				var progress_sub_current_position = (progress_current_position - progress_sub_start) / progress_current_position * 100;
-
-				progress_bar.style.width = "" + progress_current_position + "%";
-				sub_progress_bar.style.width = "" + progress_sub_current_position + "%";
+				var elapsed_ms = (new Date()).getTime() - progress_started_ms;
+				var pct = progress_start_pct + (100 - progress_start_pct) * (elapsed_ms / progress_remaining_ms);
+				if(pct > 99) pct = 99;
+				progress_current_position = pct;
+				// 子条追赶主条，做出"正在推进"的观感
+				progress_sub_start = Math.min(progress_sub_start + 0.1, pct);
+				progress_bar.style.width = "" + pct + "%";
+				sub_progress_bar.style.width = "" + progress_sub_start + "%";
 			}, 16.666666667);
 
 			function update_loading_progress(current_time, total_time) {
-				// ⚠️ 服务端是用 output(list2params(list(a, b)), …) 推的（上游 Nova 的写法）⇒
-				//    BYOND 把文本当 URL 参数解析，到页面只剩【一个】形如 "a=b" 的参数 ⇒
-				//    total_time 为 undefined ⇒ parseFloat(undefined) = NaN ⇒
-				//    progress_completion_time 变 NaN ⇒ **进度条整根不动**
-				//    （实测症状：「开服以后那个加载条不动，加载完直接进去」）。
-				//    这里在页面侧兜住：只收到一个参数时按 "=" 拆成两个。
-				var raw_first = (current_time === undefined || current_time === null) ? "" : String(current_time);
-				if((total_time === undefined || total_time === null) && raw_first.indexOf("=") !== -1) {
-					var pair = raw_first.split("=");
+				// 服务端推来的是"当前/总量"（分秒）。它用 output(list2params(list(a, b)), …) 推
+				// （上游写法）⇒ 到页面只剩【一个】"a=b" 形式的参数 ⇒ 拆开；
+				// 坏值一律不采纳 —— 这个函数只用来**修正爬行速度**，绝不允许把动画弄坏。
+				var raw = (current_time === undefined || current_time === null) ? "" : String(current_time);
+				if((total_time === undefined || total_time === null) && raw.indexOf("=") !== -1) {
+					var pair = raw.split("=");
 					current_time = pair\[0\];
 					total_time = pair\[1\];
 				}
-				var got_now = parseFloat(current_time);
 				var got_total = parseFloat(total_time);
-				// 坏值一律不采纳（NaN 与 0 都跳过）⇒ 状态永远不会被弄坏，进度条最多是"估得不准"
-				if(got_now >= 0) progress_current_time = got_now;
-				if(got_total > 0) progress_completion_time = got_total;
-				target_sub_start = progress_current_position;
+				var got_now = parseFloat(current_time);
+				if(!(got_total > 0))
+					return;
+				var remain_ms = (got_total - (got_now >= 0 ? got_now : 0)) * 100;
+				if(remain_ms > 20000)
+					progress_remaining_ms = remain_ms;
 			}
 
 			function update_current_character() {}
@@ -509,11 +490,16 @@ body.tg_collapsed .tg_handle:after { content: "▶"; }
 				ico.innerHTML = want ? "☑" : "☒";
 			}
 			function toggle_ready(setReady) {
-				// 服务端投 1/0；投数字 0 时那次调用可能根本不触发 ⇒ 参数缺失时按"取反"处理
-				if(typeof setReady === "undefined" || setReady === null || setReady === "")
-					ready_int = ready_int ? 0 : 1;
+				// ⚠️ 服务端投的是**字符串** "1"/"0"（投数字 0 时那次 JS 调用会丢）。
+				//    JS 里字符串 "0" 是 **truthy** ⇒ 绝不能写 if(setReady)，
+				//    必须显式认 "1"/1/true 为"已准备"、"0"/0/false 为"未准备"；
+				//    参数完全缺失时（例如旧页面残留）按取反处理。
+				if(setReady === 1 || setReady === "1" || setReady === true)
+					ready_int = 1;
+				else if(setReady === 0 || setReady === "0" || setReady === false)
+					ready_int = 0;
 				else
-					ready_int = setReady ? 1 : 0;
+					ready_int = ready_int ? 0 : 1;
 				set_ready_look(ready_int);
 			}
 			var antag_int = 0;
@@ -526,10 +512,13 @@ body.tg_collapsed .tg_handle:after { content: "▶"; }
 				ico.innerHTML = want ? "☑" : "☒";
 			}
 			function toggle_antag(setAntag) {
-				if(typeof setAntag === "undefined" || setAntag === null || setAntag === "")
-					antag_int = antag_int ? 0 : 1;
+				// 同 toggle_ready：显式认 "1"/"0"（字符串 "0" 是 truthy）
+				if(setAntag === 1 || setAntag === "1" || setAntag === true)
+					antag_int = 1;
+				else if(setAntag === 0 || setAntag === "0" || setAntag === false)
+					antag_int = 0;
 				else
-					antag_int = setAntag ? 1 : 0;
+					antag_int = antag_int ? 0 : 1;
 				set_antag_look(antag_int);
 			}
 
