@@ -63,6 +63,19 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
   ⇒ `ready_mark` / `antag_mark` / `character_name_slot` 全是 `null`
   ⇒ 每次赋值抛 `Cannot set properties of null (setting 'innerHTML')` ⇒ **图标永远不动**。
   ⇒ 结论：**这个文件里的上游代码不能无脑逐字搬**，凡"脚本里提前抓节点"的写法都要改成惰性。
+  ⚠️ **加载页那段脚本曾经整块不执行（症状：进度条不动、终端不刷、诊断行停在初始文字）。
+     真因有两个，都只会在浏览器里**静默**失效 —— 编译 0 errors、生成的 HTML 也完整**：
+  1. **数组尾逗号**：上游把启动消息拼成 `[ "a","b", ]`。BYOND 内嵌浏览器是**老 IE 引擎**，
+     数组字面量里的**尾逗号**会直接抛语法错误 ⇒ **整段 `<script>` 被丢弃**
+     ⇒ 已改成 `var terminal_lines = [];` + `terminal_lines.push("…")` 逐条添加。
+  2. **未定义引用**：把进度条改成"本页时钟驱动"时删掉了 `progress_completion_time` 的声明，
+     却留下引用它的 `var srv_total = progress_completion_time;` ⇒ `ReferenceError`
+     ⇒ **脚本在 `setInterval` 之前中止**。已移除该引用（估时固定 150 秒，
+     服务端 `update_loading_progress` 只用来**修正**它）。
+  ⇒ **定位办法（本模块反复靠它才抓到）**：按 DM 字符串规则把**生成出来的页面 JS 切出来**，
+     丢进 node 跑一遍。编译通过、HTML 完整，都**不能**证明那段脚本能在浏览器里跑。
+  ⇒ **另一条独立的坑**：进度动画别拿「world.timeofday − 服务端开局时刻 / 历史平均估时」算比例 ——
+     开服几分钟后才连进来的人分子早已超过分母 ⇒ 条**满格不动**。改成分子＝本页运行时长。
   ⚠️ **另有两处上游老毛病，补回 JS 之后才暴露出来，已在本模块页面侧兜住**：
   1. **不能整块重写按钮的 `innerHTML`**：上游把 `☒/☑ READY` 写成**英文常量数组**、点击后整块覆盖
      ⇒ 会把服务端渲染并**已汉化**的文字顶掉（实测：点一下准备，中文「准备」变回英文「READY」）。

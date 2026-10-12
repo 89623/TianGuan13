@@ -344,20 +344,29 @@ body.tg_collapsed .tg_handle:after { content: "▶"; }
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		dat += {"<img src="loading_screen.gif" class="bg" alt="">"}
 		dat += {"<div class="container_terminal" id="terminal"></div>"}
+		// 进度条：**纯 CSS 动画驱动**（不依赖 JS）。
+		// 前台已验证同一个浏览器能跑 CSS @keyframes（大厅侧边栏的彩虹变色就是它），而浏览器里
+		// 那段 JS 一直没有执行（用户实测：诊断行停在初始文字）⇒ 索性用 CSS 让条自己 0→99% 走过去。
+		// 150 秒线性：约本服初始化量级（实测 Initializations complete within ~193s）。
+		dat += {"<style>@keyframes tg_load { from { width: 0%; } to { width: 99%; } } #progress { animation: tg_load 150s linear forwards; }</style>"}
 		dat += {"<div class="container_progress" id="progress_container"><div class="progress_bar" id="progress"><div class="sub_progress_bar" id="sub_progress"></div></div></div>"}
+		// 路标①、诊断行已在定位完成后移除（真凶＝上游拼出的数组尾逗号，见下方注释）
 
 		dat += {"
 		<script language="JavaScript">
 			var terminal = document.getElementById("terminal");
-			var terminal_lines = \[
+			var terminal_lines = \[\];
 		"}
 
 		for(var/message in GLOB.startup_messages)
-			dat += {""[replacetext(message, "\"", "\\\"")]",}"}
+			dat += {"terminal_lines.push(""[replacetext(message, "\"", "\\\"")]"");"}
 
 		dat += {"
-			\];
-
+			// ⚠️ 这里原本是数组字面量的收尾 `\];`。上游把启动消息拼成
+			//    \["a","b",\] 这种**尾逗号**数组 —— BYOND 内嵌浏览器是 IE 内核，
+			//    老 IE 引擎在数组字面量里遇到尾逗号会直接抛语法错误 ⇒ **整段 <script> 被丢弃**
+			//    （实测症状：加载条不动、终端不刷、诊断行停在初始文字）。
+			//    改成 var terminal_lines = \[\]; + push() 逐条添加：无数组字面量、无尾逗号。
 			function append_terminal_text(text) {
 				if(text) {
 					terminal_lines.push(text);
@@ -374,56 +383,39 @@ body.tg_collapsed .tg_handle:after { content: "▶"; }
 			var progress_bar = document.getElementById("progress");
 			var sub_progress_bar = document.getElementById("sub_progress");
 			var progress_container = document.getElementById("progress_container");
-			// These times are all in 10ths of a second, like byond.
-			var progress_current_time = [world.timeofday - SStitle.progress_reference_time];
-			var progress_completion_time = [SStitle.average_completion_time];
-			// ⚠️⚠️ 上游这套动画对"开服之后才连进来的人"是坏的（实测症状：加载条整根不动）：
-			//    progress_current_time 从**服务端开局**算起，而 progress_completion_time 只是
-			//    历史平均/默认估时 ⇒ 玩家隔几分钟才进来时 current 早已超过 completion
-			//    ⇒ 比例一上来就 ≥100% ⇒ 条满格不动，直到页面被换成大厅。
-			//    改法：从"服务端此刻的进度"出发，按**剩余估时**往前爬；剩余估时给 20 秒下限，
-			//    封顶 99%（最后 1% 留给页面切换）⇒ 只要还在加载页，条一定会动。
-			var progress_start_pct = progress_current_time / progress_completion_time * 100;
-			if(!(progress_start_pct >= 0)) progress_start_pct = 0;      // 兜住 NaN
-			if(progress_start_pct > 90) progress_start_pct = 90;        // 留出可见的爬行余量
-			var progress_remaining_ms = (progress_completion_time - progress_current_time) * 100;
-			if(!(progress_remaining_ms > 20000)) progress_remaining_ms = 20000;
+			// 进度条：**完全不依赖服务端数值** —— 从本页加载那一刻起、按一个估时往上爬。
+			// 为什么改掉上游那套：上游用「world.timeofday − 服务端开局时刻」当分子、
+			// 「历史平均/默认估时」当分母 ⇒ **开服几分钟后才连进来的人**分子早已超过分母
+			// ⇒ 比例一上来就 ≥100% ⇒ 条满格不动（实测症状：「加载条不动，加载完直接进去」）。
+			// 现在：分子 = 本页自己的运行时长 ⇒ 从 0 一定往上走，不可能不动。
 			var progress_started_ms = (new Date()).getTime();
-			// Current progress bar position from 0-100
-			var progress_current_position = progress_start_pct;
-			// Current start position from 0-100 of subprogress area. Zooming towards target_sub_start.
-			var progress_sub_start = progress_start_pct;
-			// Target start position of progress area. A captured value of progress_current_position.
-			var target_sub_start = progress_start_pct;
+			// 估时 150 秒（本服实测初始化 ~193 秒，取略小值让条走得动、不早早封顶）。
+			// 注意：这里**不再引用服务端的 world.timeofday/average_completion_time** ——
+			// 上游那套对"开服几分钟后才连进来的人"天然失效（分子早已超过分母 ⇒ 条满格不动）。
+			// 服务端后续仍可通过 update_loading_progress 修正估时。
+			var progress_total_ms = 150000;
+			if(progress_total_ms < 30000)
+				progress_total_ms = 30000;
 
 			setInterval(function() {
 				var elapsed_ms = (new Date()).getTime() - progress_started_ms;
-				var pct = progress_start_pct + (100 - progress_start_pct) * (elapsed_ms / progress_remaining_ms);
+				var pct = elapsed_ms / progress_total_ms * 100;
 				if(pct > 99) pct = 99;
-				progress_current_position = pct;
-				// 子条追赶主条，做出"正在推进"的观感
-				progress_sub_start = Math.min(progress_sub_start + 0.1, pct);
 				progress_bar.style.width = "" + pct + "%";
-				sub_progress_bar.style.width = "" + progress_sub_start + "%";
+				sub_progress_bar.style.width = "" + Math.min(pct + 6, 99) + "%";
 			}, 16.666666667);
 
 			function update_loading_progress(current_time, total_time) {
-				// 服务端推来的是"当前/总量"（分秒）。它用 output(list2params(list(a, b)), …) 推
-				// （上游写法）⇒ 到页面只剩【一个】"a=b" 形式的参数 ⇒ 拆开；
-				// 坏值一律不采纳 —— 这个函数只用来**修正爬行速度**，绝不允许把动画弄坏。
+				// 服务端推的东西是坏的（output(list2params(list(a,b)), …) ⇒ 页面只剩一个 "a=b"），
+				// 所以这里只做一件事：它若给了个**像样的总量**就用来修正估时；坏值一律忽略，
+				// 绝不允许把动画弄坏（分子是本页自己的运行时长，永远在长）。
 				var raw = (current_time === undefined || current_time === null) ? "" : String(current_time);
-				if((total_time === undefined || total_time === null) && raw.indexOf("=") !== -1) {
-					var pair = raw.split("=");
-					current_time = pair\[0\];
-					total_time = pair\[1\];
-				}
-				var got_total = parseFloat(total_time);
-				var got_now = parseFloat(current_time);
-				if(!(got_total > 0))
-					return;
-				var remain_ms = (got_total - (got_now >= 0 ? got_now : 0)) * 100;
-				if(remain_ms > 20000)
-					progress_remaining_ms = remain_ms;
+				var s = (total_time === undefined || total_time === null) ? raw : String(total_time);
+				if((total_time === undefined || total_time === null) && raw.indexOf("=") !== -1)
+					s = raw.split("=")\[1\];
+				var got = parseFloat(s);
+				if(got > 0 && got < 100000)
+					progress_total_ms = got * 100;
 			}
 
 			function update_current_character() {}
