@@ -379,6 +379,10 @@ body.tg_collapsed .tg_handle:after { content: "▶"; }
 			// These times are all in 10ths of a second, like byond.
 			var progress_current_time = [world.timeofday - SStitle.progress_reference_time];
 			var progress_completion_time = [SStitle.average_completion_time];
+			// 服务端内联渲染出来的这两个值是本页的"保底估计"：后面的推送若送来坏值就回退到它们，
+			// 绝不让 progress_completion_time 变成 NaN（否则进度条永远不动）。
+			var progress_fallback_current = progress_current_time;
+			var progress_fallback_total = progress_completion_time;
 			// Current progress bar position from 0-100
 			var progress_current_position = 0;
 			// Current start position from 0-100 of subprogress area. Zooming towards target_sub_start.
@@ -386,7 +390,15 @@ body.tg_collapsed .tg_handle:after { content: "▶"; }
 			// Target start position of progress area. A captured value of progress_current_position.
 			var target_sub_start = 0;
 
+			// ⚠️ 保底值：若连服务端内联渲染出来的估计值都是坏的（0/NaN），用 200 秒顶上 ——
+			//    宁可进度条走得不准，也不要它整根卡住不动。
+			if(!(progress_fallback_total > 0)) progress_fallback_total = 2000;
+
 			setInterval(function() {
+				// ⚠️ 保底：任何来源把这两个值弄成 NaN 或 0 时回退到内联估计值，绝不让进度条卡死。
+				//    （NaN 与任何数比较都是 false ⇒ 下面这两个判断天然能兜住 NaN。）
+				if(!(progress_completion_time > 0)) progress_completion_time = progress_fallback_total;
+				if(!(progress_current_time >= 0)) progress_current_time = progress_fallback_current;
 				// Compensate for shakey execution.
 				if(progress_current_time < progress_completion_time) {
 					var current_tick = new Date().getTime();
@@ -413,8 +425,23 @@ body.tg_collapsed .tg_handle:after { content: "▶"; }
 			}, 16.666666667);
 
 			function update_loading_progress(current_time, total_time) {
-				progress_current_time = parseFloat(current_time);
-				progress_completion_time = parseFloat(total_time);
+				// ⚠️ 服务端是用 output(list2params(list(a, b)), …) 推的（上游 Nova 的写法）⇒
+				//    BYOND 把文本当 URL 参数解析，到页面只剩【一个】形如 "a=b" 的参数 ⇒
+				//    total_time 为 undefined ⇒ parseFloat(undefined) = NaN ⇒
+				//    progress_completion_time 变 NaN ⇒ **进度条整根不动**
+				//    （实测症状：「开服以后那个加载条不动，加载完直接进去」）。
+				//    这里在页面侧兜住：只收到一个参数时按 "=" 拆成两个。
+				var raw_first = (current_time === undefined || current_time === null) ? "" : String(current_time);
+				if((total_time === undefined || total_time === null) && raw_first.indexOf("=") !== -1) {
+					var pair = raw_first.split("=");
+					current_time = pair\[0\];
+					total_time = pair\[1\];
+				}
+				var got_now = parseFloat(current_time);
+				var got_total = parseFloat(total_time);
+				// 坏值一律不采纳（NaN 与 0 都跳过）⇒ 状态永远不会被弄坏，进度条最多是"估得不准"
+				if(got_now >= 0) progress_current_time = got_now;
+				if(got_total > 0) progress_completion_time = got_total;
 				target_sub_start = progress_current_position;
 			}
 
@@ -469,34 +496,41 @@ body.tg_collapsed .tg_handle:after { content: "▶"; }
 			//   ⇒ 图标永远不变（实测症状：点准备，左侧图标不动）。
 			//   惰性查找与顺序无关，以后再挪按钮也不会坏。
 			var ready_int = 0;
-			var ready_marks = \[ "<span class='unchecked'>☒</span> READY", "<span class='checked'>☑</span> READY" \];
+			// ⚠️ 只换图标的 class 与字符，**绝不重写整个 innerHTML**：
+			//    按钮文字由服务端渲染、并已过 lang_localize_title_html() 汉化；
+			//    上游那套「整块 innerHTML = 英文常量数组」会把汉化顶掉
+			//    （实测症状：点一下准备，中文「准备」变回英文「READY」）。图标与语言无关。
+			function set_ready_look(want) {
+				var el = document.getElementById("ready");
+				if(!el) return;
+				var ico = el.getElementsByTagName("span")\[0\];
+				if(!ico) return;
+				ico.className = want ? "checked" : "unchecked";
+				ico.innerHTML = want ? "☑" : "☒";
+			}
 			function toggle_ready(setReady) {
-				var ready_mark = document.getElementById("ready");
-				if(!ready_mark) return;
-				if(setReady) {
-					ready_int = setReady;
-				}
-				else {
-					ready_int++;
-					if (ready_int === ready_marks.length)
-						ready_int = 0;
-				}
-				ready_mark.innerHTML = ready_marks\[ready_int\];
+				// 服务端投 1/0；投数字 0 时那次调用可能根本不触发 ⇒ 参数缺失时按"取反"处理
+				if(typeof setReady === "undefined" || setReady === null || setReady === "")
+					ready_int = ready_int ? 0 : 1;
+				else
+					ready_int = setReady ? 1 : 0;
+				set_ready_look(ready_int);
 			}
 			var antag_int = 0;
-			var antag_marks = \[ "<span class='unchecked'>☒</span> BE ANTAGONIST", "<span class='checked'>☑</span> BE ANTAGONIST" \];
+			function set_antag_look(want) {
+				var el = document.getElementById("be_antag");
+				if(!el) return;
+				var ico = el.getElementsByTagName("span")\[0\];
+				if(!ico) return;
+				ico.className = want ? "checked" : "unchecked";
+				ico.innerHTML = want ? "☑" : "☒";
+			}
 			function toggle_antag(setAntag) {
-				var antag_mark = document.getElementById("be_antag");
-				if(!antag_mark) return;
-				if(setAntag) {
-					antag_int = setAntag;
-				}
-				else {
-					antag_int++;
-					if (antag_int === antag_marks.length)
-						antag_int = 0;
-				}
-				antag_mark.innerHTML = antag_marks\[antag_int\];
+				if(typeof setAntag === "undefined" || setAntag === null || setAntag === "")
+					antag_int = antag_int ? 0 : 1;
+				else
+					antag_int = setAntag ? 1 : 0;
+				set_antag_look(antag_int);
 			}
 
 			function update_current_character(name) {

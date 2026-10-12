@@ -63,6 +63,21 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
   ⇒ `ready_mark` / `antag_mark` / `character_name_slot` 全是 `null`
   ⇒ 每次赋值抛 `Cannot set properties of null (setting 'innerHTML')` ⇒ **图标永远不动**。
   ⇒ 结论：**这个文件里的上游代码不能无脑逐字搬**，凡"脚本里提前抓节点"的写法都要改成惰性。
+  ⚠️ **另有两处上游老毛病，补回 JS 之后才暴露出来，已在本模块页面侧兜住**：
+  1. **不能整块重写按钮的 `innerHTML`**：上游把 `☒/☑ READY` 写成**英文常量数组**、点击后整块覆盖
+     ⇒ 会把服务端渲染并**已汉化**的文字顶掉（实测：点一下准备，中文「准备」变回英文「READY」）。
+     本模块改为**只改里面那个 `<span>` 的 class 与图标字符**，按钮文字一律不动
+     （图标与语言无关，硬写没问题）。
+  2. **`update_loading_progress` 收到的参数是坏的**：服务端用
+     `output(list2params(list(a, b)), "…:update_loading_progress")` 推（上游写法），
+     而 BYOND 到 browser 会把文本**按 URL 参数解析** ⇒ 页面只收到**一个** `"a=b"` 形式的参数
+     ⇒ `total_time` 为 `undefined` ⇒ `parseFloat(undefined)` = `NaN`
+     ⇒ `progress_completion_time` 变 NaN ⇒ **进度条整根不动**
+     （实测症状：「开服以后那个加载条不动，加载完直接进去」）。
+     本模块在页面侧拆 `"="` 兜住，并加"**坏值一律不采纳**（NaN/0 都跳过）+ 用内联估计值保底"
+     ⇒ 进度条永远不会卡死（最多是估得不准）。
+     ⚠️ 这条正是 readme 上一节「推送的两个约束」里点名的那个坑 —— 本模块只在**页面侧**兜，
+     **没有**去改上游的 `title_screen_subsystem.dm`。
 
 **2) `new_player.dm`**（上游：`modular_nova/modules/title_screen/code/new_player.dm`）
 
