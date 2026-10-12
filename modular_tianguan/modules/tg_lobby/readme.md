@@ -45,7 +45,52 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
 - **改写**：`get_title_html()` 的 `else`（大厅）分支 —— 菜单区由居中 `.container_nav` 改为左侧 `.tg_side` 侧边栏；通知由居中改为右上 `.container_notice`；并插入收起用的 `<input>` + `<label>`
 - **大幅保留**：`GAME_STATE_STARTUP`（启动终端 + 进度条）分支、尾部 XHR `title_is_ready` 回报、`lang_localize_title_html()` 汉化表、页面 `<head>` 骨架仍取自 `config/nova/title_html.txt`
 - **新增 JS**：`tg_set_avatar()` / `tg_set_prefs()` / `tg_set_name()` —— 侧边栏角色卡的实时刷新接收端（启动分支里给了同名空实现占位）
-- **其余 JS**（`toggle_ready` / `toggle_antag` / `update_current_character` / `append_terminal_text` / `update_loading_progress`）与上游一致
+- **JS（本模块的坑，同步上游时必须逐字核对这一段）**：`toggle_ready` / `toggle_antag` /
+  `update_current_character` / `append_terminal_text` / `update_loading_progress`
+  **曾经整段丢失**（当初接管这个文件时没带过来）。症状：**加载界面不动**（看着像"卡加载"
+  —— 终端不滚、进度条不走）、**点准备后图标不从 ☒ 变 ☑**、头像/名字不刷新。
+  现已从上游同文件**逐字补齐**。
+  本模块另加的函数：`tg_set_avatar` / `tg_set_prefs` / `tg_set_name` / `tg_set_pid`
+  （大厅角色卡实时刷新的接收端，对应 `lobby_card.dm` 里那几条 `output(..., "nova_title_browser:…")`）
+  + `tg_set_collapsed`（侧边栏收起）。
+  ⚠️ 改这里的 JS 要记住 DM `{"..."}` 的两条雷区：**字面方括号要写 `\[`**；
+  **而需要 DM 求值的表达式恰恰不能转义** —— 写成 `\[tg_sidebar_collapsed ? 1 : 0\]` 会**原样输出**
+  字面括号，初始状态就永远注入不上（这个坑真踩过）。
+  ⚠️⚠️ **本模块的 `<script>` 排在按钮之前（上游相反）⇒ 所有 `getElementById` 必须"惰性"
+  （写在函数内），不能像上游那样写成模块级变量**：
+  上游按钮（103 行）在脚本（128 行）之前，所以它那样写没事；我们把按钮挪进侧边栏后
+  **顺序反了**（脚本 462 行 / 按钮 556 行）⇒ 脚本求值时 `#ready` 还是 `null`
+  ⇒ `ready_mark` / `antag_mark` / `character_name_slot` 全是 `null`
+  ⇒ 每次赋值抛 `Cannot set properties of null (setting 'innerHTML')` ⇒ **图标永远不动**。
+  ⇒ 结论：**这个文件里的上游代码不能无脑逐字搬**，凡"脚本里提前抓节点"的写法都要改成惰性。
+  ⚠️ **加载页那段脚本曾经整块不执行（症状：进度条不动、终端不刷、诊断行停在初始文字）。
+     真因有两个，都只会在浏览器里**静默**失效 —— 编译 0 errors、生成的 HTML 也完整**：
+  1. **数组尾逗号**：上游把启动消息拼成 `[ "a","b", ]`。BYOND 内嵌浏览器是**老 IE 引擎**，
+     数组字面量里的**尾逗号**会直接抛语法错误 ⇒ **整段 `<script>` 被丢弃**
+     ⇒ 已改成 `var terminal_lines = [];` + `terminal_lines.push("…")` 逐条添加。
+  2. **未定义引用**：把进度条改成"本页时钟驱动"时删掉了 `progress_completion_time` 的声明，
+     却留下引用它的 `var srv_total = progress_completion_time;` ⇒ `ReferenceError`
+     ⇒ **脚本在 `setInterval` 之前中止**。已移除该引用（估时固定 150 秒，
+     服务端 `update_loading_progress` 只用来**修正**它）。
+  ⇒ **定位办法（本模块反复靠它才抓到）**：按 DM 字符串规则把**生成出来的页面 JS 切出来**，
+     丢进 node 跑一遍。编译通过、HTML 完整，都**不能**证明那段脚本能在浏览器里跑。
+  ⇒ **另一条独立的坑**：进度动画别拿「world.timeofday − 服务端开局时刻 / 历史平均估时」算比例 ——
+     开服几分钟后才连进来的人分子早已超过分母 ⇒ 条**满格不动**。改成分子＝本页运行时长。
+  ⚠️ **另有两处上游老毛病，补回 JS 之后才暴露出来，已在本模块页面侧兜住**：
+  1. **不能整块重写按钮的 `innerHTML`**：上游把 `☒/☑ READY` 写成**英文常量数组**、点击后整块覆盖
+     ⇒ 会把服务端渲染并**已汉化**的文字顶掉（实测：点一下准备，中文「准备」变回英文「READY」）。
+     本模块改为**只改里面那个 `<span>` 的 class 与图标字符**，按钮文字一律不动
+     （图标与语言无关，硬写没问题）。
+  2. **`update_loading_progress` 收到的参数是坏的**：服务端用
+     `output(list2params(list(a, b)), "…:update_loading_progress")` 推（上游写法），
+     而 BYOND 到 browser 会把文本**按 URL 参数解析** ⇒ 页面只收到**一个** `"a=b"` 形式的参数
+     ⇒ `total_time` 为 `undefined` ⇒ `parseFloat(undefined)` = `NaN`
+     ⇒ `progress_completion_time` 变 NaN ⇒ **进度条整根不动**
+     （实测症状：「开服以后那个加载条不动，加载完直接进去」）。
+     本模块在页面侧拆 `"="` 兜住，并加"**坏值一律不采纳**（NaN/0 都跳过）+ 用内联估计值保底"
+     ⇒ 进度条永远不会卡死（最多是估得不准）。
+     ⚠️ 这条正是 readme 上一节「推送的两个约束」里点名的那个坑 —— 本模块只在**页面侧**兜，
+     **没有**去改上游的 `title_screen_subsystem.dm`。
 
 **2) `new_player.dm`**（上游：`modular_nova/modules/title_screen/code/new_player.dm`）
 

@@ -1,13 +1,25 @@
 // NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
-ADMIN_VERB(upload_jukebox_music, R_SERVER, "点唱机上传音乐", "Upload a valid .ogg file to be accessed via the jukebox.", ADMIN_CATEGORY_SERVER)
+ADMIN_VERB(upload_jukebox_music, R_SERVER, "点唱机上传音乐", "Upload a valid .ogg or .mp3 file to be accessed via the jukebox.", ADMIN_CATEGORY_SERVER) // TIANGUAN EDIT CHANGE - ADMIN_SOUND_BOARD - ORIGINAL: "Upload a valid .ogg file to be accessed via the jukebox."
 	var/file = input(user, LANG("datum.756b08bf193eb68a", null)) as sound|null
 	if(!file)
 		return
 
+	/* // TIANGUAN EDIT REMOVAL START - ADMIN_SOUND_BOARD
 	// we could theorticly support other sound types but OGG is the better format from what I am aware and I am 100% sure its length is properly fetched.
 	if(!IS_OGG_FILE(file))
 		tgui_alert(user, LANG("datum.f9fede34ab022030", null), LANG("datum.e990db784bda09f4", null), list("Ok"))
 		return
+	*/ // TIANGUAN EDIT REMOVAL END
+	// TIANGUAN EDIT ADDITION START - ADMIN_SOUND_BOARD
+	// 两种格式都支持（ogg + mp3）。改按 SSsounds.safe_formats 判定
+	// （code/controllers/subsystem/sounds.dm:58）—— 那份清单的定义就是
+	// 「rust-g 能取到时长的格式」，含 ogg 与 mp3，因此放行 mp3 不会引入
+	// 时长取不到的问题（倒计时连播 / 到点播放都依赖曲目时长）。
+	// 倒计时放歌与全局音效面板的上传按钮走的都是这条 verb ⇒ 一处放行、两处生效。
+	if(!IS_SOUND_FILE_SAFE(file))
+		tgui_alert(user, "文件类型无效。请选择 .ogg 或 .mp3 音频文件。", "无效的文件类型", list("Ok"))
+		return
+	// TIANGUAN EDIT ADDITION END
 
 	var/list/track_data = splittext(file, "+")
 	if(track_data.len < 2)

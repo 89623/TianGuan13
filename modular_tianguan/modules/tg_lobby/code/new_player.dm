@@ -67,7 +67,7 @@
 		play_lobby_button_sound()
 		var/datum/preferences/preferences = client.prefs
 		preferences.write_preference(GLOB.preference_entries[/datum/preference/toggle/be_antag], !preferences.read_preference(/datum/preference/toggle/be_antag))
-		client << output(preferences.read_preference(/datum/preference/toggle/be_antag), "nova_title_browser:toggle_antag")
+		client << output(preferences.read_preference(/datum/preference/toggle/be_antag) ? "1" : "0", "nova_title_browser:toggle_antag")
 		return
 
 	if(href_list["character_setup"])
@@ -104,7 +104,9 @@
 			ready = PLAYER_NOT_READY
 			SSstatpanels.remove_job_estimation(src)
 
-		client << output((ready == PLAYER_READY_TO_PLAY) ? 1 : 0, "nova_title_browser:toggle_ready")
+		// ⚠️ 投**字符串** "1"/"0"：投数字 0 时那次 JS 调用可能根本不触发
+		//    ⇒ 实测症状「变成 ☑ 之后再点，图标不变回 ☒」（音效面板那条是同一个坑）。
+		client << output((ready == PLAYER_READY_TO_PLAY) ? "1" : "0", "nova_title_browser:toggle_ready")
 		return
 
 	if(href_list["late_join"])

@@ -344,9 +344,82 @@ body.tg_collapsed .tg_handle:after { content: "▶"; }
 	if(SSticker.current_state == GAME_STATE_STARTUP)
 		dat += {"<img src="loading_screen.gif" class="bg" alt="">"}
 		dat += {"<div class="container_terminal" id="terminal"></div>"}
+		// 进度条：**纯 CSS 动画驱动**（不依赖 JS）。
+		// 前台已验证同一个浏览器能跑 CSS @keyframes（大厅侧边栏的彩虹变色就是它），而浏览器里
+		// 那段 JS 一直没有执行（用户实测：诊断行停在初始文字）⇒ 索性用 CSS 让条自己 0→99% 走过去。
+		// 150 秒线性：约本服初始化量级（实测 Initializations complete within ~193s）。
+		dat += {"<style>@keyframes tg_load { from { width: 0%; } to { width: 99%; } } #progress { animation: tg_load 150s linear forwards; }</style>"}
 		dat += {"<div class="container_progress" id="progress_container"><div class="progress_bar" id="progress"><div class="sub_progress_bar" id="sub_progress"></div></div></div>"}
+		// 路标①、诊断行已在定位完成后移除（真凶＝上游拼出的数组尾逗号，见下方注释）
 
 		dat += {"
+		<script language="JavaScript">
+			var terminal = document.getElementById("terminal");
+			var terminal_lines = \[\];
+		"}
+
+		for(var/message in GLOB.startup_messages)
+			dat += {"terminal_lines.push(""[replacetext(message, "\"", "\\\"")]"");"}
+
+		dat += {"
+			// ⚠️ 这里原本是数组字面量的收尾 `\];`。上游把启动消息拼成
+			//    \["a","b",\] 这种**尾逗号**数组 —— BYOND 内嵌浏览器是 IE 内核，
+			//    老 IE 引擎在数组字面量里遇到尾逗号会直接抛语法错误 ⇒ **整段 <script> 被丢弃**
+			//    （实测症状：加载条不动、终端不刷、诊断行停在初始文字）。
+			//    改成 var terminal_lines = \[\]; + push() 逐条添加：无数组字面量、无尾逗号。
+			function append_terminal_text(text) {
+				if(text) {
+					terminal_lines.push(text);
+				}
+				while(terminal_lines.length > [MAX_STARTUP_MESSAGES]) {
+					terminal_lines.shift();
+				}
+
+				terminal.innerHTML = terminal_lines.join("");
+			}
+
+			append_terminal_text();
+
+			var progress_bar = document.getElementById("progress");
+			var sub_progress_bar = document.getElementById("sub_progress");
+			var progress_container = document.getElementById("progress_container");
+			// 进度条：**完全不依赖服务端数值** —— 从本页加载那一刻起、按一个估时往上爬。
+			// 为什么改掉上游那套：上游用「world.timeofday − 服务端开局时刻」当分子、
+			// 「历史平均/默认估时」当分母 ⇒ **开服几分钟后才连进来的人**分子早已超过分母
+			// ⇒ 比例一上来就 ≥100% ⇒ 条满格不动（实测症状：「加载条不动，加载完直接进去」）。
+			// 现在：分子 = 本页自己的运行时长 ⇒ 从 0 一定往上走，不可能不动。
+			var progress_started_ms = (new Date()).getTime();
+			// 估时 150 秒（本服实测初始化 ~193 秒，取略小值让条走得动、不早早封顶）。
+			// 注意：这里**不再引用服务端的 world.timeofday/average_completion_time** ——
+			// 上游那套对"开服几分钟后才连进来的人"天然失效（分子早已超过分母 ⇒ 条满格不动）。
+			// 服务端后续仍可通过 update_loading_progress 修正估时。
+			var progress_total_ms = 150000;
+			if(progress_total_ms < 30000)
+				progress_total_ms = 30000;
+
+			setInterval(function() {
+				var elapsed_ms = (new Date()).getTime() - progress_started_ms;
+				var pct = elapsed_ms / progress_total_ms * 100;
+				if(pct > 99) pct = 99;
+				progress_bar.style.width = "" + pct + "%";
+				sub_progress_bar.style.width = "" + Math.min(pct + 6, 99) + "%";
+			}, 16.666666667);
+
+			function update_loading_progress(current_time, total_time) {
+				// 服务端推的东西是坏的（output(list2params(list(a,b)), …) ⇒ 页面只剩一个 "a=b"），
+				// 所以这里只做一件事：它若给了个**像样的总量**就用来修正估时；坏值一律忽略，
+				// 绝不允许把动画弄坏（分子是本页自己的运行时长，永远在长）。
+				var raw = (current_time === undefined || current_time === null) ? "" : String(current_time);
+				var s = (total_time === undefined || total_time === null) ? raw : String(total_time);
+				if((total_time === undefined || total_time === null) && raw.indexOf("=") !== -1)
+					s = raw.split("=")\[1\];
+				var got = parseFloat(s);
+				if(got > 0 && got < 100000)
+					progress_total_ms = got * 100;
+			}
+
+			function update_current_character() {}
+		</script>
 		"}
 
 	else
@@ -387,6 +460,86 @@ body.tg_collapsed .tg_handle:after { content: "▶"; }
 		// ⚠️ DM 的 {"..."} 字符串里不能有正则字面量（\s 等是雷区），也不能有未转义的 [ ⇒ 写成 \[ \]。
 		dat += {"
 		<script language="JavaScript">
+			// ── 以下 ready / antag / character 三块从上游同文件搬回 ──
+			// （当初接管这个文件时整段 script 丢了 ⇒ 准备图标点了不变、加载终端不动）
+			// ⚠️⚠️ 元素查找**必须惰性**（放在函数里），不能像上游那样写成模块级变量：
+			//   上游的 <script> 排在按钮**之后**，而我们这个 <script> 排在按钮**之前**
+			//   ⇒ 脚本求值时 document.getElementById("ready") 还是 null，
+			//   写成模块级变量会让三个 mark 全是 null、之后每次赋值都抛异常
+			//   ⇒ 图标永远不变（实测症状：点准备，左侧图标不动）。
+			//   惰性查找与顺序无关，以后再挪按钮也不会坏。
+			var ready_int = 0;
+			// ⚠️ 只换图标的 class 与字符，**绝不重写整个 innerHTML**：
+			//    按钮文字由服务端渲染、并已过 lang_localize_title_html() 汉化；
+			//    上游那套「整块 innerHTML = 英文常量数组」会把汉化顶掉
+			//    （实测症状：点一下准备，中文「准备」变回英文「READY」）。图标与语言无关。
+			function set_ready_look(want) {
+				var el = document.getElementById("ready");
+				if(!el) return;
+				var ico = el.getElementsByTagName("span")\[0\];
+				if(!ico) return;
+				ico.className = want ? "checked" : "unchecked";
+				ico.innerHTML = want ? "☑" : "☒";
+			}
+			function toggle_ready(setReady) {
+				// ⚠️ 服务端投的是**字符串** "1"/"0"（投数字 0 时那次 JS 调用会丢）。
+				//    JS 里字符串 "0" 是 **truthy** ⇒ 绝不能写 if(setReady)，
+				//    必须显式认 "1"/1/true 为"已准备"、"0"/0/false 为"未准备"；
+				//    参数完全缺失时（例如旧页面残留）按取反处理。
+				if(setReady === 1 || setReady === "1" || setReady === true)
+					ready_int = 1;
+				else if(setReady === 0 || setReady === "0" || setReady === false)
+					ready_int = 0;
+				else
+					ready_int = ready_int ? 0 : 1;
+				set_ready_look(ready_int);
+			}
+			var antag_int = 0;
+			function set_antag_look(want) {
+				var el = document.getElementById("be_antag");
+				if(!el) return;
+				var ico = el.getElementsByTagName("span")\[0\];
+				if(!ico) return;
+				ico.className = want ? "checked" : "unchecked";
+				ico.innerHTML = want ? "☑" : "☒";
+			}
+			function toggle_antag(setAntag) {
+				// 同 toggle_ready：显式认 "1"/"0"（字符串 "0" 是 truthy）
+				if(setAntag === 1 || setAntag === "1" || setAntag === true)
+					antag_int = 1;
+				else if(setAntag === 0 || setAntag === "0" || setAntag === false)
+					antag_int = 0;
+				else
+					antag_int = antag_int ? 0 : 1;
+				set_antag_look(antag_int);
+			}
+
+			function update_current_character(name) {
+				var slot = document.getElementById("character_slot");
+				if(slot && name) slot.textContent = name.toUpperCase();
+			}
+
+			// ── 天关追加：大厅角色卡的实时刷新接收端（lobby_card.dm 往这些函数名 push）──
+			// ⚠️ output() 到 browser 会按 URL 参数解析 ⇒ base64 里的 + 被解码成空格，必须还原，
+			//    否则 PNG 数据损坏、头像显示成一个叉。不用正则（DM 字符串雷区），用 split/join。
+			function tg_set_avatar(data) {
+				var e = document.getElementById("tg_avatar");
+				if(!e || !data) return;
+				e.src = "data:image/png;base64," + data.split(" ").join("+");
+			}
+			function tg_set_prefs(html) {
+				var e = document.getElementById("tg_prefs");
+				if(e) e.innerHTML = html;
+			}
+			function tg_set_name(name) {
+				var e = document.getElementById("tg_pname");
+				if(e) e.innerHTML = name;
+			}
+			function tg_set_pid(text) {
+				var e = document.getElementById("tg_pid");
+				if(e) e.innerHTML = text;
+			}
+
 			function tg_set_collapsed(on) {
 				var b = document.body;
 				if(!b) return;
@@ -407,7 +560,7 @@ body.tg_collapsed .tg_handle:after { content: "▶"; }
 					b.className = out;
 				}
 			}
-			tg_set_collapsed("\[tg_sidebar_collapsed ? 1 : 0\]");
+			tg_set_collapsed("[tg_sidebar_collapsed ? 1 : 0]");
 		</script>
 		"}
 

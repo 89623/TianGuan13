@@ -47,6 +47,8 @@
 	var/tick_timer
 	/// 当前在播放的文件名（用于停止按钮显示）
 	var/playing_file
+	/// 播放结束自动复位的定时器（见 play()）
+	var/play_end_timer
 	/// 已知的目录清单：变了才把新文件纳入传输（上传后自动生效，无需回调）
 	var/list/known_files = list()
 	/// **已激活**的音频：只有这些才会被预传输。
@@ -62,6 +64,9 @@
 	if(push_timer)
 		deltimer(push_timer)
 		push_timer = null
+	if(play_end_timer)
+		deltimer(play_end_timer)
+		play_end_timer = null
 	return ..()
 
 /// 控制器单例
@@ -136,11 +141,32 @@
 			for(var/other_key in status)
 				queue += list(list(other_key, track_file))
 	known_files = files.Copy()
+	// 加固：待推队列 / 已激活清单里指向「已不在曲库里」的音频直接丢掉。
+	// 谁绕过面板直接删了音频文件也能自愈 —— 否则 enabled_files 会一直把「就绪」的分母撑住，
+	// 所有玩家都到不了就绪，播放按钮永远不亮（且待推份数会挂着永远消化不掉）。
+	for(var/stale_file in enabled_files.Copy())
+		if(!files[stale_file])
+			enabled_files -= stale_file
+			prune_queue_for(stale_file)
 	if(length(queue) && !push_timer)
 		push_now()
 
+/// 从待推队列里剔除某一首的所有份（该音频已被移除 / 已不存在）
+/datum/tianguan_sound_board/proc/prune_queue_for(track_file)
+	// 倒着遍历 + Cut：边遍历边改会让正序遍历漏项
+	for(var/i = length(queue); i >= 1; i--)
+		var/list/pair = queue[i]
+		if(pair && pair[2] == track_file)
+			queue.Cut(i, i + 1)
+
 /// 立刻推一份（避免第一份要等一个间隔才动）；其余按间隔排下去
 /datum/tianguan_sound_board/proc/push_now()
+	// ⚠️ 进入时先把句柄清掉：本 proc 就是刚触发的那个定时器的回调，此刻它已经作废。
+	//    不清的话，队列若恰好在这里排空就没人再续期 ⇒ push_timer 留着一个**失效的旧 id**，
+	//    而唯一的启动闸门是 `length(queue) && !push_timer` ⇒ 之后新入队的份永远推不动。
+	//    实测症状：放完一轮（队列排空过一次）之后再选多少首都只停在「待推」，
+	//    点「传输」也不动 —— 因为循环再也不被启动。
+	push_timer = null
 	push_one()
 	if(length(queue))
 		push_timer = addtimer(CALLBACK(src, PROC_REF(push_now)), max(round(interval * 10), 5), TIMER_STOPPABLE)
@@ -255,16 +281,39 @@
 		else
 			skipped++
 	playing_file = track_file
+	// 播完自动复位「正在播放」：BYOND 收不到「客户端播完了」这种通知，只能按曲目时长自己掐表
+	// （admin_countdown 的连播推进用的就是同一套办法）。
+	// ⚠️ 这里调 SSsounds.get_sound_length() 是安全的：点唱机加载曲库时已经对**同一批文件**调过它
+	//    （code/datums/components/jukebox.dm:108），长度已进 sound_lengths 缓存 ⇒ 这里是纯缓存命中、
+	//    不会再触发 rust-g 调用。取不到时长（返回 0）时**不排定时器** —— 宁可手动点停止，
+	//    也不要让按钮停在一个凭猜的状态上（单个 get_sound_length 在 rust-g 报错时会 CRASH 整个服）。
+	if(play_end_timer)
+		deltimer(play_end_timer)
+		play_end_timer = null
+	var/play_length_ds = max(round(SSsounds.get_sound_length(track["path"]) || 0), 0)
+	if(play_length_ds)
+		// +1 秒余量：客户端起播有网络延迟，掐太死会在尾声就复位
+		play_end_timer = addtimer(CALLBACK(src, PROC_REF(clear_playing)), play_length_ds + 1 SECONDS, TIMER_STOPPABLE)
 	log_admin("[key_name(user)] 播放了全局音效面板里的 [track["name"]]（送达 [heard] 人 / 因音量偏好为 0 跳过 [skipped] 人）。")
 	log_world("TIANGUAN_SOUND_BOARD: 播放 [track["name"]] 送达=[heard] 跳过=[skipped]")
 	start_ticking()
 	return TRUE
+
+/// 播放到点：复位「正在播放」。
+/// 服务端收不到客户端的"播放结束"通知，所以由 play() 按曲目时长排了这个定时器。
+/// 重新播放会先 deltimer 掉旧的 ⇒ 这里只可能是"当前这一首"到点。
+/datum/tianguan_sound_board/proc/clear_playing()
+	playing_file = null
+	play_end_timer = null
 
 /// 停止播放
 /datum/tianguan_sound_board/proc/stop(mob/user)
 	for(var/mob/player_mob as anything in GLOB.player_list)
 		SEND_SOUND(player_mob, sound(null, channel = CHANNEL_JUKEBOX))
 	playing_file = null
+	if(play_end_timer)
+		deltimer(play_end_timer)
+		play_end_timer = null
 	if(user)
 		log_admin("[key_name(user)] 停止了全局音效面板的播放。")
 
@@ -370,6 +419,10 @@ GLOBAL_LIST_EMPTY(tianguan_sound_board_uis)
 		var/list/entry = board.status[key]
 		if(entry && entry["files"])
 			entry["files"] -= track_file
+	// ⚠️ 队列里属于这个文件的份也要剔除：只清上面那三处的话，「待推 N 份」会留下
+	//    永远消化不掉的幽灵份（实测：选 3 首 × 51 人 = 153，面板却显示 154）。
+	//    倒着遍历 + Cut，避免边遍历边改造成的漏项。
+	board.prune_queue_for(track_file)
 	log_admin("[key_name(warner)] 从全局音效面板移除并删除了上传音频 [track_file]。")
 	to_chat(warner, span_notice("已删除「[track_name]」。（点唱机曲库同步生效）"))
 	board.start_ticking()
