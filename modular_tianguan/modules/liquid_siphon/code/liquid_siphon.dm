@@ -14,8 +14,15 @@
 //
 // 建造：电路板只需 3 扫描模块 + 3 物质仓；电池**不是**建造零件，造好后手持电池左键装入。
 //
-// 贴图：本模块暂无专属贴图，按需求沿用气体虹吸器（/obj/machinery/portable_atmospherics/pump）那套 ——
-//       同为 icons/obj/pipes_n_cables/atmos.dmi 的 siphon_0（关）/ siphon_1（开，4 帧动画）。
+// 贴图：模块自带 icons/liquid_siphon.dmi，与气体虹吸器**三态同构** —— siphon（代表性静态图，单帧）/
+//       siphon_0（关，单帧）/ siphon_1（开，4 帧循环，帧延迟与 atmos.dmi 里的 siphon_1 一致）；
+//       由 update_icon_state() 按开关拼 "[基名]_[on]" 切换。
+//       ⚠️ siphon 这一态不能省：部门车床/研究界面里**电路板的图标 = 它造出来的那台机器**的图标
+//       （code/modules/asset_cache/assets/research_designs.dm 把 circuitboard 换成 C.build_path，
+//       再取编译期的 icon_state）⇒ 取的正是 siphon，缺了它电路板会显示成坏图。
+//
+// 货舱：文件末尾定义 /datum/supply_pack/engineering/portasiphon —— 分类与价格沿用同类的
+//       便携式空气泵 / 洗涤器（见 code/modules/cargo/packs/engineering.dm 的 portapump）。
 //
 // ⚠️ 规格未写明、由实现自行取定的一点（如需改动很便宜）：
 //   1 级范围的「设备下一格」按【机器自己所在的那一格】实现（不额外向下取格）。
@@ -35,7 +42,7 @@
 /obj/machinery/light_liquid_siphon
 	name = "轻量化液体虹吸器"
 	desc = "星狐工业发明，与纳米传讯合作进行便携化改造的设备。其前身是用于海洋世界行星改造工程的特种设备。开启后可快速吸取并消除泄露的液体"
-	icon = 'icons/obj/pipes_n_cables/atmos.dmi'
+	icon = 'modular_tianguan/modules/liquid_siphon/icons/liquid_siphon.dmi'
 	icon_state = "siphon"
 	density = TRUE
 	anchored = FALSE
@@ -256,3 +263,26 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ATMOS
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+// ───────────────────────── 货舱采购 ─────────────────────────
+
+/// 与便携式空气泵 / 便携式空气洗涤器同分类、同价格档、同权限、同箱子
+/// （对照 code/modules/cargo/packs/engineering.dm 的 portapump / portascrubber）。
+/datum/supply_pack/engineering/portasiphon
+	name = "轻量化液体虹吸器采购箱"
+	desc = "两台轻量化液体虹吸器。星狐工业出品，开启后可快速吸取并消除地面上的泄漏液体；\
+		范围与速率可由零件等级调节，适合处理大面积的液体泄漏事故。"
+	cost = CARGO_CRATE_VALUE * 4.5
+	access_view = ACCESS_ATMOSPHERICS
+	contains = list(/obj/machinery/light_liquid_siphon = 2)
+	crate_name = "轻量化液体虹吸器采购箱"
+	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
+
+// ───────────────────────── 收尾：本文件的宏只服务本文件 ─────────────────────────
+// 按 modular_tianguan/readme.md「Defines」：只在单个文件内使用的宏在文件底部 #undef，
+// 避免污染全局编译上下文与自动补全（仓内先例：custom_employers / emergency_shuttle_cc / guide_browser）。
+
+#undef SIPHON_RANGE_SIDES
+#undef SIPHON_RATES
+#undef SIPHON_JOULES_PER_SECOND
+#undef SIPHON_MAX_TIER
