@@ -8,6 +8,7 @@
 		/datum/design/board/thermomachine,
 		/datum/design/board/space_heater,
 		/datum/design/board/scrubber,
+		/datum/design/board/light_liquid_siphon, // TIANGUAN EDIT ADDITION - LIQUID_SIPHON（与便携式空气洗涤器同节点 ⇒ 凡能造它的地方都能造本机）
 		/datum/design/generic_gas_tank,
 		/datum/design/oxygen_tank,
 		/datum/design/plasma_tank,
