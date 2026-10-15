@@ -240,6 +240,10 @@
 	var/clearview = FALSE
 	// TIANGUAN EDIT ADDITION END - HOLOSIGN_Z_LAYER_FIX
 
+/obj/structure/holosign/barrier/atmos/emp_act(severity)
+	. = ..()
+	investigate_log("was destroyed due to EMP", INVESTIGATE_ATMOS)
+
 /obj/structure/holosign/barrier/atmos/proc/clearview_transparency()
 	// TIANGUAN EDIT CHANGE - HOLOSIGN_Z_LAYER_FIX - ORIGINAL: alpha = 25 + a bare SSvis_overlays.remove_vis_overlay()/add_vis_overlay() pair
 	// Going through create_vis_overlay() keeps the vis overlay, and the state needed to rebuild it, in one place.
