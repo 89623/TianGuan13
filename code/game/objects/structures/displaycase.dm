@@ -1,4 +1,4 @@
-// NOVA EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_nova/modules/i18n/readme.md
+// ZH EDIT - I18N CODEMOD - 玩家可见字符串已改写为 LANG()；请勿手改 key，见 modular_zh/modules/i18n/readme.md
 // TIANGUAN EDIT - VENDATRAY_TEMP - 本文件含临时核心补丁，上游同步 / nova-i18n rewrite 可能覆盖，改动说明见 modular_tianguan/modules/vendatray_temp/readme.md
 //   · /obj/structure/displaycase/forsale/item_interaction —— 恢复"托盘打开时把物品放上展示台"的分支（上游无此功能，天关自行补的）
 //   · 同步上游之后必须复查：grep -n VENDATRAY_TEMP code/game/objects/structures/displaycase.dm

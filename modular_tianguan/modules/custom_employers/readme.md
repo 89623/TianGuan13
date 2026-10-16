@@ -226,7 +226,7 @@
 `syndicate`→`syndicate`、`nanotrasen`→`ntos`、`uar`→`uar`。
 
 ⚠️ **`ui_theme` 必须登记进 `strings/i18n/policy.json` 的 `payload_skip_keys`（已登记）。**
-服务器的 i18n（`modular_nova/modules/i18n`）会把 flavor 表里的字符串值就地反查翻译，`ui_theme` 原本被翻成
+服务器的 i18n（`modular_zh/modules/i18n`）会把 flavor 表里的字符串值就地反查翻译，`ui_theme` 原本被翻成
 「辛迪加」——于是 tgui 拿到 `theme-辛迪加` 这种类名，**匹配不到任何 CSS**，界面掉回默认蓝（看着像纳米的），
 而且完全静默。`ui_theme` 属于「值兼标识符」（前端拿它拼 CSS 类名），正是 `payload_skip_keys` 要挡的那类。
 

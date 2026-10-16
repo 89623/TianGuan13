@@ -276,6 +276,7 @@ export const DmTarget = new Juke.Target({
     'tgui/public/tgui.html',
     "modular_nova/**", ///NOVA EDIT ADDITION - Making the CBT work
     "modular_z121/**",
+    "modular_zh/**", // ZH EDIT ADDITION - the localization fork's own modules
     `${DME_NAME}.dme`,
     NamedVersionFile,
   ],

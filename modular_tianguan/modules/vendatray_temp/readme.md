@@ -52,7 +52,7 @@
   grep -n VENDATRAY_TEMP code/game/objects/structures/displaycase.dm
   ```
   正常应命中 4 处（文件头 3 处 + proc 内标记 1 处）。只命中文件头、没有 `TIANGUAN EDIT ADDITION START` 就说明插入分支被冲掉了。
-- `nova-i18n rewrite` 重写该文件时也可能抹掉标记（它只保留自己加的 `NOVA EDIT - I18N CODEMOD` 头）。重跑 rewrite / resync 之后同样复查一次上面那条命令。
+- `nova-i18n rewrite` 重写该文件时也可能抹掉标记（它只保留自己加的 `ZH EDIT - I18N CODEMOD` 头）。重跑 rewrite / resync 之后同样复查一次上面那条命令。
 - 玩家可见症状（用于快速判断补丁是否失效）：**托盘开着，拿食物点托盘放不进去，也没有任何提示**。
 
 ### 游戏内复验：
