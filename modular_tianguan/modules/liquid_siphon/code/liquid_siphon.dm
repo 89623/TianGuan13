@@ -41,7 +41,7 @@
 
 /obj/machinery/light_liquid_siphon
 	name = "轻量化液体虹吸器"
-	desc = "星狐工业发明，与纳米传讯合作进行便携化改造的设备。其前身是用于海洋世界行星改造工程的特种设备。开启后可快速吸取并消除泄露的液体"
+	desc = "中华联合工业发明，与纳米传讯合作进行便携化改造的设备。其前身是用于海洋世界行星改造工程的特种设备。开启后可快速吸取并消除泄露的液体"
 	icon = 'modular_tianguan/modules/liquid_siphon/icons/liquid_siphon.dmi'
 	icon_state = "siphon"
 	density = TRUE
@@ -270,7 +270,7 @@
 /// （对照 code/modules/cargo/packs/engineering.dm 的 portapump / portascrubber）。
 /datum/supply_pack/engineering/portasiphon
 	name = "轻量化液体虹吸器采购箱"
-	desc = "两台轻量化液体虹吸器。星狐工业出品，开启后可快速吸取并消除地面上的泄漏液体；\
+	desc = "两台轻量化液体虹吸器。中华联合工业出品，开启后可快速吸取并消除地面上的泄漏液体；\
 		范围与速率可由零件等级调节，适合处理大面积的液体泄漏事故。"
 	cost = CARGO_CRATE_VALUE * 4.5
 	access_view = ACCESS_ATMOSPHERICS

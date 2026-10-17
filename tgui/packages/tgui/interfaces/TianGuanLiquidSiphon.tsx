@@ -54,7 +54,7 @@ export const TianGuanLiquidSiphon = (props) => {
           color="label"
           style={{ letterSpacing: '0.25em', marginLeft: '0.25em' }}
         >
-          ——星 狐
+          ——联 合
           {/* 齿轮自转：外框限成正方并清掉父级字距，否则旋转轴心会偏离字形中心 */}
           <Box
             inline
