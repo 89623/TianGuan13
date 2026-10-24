@@ -10139,6 +10139,7 @@
 #include "modular_tianguan\modules\admin_sound_board\code\admin_sound_board.dm"
 #include "modular_tianguan\modules\music_tapes\code\music_tapes.dm"
 #include "modular_tianguan\modules\liquid_siphon\code\liquid_siphon.dm"
+#include "modular_tianguan\modules\blindfold_costume\code\blindfold_costume.dm"
 #include "modular_tianguan\code\wings\wings.dm"
 
 
