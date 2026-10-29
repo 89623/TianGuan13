@@ -220,7 +220,8 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	//TIANGUAN EDIT ADDITION START - UAR/幽灵船员列表：卡取不到时（卡在 PDA 里、而 PDA 不在 ID 槽/腰带 ——
 	//  get_idcard() 只查 手/ID 槽/腰带，见 human_helpers.dm:118-123）改用"职业自带的 id_trim"兜底，
 	//  这样列表里仍显示**正确的职业 HUD**，而不是黑格或缺省图标。
-	var/datum/id_trim/fallback_trim = player.mind?.assigned_role?.get_outfit()?.id_trim
+	var/datum/outfit/job_outfit = player.mind?.assigned_role?.get_outfit()
+	var/datum/id_trim/fallback_trim = job_outfit?.id_trim
 	//TIANGUAN EDIT ADDITION END
 	serialized["job"] = id_card?.get_trim_assignment() || player.job
 	serialized["icon"] = id_card?.get_trim_sechud_icon() || (fallback_trim ? fallback_trim::sechud_icon : null) || DEFAULT_HUDS_DMI

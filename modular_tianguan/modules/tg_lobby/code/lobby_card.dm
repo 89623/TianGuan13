@@ -45,7 +45,8 @@
 		gender_text = "男"
 	else if(gender_value == FEMALE)
 		gender_text = "女"
-	var/job_title = get_highest_priority_job()?.title   // 上游现成的取值，别自己遍历 job_preferences
+	var/datum/job/highest_job = get_highest_priority_job()   // 上游现成的取值，别自己遍历 job_preferences
+	var/job_title = highest_job?.title
 	if(!job_title)
 		job_title = "无"
 

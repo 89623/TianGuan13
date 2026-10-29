@@ -71,6 +71,7 @@
 
 /// 控制器单例
 /proc/tianguan_sound_board_controller()
+	RETURN_TYPE(/datum/tianguan_sound_board)
 	// proc 内静态 + 显式类型（`GLOBAL_VAR_INIT(x, null)` 里 null 推不出类型，会编译报错）
 	var/static/datum/tianguan_sound_board/board
 	if(!board)

@@ -34,6 +34,7 @@ GLOBAL_LIST_EMPTY(tianguan_countdown_uis)
 
 /// 取（懒创建）全局控制器
 /proc/tianguan_countdown_controller()
+	RETURN_TYPE(/datum/tianguan_countdown)
 	if(!GLOB.tianguan_countdown)
 		GLOB.tianguan_countdown = new /datum/tianguan_countdown()
 	return GLOB.tianguan_countdown
