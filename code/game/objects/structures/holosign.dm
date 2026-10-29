@@ -96,6 +96,8 @@
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	// TIANGUAN EDIT CHANGE - HOLOSIGN_Z_LAYER_FIX - ORIGINAL: add_appearance_flags = KEEP_APART|RESET_ALPHA
 	var/obj/effect/overlay/vis/overlay = SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir, add_appearance_flags = overlay_appearance_flags) //you see mobs under it, but you hit them like they are above it
+	if(isnull(overlay)) // Signs being deleted get no vis overlays
+		return
 	if (color || cached_color_filter)
 		overlay.add_atom_colour(cached_color_filter || color, FIXED_COLOUR_PRIORITY)
 
