@@ -26,9 +26,6 @@
   "\"When enabled, the Nova Sector logo will be displayed next to your name in OOC if you're a donator.": [
     "tgui:donator_status"
   ],
-  "#RRGGBB 或色名（如 gold）": [
-    "tgui:TianGuanCountdown"
-  ],
   "'Dagger' Designer Mantle": [
     "dm:labels"
   ],
@@ -1453,9 +1450,6 @@
   ],
   "All zombie types will be detected, including dormant zombies.": [
     "tgui:ScannerGate"
-  ],
-  "Alliance Inspector": [
-    "dm:labels"
   ],
   "Allied Sectors": [
     "tgui:Main"
@@ -3990,28 +3984,13 @@
   "Boom Bird Plushie": [
     "dm:labels"
   ],
-  "Boots (Cowboy, Black)": [
-    "dm:labels"
-  ],
-  "Boots (Cowboy, Brown)": [
-    "dm:labels"
-  ],
-  "Boots (Cowboy, White)": [
-    "dm:labels"
-  ],
   "Boots - Colonial Half-Boots": [
     "dm:labels"
   ],
   "Boots - Cowboy (Colorable)": [
     "dm:labels"
   ],
-  "Boots - Cowboy, Laced (Black)": [
-    "dm:labels"
-  ],
-  "Boots - Cowboy, Laced (Brown)": [
-    "dm:labels"
-  ],
-  "Boots - Cowboy, Laced (White)": [
+  "Boots - Cowboy, Laced": [
     "dm:labels"
   ],
   "Boots - Heavy Frontier": [
@@ -5472,15 +5451,10 @@
     "tgui:AlarmStatus"
   ],
   "Cap": [
+    "dm:labels",
     "tgui:Crayon",
     "tgui:Seed",
     "tgui:species_features"
-  ],
-  "Cap (Black)": [
-    "dm:labels"
-  ],
-  "Cap (Blue)": [
-    "dm:labels"
   ],
   "Cap (Delinquent)": [
     "dm:labels"
@@ -5488,37 +5462,13 @@
   "Cap (Flat)": [
     "dm:labels"
   ],
-  "Cap (Green)": [
-    "dm:labels"
-  ],
-  "Cap (Grey)": [
-    "dm:labels"
-  ],
   "Cap (Mail)": [
-    "dm:labels"
-  ],
-  "Cap (Orange)": [
     "dm:labels"
   ],
   "Cap (Plague Doctor)": [
     "dm:labels"
   ],
-  "Cap (Purple)": [
-    "dm:labels"
-  ],
-  "Cap (Rainbow)": [
-    "dm:labels"
-  ],
   "Cap (Rastafarian)": [
-    "dm:labels"
-  ],
-  "Cap (Red)": [
-    "dm:labels"
-  ],
-  "Cap (White)": [
-    "dm:labels"
-  ],
-  "Cap (Yellow)": [
     "dm:labels"
   ],
   "Cap - Baseball": [
@@ -7861,6 +7811,9 @@
   "Cowardly": [
     "dm:labels"
   ],
+  "Cowboy Boots": [
+    "dm:labels"
+  ],
   "Cowboy Hat (Legacy)": [
     "dm:labels"
   ],
@@ -9595,6 +9548,9 @@
     "dm:labels"
   ],
   "Diphenhydramine": [
+    "dm:labels"
+  ],
+  "Diploma": [
     "dm:labels"
   ],
   "Dipped": [
@@ -12061,19 +12017,13 @@
     "tgui:SpeciesPage",
     "tgui:index"
   ],
-  "Fedora (Beige)": [
-    "dm:labels"
-  ],
-  "Fedora (Black)": [
+  "Fedora": [
     "dm:labels"
   ],
   "Fedora (Brown)": [
     "dm:labels"
   ],
   "Fedora (Colorable)": [
-    "dm:labels"
-  ],
-  "Fedora (White)": [
     "dm:labels"
   ],
   "Feeding": [
@@ -35510,9 +35460,6 @@
   "Union Requisitions Officer": [
     "dm:labels"
   ],
-  "Union of Allied Republics": [
-    "dm:labels"
-  ],
   "Unique Enzyme": [
     "tgui:GeneticMakeupInfo"
   ],
@@ -40278,23 +40225,5 @@
   ],
   "∞ minutes": [
     "tgui:ExoscannerConsole"
-  ],
-  "「阶段」= 倒计时开始后到第 N 分钟时，把上方标题换成指定文本；可以设任意多条。 没到第一条阶段之前显示静态标题。只影响标题那一行，倒计时数字与结束文本不受影响。 「新增阶段」会自动接着上一条 +1 分钟，所以连点几次就是 1 分、2 分、3 分…各变一次。": [
-    "tgui:TianGuanCountdownStages"
-  ],
-  "回合开始时不自动显示左上角的「指南浏览器」按钮。勾/取消不会当场改变按钮，下个回合开始（或重新进服）时生效；当前回合的显示/隐藏请用 OOC 栏的指令。": [
-    "tgui:tianguan_guide_button"
-  ],
-  "复用「点唱机上传音乐」（.ogg / .mp3 均可；文件名需 标题+节拍）": [
-    "tgui:TianGuanCountdown"
-  ],
-  "想让标题随倒计时变化（开始后第 N 秒换成别的文本）⇒ 用「标题阶段」": [
-    "tgui:TianGuanCountdown"
-  ],
-  "支持 .ogg / .mp3。上传的自动开始传输；曲库里已有的点「传输」才传": [
-    "tgui:TianGuanSoundBoard"
-  ],
-  "点唱机曲库为空 —— 先用「点唱机上传音乐」上传 .ogg / .mp3": [
-    "tgui:TianGuanCountdown"
   ]
 }
