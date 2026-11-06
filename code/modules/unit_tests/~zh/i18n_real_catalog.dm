@@ -299,6 +299,20 @@
 	TEST_ASSERT(!findtext(fiber_out, "Material from"), "法医纤维文本应由显示层模板翻译：[fiber_out]")
 	TEST_ASSERT_NOTEQUAL(lang_reverse_text("Reset And Trigger"), "Reset And Trigger", "多词电路端口名应已进目录")
 	TEST_ASSERT_EQUAL(lang_reverse_text("Current Target"), "Current Target", "与 AI 黑板键同形的端口名不得进全局反查表")
+	// ⑭ 药物/化学过敏在健康扫描仪（healthscan / chemscan）与医疗记录里的运行期翻译：
+	//   · `/datum/quirk/item_quirk/allergic/add()` 在生成时将各药物试剂名经 `lang_reverse_text` 反查并拼接成
+	//     `allergy_string`，再用 manual 模板键生成 `name` 与 `medical_record_text`（无需污染全局反查/实参链）。
+	var/mob/living/carbon/human/allergy_patient = allocate(/mob/living/carbon/human/consistent)
+	allergy_patient.add_quirk(/datum/quirk/item_quirk/allergic)
+	var/datum/quirk/item_quirk/allergic/allergy_quirk = allergy_patient.get_quirk(/datum/quirk/item_quirk/allergic)
+	TEST_ASSERT_NOTNULL(allergy_quirk, "应能为测试角色添加药物过敏怪癖")
+	var/allergy_scan_line = LANG("_root.f3b9c31a01a52bdf", list(allergy_patient.get_quirk_string(FALSE, CAT_QUIRK_MAJOR_DISABILITY, from_scan = TRUE)))
+	TEST_ASSERT(!findtext(allergy_scan_line, "Extreme") && !findtext(allergy_scan_line, "Allergies"), \
+		"健康扫描仪重大残疾行里的药物过敏应完整翻译（含 tochat = FALSE 形态）：[allergy_scan_line]")
+	TEST_ASSERT(findtext(allergy_quirk.allergy_string, "、"), \
+		"右键 chemscan 读取的 allergy_string 应以中文顿号拼接：[allergy_quirk.allergy_string]")
+	TEST_ASSERT(!findtext(allergy_quirk.medical_record_text, "responds violently"), \
+		"药物过敏的医疗记录文本应已本地化：[allergy_quirk.medical_record_text]")
 
 	GLOB.i18n_server_locale = saved_locale
 

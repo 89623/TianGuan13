@@ -68,5 +68,7 @@
 	"_root.instrument_sustain_exponential": "指数衰减系数（每 0.1 秒 %）",
 	"_root.arcade_new_game": "新游戏开始，对手：{0}",
 	"_root.job_estimation_named": "* {0}（{1}）",
-	"_root.job_estimation_mysterious": "* 一位神秘的{0}"
+	"_root.job_estimation_mysterious": "* 一位神秘的{0}",
+	"datum.allergy_quirk_name": "极端{0}过敏",
+	"datum.allergy_medical_record": "患者的免疫系统对{0}反应剧烈"
 }
