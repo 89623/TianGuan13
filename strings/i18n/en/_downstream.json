@@ -1,0 +1,8 @@
+{
+	"client.17c151c01f589ad7": "tar reported exit code {0}; the archive was still created. This is expected for the current round, whose logs are still being written.",
+	"client.2a9ef63f1a5c0307": "Refusing to archive {0}: the path contains characters that are unsafe to hand to a shell.",
+	"client.7aea08c3c3903602": "Refusing to archive the entire log root - that would pack up every round ever recorded and freeze the server while it runs. Pick a single round's folder instead.",
+	"client.9b753d182153e9a3": "Error: download_folder_as_archive(): failed to create {0} (exit code {1}). The server must be running in Trusted mode and have tar available.",
+	"client.9f71aac0a8a6810e": "Pack every file in {0} into a single archive and download it? A very large folder will briefly freeze the server while the archive is created.",
+	"client.cc8ba79bc21a9d99": "{0} is empty or does not exist."
+}
