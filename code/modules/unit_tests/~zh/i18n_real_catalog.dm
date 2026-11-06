@@ -188,6 +188,15 @@
 	var/objective_out = lang_template_apply(objective_line, LANGUAGE_LOCALE_ZH_HANS)
 	TEST_ASSERT_NOTEQUAL(objective_out, objective_line, "反派目标行应被模板逆匹配整条翻译")
 	TEST_ASSERT(!findtext(objective_out, "from escaping alive"), "不应只翻一半、留下英文残句：[objective_out]")
+	// ⑤b 模板字面段里的冠词宏（`Protect \the {0} at all costs.`）：归一化必须把 `\the ` 剥掉，
+	// 否则字面段 `Protect \the ` 永远对不上运行期的 `Protect the …`（灰烬行者的巢穴目标）。
+	var/protect_line = "Protect the necropolis tendril nest at all costs."
+	var/protect_out = lang_template_apply(protect_line, LANGUAGE_LOCALE_ZH_HANS)
+	TEST_ASSERT(!findtext(protect_out, "at all costs"), "带冠词宏的模板应被逆匹配：[protect_out]")
+	TEST_ASSERT(!findtext(protect_out, "necropolis"), "冠词落进捕获值后应被剥掉再反查：[protect_out]")
+	// ⑤c 单值形态的攻击动词（`attack_verb_continuous = "pulverizes"`）：抽取器从前只认 list 形态，
+	// 单值整类不进目录 → 「歌利亚 pulverizes了你！」。
+	TEST_ASSERT_NOTEQUAL(lang_localize_arg("pulverizes"), "pulverizes", "单值形态的攻击动词应已进目录")
 
 	// ⑥ 两段**运行期追加后缀**被拼在一起（职业描述的 antag opt-in 段）。两段各自都是目录键、
 	// 也都译好了，拼起来的整串不是键。从前靠字面 AC 的子串替换蒙混过去；AC 删掉之后改为
