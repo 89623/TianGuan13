@@ -62,6 +62,10 @@ const NAME_LANG_ASSIGN_ALLOWLIST: &[&str] = &[
     "code/datums/actions/items/organ_action.dm",
     // 物品调整动作名 `"Adjust [物品名]"` 三兄弟：与 toggles.dm 同形同理。
     "code/datums/actions/items/adjust.dm",
+    // 药物过敏特质名 `"Extreme [allergy_string] Allergies"`：所有 `/datum/quirk` 实例都在 `New()` 里将
+    // `name` 固化为译文（`_quirk.dm`），而本特质在 `add()` 里用随机抽取的 6 种药物列表覆写了 `name`。
+    // 特质判定一律走 `has_quirk(type)`，`name` 仅用于 `get_quirk_string` 展示。
+    "code/datums/quirks/negative_quirks/allergic.dm",
 ];
 
 /// 表达式的**值**是否就是 LANG 的产物（译文串）。
