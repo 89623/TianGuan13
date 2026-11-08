@@ -18,7 +18,7 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
 上游条目自带的**职业限定原样保留**（清单内有 19 条带 `restricted_roles`）——
 即需求方要的「赞助者专属」叠加上「职业限定」：选上后若当前职业不在限制内，开局发放会被拒并提示。
 
-**② 本模块自建条目（6 条，上游没有对应配装 datum）**
+**② 本模块自建条目（8 条，上游没有对应配装 datum）**
 
 | 物品（显示名） | item_path | 配装页签 |
 | --- | --- | --- |
@@ -28,10 +28,12 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
 | 辛迪莉亚娃娃 | `/obj/item/toy/plush/tianguan/xindiliya` | Toys（Plushies 分组） |
 | 绘兔娃娃 | `/obj/item/toy/plush/tianguan/huitu` | Toys（Plushies 分组） |
 | Luna娃娃 | `/obj/item/toy/plush/tianguan/luna` | Toys（Plushies 分组） |
+| 蓝红球娃娃 | `/obj/item/toy/plush/tianguan/lanhongqiu` | Toys（Plushies 分组） |
+| Mona娃娃 | `/obj/item/toy/plush/tianguan/mona` | Toys（Plushies 分组） |
 
-**三只赞助者玩偶**（`code/sponsor_plushies.dm` + `icons/plushies.dmi`）是本模块唯一自带美术的物品：
+**五只赞助者玩偶**（`code/sponsor_plushies.dm` + `icons/plushies.dmi`）是本模块唯一自带美术的物品：
 类型挂 `/obj/item/toy/plush/tianguan`（只把 `icon` 指到本模块图集），继承基类玩偶的全部行为
-（捏响、塞东西/拆填充、*love* 系列、可给玩偶改名与写描述）。三条配装条目挂
+（捏响、塞东西/拆填充、*love* 系列、可给玩偶改名与写描述）。五条配装条目挂
 `/datum/loadout_item/toys/plush` ⇒ 进 Toys 页签的「Plushies」分组、可改名，`donator_only = TRUE`
 写在类型体里（非默认值 ⇒ 编译期生效，不走 148 条清单那套运行期解锁）。
 
@@ -114,8 +116,8 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
 ### 测试方式：
 
 - DreamMaker 编译通过（0 errors；`dm.exe -DCBT tgstation.dme`，BYOND 516.1659）。
-- 单元测试 `/datum/unit_test/tianguan_sponsor_loadout` 通过（清单 148 条 + 自建 6 条都断言到；
-  三只玩偶已加进该测试的「自建条目」清单）。
+- 单元测试 `/datum/unit_test/tianguan_sponsor_loadout` 通过（清单 148 条 + 自建 8 条都断言到；
+  五只玩偶已加进该测试的「自建条目」清单）。
 - 无头探针（真引擎里读的运行期事实，2026-10-01，本模块玩偶那批）：
   - `loadout_entry_<三只>=1`、`donator_only_<三只>=1`、`ckey_wl_len_<三只>=0`、
     `group=Plushies`、`category=Toys`、`entries_sharing_path=1`（每只只有一条 datum，没撞键）；
@@ -142,15 +144,17 @@ https://github.com/89623/TianGuan13/pull/<!--PR 编号-->
 - 物品来源：需求方提供的清单（`预添加的物品.md`，156 条）。其中 148 条解锁、7 条保持原样、
   1 条（硬光轮椅）上游无条目故自建。需求文件里 `caligram_parkaa` 系笔误，实际类型为 `caligram_parka`。
 - 加物品：只在 `TIANGUAN_SPONSOR_ITEM_PATHS` 里加一行即可（上游已有该 item_path 的条目为前提）。
-- **三只玩偶的贴图**：`icons/plushies.dmi`（32×32、dirs=1、单帧），来源是需求方给的三张稿。
-  装配口径（**1:1 放像素，绝不重采样出糊边**）：原稿原生多大就多大 —— 绘兔/Luna 的稿是 32×32 稿的
-  16 倍放大图，还原回 32×32 后**不动一个像素**（缩放比 = 1.000）；只有辛迪莉亚（原生 64×64、
-  内容 35×33）超过画布，才按 0.857 用 **NEAREST** 缩到 30×28。此外只做两件事：
+- **五只玩偶的贴图**：`icons/plushies.dmi`（32×32、dirs=1、单帧），来源是需求方给的五张稿。
+  装配口径（**1:1 放像素，绝不重采样出糊边**）：原稿原生多大就多大 —— 绘兔/Luna/蓝红球/Mona 的稿
+  都是 32×32 稿的 16 倍放大图（512×512），还原回 32×32 后**不动一个像素**（缩放比 = 1.000；
+  蓝红球内容 22×26、Mona 27×28）；只有辛迪莉亚（原生 64×64、内容 35×33）超过画布，
+  才按 0.857 用 **NEAREST** 缩到 30×28。此外只做两件事：
   alpha 二值化（阈值 128，切掉 AI 稿的半透明柔光）+ 内容居中、底部留 1px。
   **不量化调色板、不补描边**（原稿多少色就多少色；描边会让玩偶发胖并吃掉画布）。
   生成脚本与对照预览图在仓库外的素材工作区（`Desktop/Hermes/projects/donator_plushies/`，
-  `build_sprites.py` / `preview.py`）——要改尺寸/阈值就改常量重跑，
-  再把 `out/<state>.png` 写回本模块的 `icons/plushies.dmi`。
+  `build_sprites.py`（前三只）/ `build_sprites_v3.py`（蓝红球 + Mona，读 `Desktop/需求/` 的稿并
+  追加进既有图集，会先备份 dmi 再回读校验旧三只逐像素未变）/ `preview.py`）——
+  要改尺寸/阈值就改常量重跑，再把 `out/<state>.png` 写回本模块的 `icons/plushies.dmi`。
 - **不改上游玩偶清单**：玩偶不进 `/obj/effect/spawner/random/entertainment/plushie(_delux)` 等随机池
   （赞助者专属，不该出现在随机玩偶箱里），也不动 `icons/obj/toys/plushes.dmi`。
 - **上游同步注意**：Nova 若改动 `donator_personal.dm` 中这些条目的 `item_path`／白名单／职业限制，

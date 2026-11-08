@@ -19,10 +19,12 @@
 		/obj/item/storage/box/balloons,
 		/obj/item/skillchip/job/clown,
 		/obj/item/holosign_creator/hardlight_wheelchair,
-		// 天关赞助者玩偶（sponsor_plushies.dm，三只）
+		// 天关赞助者玩偶（sponsor_plushies.dm，五只）
 		/obj/item/toy/plush/tianguan/xindiliya,
 		/obj/item/toy/plush/tianguan/huitu,
 		/obj/item/toy/plush/tianguan/luna,
+		/obj/item/toy/plush/tianguan/lanhongqiu,
+		/obj/item/toy/plush/tianguan/mona,
 	)
 	for(var/path in own_items)
 		var/datum/loadout_item/entry = GLOB.all_loadout_datums[path]

@@ -1,13 +1,13 @@
 // SPONSOR_LOADOUT_ITEMS - 天关赞助者玩偶（本模块自建物品）
 //
-// 三只赞助者专属玩偶：在配装（loadout）界面里开放给「赞助者」，判定与其它赞助者物品同源
+// 五只赞助者专属玩偶：在配装（loadout）界面里开放给「赞助者」，判定与其它赞助者物品同源
 // （donator_only ⇒ 走 Nova 捐赠者机制，名单在 config/nova/donators.txt，见 sponsor_loadout_items.dm 顶部说明）。
 //
 // 为什么单开一个文件：sponsor_loadout_items.dm 只管「解锁上游既有的配装条目」（清单 + 运行期 New() 覆盖），
 // 本文件是「天关自建的新物品」——物品类型与配装条目都在这里，清单那边一行都不用动
 // （未解的 item_path 不在 TIANGUAN_SPONSOR_ITEM_PATHS 里，也不需要：那套机制只用于改上游条目的字段）。
 //
-// 素材：需求方提供的三张玩偶稿，装配成 32×32 后落在本模块的 icons/plushies.dmi（三帧一态，dirs=1）。
+// 素材：需求方提供的五张玩偶稿，装配成 32×32 后落在本模块的 icons/plushies.dmi（一态一帧，dirs=1）。
 
 /// 天关自建玩偶的公共父类：只负责把图标指到本模块的图集。
 /// 不加这行会继承基类的 'icons/obj/toys/plushes.dmi'，按下面的 icon_state 去找而「查无此图」。
@@ -29,6 +29,16 @@
 	name = "Luna娃娃"
 	desc = "心血来潮的绘兔在那天看着Luna，以她的样貌做出来绘兔的第二个娃娃。"
 	icon_state = "plushie_luna"
+
+/obj/item/toy/plush/tianguan/lanhongqiu
+	name = "蓝红球娃娃"
+	desc = "蓝红球的生日礼物——绘兔专定"
+	icon_state = "plushie_lanhongqiu"
+
+/obj/item/toy/plush/tianguan/mona
+	name = "Mona娃娃"
+	desc = "来自绘兔给mona的专属定制"
+	icon_state = "plushie_mona"
 
 // ——— 配装条目 ———
 // 挂 /datum/loadout_item/toys/plush ⇒ 落在配装界面的 Toys（玩具）页签、Plushies 分组
@@ -53,4 +63,14 @@
 /datum/loadout_item/toys/plush/luna
 	name = "Luna娃娃"
 	item_path = /obj/item/toy/plush/tianguan/luna
+	donator_only = TRUE
+
+/datum/loadout_item/toys/plush/lanhongqiu
+	name = "蓝红球娃娃"
+	item_path = /obj/item/toy/plush/tianguan/lanhongqiu
+	donator_only = TRUE
+
+/datum/loadout_item/toys/plush/mona
+	name = "Mona娃娃"
+	item_path = /obj/item/toy/plush/tianguan/mona
 	donator_only = TRUE
