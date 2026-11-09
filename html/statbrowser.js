@@ -372,6 +372,7 @@ function draw_status() {
       a.href = 'byond://?' + part[2];
       a.textContent = part[1];
       lastdiv.appendChild(a);
+      continue; // ZH EDIT ADDITION - fall-through reached the default branch with div undefined and blanked the whole Status tab
     } else {
       div = document.createElement('div');
       lastdiv = div;

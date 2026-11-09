@@ -68,5 +68,7 @@
 	"_root.instrument_sustain_exponential": "Exponential Falloff Factor (% per decisecond)",
 	"_root.arcade_new_game": "New game started against {0}",
 	"_root.job_estimation_named": "* {0} as {1}",
-	"_root.job_estimation_mysterious": "* a mysterious {0}"
+	"_root.job_estimation_mysterious": "* a mysterious {0}",
+	"datum.allergy_quirk_name": "Extreme {0} Allergies",
+	"datum.allergy_medical_record": "Patient's immune system responds violently to {0}"
 }

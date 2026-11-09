@@ -45,11 +45,14 @@ GLOBAL_LIST_INIT(allergy_reagent_blacklist, typecacheof(list(
 	for(var/i in 0 to 5)
 		var/datum/reagent/medicine/chem_type = pick_n_take(chem_list)
 		allergies += chem_type
-		allergy_chem_names += initial(chem_type.name)
+		allergy_chem_names += lang_reverse_text(initial(chem_type.name)) // ZH EDIT CHANGE - i18n - ORIGINAL: allergy_chem_names += initial(chem_type.name)
 
-	allergy_string = allergy_chem_names.Join(", ")
-	name = "Extreme [allergy_string] Allergies"
-	medical_record_text = "Patient's immune system responds violently to [allergy_string]"
+	// ZH EDIT ADDITION START - i18n
+	var/separator = GLOB.i18n_server_locale != DEFAULT_UI_LOCALE ? (lang_scoped_table("list_formatting.json")["separator"] || ", ") : ", "
+	// ZH EDIT ADDITION END
+	allergy_string = allergy_chem_names.Join(separator) // ZH EDIT CHANGE - i18n - ORIGINAL: allergy_string = allergy_chem_names.Join(", ")
+	name = LANG("datum.allergy_quirk_name", list(allergy_string)) // ZH EDIT CHANGE - i18n - ORIGINAL: name = "Extreme [allergy_string] Allergies"
+	medical_record_text = LANG("datum.allergy_medical_record", list(allergy_string)) // ZH EDIT CHANGE - i18n - ORIGINAL: medical_record_text = "Patient's immune system responds violently to [allergy_string]"
 	RegisterSignal(quirk_holder, COMSIG_MOB_REAGENT_TICK, PROC_REF(block_metab))
 
 /datum/quirk/item_quirk/allergic/add_unique(client/client_source)

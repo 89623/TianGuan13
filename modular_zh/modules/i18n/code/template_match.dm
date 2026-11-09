@@ -50,6 +50,14 @@ GLOBAL_VAR_INIT(i18n_tpl_etx, "⟧")
 /// （字面 \n / \" / \improper），运行时字符串里是真换行/裸引号/无宏——不归一则永远匹配不上。
 /proc/lang_tpl_normalize(text)
 	if(findtext(text, "\\"))
+		// 文法宏（`\improper` `\proper` 与冠词 `\the` `\a` …）连同后面那个空格一起剥，而且**必须最先做**：
+		// 下面的 `\t` → 制表符会把 `\the` 吃成「制表符 + he」，宏就再也认不出来了。
+		// 冠词宏在运行期变成 "the "/"a "（专名则什么都不剩），留在字面段里的话 `Protect \the `
+		// 永远对不上 `Protect the …`，全目录约 1300 条插值模板因此在反查路径上整类失效（反派目标
+		// `Protect \the {0} at all costs.` 即此）。剥掉之后冠词落进捕获值，由 lang_localize_arg
+		// 的剥冠词步骤处理（中文不需要冠词）。
+		var/regex/article_re = GLOB.i18n_article_macro_regex
+		text = article_re.Replace(text, "")
 		text = replacetext(text, "\\\"", "\"")
 		text = replacetext(text, "\\n", "\n")
 		text = replacetext(text, "\\t", "\t")
@@ -58,8 +66,6 @@ GLOBAL_VAR_INIT(i18n_tpl_etx, "⟧")
 		// （正电子脑的 `Personality requested: \[{0}\]` 即此）。与 lang_unescape_source 同一处理。
 		text = replacetext(text, "\\\[", "\[")
 		text = replacetext(text, "\\\]", "\]")
-		text = replacetext(text, "\\improper", "")
-		text = replacetext(text, "\\proper", "")
 	return text
 
 /// 把模板拆为「字面段序列 + 占位符序号序列」：segs 比 order 多 1（首段/末段可为空 =

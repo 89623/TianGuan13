@@ -872,6 +872,18 @@ fn emit_list_strings_filtered(
     let args = match &term.elem {
         Term::List(args) => args,
         Term::Call(name, args) if name == "list" => args,
+        // 单值形态（`attack_verb_continuous = "pulverizes"`，全仓 168 个值、其中 78 个此前不在目录）：
+        // 从前直接 return，而调用侧随后 `continue`，于是这一整类既不走 list 也不走 build_template ——
+        // 歌利亚的「pulverizes 了你」即此。只收纯字面量：`"[attack_verb_simple]s"` 这种运行期拼的复数
+        // 不是独立文案。
+        Term::String(_) => {
+            if let Some(t) = build_template(expr) {
+                if !t.contains('{') && !blocklist.contains(&t.as_str()) {
+                    emit(catalog, ns, &t);
+                }
+            }
+            return;
+        }
         _ => return,
     };
     for arg in args.iter() {
