@@ -4,7 +4,8 @@
 配套模块：`uar_department`（部门「团结联盟」+ 职业「团结联盟审查官」本体的注册在那里）
 
 给团结联盟审查官配齐一整套：制服 / 公务员帽 / 行政手套 / 祖国靴 / 两个战术耳机 /
-行政ID 卡（卡面 + 审查官徽记 + secHUD 图标）/ 两面旗帜（墙上态 + 折叠态 + 货舱订购）。
+行政ID 卡（卡面 + 审查官徽记 + secHUD 图标）/ 两面旗帜（墙上态 + 折叠态 + 货舱订购）/
+团结联盟印章（可盖在公文上，见第八节）。
 制服**防火防酸**；帽 / 手套 / 靴 **激光·实弹·爆炸三级防护**（护甲读数 `30`，等级 = 数值/10 的罗马数字）。
 
 ## 一、三种「零核心改动」的挂法
@@ -78,7 +79,7 @@ NTC 的 `template_access = list(ACCESS_CAPTAIN, ACCESS_CHANGE_IDS)` —— **舰
 ## 五、旗帜与货舱
 
 - `/obj/structure/sign/flag/uar` + `/obj/item/sign/flag/uar`（折叠态，插墙展开），WSR 同构；
-- 审查官**开局只携带 UAR 国旗**（`backpack_contents` 里只有它；用户 09-30 明确规格）；
+- 审查官**开局携带 UAR 国旗 + 武器信标 + 团结联盟印章**（都在 `backpack_contents` 里；用户 09-30 明确规格：旗帜只带 uar 那面）；
   WSR 国旗不进开局携带，只能走货舱订购；
 - 货舱订购：`/datum/supply_pack/companies/general/uar_flag` 与 `.../wsr_flag`（与上游 `hc_flag` **同组**、同价 `CARGO_CRATE_VALUE * 0.2`）。
 
@@ -141,7 +142,41 @@ NTC 的 `template_access = list(ACCESS_CAPTAIN, ACCESS_CHANGE_IDS)` —— **舰
 **构建坑**：改了前端后须在 `tgui/` 跑 `bun run tgui:build`，**并删掉 `.rsc` 再编译 DM** ——
 DM 编译器只按文件清单判断资源是否变化，bundle 内容变了它**不会**重写 `.rsc`，客户端会继续用旧前端。
 
-## 八、待办（尚未落地）
+## 八、团结联盟印章（可盖公文）
+
+`/obj/item/stamp/uar`，审查官开局背包里就有一枚（`backpack_contents`，见第五节）。
+继承上游 `/obj/item/stamp`，盖章机制照抄上游：左键点纸张、右键速盖、`MODE_STAMPING`。
+
+文案（需求原文逐字）：
+- 名称：`团结联盟印章`
+- 介绍：`团结联盟在此星区合法授权的凭证。` 换行 `章身铭刻——“祖国万岁”`
+
+### 三处外观分工（物品本体与纸面小印记**全部沿用上游红色印章**，只有纸面窗口自绘）
+
+| 位置 | 用的是什么 | 谁在取 |
+|---|---|---|
+| 物品图标（背包 / 地上 / 手上托盘） | 上游 `icons/obj/service/bureaucracy.dmi` 的 `stamp-hos`（安保主管那枚红章） | 物品 `icon` / `icon_state` = `"stamp-hos"` |
+| 纸张**物品图标**上的小印记 | 上游 `paper_stamp-hos`（红色斜矩形；`stamp-deny` 那个是红色 ×，不要） | `add_stamp()` 取 `paper_<icon_state>` |
+| 纸面**窗口**（TGUI PaperSheet）里的大印记 | `icons/stamp_uar.png`（121×54，与上游印章**同画布、1:1 原样**） | `/obj/item/stamp/uar/get_writing_implement_details()` 覆盖，`stamp_class = icon_class_name("uar_stamp")`；精灵表那一条在 `code/modules/asset_cache/assets/paper.dm`（**TIANGUAN EDIT**） |
+
+> **尺寸**：纸面窗口内容区 420×500，印记 121×54 与上游所有印章同尺寸；之前试过 2 倍（242×108）被判「太大」⇒ 回到 1:1。
+> 以后若还要更大，把**源图整体 ×N NEAREST** 再落盘即可（像素画整数放大不糊），不用改代码。
+> 覆盖 `get_writing_implement_details()` 的代价：基类那份只填 4 个键（`interaction_mode` / `stamp_icon_state` /
+> `stamp_icon` / `stamp_class`），我们照抄并只换最后一项。上游若给它加字段（例如新的墨色），这里要跟着同步。
+> 守卫：`Initialize()` 第一次生成时确认精灵表条目与 `stamp_class` 可用，缺了就在 `runtime.log` 点名（`UAR_OFFICER: ⚠ …`）。
+
+### 精灵从哪来（源图 `~/Downloads/Photo 6.png/Photo 6.png`，2026-11-11 新版）
+
+- 源图本身就是**成品像素画**：121×54、RGBA、33 色、alpha 只有 0/255（仅 4 个半透明残留像素）、内容框 `(5,5)-(116,50)`
+  —— 与上游 `icons/stamp_icons/large_stamp-*.png` 同画布同落点。
+- ⇒ **不做任何处理**（不缩放、不锐化、不收色、不反解混白），脚本只做「校验 + 原样拷贝」，落盘文件与源图**逐字节相同**。
+- ⚠️ 上一版源图 `~/Downloads/TJLM.png`（120×54、白底无 alpha）已弃用：它必须经过「白底转透明 + 反解混白」，
+  而反解会把笔画稀释、在纸面窗口里看起来发糊 —— **源图本身没问题，是那一步处理的锅**。
+- 生成脚本（仓外）：`Desktop/Hermes/projects/uar_stamp/build_stamp_sprites.py`（`--check` 只校验不覆盖；
+  不满足 121×54 / 内容框 / alpha 二值就拒绝落盘）。
+- 效果图（纸面 1:1、放大 4 倍对照）：`Desktop/Hermes/团结联盟印章预览/`。
+
+## 九、待办（尚未落地）
 
 - **团结联盟SOP手册**：计划加进现成的 `sop_book` 模块（`/obj/item/book/manual/wiki/sop/uar`，
   `direct_wiki_url` 指向团结联盟标准操作程序 wiki 页，图标加进该模块的 `sop_books.dmi`）。
