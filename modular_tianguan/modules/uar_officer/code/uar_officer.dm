@@ -2,7 +2,8 @@
  * 团结联盟审查官服饰与装备（UAR_OFFICER）
  *
  * 内容：制服 / 公务员帽 / 礼仪手套 / 祖国靴 / 两个战术耳机（普通 + 防闪 bowman）/
- *       行政ID 卡 + 审查官卡面徽记 + secHUD 图标 / 两面旗帜（墙上态 + 折叠态 + 货舱订购）。
+ *       行政ID 卡 + 审查官卡面徽记 + secHUD 图标 / 两面旗帜（墙上态 + 折叠态 + 货舱订购）/
+ *       团结联盟印章（可盖在公文上，纸面印记走纸面窗口那套精灵表）。
  *
  * 三种「零核心改动」的挂法（依据 modular_tianguan/readme.md）：
  *   ① 新类型：衣物 / 耳机 / ID卡 / trim / 旗帜 / 补给包 —— 全是新子类型，定义即生效；
@@ -206,6 +207,45 @@
 	contains = list(/obj/item/sign/flag/wsr)
 	cost = CARGO_CRATE_VALUE * 0.2
 
+// ———————————————————————————————— 团结联盟印章（可盖在公文上）
+/// 继承上游 `/obj/item/stamp` ⇒ 盖公文那一整套机制照常可用：左键点纸张（读不了字时盲盖）、
+/// 右键速盖、`get_writing_implement_details()` 走 `MODE_STAMPING`。
+/// 三处贴图分工：
+///   · **物品图标** —— 沿用上游红色印章 `stamp-hos`（安保主管那枚，红章体）；
+///   · **纸张物品图标上的小印记** —— `add_stamp()` 取 `paper_<icon_state>` = 上游 `paper_stamp-hos`（红色斜矩形）；
+///   · **纸面窗口**（TGUI PaperSheet）里的大印记 —— 模块自带的联盟印章图 `icons/stamp_uar.png`（121×54 的 2 倍
+///     NEAREST 放大 = 242×108；纸面窗口约 300×400，1x 时字会糊成一团），
+///     走 stamps 精灵表的 `"uar_stamp"` 条目（那一行在 `code/modules/asset_cache/assets/paper.dm`，带 TIANGUAN EDIT 标记）。
+/obj/item/stamp/uar
+	name = "团结联盟印章"
+	desc = "团结联盟在此星区合法授权的凭证。\n章身铭刻——“祖国万岁”"
+	icon = 'icons/obj/service/bureaucracy.dmi'
+	icon_state = "stamp-hos"
+	// 与上游安保主管印章同档（洗衣机的染色登记位，本仓对 stamp 没有别的消费点）
+	dye_color = DYE_HOS
+
+/// 只换纸面**窗口**里那张大印记，其余两项（物品图标、纸张物品图标上的小印记）保持上游红色印章。
+/// 覆盖合法：`/obj/item/stamp/get_writing_implement_details()` 定义在基类上，本类型此前没有自己的版本。
+/obj/item/stamp/uar/get_writing_implement_details()
+	var/datum/asset/spritesheet_batched/sheet = get_asset_datum(/datum/asset/spritesheet/simple/stamps)
+	return list(
+		interaction_mode = MODE_STAMPING,
+		stamp_icon_state = icon_state,
+		stamp_icon = icon,
+		stamp_class = sheet.icon_class_name("uar_stamp"),
+	)
+
+/// 静默失败守卫：精灵表缺条目不会报错，只会「纸上盖了、点开纸张窗口一片空白」，所以点名一次。
+/obj/item/stamp/uar/Initialize(mapload)
+	. = ..()
+	var/static/checked = FALSE
+	if(checked)
+		return
+	checked = TRUE
+	var/datum/asset/spritesheet/simple/stamps/sheet = get_asset_datum(/datum/asset/spritesheet/simple/stamps)
+	if(!sheet || !sheet.assets["uar_stamp"] || !get_writing_implement_details()["stamp_class"])
+		log_world("UAR_OFFICER: ⚠ stamps 精灵表里没有可用的 \"uar_stamp\" 条目（code/modules/asset_cache/assets/paper.dm），纸面窗口里盖不出印章印记")
+
 // ———————————————————————————————— 职业套装（重声明变量：后 include 者生效）
 /// 上一批 uar_department 里已经建过 /datum/outfit/job/uar_inspector（那一版是临时的黑西装），
 /// 这里同类型重声明变量 → 本模块生效（模块 include 排在 uar_department 之后）。
@@ -226,11 +266,12 @@
 	shoes = /obj/item/clothing/shoes/uar_boots
 	ears = /obj/item/radio/headset/heads/uar_inspector
 	belt = /obj/item/modular_computer/pda/uar_inspector
-	// 开局只带 **UAR 国旗**（用户 09-30 明确规格：审查官只携带 uar 国旗）；
+	// 开局携带：**UAR 国旗**（用户 09-30 明确规格：审查官只携带 uar 国旗）+ 武器信标 + 团结联盟印章；
 	// WSR 国旗不进开局携带，只能走货舱订购。
 	backpack_contents = list(
 		/obj/item/sign/flag/uar = 1,
 		/obj/item/choice_beacon/uar = 1,
+		/obj/item/stamp/uar = 1,
 	)
 
 /// 诊断：每次有人以这个职业 spawn，都把**实际**穿/带的东西打进 runtime.log。

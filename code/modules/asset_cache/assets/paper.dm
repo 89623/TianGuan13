@@ -32,7 +32,13 @@
 		"stamp-chap" = 'icons/stamp_icons/large_stamp-chap.png',
 		"stamp-mime" = 'icons/stamp_icons/large_stamp-mime.png',
 		"stamp-centcom" = 'icons/stamp_icons/large_stamp-centcom.png',
-		"stamp-syndicate" = 'icons/stamp_icons/large_stamp-syndicate.png'
+		"stamp-syndicate" = 'icons/stamp_icons/large_stamp-syndicate.png',
+		// TIANGUAN EDIT ADDITION START - UAR_OFFICER（团结联盟印章的纸面窗口印记）
+		// 键名由 /obj/item/stamp/uar/get_writing_implement_details() 里的 icon_class_name("uar_stamp") 取用
+		// （不是物品的 icon_state —— 那个沿用上游 stamp-hos）。不能放到模块里整表重声明：
+		// assets 是 var，重声明要抄上面全部上游条目，上游一改就漂。
+		"uar_stamp" = 'modular_tianguan/modules/uar_officer/icons/stamp_uar.png'
+		// TIANGUAN EDIT ADDITION END
 	)
 
 // Contains 256x128 versions of various in game company logos
